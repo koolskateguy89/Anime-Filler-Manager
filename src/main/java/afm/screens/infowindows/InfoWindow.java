@@ -111,6 +111,7 @@ public abstract class InfoWindow extends Stage {
 		if (img == null)
 			return;
 		
+		
 		// clone the original ImageView
 		ImageView view = new ImageView(img);
 		
@@ -122,7 +123,7 @@ public abstract class InfoWindow extends Stage {
 		stage.setTitle(anime.getName());
 		stage.getIcons().add(img);
 		
-		// Roughly maintain the aspect ratio of the original image/view
+		// Roughly maintain the aspect ratio of the original image
 		stage.setMinHeight(img.getHeight() / 2);
 		stage.setMinWidth(img.getWidth() / 2);
 		
@@ -130,12 +131,11 @@ public abstract class InfoWindow extends Stage {
 		view.fitWidthProperty().bind(scene.widthProperty());
 		view.fitHeightProperty().bind(scene.heightProperty());
 		
-		stage.setScene(scene);
-		stage.centerOnScreen();
-		
 		addWindow(stage);
 		stage.setOnCloseRequest(e -> removeWindow(stage));
-		
+
+		stage.setScene(scene);
+		stage.centerOnScreen();
 		stage.show();
 	}
 }

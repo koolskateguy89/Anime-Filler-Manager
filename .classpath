@@ -12,5 +12,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jsoup"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SQLite Jdbc"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX15"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ImgScalr"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
