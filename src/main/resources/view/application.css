@@ -1,0 +1,33 @@
+.Panes {
+	-fx-background-color: #484848;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+	-fx-padding: 0.01;
+	-fx-background-color: black;
+}
+
+.progress-bar {
+	-fx-accent: #F5DF4D;
+}
+
+.button {
+	-fx-background-color: #282828;
+	-fx-text-fill: #E8E8E8;
+}
+.button .MenuButtons {
+	-fx-pref-width: 74;
+	-fx-pref-height: 34;
+}
+.button .Invisible {
+	-fx-background-color: #484848;
+	-fx-text-fill: #484848;
+}
+
+
+.Text-area {
+	-fx-text-fill: #FCFCFC;
+}
+.Text-area .content {
+	-fx-background-color: #272727;
+}
