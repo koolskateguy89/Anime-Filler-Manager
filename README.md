@@ -6,7 +6,6 @@ IB CS IA
 
 Public license will be added after results, just to be safe :)
 
-
 ## Requirements
 
 Java 15 with preview features enabled
