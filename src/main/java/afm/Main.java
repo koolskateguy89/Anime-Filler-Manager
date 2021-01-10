@@ -183,7 +183,7 @@ public class Main extends Application {
 
 			stage.setTitle("Anime Filler Manager");
 
-			stage.getIcons().add(new Image("icons/MainIcon.png"));
+			stage.getIcons().add(new Image("icons/MainIcon.ico"));
 
 			stage.setResizable(false);
 
