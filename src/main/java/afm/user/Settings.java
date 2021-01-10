@@ -36,18 +36,14 @@ public final class Settings {
 	
 	private static void loadValues() {
 		try (Connection con = DriverManager.getConnection(DB_URL);
-				Statement s = con.createStatement()) {
-
+				Statement s = con.createStatement();
+				ResultSet rs = s.executeQuery("SELECT * from Config")) {
 			// There should only be 1 record in the database
-			ResultSet rs = s.executeQuery("SELECT * from Config");
-			rs.next();
-			
-			showFacts = rs.getBoolean(1);
-			nameOrder = rs.getBoolean(2);
-			playSound = rs.getBoolean(3);
-			
-			rs.close();
-
+			if (rs.next()) {
+				showFacts = rs.getBoolean(1);
+				nameOrder = rs.getBoolean(2);
+				playSound = rs.getBoolean(3);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
