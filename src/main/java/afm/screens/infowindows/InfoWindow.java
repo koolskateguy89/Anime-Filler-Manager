@@ -113,7 +113,6 @@ public abstract class InfoWindow extends Stage {
 		
 		// clone the original ImageView
 		ImageView view = new ImageView(img);
-		view.getProperties().putAll(v.getProperties());
 		
 		// Create a new Stage (Window) to show the image
 		Pane root = new Pane(view);
