@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.google.common.base.Strings;
+
 import afm.anime.Anime;
 import afm.anime.Genre;
 import afm.anime.Season;
@@ -157,7 +159,7 @@ public final class Database {
 		builder.setGenres(genreSet);
 		
 		String fillerString = rs.getString(COLUMN_MAP.get("fillers"));
-		if (fillerString != null && !fillerString.isBlank()) {
+		if (!Strings.isNullOrEmpty(fillerString)) {
 			for (String f : fillerString.split(", "))
 				builder.addFillerAsString(f);
 		}
