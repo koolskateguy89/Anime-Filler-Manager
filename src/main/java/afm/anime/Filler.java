@@ -1,15 +1,55 @@
 package afm.anime;
 
 import java.io.IOException;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import com.google.common.collect.HashBasedTable;
+
 import afm.utils.Utils;
 
-// AFL = Anime Filler List
-@SuppressWarnings("preview")
-public record Filler(int start, int end) implements Comparable<Filler> {
+public class Filler implements Comparable<Filler> {
+	
+	private static final HashBasedTable<Integer, Integer, Filler> CACHE = HashBasedTable.create();
+	
+//	// load some values into cache
+//	static {
+//		for (int i = 5; i <= 200; i++) {
+//			CACHE.put(i, i, new Filler(i));
+//		}
+//	}
+	
+	// For one episode filler
+	public static Filler of(int episode) {
+		return of(episode, episode);
+	}
+	
+	public static Filler of(int start, int end) {
+		Filler filler = CACHE.get(start, end);
+		
+		if (filler == null) {
+			filler = new Filler(start, end);
+			CACHE.put(start, end, filler);
+		}
+		
+		return filler;
+	}
+	
+	static Filler parseFiller(String s) {
+		int divPos = s.indexOf('-');
+		
+		// single episode filler
+		if (divPos == -1) {
+			return Filler.of(Integer.parseInt(s));
+		}
+		
+		int start = Integer.parseInt(s.substring(0, divPos));
+		int end = Integer.parseInt(s.substring(divPos+1));
+		
+		return Filler.of(start, end);
+	}
 	
 	static void addFillersTo(Anime anime) {
 		/* don't search for filler for any custom anime
@@ -54,58 +94,52 @@ public record Filler(int start, int end) implements Comparable<Filler> {
 			}
 		} catch (IOException e) {
 			//e.printStackTrace();
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
 		}
 	}
 	
-	static Filler parseFiller(String s) {
-		int divPos = s.indexOf('-');
-		
-		// single episode filler
-		if (divPos == -1) {
-			return new Filler(Integer.parseInt(s));
-		}
-		
-		int start = Integer.parseInt(s.substring(0, divPos));
-		int end = Integer.parseInt(s.substring(divPos+1));
-		
-		return new Filler(start, end);
+
+	private int start;
+	private int end;
+	
+	private Filler(int start, int end) {
+		this.start = start;
+		this.end = end;
 	}
 	
-	
-	// for single episode filler
-	private Filler(int episode) {
-		this(episode, episode);
-	}
+//	private Filler(int episode) {
+//		this(episode, episode);
+//	}
 	
 	public int length() {
 		return end - start + 1;
 	}
 	
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		return (end - start == 0) ? Integer.toString(end) : start + "-" + end;
 	}
 
 	// This smaller -> negative result
-	@Override public int compareTo(Filler o) {
+	@Override
+	public int compareTo(Filler o) {
 		return (start != o.start) ? start - o.start : end - o.end;
 	}
 	
-	@Override public boolean equals(Object o) {
-		if (o == null)
-			return false;
-		
+	@Override @SuppressWarnings("preview")
+	public boolean equals(Object o) {
+		// identity check
 		if (this == o)
 			return true;
 		
+		// null and type check
 		if (o instanceof Filler other) {
 			return start == other.start && end == other.end;
 		}
 		return false;
 	}
 	
-	@Override public int hashCode() {
+	@Override
+	public int hashCode() {
 		int result = 1;
 		result = 31 * result + start;
 		result = 31 * result + end;

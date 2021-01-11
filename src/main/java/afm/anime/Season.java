@@ -148,10 +148,7 @@ public final class Season implements Comparable<Season> {
 		if (this == o)
 			return true;
 		
-		// null check
-		if (o == null)
-			return false;
-		
+		// null and type check
 		if (o instanceof Season other) {
 			return year == other.year && szn.equals(other.szn);
 		}

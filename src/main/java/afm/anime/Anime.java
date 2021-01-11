@@ -53,7 +53,7 @@ public final class Anime {
 									 	  SORT_BY_NAME_DESC;
 	
 	static {
-		SORT_BY_NAME = (a1,a2) -> a1.name.compareToIgnoreCase(a2.name);
+		SORT_BY_NAME = (Anime a1, Anime a2) -> a1.name.compareToIgnoreCase(a2.name);
 		SORT_BY_NAME_DESC = SORT_BY_NAME.reversed();
 	}
 	
@@ -261,10 +261,7 @@ public final class Anime {
 		if (this == o)
 			return true;
 		
-		// null check
-		if (o == null)
-			return false;
-		
+		// null and type check
 		if (o instanceof Anime other) {
 			return name.equals(other.name)
 					&& genres.equals(other.genres)
@@ -349,22 +346,22 @@ public final class Anime {
 		return genreString;
 	}
 	
-	private static final WeakHashMap<Anime,Image> IMG_MAP = new WeakHashMap<>();
+	private static final WeakHashMap<String,Image> IMG_CACHE = new WeakHashMap<>();
 	
 	/* 
 	 * This method should only be called by MyList/ToWatch, however it isn't too problematic
 	 * if it's called anywhere else as image will just be reloaded.
 	 */
 	public void freeImage() {
-		IMG_MAP.remove(this);
+		IMG_CACHE.remove(imageURL);
 	}
 	
 	public Image getImage() {
 		if (imageURL == null)
 			return null;
 		
-		// Lazily load Image
-		return IMG_MAP.computeIfAbsent(this, anime -> new Image(anime.getImageURL()));
+		// Lazily/Atomically load Image
+		return IMG_CACHE.computeIfAbsent(imageURL, Image::new);
 	}
 	
 	public String getImageURL() {
@@ -402,7 +399,7 @@ public final class Anime {
 	}
 	
 	private void updateEpisodeRange() {
-		episodeRange = episodes == NOT_FINISHED ? Range.atLeast(0) : Range.closed(0, episodes);
+		episodeRange = (episodes == NOT_FINISHED) ? Range.atLeast(0) : Range.closed(0, episodes);
 	}
 
 	public int getEpisodes() {
