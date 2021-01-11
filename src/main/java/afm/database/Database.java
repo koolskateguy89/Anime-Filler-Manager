@@ -91,6 +91,9 @@ public final class Database {
 		
 		if (inJar() && firstRun())
 			clearTables();
+		
+		System.out.println("inj "+inJar());
+		System.out.println("first "+firstRun());
 
 		loadAll();
 		

@@ -1,11 +1,16 @@
 package afm.user;
 
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
+import afm.utils.Utils;
 
 public final class Settings {
 
 	// Don't allow this class to be instantiated
 	private Settings() { }
+	
+	private static final String PREF_NAME = Utils.inJar() ? "jar:Settings" : "Settings";
 	
 	static {
 		loadValues();
@@ -16,7 +21,7 @@ public final class Settings {
 	private static final boolean DEFAULT_PLAYSOUND = false;
 	
 	private static void loadValues() {
-		Preferences prefs = Preferences.userRoot().node(Settings.class.getSimpleName());
+		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
 		
 		showFacts = prefs.getBoolean("showFacts", DEFAULT_SHOWFACTS);
 		nameOrder = prefs.getBoolean("nameOrder", DEFAULT_NAMEORDER);
@@ -25,11 +30,17 @@ public final class Settings {
 	
 	// OnClose
 	public static void save() {
-		Preferences prefs = Preferences.userRoot().node(Settings.class.getSimpleName());
+		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
 		
 		prefs.putBoolean("showFacts", showFacts);
 		prefs.putBoolean("nameOrder", nameOrder);
 		prefs.putBoolean("playSound", playSound);
+		
+		try {
+			prefs.flush();
+		} catch (BackingStoreException e) {
+			//e.printStackTrace();
+		}
 	}
 	
 	
