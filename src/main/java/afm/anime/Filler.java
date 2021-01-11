@@ -1,5 +1,7 @@
 package afm.anime;
 
+import static afm.utils.Utils.inJar;
+
 import java.io.IOException;
 
 import org.jsoup.Jsoup;
@@ -93,7 +95,7 @@ public class Filler implements Comparable<Filler> {
 				anime.addFiller(parseFiller(f));
 			}
 		} catch (IOException e) {
-			//e.printStackTrace();
+			if (!inJar()) e.printStackTrace();
 		}
 	}
 	

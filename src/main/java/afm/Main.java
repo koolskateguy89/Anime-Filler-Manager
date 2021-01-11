@@ -1,5 +1,7 @@
 package afm;
 
+import static afm.utils.Utils.inJar;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -152,7 +154,7 @@ public class Main extends Application {
 			try {
 				searchingScreen = new SearchingScreen(h);
 			} catch (IOException e) {
-				e.printStackTrace();
+				if (!inJar()) e.printStackTrace();
 			}
 
 		searchingScreen.setSearch(s);
@@ -167,7 +169,7 @@ public class Main extends Application {
 			try {
 				resultsScreen = new ResultsScreen();
 			} catch (IOException e) {
-				e.printStackTrace();
+				if (!inJar()) e.printStackTrace();
 			}
 
 		resultsScreen.setResults(results);

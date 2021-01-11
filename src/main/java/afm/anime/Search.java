@@ -1,5 +1,7 @@
 package afm.anime;
 
+import static afm.utils.Utils.inJar;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -105,7 +107,7 @@ public class Search {
 				 */
 				reachedLastPage = true;
 			} catch (IOException e) {
-				e.printStackTrace();
+				if (!inJar()) e.printStackTrace();
 			}
 		});
 	}

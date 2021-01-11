@@ -92,9 +92,6 @@ public final class Database {
 		if (inJar() && firstRun())
 			clearTables();
 		
-		System.out.println("inj "+inJar());
-		System.out.println("first "+firstRun());
-
 		loadAll();
 		
 		MyList.init(h);
@@ -115,9 +112,8 @@ public final class Database {
 			s.addBatch("DELETE FROM ToWatch");
 			
 			s.executeBatch();
-			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (!inJar()) e.printStackTrace();
 		}
 	}
 	
@@ -131,7 +127,7 @@ public final class Database {
 			loadToWatch(s);
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (!inJar()) e.printStackTrace();
 		}
 	}
 	
@@ -199,7 +195,7 @@ public final class Database {
 			con.commit();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (!inJar()) e.printStackTrace();
 		}
 	}
 	
