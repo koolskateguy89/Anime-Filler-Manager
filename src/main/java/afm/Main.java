@@ -218,7 +218,7 @@ public class Main extends Application {
 		saveThread.start();
 	}
 
-	public static void launch0(String[] args) {
+	static void launch0(String[] args) {
 		launch(args);
 	}
 	
