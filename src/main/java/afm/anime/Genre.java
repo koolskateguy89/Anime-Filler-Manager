@@ -32,7 +32,7 @@ public enum Genre {
 
 		StringBuilder sb = new StringBuilder(sp[0]);
 		for (int i = 1; i < sp.length; i++) {
-			sb.append(' ').append(sp[i]);
+			sb.append('-').append(sp[i]);
 		}
 		if (info != null)
 			sb.append(' ').append(info);
