@@ -231,7 +231,7 @@ public final class Anime {
 		
 		currEp = builder.currEp;
 		episodes = builder.episodes;
-		episodeRange = episodes == NOT_FINISHED ? Range.atLeast(0) : Range.closed(0, episodes);
+		episodeRange = (episodes == NOT_FINISHED) ? Range.atLeast(0) : Range.closed(0, episodes);
 		
 		custom = builder.custom;
 		id = builder.id;
