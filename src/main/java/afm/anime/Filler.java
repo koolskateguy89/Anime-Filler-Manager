@@ -29,14 +29,14 @@ public class Filler implements Comparable<Filler> {
 	}
 
 	public static Filler of(int start, int end) {
-		Filler filler = CACHE.get(start, end);
+		Filler cached = CACHE.get(start, end);
 
-		if (filler == null) {
-			filler = new Filler(start, end);
-			CACHE.put(start, end, filler);
+		if (cached == null) {
+			cached = new Filler(start, end);
+			CACHE.put(start, end, cached);
 		}
 
-		return filler;
+		return cached;
 	}
 
 	static Filler parseFiller(String s) {
