@@ -187,9 +187,9 @@ public class Main extends Application {
 			stage.getIcons().add(new Image("icons/MainIcon.ico"));
 
 			stage.setResizable(false);
-			
+
 			//stage.setOnCloseRequest(event -> onClose());
-			
+
 			// OnClose thread will be run upon JVM trying to exit
 			Runtime.getRuntime().addShutdownHook(OnClose.getInstance());
 
@@ -219,7 +219,7 @@ public class Main extends Application {
 //		}, "Save DB Thread");
 //		saveThread.setDaemon(false);
 //		saveThread.start();
-		
+
 		Thread onClose = OnClose.getInstance();
 		//onClose.start();
 	}*/

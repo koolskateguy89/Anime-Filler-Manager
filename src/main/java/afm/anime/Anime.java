@@ -436,6 +436,11 @@ public final class Anime implements Closeable {
 	}
 
 
+	/*
+	 * I could make it lazily load the buttons instead
+	 * Or just have one infowindow with 3 buttons and change them as needed
+	 */
+
 	/* Everything following this is to help ResultsScreen with anime
 	 * returned from search results:
 	 *
