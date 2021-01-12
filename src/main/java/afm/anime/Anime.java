@@ -351,7 +351,6 @@ public final class Anime implements Closeable {
 	/*
 	 * This method should only be called by MyList/ToWatch, however it isn't too problematic
 	 * if it's called anywhere else as image will just be reloaded.
-	 * TODO: rename to close
 	 */
 	public void close() {
 		image = null;
