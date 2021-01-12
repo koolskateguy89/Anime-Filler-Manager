@@ -103,32 +103,41 @@ public class Filler implements Comparable<Filler> {
 			while (formattedName.length() > 1 && formattedName.charAt(formattedName.length()-1) == '-')
 				formattedName = formattedName.substring(0, formattedName.length()-1);
 		}
-		
+
 		return formattedName;
 	}
-	
+
 	// this took avg ~600ns vs regex ~6-7k ns
 	private static String replaceNonAlphaNumeric(String s, char replace) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		// help with if multiple characters in a row are non-alphanumeric
 		boolean lastWasNonAlpha = false;
-		
-		for (char ch : s.toCharArray()) {
+
+		for (int i = 0; i < s.length(); i++) {
+			char ch = s.charAt(i);
 			if (Character.isLetterOrDigit(ch)) {
 				sb.append(ch);
 				lastWasNonAlpha = false;
-				continue;
-			}
-			if (!lastWasNonAlpha) {
+			} else if (!lastWasNonAlpha) {
 				sb.append(replace);
 				lastWasNonAlpha = true;
 			}
 		}
-		
+		/*
+		for (char ch : s.toCharArray()) {
+			if (Character.isLetterOrDigit(ch)) {
+				sb.append(ch);
+				lastWasNonAlpha = false;
+			} else if (!lastWasNonAlpha) {
+				sb.append(replace);
+				lastWasNonAlpha = true;
+			}
+		}
+		*/
 		return sb.toString();
 	}
-	
+
 
 	private int start;
 	private int end;
