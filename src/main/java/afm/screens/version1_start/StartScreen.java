@@ -110,10 +110,9 @@ public class StartScreen extends Pane {
 
 					// load MyList & ToWatch from database into run time memory
 					Database.init(h);
-					System.out.println("db done");
 
 					updateThread.join();
-					
+
 					//Completely fill progressBar
 					updateProgress(100, 100);
 				} catch (IOException e) {

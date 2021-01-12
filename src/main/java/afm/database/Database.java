@@ -88,12 +88,12 @@ public final class Database {
 	// load myList & toWatch contents into runtime linkedHSs
 	public static void init(Handler handler) {
 		prop.put("rewriteBatchedStatements", "true");
-		
+
 		if (inJar() && firstRun())
 			clearTables();
 		else
 			loadAll();
-		
+
 		MyList.init(handler);
 		ToWatch.init(handler);
 	}
@@ -124,7 +124,7 @@ public final class Database {
 			s.setQueryTimeout(30);
 
 			loadMyList(s);
-		
+
 			loadToWatch(s);
 
 		} catch (SQLException e) {

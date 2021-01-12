@@ -139,8 +139,8 @@ public class Filler implements Comparable<Filler> {
 	}
 
 
-	private int start;
-	private int end;
+	private final int start;
+	private final int end;
 
 	private Filler(int start, int end) {
 		this.start = start;
