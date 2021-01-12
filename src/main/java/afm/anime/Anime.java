@@ -2,6 +2,7 @@ package afm.anime;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Closeable;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -9,7 +10,6 @@ import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.Property;
@@ -44,7 +44,7 @@ import afm.utils.Utils;
  * 11 +fillers - String (fillers as a String)
  *
  */
-public final class Anime {
+public final class Anime implements Closeable {
 
 	//episode count
 	public static final int NOT_FINISHED = -1;
@@ -123,7 +123,6 @@ public final class Anime {
 
 		public final AnimeBuilder setImageURL(String url) {
 			imageURL = url;
-
 			return this;
 		}
 
@@ -208,6 +207,7 @@ public final class Anime {
 	private String info;
 
 	private String imageURL;
+	private Image image;
 
 	private int episodes;
 	private int currEp;
@@ -346,22 +346,29 @@ public final class Anime {
 		return genreString;
 	}
 
-	private static final WeakHashMap<String,Image> IMG_CACHE = new WeakHashMap<>();
+	//private static final WeakHashMap<String,Image> IMG_CACHE = new WeakHashMap<>();
 
 	/*
 	 * This method should only be called by MyList/ToWatch, however it isn't too problematic
 	 * if it's called anywhere else as image will just be reloaded.
+	 * TODO: rename to close
 	 */
-	public void freeImage() {
-		IMG_CACHE.remove(imageURL);
+	public void close() {
+		image = null;
+		//IMG_CACHE.remove(imageURL);
 	}
 
 	public Image getImage() {
 		if (imageURL == null)
 			return null;
 
+		if (image == null) {
+			image = new Image(imageURL);
+		}
+
+		return image;
 		// Lazily/Atomically load Image
-		return IMG_CACHE.computeIfAbsent(imageURL, Image::new);
+		//return IMG_CACHE.computeIfAbsent(imageURL, Image::new);
 	}
 
 	public String getImageURL() {

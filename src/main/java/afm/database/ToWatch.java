@@ -29,8 +29,8 @@ public final class ToWatch {
 	}
 
 	public static void init(Handler handler) {
-		SetChangeListener<Anime> setListener = change -> handler.getMain().toWatchScreen.refreshTable();
-		runTime.addListener(setListener);
+		SetChangeListener<Anime> changeListener = change -> handler.getMain().toWatchScreen.refreshTable();
+		runTime.addListener(changeListener);
 	}
 
 	private static final Set<Anime> added = new LinkedHashSet<>();
@@ -68,7 +68,7 @@ public final class ToWatch {
 		// only add to [removed] if the anime was present in [runTime]
 		if (runTime.remove(anime)) {
 			removed.add(anime.getName());
-			anime.freeImage();
+			anime.close();
 		}
 
 		added.remove(anime);

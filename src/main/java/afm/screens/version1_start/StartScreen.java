@@ -1,5 +1,7 @@
 package afm.screens.version1_start;
 
+import static afm.utils.Utils.sleep;
+
 import java.io.IOException;
 
 import javafx.application.Platform;
@@ -98,7 +100,7 @@ public class StartScreen extends Pane {
 						long time = 1000; // i want it to take x seconds to fill rest of bar
 						long wait = time / (98 - 80);
 						for (int n = 80; n < 98; n++) {
-							Utils.sleep(wait);
+							sleep(wait);
 							updateProgress(n, 100);
 						}
 					});
@@ -106,13 +108,12 @@ public class StartScreen extends Pane {
 					updateThread.setDaemon(false);
 					updateThread.start();
 
-
 					// load MyList & ToWatch from database into run time memory
 					Database.init(h);
-
+					System.out.println("db done");
 
 					updateThread.join();
-
+					
 					//Completely fill progressBar
 					updateProgress(100, 100);
 				} catch (IOException e) {

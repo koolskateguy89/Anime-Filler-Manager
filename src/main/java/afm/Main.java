@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 import afm.anime.Anime;
 import afm.anime.Search;
-import afm.database.Database;
 import afm.screens.MainScreen;
 import afm.screens.Menu;
 import afm.screens.SettingsScreen;
@@ -29,8 +28,8 @@ import afm.screens.version5_results.ResultsScreen;
 import afm.screens.version6_myList.MyListScreen;
 import afm.screens.version7_toWatch.ToWatchScreen;
 import afm.screens.version8_custom.CustomScreen;
-import afm.user.Settings;
 import afm.utils.Handler;
+import afm.utils.OnClose;
 
 public class Main extends Application {
 
@@ -50,7 +49,7 @@ public class Main extends Application {
 	public WelcomeScreen welcomeScreen;
 	public Menu menu;
 	public SettingsScreen settingsScreen;
-	
+
 
 	public SearchScreen searchScreen;
 	private SearchingScreen searchingScreen;
@@ -72,11 +71,11 @@ public class Main extends Application {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
+
 		normalSize();
 		scene.setRoot(welcomeScreen);
 	}
-	
+
 	public void openSettingsScreen() {
 		setScreen(settingsScreen);
 	}
@@ -99,7 +98,7 @@ public class Main extends Application {
 
 		return this;
 	}
-	
+
 	private void normalSize() {
 		stage.setHeight(searchScreen.getPrefHeight()); // most screens have the same pref height
 	}
@@ -188,8 +187,11 @@ public class Main extends Application {
 			stage.getIcons().add(new Image("icons/MainIcon.ico"));
 
 			stage.setResizable(false);
-
-			stage.setOnCloseRequest(event -> onClose());
+			
+			//stage.setOnCloseRequest(event -> onClose());
+			
+			// OnClose thread will be run upon JVM trying to exit
+			Runtime.getRuntime().addShutdownHook(OnClose.getInstance());
 
 			// start loading is done internally (button action)
 			startScreen = new StartScreen(h);
@@ -205,21 +207,25 @@ public class Main extends Application {
 		}
 	}
 
+	/*
 	private static void onClose() {
 		// close all open windows as well as this window
 		InfoWindow.closeAllOpenWindows();
 
 		// save runtime MyList & ToWatch into database
-		Thread saveThread = new Thread(() -> {
-			Settings.save();
-			Database.saveAll();
-		}, "Save DB Thread");
-		saveThread.setDaemon(false);
-		saveThread.start();
-	}
+//		Thread saveThread = new Thread(() -> {
+//			Settings.save();
+//			Database.saveAll();
+//		}, "Save DB Thread");
+//		saveThread.setDaemon(false);
+//		saveThread.start();
+		
+		Thread onClose = OnClose.getInstance();
+		//onClose.start();
+	}*/
 
 	static void launch0(String[] args) {
 		launch(args);
 	}
-	
+
 }

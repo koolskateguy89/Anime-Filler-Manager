@@ -61,24 +61,7 @@ public class Filler implements Comparable<Filler> {
 
 		try {
 			// replace all non-alphanumeric characters with a dash (which is what AFL does)
-			String formattedName = anime.getName().toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-");
-
-			// get rid of leading/trailing dashes
-			while (formattedName.length() > 1 && formattedName.charAt(0) == '-')
-				formattedName = formattedName.substring(1);
-			while (formattedName.length() > 1 && formattedName.charAt(formattedName.length()-1) == '-')
-				formattedName = formattedName.substring(0, formattedName.length()-1);
-
-			// basically if name includes a year, remove it
-			int len = formattedName.length();
-			if (len > 6 && Utils.isNumeric(formattedName.substring(len - 4))) {
-				formattedName = formattedName.substring(0, len-4);
-
-				while (formattedName.length() > 1 && formattedName.charAt(0) == '-')
-					formattedName = formattedName.substring(1);
-				while (formattedName.length() > 1 && formattedName.charAt(formattedName.length()-1) == '-')
-					formattedName = formattedName.substring(0, formattedName.length()-1);
-			}
+			String formattedName = formatName(anime.getName());
 
 			Document doc = Jsoup.connect("https://www.animefillerlist.com/shows/" + formattedName).get();
 
@@ -99,6 +82,53 @@ public class Filler implements Comparable<Filler> {
 		}
 	}
 
+	private static String formatName(String name) {
+		// replace all non-alphanumeric characters with a dash (which is what AFL does)
+		String formattedName = replaceNonAlphaNumeric(name.toLowerCase(), '-');
+		// name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
+
+		// get rid of leading/trailing dashes
+		while (formattedName.length() > 1 && formattedName.charAt(0) == '-')
+			formattedName = formattedName.substring(1);
+		while (formattedName.length() > 1 && formattedName.charAt(formattedName.length()-1) == '-')
+			formattedName = formattedName.substring(0, formattedName.length()-1);
+
+		// basically if name includes a year, remove it
+		int len = formattedName.length();
+		if (len > 6 && Utils.isNumeric(formattedName.substring(len - 4))) {
+			formattedName = formattedName.substring(0, len-4);
+
+			while (formattedName.length() > 1 && formattedName.charAt(0) == '-')
+				formattedName = formattedName.substring(1);
+			while (formattedName.length() > 1 && formattedName.charAt(formattedName.length()-1) == '-')
+				formattedName = formattedName.substring(0, formattedName.length()-1);
+		}
+		
+		return formattedName;
+	}
+	
+	// this took avg ~600ns vs regex ~6-7k ns
+	private static String replaceNonAlphaNumeric(String s, char replace) {
+		StringBuilder sb = new StringBuilder();
+		
+		// help with if multiple characters in a row are non-alphanumeric
+		boolean lastWasNonAlpha = false;
+		
+		for (char ch : s.toCharArray()) {
+			if (Character.isLetterOrDigit(ch)) {
+				sb.append(ch);
+				lastWasNonAlpha = false;
+				continue;
+			}
+			if (!lastWasNonAlpha) {
+				sb.append(replace);
+				lastWasNonAlpha = true;
+			}
+		}
+		
+		return sb.toString();
+	}
+	
 
 	private int start;
 	private int end;

@@ -86,16 +86,16 @@ public final class Database {
 
 
 	// load myList & toWatch contents into runtime linkedHSs
-	public static void init(Handler h) {
+	public static void init(Handler handler) {
 		prop.put("rewriteBatchedStatements", "true");
-
+		
 		if (inJar() && firstRun())
 			clearTables();
-
-		loadAll();
-
-		MyList.init(h);
-		ToWatch.init(h);
+		else
+			loadAll();
+		
+		MyList.init(handler);
+		ToWatch.init(handler);
 	}
 
 	/*
@@ -118,16 +118,17 @@ public final class Database {
 	}
 
 	private static void loadAll() {
-		try (Connection con = DriverManager.getConnection(DB_URL, prop); Statement s = con.createStatement()) {
+		try (Connection con = DriverManager.getConnection(DB_URL, prop);
+				Statement s = con.createStatement()) {
 
 			s.setQueryTimeout(30);
 
 			loadMyList(s);
-
+		
 			loadToWatch(s);
 
 		} catch (SQLException e) {
-			if (!inJar()) e.printStackTrace();
+			/*if (!inJar())*/ e.printStackTrace();
 		}
 	}
 
@@ -168,20 +169,20 @@ public final class Database {
 
 	// Load contents of MyList table into runtime MyList
 	private static void loadMyList(Statement statement) throws SQLException {
-		ResultSet rs = statement.executeQuery("SELECT * FROM MyList");
-		while (rs.next()) {
-			MyList.addSilent(loadAnimeFromResultSet(rs));
+		try (ResultSet rs = statement.executeQuery("SELECT * FROM MyList")) {
+			while (rs.next()) {
+				MyList.addSilent(loadAnimeFromResultSet(rs));
+			}
 		}
-		rs.close();
 	}
 
 	// Load contents of ToWatch table into runtime ToWatch
 	private static void loadToWatch(Statement statement) throws SQLException {
-		ResultSet rs = statement.executeQuery("SELECT * FROM ToWatch");
-		while (rs.next()) {
-			ToWatch.addSilent(loadAnimeFromResultSet(rs));
+		try (ResultSet rs = statement.executeQuery("SELECT * FROM ToWatch")) {
+			while (rs.next()) {
+				ToWatch.addSilent(loadAnimeFromResultSet(rs));
+			}
 		}
-		rs.close();
 	}
 
 	public static void saveAll() {
