@@ -31,9 +31,9 @@ public class ToWatchInfoWindow extends InfoWindow {
 	@FXML private ImageView imageView;
 
 	@FXML private TextArea infoTextArea;
-	
+
 	@FXML private TextField totalEpField;
-	
+
 	@FXML private Button fillerBtn;
 
 	private ToWatchInfoWindow(Anime a, Button infoBtn) throws IOException {
@@ -57,19 +57,19 @@ public class ToWatchInfoWindow extends InfoWindow {
 
 		// don't need to check if null as default is null
 		imageView.setImage(anime.getImage());
-		
+
 		int eps = anime.getEpisodes();
 		if (eps < 1)
 			totalEpField.setText("Not finished");
 		else
 			totalEpField.setText(Integer.toString(anime.getEpisodes()));
-		
+
 		if (anime.getFillers().isEmpty())
 			fillerBtn.setVisible(false);
-		
+
 		if (anime.getURL() == null)
 			browserBtn.setVisible(false);
-		
+
 		super.afterInitialize();
 
 		requestFocus();

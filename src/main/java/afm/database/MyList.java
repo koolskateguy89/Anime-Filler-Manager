@@ -20,9 +20,9 @@ public final class MyList {
 
 	// don't allow any instantiations of this to be made
 	private MyList() { }
-	
+
 	private static final ObservableSet<Anime> runTime;
-	
+
 	/*
 	 * Can't lie my implementation of {name order} is absolutely genius:
 	 * -The database always stays in insertion order
@@ -35,17 +35,17 @@ public final class MyList {
 													 : new LinkedHashSet<>();
 		runTime = FXCollections.observableSet(backingSet);
 	}
-	
+
 	public static void init(Handler handler) {
 		SetChangeListener<Anime> setListener = change -> handler.getMain().myListScreen.refreshTable();
 		runTime.addListener(setListener);
 	}
-	
+
 	private static final Set<Anime> added = new LinkedHashSet<>();
 	// Only the name of the removed anime is important
 	private static final Set<String> removed = new HashSet<>();
-	
-	
+
+
 	/* add anime to runTime without adding to {added}.
 	 * used when loading anime from database
 	 */
@@ -58,7 +58,7 @@ public final class MyList {
 		removed.remove(anime.getName());
 		added.add(anime);
 	}
-	
+
 	public static void update(Anime anime) {
 		// For when an anime already exists in runTime, set it to be updated
 		// in database
@@ -81,7 +81,7 @@ public final class MyList {
 			removed.add(anime.getName());
 			anime.freeImage();
 		}
-		
+
 		added.remove(anime);
 	}
 
@@ -100,16 +100,16 @@ public final class MyList {
 	public static Set<Anime> values() {
 		return runTime;
 	}
-	
+
 	// changes made by iterator are be reflected in map
 	public static Iterator<Anime> iterator() {
 		return values().iterator();
 	}
-	
+
 	static Set<Anime> getAdded() {
 		return added;
 	}
-	
+
 	static String getRemovedSQL() {
 		return removed.stream()
 					  .map(name -> name.replace("'", "''"))	// escape quotes in SQL

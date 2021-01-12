@@ -34,17 +34,18 @@ public class StartScreen extends Pane {
 	private final Handler h;
 	private Pair<Integer, String> fact;
 	private Task<Void> loadTask;
-	
+
 	public StartScreen(Handler h) throws IOException {
 		this.h = h;
-		
+
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("StartScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
 	}
-	
-	@FXML void initialize() {
+
+	@FXML
+	void initialize() {
 		//Get a random fact and its id and display it in factText
 		if (Settings.showFacts()) {
 			Facts.init(); // only need to init if showing facts
@@ -53,7 +54,7 @@ public class StartScreen extends Pane {
 		} else {
 			factText.setVisible(false);
 		}
-		
+
 		//Initialise the loadTask which loads all screens
 		loadTask = new Task<Void>() {
 			protected Void call() {
@@ -67,17 +68,17 @@ public class StartScreen extends Pane {
 						// Show loadLbl
 						loadLbl.setOpacity(1);
 					});
-					
+
 					updateProgress(5,100);
-					
+
 					Season.init();
 					updateProgress(10,100);
-					
+
 					InfoWindow.init(h);
-					
+
 					//Load different Screens
 					final Main main = h.getMain();
-					
+
 					main.welcomeScreen = new WelcomeScreen(h);
 					updateProgress(25,100);
 					main.menu = new Menu(h);
@@ -92,7 +93,7 @@ public class StartScreen extends Pane {
 					updateProgress(65,100);
 					main.customScreen = new CustomScreen();
 					updateProgress(80,100);
-					
+
 					Thread updateThread = new Thread(() ->  {
 						long time = 1000; // i want it to take x seconds to fill rest of bar
 						long wait = time / (98 - 80);
@@ -101,17 +102,17 @@ public class StartScreen extends Pane {
 							updateProgress(n, 100);
 						}
 					});
-					
+
 					updateThread.setDaemon(false);
 					updateThread.start();
-					
-					
+
+
 					// load MyList & ToWatch from database into run time memory
 					Database.init(h);
-					
-					
+
+
 					updateThread.join();
-					
+
 					//Completely fill progressBar
 					updateProgress(100, 100);
 				} catch (IOException e) {
@@ -121,7 +122,7 @@ public class StartScreen extends Pane {
 					// "Restore interrupted state"
 					Thread.currentThread().interrupt();
 				}
-				
+
 				return null;
 			}
 		};
@@ -136,33 +137,38 @@ public class StartScreen extends Pane {
 			startBtn.setDisable(false);
 		});
 	}
-	
-	@FXML private ProgressBar progressBar;
 
-	@FXML private Button startBtn;
-    
-	@FXML private Text factText;
-    
-	@FXML private Text loadLbl;
+	@FXML
+	private ProgressBar progressBar;
+
+	@FXML
+	private Button startBtn;
+
+	@FXML
+	private Text factText;
+
+	@FXML
+	private Text loadLbl;
 
     // When startBtn is first pressed, load all elements first,
 	// otherwise, move to welcome screen
-    @FXML void moveToWelcomeScreen(ActionEvent event) {
+    @FXML
+    void moveToWelcomeScreen(ActionEvent event) {
     	if (!loadTask.isRunning() && !loadTask.isDone()) {
     		// Bind progressBar progress to the loadTask
     		progressBar.progressProperty().bind(loadTask.progressProperty());
-    		
+
     		// Show a new fact
     		if (Settings.showFacts()) {
     			fact = Facts.getRandomFact();
     			factText.setText("Fact " + fact.getKey() + ": " + fact.getValue());
     		}
-    		
+
     		loadAll();
     	} else
     		h.getMain().moveToWelcomeScreen();
     }
-    
+
 	private void loadAll() {
 		//fade the loadLbl in and out
 		final Thread fadeLoadLbl = new Thread(() -> {
@@ -177,18 +183,18 @@ public class StartScreen extends Pane {
 					//to fade in, increase opacity
 					loadLbl.setOpacity(loadLbl.getOpacity() + 0.1);
 				}
-				
+
 				//start to fade out once loadLbl is fully visible
 				if (loadLbl.getOpacity() >= 1)
 					fadeOut = true;
 				//start to fade in once loadLbl is not visible
 				else if (loadLbl.getOpacity() <= 0)
 					fadeOut = false;
-				
+
 				Utils.sleep(60);
 			}
 		});
-		
+
 		/* Change the thread from a user thread to a daemon thread (low priority)
 		 *  so the JVM can terminate if the thread is still running.
 		 *
@@ -199,7 +205,7 @@ public class StartScreen extends Pane {
 		*/
 		fadeLoadLbl.setDaemon(true);
 		fadeLoadLbl.start();
-		
+
 		//Start loading screens
 		final Thread loadThread = new Thread(loadTask);
 		loadThread.setDaemon(true);

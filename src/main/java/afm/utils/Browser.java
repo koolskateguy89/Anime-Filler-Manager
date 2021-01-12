@@ -10,19 +10,19 @@ import javafx.scene.control.Alert.AlertType;
 import com.sun.javafx.PlatformUtil;
 
 public class Browser {
-	
+
 	private Browser() { }
-	
+
 	// see https://stackoverflow.com/a/18509384
 	public static boolean open(String url) {
 		boolean opened = false;
-		
+
 		if (PlatformUtil.isMac()) {
 			opened = openMac(url);
 		} else {
 			opened = open0(url);
 		}
-		
+
 		if (!opened) {
 			if (PlatformUtil.isWindows()) {
 				opened = openWindows(url);
@@ -30,15 +30,15 @@ public class Browser {
 				opened = openLinux(url);
 			}
 		}
-		
+
 		if (!opened) {
 			Alert a = new Alert(AlertType.ERROR, "Browser could not be opened.");
 			a.showAndWait();
 		}
-		
+
 		return opened;
 	}
-	
+
 	// Usually works in Windows & Linux
 	private static boolean open0(String url) {
 		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -51,7 +51,7 @@ public class Browser {
 		}
 		return false;
 	}
-	
+
 	private static boolean openWindows(String url) {
 		try {
 			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
@@ -65,7 +65,7 @@ public class Browser {
 			}
 		}
 	}
-	
+
 	// If it doesn't work, try opening the other way
 	// this might work for Unix, I'm not sure
 	private static boolean openMac(String url) {
@@ -90,5 +90,5 @@ public class Browser {
 		}
 		return false;
 	}
-	
+
 }

@@ -10,15 +10,15 @@ public enum Genre {
 	Horror, Josei, Kids, Magic, MartialArts, Mecha, Military, Music, Mystery, Parody, Police, Psychological, Romance, Samurai,
 	School, SciFi, Seinen, Shoujo, ShoujoAi, Shounen, ShounenAi, SliceOfLife, Space, Sports, SuperPower, Supernatural, Thriller,
 	Vampire, Yaoi("(18+)"), Yuri("(18+)");
-	
-	
+
+
 	String info;
 	/* it is not index in the usual sense, it is index as in
 	 * the number in the MyAnimeList link
 	 * (used when searching for anime)
 	 * */
 	int index;
-	
+
 	private Genre() {
 		index = findIndex(this.name());
 	}
@@ -26,7 +26,7 @@ public enum Genre {
 		this();
 		this.info = info;
 	}
-	
+
 	@Override public String toString() {
 		String[] sp = Utils.splitByCapitals(this.name());
 
@@ -36,14 +36,14 @@ public enum Genre {
 		}
 		if (info != null)
 			sb.append(' ').append(info);
-		
+
 		return sb.toString();
 	}
-	
+
 	public int getIndex() {
 		return index;
 	}
-	
+
 	// Helper for myanimelist.net link (searching)
 	private static int findIndex(String s) {
 		switch (s) {
@@ -139,7 +139,7 @@ public enum Genre {
 				throw new IllegalArgumentException("Not a genre: " + s);
 		}
 	}
-	
+
 	/* special implementation of binary search that ignores case for safety */
 	public static Genre parseGenreFromToString(String toString) {
 		var values = values();
@@ -150,7 +150,7 @@ public enum Genre {
 		else
 			return values[pos];
 	}
-	
+
 	// ignore case for safety
 	public static Genre getGenre(String ignoreCaseName) {
 		// values() is final so this should be optimised by JIT compiler (in-lining)

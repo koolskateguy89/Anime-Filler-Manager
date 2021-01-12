@@ -20,24 +20,24 @@ public final class ToWatch {
 
 	// don't allow any instantiations of this to be made
 	private ToWatch() { }
-	
+
 	private static final ObservableSet<Anime> runTime;
-	
+
 	static {
 		Set<Anime> backingSet = Settings.nameOrder() ? new TreeSet<>(Anime.SORT_BY_NAME) : new LinkedHashSet<>();
 		runTime = FXCollections.observableSet(backingSet);
 	}
-	
+
 	public static void init(Handler handler) {
 		SetChangeListener<Anime> setListener = change -> handler.getMain().toWatchScreen.refreshTable();
 		runTime.addListener(setListener);
 	}
-	
+
 	private static final Set<Anime> added = new LinkedHashSet<>();
 	// Only the name of the removed anime is important
 	private static final Set<String> removed = new HashSet<>();
-	
-	
+
+
 	static void addSilent(Anime anime) {
 		runTime.add(anime);
 	}
@@ -47,7 +47,7 @@ public final class ToWatch {
 		removed.remove(anime.getName());
 		added.add(anime);
 	}
-	
+
 	public static void update(Anime anime) {
 		// For when an anime already exists in runTime, set it to be updated
 		// in database
@@ -70,14 +70,14 @@ public final class ToWatch {
 			removed.add(anime.getName());
 			anime.freeImage();
 		}
-		
+
 		added.remove(anime);
 	}
 
 	public static boolean contains(Anime anime) {
 		return runTime.contains(anime);
 	}
-	
+
 	public static int size() {
 		return runTime.size();
 	}
@@ -89,16 +89,16 @@ public final class ToWatch {
 	public static Set<Anime> values() {
 		return runTime;
 	}
-	
+
 	// changes made by iterator are be reflected in map
 	public static Iterator<Anime> iterator() {
 		return values().iterator();
 	}
-	
+
 	static Set<Anime> getAdded() {
 		return added;
 	}
-	
+
 	static String getRemovedSQL() {
 		return removed.stream()
 					  .map(name -> name.replace("'", "''"))	// escape quotes in SQL

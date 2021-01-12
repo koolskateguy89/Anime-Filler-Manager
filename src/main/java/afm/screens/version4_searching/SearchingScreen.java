@@ -31,16 +31,16 @@ import afm.utils.Utils;
 public class SearchingScreen extends Pane {
 
 	private final Handler h;
-	
+
 	private Search search;
-	
+
 	private final List<Anime> results = Collections.synchronizedList(new ArrayList<Anime>());
-	
+
 	private ObservableList<Node> circles;
-	
+
 	@FXML private HBox loadingBox;
 	@FXML private Button resultsBtn;
-	
+
 
 	public SearchingScreen(Handler h) throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("SearchingScreen"));
@@ -50,7 +50,7 @@ public class SearchingScreen extends Pane {
 
 		this.h = h;
 	}
-	
+
 	// change search
 	// (This is called on the JavaFX Application Thread)
 	public void setSearch(Search s) {
@@ -58,54 +58,56 @@ public class SearchingScreen extends Pane {
 		search = s;
 	}
 
-	@FXML private void initialize() {
+	@FXML
+	private void initialize() {
 		circles = loadingBox.getChildren();
 		circles.forEach(circle -> circle.setOpacity(0));
 	}
 
-	
+
 	private volatile boolean stopLoading = false;
 	private volatile boolean stopBlinking = false;
-	
+
 	private final Service<Void> searching = new SearchService();
 	private final Service<Void> loading = new LoadService();
 	private final Service<Void> blinking = new BlinkService();
-	
+
 
 	// (This is called on the JavaFX Application Thread)
 	public void startSearch() {
 		resultsBtn.setDisable(true);
 		resultsBtn.setText("Not yet...");
-		
+
 		stopLoading = false;
-		
+
 		loading.restart();
 		searching.restart();
 	}
-	
-	@FXML void openResults(ActionEvent event) {
+
+	@FXML
+	void openResults(ActionEvent event) {
 		stopBlinking = true;
 		h.getMain().moveToResultsScreen(results);
 	}
-	
+
 	// Helper Service classes
 	private class SearchService extends Service<Void> {
 		SearchService() {
 			super();
-			
+
 			setOnSucceeded(event -> {
 				stopLoading = true;
 				stopBlinking = false;
-				
+
 				resultsBtn.setDisable(false);
 				resultsBtn.setText("Open Results");
-				
+
 				blinking.restart();
-				
+
 				if (Settings.playSound())
 					SoundFactory.ping();
 			});
-			
+
 			// if something goes wrong: print exception & terminate
 			exceptionProperty().addListener((obs, oldVal, newVal) -> {
 				if (newVal != null) {
@@ -128,16 +130,16 @@ public class SearchingScreen extends Pane {
 			};
 		}
 	}
-	
+
 	private class BlinkService extends Service<Void> {
 		BlinkService() {
 			super();
 		}
-		
+
 		@Override
 		protected Task<Void> createTask() {
 			return new Task<>() {
-				
+
 				private boolean dim = true;	// start by dimming circles
 				private double opacity = 0.8;
 				private double step = 0.4;
@@ -169,86 +171,86 @@ public class SearchingScreen extends Pane {
 			};
 		}
 	}
-	
+
 	private class LoadService extends Service<Void> {
 		LoadService() {
 			super();
 		}
-		
+
 		/*
 		 * 11 circles
-		 * 
+		 *
 		 * peak starts at middle index (5),
 		 * 'peakflat' is to be 3 circles wide (+- 1 from peak index),
 		 * 2 after peakflat (left&right) are to be fading out,
 		 * rest invisible
-		 * 
+		 *
 		 * All ternary operators below are to solve over/underflow
 		 */
 		@Override
 		protected Task<Void> createTask() {
 			return new Task<>() {
-				
+
 				final int size = circles.size();
 				int peak = size / 2;	// start at middle
-				
+
 				@Override
 				protected Void call() throws Exception {
 					          /* Position, opacity of each circle*/
 					final HashMap<Integer, Double> circleMap = new HashMap<>();
-					
+
 					while (!stopLoading) {
-						
+
 						/* at the start of each iteration, 'set' each circle's
 						   opacity to 0 */
 						IntStream.range(0, size)
 								 .forEach(i -> circleMap.put(i, 0d));
-						
+
 						final int right = (peak >= size - 1) ? 0 : peak + 1;
 						final int left = (peak <= 0) ? size - 1 : peak - 1;
-						
+
 						circleMap.put(peak, 1d);
 						circleMap.put(left, 0.9);
 						circleMap.put(right, 0.9);
-						
+
 						// left fading circles from peak
 						int leftPos = (left <= 0) ? size - 1 : left - 1;
 						double opacity = 0.65;
 						for (int i = 0; i < 2; i++) {
 							circleMap.put(leftPos, opacity);
-							
+
 							opacity -= 0.3;
 							leftPos = (leftPos <= 0) ? size - 1 : leftPos - 1;
 						}
-						
+
 						//right fading circles from peak
 						int rightPos = (right >= size - 1) ? 0 : right + 1;
 						opacity = 0.65;
 						for (int i = 0; i < 2; i++) {
 							circleMap.put(rightPos, opacity);
-							
+
 							opacity -= 0.3;
 							rightPos = (rightPos >= size - 1) ? 0 : rightPos + 1;
 						}
-						
+
 						peak++;
 						peak %= size;	// solve any overflow
-						
+
 						// Actually set opacity for every circle
 						Platform.runLater(() -> {
 							circleMap.entrySet().forEach(entry ->
 								circles.get(entry.getKey()).setOpacity(entry.getValue())
 							);
 						});
-						
+
 						sleep(130);
 					}
-					
+
 					return null;
 				}
-				
+
 			};
 		}
 	}
-	
+
 }

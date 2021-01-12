@@ -192,7 +192,7 @@ public final class Utils {
 		} else // comp > 0, key is greater, search right
 			return binarySearch(arr, key, mid + 1, end);
 	}
-	
+
 	@SuppressWarnings({ "preview", "rawtypes" })
 	private static <T extends Styleable> void changeStyle(T target, String style) {
 		String newStyle = target.getStyle();
@@ -200,7 +200,7 @@ public final class Utils {
 			newStyle = new StringBuilder(newStyle).append("; ").append(style).toString();
 		else
 			newStyle = style;
-		
+
 		if (target instanceof Node node) {
 			node.setStyle(newStyle);
 		} else if (target instanceof TableColumn tc) {
@@ -211,7 +211,7 @@ public final class Utils {
 	public static void topCenterColumnAlignment(TableColumn<?, ?> col) {
 		changeStyle(col, "-fx-alignment: TOP-CENTER");
 	}
-	
+
 	public static void centerColumnAlignment(TableColumn<?, ?> col) {
 		changeStyle(col, "-fx-alignment: CENTER");
 	}
@@ -245,28 +245,28 @@ public final class Utils {
 	 * public static byte[] serialize(EnumSet<Genre> genreSet) throws IOException {
 	 * // generate a mask of the set so nothing happens to original set
 	 * EnumSet<Genre> mask = genreSet.clone();
-	 * 
+	 *
 	 * ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutputStream
 	 * out = new ObjectOutputStream(bos);
-	 * 
+	 *
 	 * out.writeObject(mask); out.close();
-	 * 
+	 *
 	 * // this is what is to be saved into database blob: byte[] bytes =
 	 * bos.toByteArray(); bos.close();
-	 * 
+	 *
 	 * return bytes; }
-	 * 
+	 *
 	 * @SuppressWarnings("unchecked") public static EnumSet<Genre>
 	 * deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
 	 * EnumSet<Genre> genres;
-	 * 
+	 *
 	 * ByteArrayInputStream bis = new ByteArrayInputStream(bytes); ObjectInputStream
 	 * in = new ObjectInputStream(bis);
-	 * 
+	 *
 	 * genres = (EnumSet<Genre>) in.readObject();
-	 * 
+	 *
 	 * in.close(); bis.close();
-	 * 
+	 *
 	 * return genres; }
 	 */
 
@@ -281,7 +281,7 @@ public final class Utils {
 			}
 
 			@Override public Object getBean() { return null; }
-			
+
 			@Override public void addListener(ChangeListener<? super Button> listener) { }
 			@Override public void removeListener(ChangeListener<? super Button> listener) { }
 
