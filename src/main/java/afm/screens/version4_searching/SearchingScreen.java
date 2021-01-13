@@ -150,7 +150,7 @@ public class SearchingScreen extends Pane {
 					circles.forEach(c -> c.setOpacity(1));
 
 					while (!stopBlinking) {
-						Platform.runLater(() -> circles.forEach(c -> c.setOpacity(opacity)));
+						circles.forEach(c -> c.setOpacity(opacity));
 
 						// If dimming, decrement opacity
 						if (dim)
@@ -163,7 +163,7 @@ public class SearchingScreen extends Pane {
 						if (opacity > 1 || opacity < 0)
 							dim = !dim;
 
-						sleep(70);
+						sleep(85);
 					}
 
 					return null;
