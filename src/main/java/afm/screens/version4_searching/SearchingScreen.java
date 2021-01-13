@@ -197,52 +197,48 @@ public class SearchingScreen extends Pane {
 				@Override
 				protected Void call() throws Exception {
 					          /* Position, opacity of each circle*/
-					final HashMap<Integer, Double> circleMap = new HashMap<>();
+					HashMap<Integer, Double> circleMap = new HashMap<>();
+					
+					IntStream.range(0, size)
+							 .forEach(i -> circleMap.put(i, 0d));
 
+					final int right = (peak >= size - 1) ? 0 : peak + 1;
+					final int left = (peak <= 0) ? size - 1 : peak - 1;
+
+					circleMap.put(peak, 1d);
+					circleMap.put(left, 0.9);
+					circleMap.put(right, 0.9);
+
+					// left fading circles from peak
+					int leftPos = (left <= 0) ? size - 1 : left - 1;
+					double opacity = 0.65;
+					for (int i = 0; i < 2; i++) {
+						circleMap.put(leftPos, opacity);
+
+						opacity -= 0.3;
+						leftPos = (leftPos <= 0) ? size - 1 : leftPos - 1;
+					}
+
+					//right fading circles from peak
+					int rightPos = (right >= size - 1) ? 0 : right + 1;
+					opacity = 0.65;
+					for (int i = 0; i < 2; i++) {
+						circleMap.put(rightPos, opacity);
+
+						opacity -= 0.3;
+						rightPos = (rightPos >= size - 1) ? 0 : rightPos + 1;
+					}
+
+					Platform.runLater(() -> {
+						circleMap.entrySet().forEach(entry ->
+							circles.get(entry.getKey()).setOpacity(entry.getValue())
+						);
+					});
+
+					sleep(130);
+					// Move the circle at the end to the start, imitating a cycle
 					while (!stopLoading) {
-
-						/* at the start of each iteration, 'set' each circle's
-						   opacity to 0 */
-						IntStream.range(0, size)
-								 .forEach(i -> circleMap.put(i, 0d));
-
-						final int right = (peak >= size - 1) ? 0 : peak + 1;
-						final int left = (peak <= 0) ? size - 1 : peak - 1;
-
-						circleMap.put(peak, 1d);
-						circleMap.put(left, 0.9);
-						circleMap.put(right, 0.9);
-
-						// left fading circles from peak
-						int leftPos = (left <= 0) ? size - 1 : left - 1;
-						double opacity = 0.65;
-						for (int i = 0; i < 2; i++) {
-							circleMap.put(leftPos, opacity);
-
-							opacity -= 0.3;
-							leftPos = (leftPos <= 0) ? size - 1 : leftPos - 1;
-						}
-
-						//right fading circles from peak
-						int rightPos = (right >= size - 1) ? 0 : right + 1;
-						opacity = 0.65;
-						for (int i = 0; i < 2; i++) {
-							circleMap.put(rightPos, opacity);
-
-							opacity -= 0.3;
-							rightPos = (rightPos >= size - 1) ? 0 : rightPos + 1;
-						}
-
-						peak++;
-						peak %= size;	// solve any overflow
-
-						// Actually set opacity for every circle
-						Platform.runLater(() -> {
-							circleMap.entrySet().forEach(entry ->
-								circles.get(entry.getKey()).setOpacity(entry.getValue())
-							);
-						});
-
+						Platform.runLater(() -> circles.add(0, circles.remove(size-1)));
 						sleep(130);
 					}
 
