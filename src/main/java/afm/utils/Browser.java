@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+
 import com.sun.javafx.PlatformUtil;
 
 public class Browser {
@@ -16,7 +18,7 @@ public class Browser {
 	// see https://stackoverflow.com/a/18509384
 	public static boolean open(String url) {
 		boolean opened = false;
-
+		
 		if (PlatformUtil.isMac()) {
 			opened = openMac(url);
 		} else {
@@ -86,7 +88,6 @@ public class Browser {
 				return true;
 			}
 		} catch (IOException io) {
-			return false;
 		}
 		return false;
 	}
