@@ -159,7 +159,7 @@ public class SearchingScreen extends Pane {
 						else
 							opacity += step;
 
-						// Stop dimming/stop lighting up
+						// Stop lighting up /stop dimming
 						if (opacity > 1 || opacity < 0)
 							dim = !dim;
 
