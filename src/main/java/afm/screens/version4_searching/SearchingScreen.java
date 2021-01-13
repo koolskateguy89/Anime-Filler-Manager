@@ -233,10 +233,9 @@ public class SearchingScreen extends Pane {
 						circleMap.entrySet().forEach(entry ->
 							circles.get(entry.getKey()).setOpacity(entry.getValue())
 						);
+						circleMap.clear();
 					});
 					
-					circleMap.clear();
-
 					sleep(130);
 					// Move the circle at the end to the start, imitating a cycle
 					while (!stopLoading) {
