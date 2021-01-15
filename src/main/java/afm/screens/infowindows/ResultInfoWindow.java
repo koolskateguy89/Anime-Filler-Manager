@@ -11,10 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class ResultInfoWindow extends InfoWindow {
 
@@ -31,19 +27,8 @@ public class ResultInfoWindow extends InfoWindow {
 	private final Button TWbtn;
 
 	@FXML
-	private ImageView imageView;
-
-	@FXML
-	private TextArea infoTextArea;
-
-	@FXML
-	private TextField totalEpField;
-
-	@FXML
-	private Button fillerBtn;
-
-	@FXML
 	private Button myListBtn;
+
 	@FXML
 	private Button toWatchBtn;
 
@@ -69,19 +54,6 @@ public class ResultInfoWindow extends InfoWindow {
 		}
 
 		setTitle("Info: "+anime.getName());
-
-		infoTextArea.setText(anime.getInfo());
-
-		imageView.setImage(anime.getImage());
-
-		// undeterminable number of episodes / not finished anime
-		if (anime.getEpisodes() == 0 || anime.getEpisodes() == Anime.NOT_FINISHED)
-			totalEpField.setText("Not finished");
-		else
-			totalEpField.setText(Integer.toString(anime.getEpisodes()));
-
-		if (anime.getFillers().isEmpty())
-			fillerBtn.setVisible(false);
 
 		super.afterInitialize();
 	}

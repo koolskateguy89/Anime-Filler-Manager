@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -49,9 +51,23 @@ public abstract class InfoWindow extends Stage {
 
 	protected final Anime anime;
 
-	@FXML protected Button urlBtn;
+	@FXML
+	protected ImageView imageView;
 
-	@FXML protected Button browserBtn;
+	@FXML
+	protected TextArea infoTextArea;
+
+	@FXML
+	protected Button urlBtn;
+
+	@FXML
+	protected Button browserBtn;
+
+	@FXML
+	private TextField totalEpField;
+
+	@FXML
+	protected Button fillerBtn;
 
 	protected InfoWindow(Anime anime) {
 		this.anime = anime;
@@ -59,18 +75,37 @@ public abstract class InfoWindow extends Stage {
 	}
 
 	protected void afterInitialize() {
-		// If the anime does not have a URL, hide URL button
-		if (urlBtn != null && anime != null && anime.getURL() == null)
-			urlBtn.setVisible(false);
-
 		getIcons().add(new Image("icons/InfoIcon.png"));
 
 		requestFocus();
 		setOnCloseRequest(event -> closeWindow(null));
 		centerOnScreen();
+
+		// if anime != null, totalEpField, fillerBtn, etc. will not be null
+		if (anime == null)
+			return;
+
+		// If the anime does not have a URL, hide URL button
+		if (anime.getURL() == null)
+			urlBtn.setVisible(false);
+
+		int eps = anime.getEpisodes();
+		// not finished anime / undeterminable number of episodes
+		if (eps == Anime.NOT_FINISHED || eps == 0)
+			totalEpField.setText("Not finished");
+		else
+			totalEpField.setText(Integer.toString(eps));
+
+		if (anime.getFillers().isEmpty())
+			fillerBtn.setVisible(false);
+
+		infoTextArea.setText(anime.getInfo());
+
+		imageView.setImage(anime.getImage());
 	}
 
-	@FXML void openFillers(ActionEvent event) {
+	@FXML
+	void openFillers(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 
 		alert.setTitle("Filler episodes for: " + anime.getName());
@@ -82,23 +117,27 @@ public abstract class InfoWindow extends Stage {
 		alert.showAndWait();
 	}
 
-	@FXML void remove(ActionEvent event) {
+	@FXML
+	void remove(ActionEvent event) {
 		MyList.remove(anime);
 		ToWatch.remove(anime);
 		closeWindow(null);
-    }
+	}
 
-	@FXML void copyURL(ActionEvent event) {
+	@FXML
+	void copyURL(ActionEvent event) {
 		Utils.copyToClipboard(anime.getURL());
 		NotificationFactory.showInfoNotification("Copied URL to clipboard!");
 	}
 
-	@FXML void copyName(ActionEvent event) {
+	@FXML
+	void copyName(ActionEvent event) {
 		Utils.copyToClipboard(anime.getName());
 		NotificationFactory.showInfoNotification("Copied name to clipboard!");
 	}
 
-	@FXML void openBrowser(ActionEvent event) {
+	@FXML
+	void openBrowser(ActionEvent event) {
 		String url = anime.getURL();
 		if (url == null) return;
 
@@ -106,12 +145,14 @@ public abstract class InfoWindow extends Stage {
 		Browser.open(url);
 	}
 
-	@FXML void closeWindow(ActionEvent event) {
+	@FXML
+	void closeWindow(ActionEvent event) {
 		removeWindow(this);
 		close();
 	}
 
-	@FXML void openImage(MouseEvent event) {
+	@FXML
+	void openImage(MouseEvent event) {
 		final ImageView v = (ImageView)event.getSource();
 		final Image img = v.getImage();
 		if (img == null)

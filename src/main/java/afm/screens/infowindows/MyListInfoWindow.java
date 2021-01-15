@@ -11,10 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 // Refreshing of MyList table is done in MyList.add(Anime)
 public class MyListInfoWindow extends InfoWindow {
@@ -30,19 +27,7 @@ public class MyListInfoWindow extends InfoWindow {
 	private final Button infoBtn;
 
 	@FXML
-	private ImageView imageView;
-
-	@FXML
-	private TextArea infoTextArea;
-
-	@FXML
 	private TextField currEpField;
-
-	@FXML
-	private TextField totalEpField;
-
-	@FXML
-	private Button fillerBtn;
 
 	private MyListInfoWindow(Anime a, Button infoBtn) throws IOException {
 		super(a);
@@ -58,25 +43,6 @@ public class MyListInfoWindow extends InfoWindow {
 	@FXML
 	void initialize() {
 		setTitle("Info: "+anime.getName());
-
-		// don't check if null as null strings are made empty strings
-		infoTextArea.setText(anime.getInfo());
-
-		imageView.setImage(anime.getImage());
-
-		// anime is not finished (== -1) or episode number is undeterminable (== 0)
-		int eps = anime.getEpisodes();
-		if (eps < 1)
-			totalEpField.setText("Not finished");
-		else
-			totalEpField.setText(Integer.toString(anime.getEpisodes()));
-
-		if (anime.getFillers().isEmpty())
-			fillerBtn.setVisible(false);
-
-		if (anime.getURL() == null)
-			browserBtn.setVisible(false);
-
 
 		currEpField.setText(Integer.toString(anime.getCurrEp()));
 
