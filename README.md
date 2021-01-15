@@ -3,6 +3,20 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e43cf0251bdf4f49aae15f7e82808a01)](https://www.codacy.com/gh/koolskateguy89/Anime-Filler-Manager/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=koolskateguy89/Anime-Filler-Manager&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/774d8a80335d28beb533/maintainability)](https://codeclimate.com/github/koolskateguy89/Anime-Filler-Manager/maintainability)
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Built With](#built-with)
+- [How Does It Work?](#how-does-it-work?)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installing](#installing)
+    - [Building and running using Maven](#building-and-running-using-maven)
+- [Important notes](#important-things-to-know-when-running)
+- [License](#license)
+
+# Introduction
+
 This is for my IB CS IA
 <sub><sup>
 Currently sitting on 5337 lines
@@ -16,6 +30,18 @@ Anime Filler Manager is a Java application to search for anime from
 <sub><sup><sub><sup>
 omg I should have called this MyFillerList
 </sup></sub></sup></sub>
+
+## Built With
+
+- [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
+- [Maven](https://maven.apache.org/) - Project Management
+- [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
+    - [FXML](https://en.wikipedia.org/wiki/FXML) - GUI Development
+- [SQLite](https://www.sqlite.org/index.html) - Database Management System
+
+## How does it work?
+
+This application mainly uses [web scraping](https://jsoup.org/) to enable you to find the anime of your dreams and to find out which episodes are not worth watching. It also employs [database management](https://github.com/xerial/sqlite-jdbc) to be able to store the anime you're currently watching/want to watch.
 
 ## Getting Started
 
@@ -37,7 +63,7 @@ git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 
 (p.s. if using Eclipse, you can import this as a Java Project, but you will probably have to configure the project build path to include all the prerequisites)
 
-### Build and run using Maven
+### Building and running using Maven
 
 To build:
 1.  Run the command `mvn package` in the repository folder
@@ -50,18 +76,6 @@ To run:\
 
 1. To search for an anime, you HAVE to have selected an anime
 2. More coming soon...
-
-## Built With
-
-- [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
-- [Maven](https://maven.apache.org/) - Project Management
-- [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
-    - [FXML](https://en.wikipedia.org/wiki/FXML) - GUI Development
-- [SQLite](https://www.sqlite.org/index.html) - Database Management System
-
-## How does it work?
-
-This application mainly uses [web scraping](https://jsoup.org/) to enable you to find the anime of your dreams and to find out which episodes are not worth watching. It also employs [database management](https://github.com/xerial/sqlite-jdbc) to be able to store the anime you're currently watching/want to watch.
 
 ## License
 
