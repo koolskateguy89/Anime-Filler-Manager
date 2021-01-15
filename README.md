@@ -18,12 +18,12 @@ omg I should have called this MyFillerList
 
 ### Prerequisites
 
--  [Java 15](https://www.oracle.com/uk/java/technologies/javase-downloads.html) (with preview features)
--  [JavaFX 15]()
--  [ControlsFX]()
--  [Guava]()
--  [jsoup]()
--  [SQLite JDBC Driver]()
+-  [Java 14](https://www.oracle.com/uk/java/technologies/javase-downloads.html) (with preview features)
+-  [JavaFX 15](https://openjfx.io/)
+-  [ControlsFX 11.0.3](https://github.com/controlsfx/controlsfx)
+-  [Guava 30.1-jre](https://github.com/google/guava)
+-  [jsoup 1.13.1](https://jsoup.org/)
+-  [SQLite JDBC Driver 3.34.0](https://github.com/xerial/sqlite-jdbc)
 
 ### Installing
 
@@ -32,7 +32,7 @@ Clone this repository:
 git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 ```
 
-(p.s. if using Eclipse, you can import this as a Java Project and run it through there)
+(p.s. if using Eclipse, you can import this as a Java Project, but you will probably have to configure the project build path to include all the prerequisites)
 
 ### Build and run using Maven
 
@@ -43,13 +43,16 @@ To run:\
 3.  Run the command `java -jar --enable-preview "AFM.jar"`\
     OR double click executable JAR `[REPO_FOLDER]/target/AFM.jar`
 
-
 ## Built With
 
-- JDK 15
+-  [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language
+-  [Maven](https://maven.apache.org/) - Project Management
+-  [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
+-  [SQLite](https://www.sqlite.org/index.html) - Database Management System
 
 ## How does it work?
 
+This application mainly uses web scraping to enable you to find the anime of your dreams and to find out which episodes are not worth watching. It also employs database management to be able to store the anime you're currently watching/want to watch.
 
 ## License
 
