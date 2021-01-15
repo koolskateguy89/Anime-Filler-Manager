@@ -44,8 +44,7 @@ To build:
 
 To run:\
 2.  Open the target directory e.g. `cd target`
-3.  Run the command `java -jar --enable-preview "AFM.jar"`\
->>>>OR double click executable JAR `[REPO_FOLDER]/target/AFM.jar`
+3.  Run the command `java -jar --enable-preview "AFM.jar"` OR double click executable at `[REPO_FOLDER]/target/AFM.jar`
 
 ## Built With
 
