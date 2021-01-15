@@ -30,6 +30,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+import com.google.common.math.DoubleMath;
+
 import afm.anime.Anime;
 import afm.anime.Genre;
 
@@ -154,7 +156,7 @@ public final class Utils {
 			return true;
 		} catch (NumberFormatException nfe) {
 			try {
-				return Double.parseDouble(s) % 1 == 0;
+				return DoubleMath.isMathematicalInteger(Double.parseDouble(s));
 			} catch (NumberFormatException nfe1) {
 				return false;
 			}
@@ -319,9 +321,10 @@ public final class Utils {
 	// Stop user from typing any characters that aren't numeric
 	public static ChangeListener<String> onlyAllowIntegersListener() {
 		return (obs, oldVal, newVal) -> {
-			if (!newVal.equals("") && !isInteger(newVal)) {
+			if (newVal.equals(""))
+				((StringProperty) obs).setValue("0");
+			else if (!isInteger(newVal))
 				((StringProperty) obs).setValue(oldVal);
-			}
 		};
 	}
 
