@@ -163,6 +163,15 @@ public final class Utils {
 		}
 	}
 
+	public static boolean isStrictInteger(String s) {
+		try {
+			Integer.parseInt(s);
+			return true;
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+	}
+
 	public static void sleep(long millis) {
 		try {
 			Thread.sleep(millis);
@@ -323,7 +332,7 @@ public final class Utils {
 		return (obs, oldVal, newVal) -> {
 			if (newVal.equals(""))
 				((StringProperty) obs).setValue("0");
-			else if (!isInteger(newVal))
+			else if (!isStrictInteger(newVal))
 				((StringProperty) obs).setValue(oldVal);
 		};
 	}

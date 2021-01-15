@@ -50,16 +50,16 @@ public class MyListInfoWindow extends InfoWindow {
 		// current episode of the anime
 		// and only allow them to enter numbers in currEpField
 		currEpField.textProperty().addListener((obs, oldVal, newVal) -> {
-			if (Utils.isInteger(newVal)) {
+			StringProperty s = (StringProperty)obs;
+			if (Utils.isStrictInteger(newVal)) {
 				int newEps = Integer.parseInt(newVal);
     			anime.setCurrEp(newEps);
     			MyList.update(anime);
-    			((StringProperty)obs).setValue(Integer.toString(anime.getCurrEp()));
+    			s.setValue(Integer.toString(anime.getCurrEp()));
     			return;
+			} else if (!newVal.equals("")) {
+				s.setValue(oldVal);
 			}
-
-			if (!newVal.equals(""))
-				((StringProperty)obs).setValue(oldVal);
 		});
 
 		super.afterInitialize();
