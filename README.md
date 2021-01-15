@@ -19,7 +19,7 @@
 
 This is for my IB CS IA
 <sub><sup>
-Currently sitting on 5337 lines
+Currently sitting on 5268 lines & 3720 loc (lines of code)
 </sup></sub>
 
 Anime Filler Manager is a Java application to search for anime from
