@@ -3,14 +3,6 @@ package afm.screens.infowindows;
 import java.io.IOException;
 import java.util.EnumMap;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-
-import afm.anime.Genre;
-import afm.screens.Menu;
-import afm.utils.Handler;
-import afm.utils.Utils;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -20,6 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.InputEvent;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+
+import afm.anime.Genre;
+import afm.screens.Menu;
+import afm.utils.Handler;
+import afm.utils.Utils;
 
 
 public class GenreInfoWindow extends InfoWindow {
