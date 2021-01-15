@@ -31,6 +31,7 @@ import afm.screens.version8_custom.CustomScreen;
 import afm.utils.Handler;
 import afm.utils.OnClose;
 
+// https://github.com/koolskateguy89/Anime-Filler-Manager
 public class Main extends Application {
 
 	final Handler h = new Handler(this);
