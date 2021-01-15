@@ -59,8 +59,6 @@ public class MyListInfoWindow extends InfoWindow {
 	void initialize() {
 		setTitle("Info: "+anime.getName());
 
-		getIcons().add(new Image("icons/InfoIcon.png"));
-
 		// don't check if null as null strings are made empty strings
 		infoTextArea.setText(anime.getInfo());
 
@@ -82,7 +80,6 @@ public class MyListInfoWindow extends InfoWindow {
 
 		currEpField.setText(Integer.toString(anime.getCurrEp()));
 
-
 		// when user changes what is contained in currEpField, change the
 		// current episode of the anime
 		// and only allow them to enter numbers in currEpField
@@ -100,10 +97,6 @@ public class MyListInfoWindow extends InfoWindow {
 		});
 
 		super.afterInitialize();
-
-		requestFocus();
-		setOnCloseRequest(event -> closeWindow(null));
-		centerOnScreen();
 	}
 
 	@FXML

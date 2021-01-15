@@ -62,6 +62,12 @@ public abstract class InfoWindow extends Stage {
 		// If the anime does not have a URL, hide URL button
 		if (urlBtn != null && anime != null && anime.getURL() == null)
 			urlBtn.setVisible(false);
+
+		getIcons().add(new Image("icons/InfoIcon.png"));
+
+		requestFocus();
+		setOnCloseRequest(event -> closeWindow(null));
+		centerOnScreen();
 	}
 
 	@FXML void openFillers(ActionEvent event) {

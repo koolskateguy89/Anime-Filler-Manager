@@ -62,6 +62,7 @@ public class ResultInfoWindow extends InfoWindow {
 
 	@FXML
 	void initialize() {
+		// Don't allow the anime to be moved if already present
 		if (MyList.contains(anime) || ToWatch.contains(anime)) {
 			myListBtn.setVisible(false);
 			toWatchBtn.setVisible(false);
@@ -69,16 +70,12 @@ public class ResultInfoWindow extends InfoWindow {
 
 		setTitle("Info: "+anime.getName());
 
-		getIcons().add(new Image("icons/InfoIcon.png"));
-
-		// shouldn't check if null as null strings are made empty strings
 		infoTextArea.setText(anime.getInfo());
 
-		// shouldn't need to check if null as default is null (I think)
 		imageView.setImage(anime.getImage());
 
-		// == Anime.NOT_FINISHED or == 0 (undeterminable)
-		if (anime.getEpisodes() < 1)
+		// undeterminable number of episodes / not finished anime
+		if (anime.getEpisodes() == 0 || anime.getEpisodes() == Anime.NOT_FINISHED)
 			totalEpField.setText("Not finished");
 		else
 			totalEpField.setText(Integer.toString(anime.getEpisodes()));
@@ -87,10 +84,6 @@ public class ResultInfoWindow extends InfoWindow {
 			fillerBtn.setVisible(false);
 
 		super.afterInitialize();
-
-		requestFocus();
-		setOnCloseRequest(event -> closeWindow(null));
-		centerOnScreen();
 	}
 
 	// these also move it to MyList/ToWatch if it was in the other

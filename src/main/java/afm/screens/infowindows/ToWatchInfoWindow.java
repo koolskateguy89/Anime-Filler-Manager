@@ -50,8 +50,6 @@ public class ToWatchInfoWindow extends InfoWindow {
 	@FXML void initialize() {
 		setTitle("Info: " + anime.getName());
 
-		getIcons().add(new Image("icons/InfoIcon.png"));
-
 		// don't need to check if null as null strings are made empty strings
 		infoTextArea.setText(anime.getInfo());
 
@@ -71,10 +69,6 @@ public class ToWatchInfoWindow extends InfoWindow {
 			browserBtn.setVisible(false);
 
 		super.afterInitialize();
-
-		requestFocus();
-		setOnCloseRequest(event -> closeWindow(null));
-		centerOnScreen();
 	}
 
 	@FXML void move(ActionEvent event) {

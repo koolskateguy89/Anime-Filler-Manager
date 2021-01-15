@@ -168,8 +168,6 @@ public class GenreInfoWindow extends InfoWindow {
 	void initialize() {
 		setTitle("Genre Expanations");
 
-		getIcons().add(new Image("icons/InfoIcon.png"));
-
 		// add all Genres into the ComboBox
 		genreCombo.getItems().addAll(Genre.values());
 
@@ -183,9 +181,7 @@ public class GenreInfoWindow extends InfoWindow {
 			}
 		});
 
-		requestFocus();
-		setOnCloseRequest(event -> closeWindow(null));
-		centerOnScreen();
+		super.afterInitialize();
 	}
 
 	@Override @FXML
