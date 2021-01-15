@@ -15,7 +15,7 @@
 - [Important notes](#important-things-to-know-when-running)
 - [License](#license)
 
-# Introduction
+## Introduction
 
 This is for my IB CS IA
 <sub><sup>
