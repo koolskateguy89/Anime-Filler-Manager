@@ -2,8 +2,6 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- TODO: rename JavaFX 14 user lib to JavaFX15 -->
-
     <groupId>koolskateguy89</groupId>
     <artifactId>Anime-Filler-Manager</artifactId>
     <packaging>jar</packaging>
