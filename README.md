@@ -42,10 +42,10 @@ git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 To build:
 1.  Run the command `mvn package` in the repository folder
 
-To run:
+To run:\
 2.  Open the target directory e.g. `cd target`
 3.  Run the command `java -jar --enable-preview "AFM.jar"`\
-    OR double click executable JAR `[REPO_FOLDER]/target/AFM.jar`
+>>>>OR double click executable JAR `[REPO_FOLDER]/target/AFM.jar`
 
 ## Built With
 
