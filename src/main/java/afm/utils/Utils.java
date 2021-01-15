@@ -118,8 +118,8 @@ public final class Utils {
 
 	// see https://stackoverflow.com/a/35446009
 	public static String getFileAsString(String path) throws IOException {
-		try (InputStream in = Utils.class.getClassLoader().getResourceAsStream(path)) {
-			ByteArrayOutputStream result = new ByteArrayOutputStream();
+		try (InputStream in = Utils.class.getClassLoader().getResourceAsStream(path);
+				ByteArrayOutputStream result = new ByteArrayOutputStream()) {
 			byte[] buffer = new byte[1024];
 			int length;
 			while ((length = in.read(buffer)) != -1) {
