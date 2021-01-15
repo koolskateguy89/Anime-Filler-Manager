@@ -52,6 +52,7 @@ To run:\
 -  [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
 -  [Maven](https://maven.apache.org/) - Project Management
 -  [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
+    * [FXML](https://en.wikipedia.org/wiki/FXML) - GUI Development
 -  [SQLite](https://www.sqlite.org/index.html) - Database Management System
 
 ## How does it work?
