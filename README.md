@@ -4,14 +4,14 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/774d8a80335d28beb533/maintainability)](https://codeclimate.com/github/koolskateguy89/Anime-Filler-Manager/maintainability)
 
 This is for my IB CS IA
-<sub><sup><sub><sup>
+<sub><sup>
 Currently sitting on 5337 lines
-</sup></sub></sup></sub>
+</sup></sub>
 
-Anime Filler Manager is a Java application to search for anime from \
-[MyAnimeList](https://myanimelist.net/) \
-and find out which episodes of that anime are **filler** (unnecessary to watch), according to the amazing community-led \
-[Anime Filler List](https://www.animefillerlist.com/).
+Anime Filler Manager is a Java application to search for anime from
+ [MyAnimeList](https://myanimelist.net/)
+ and find out which episodes of that anime are **filler** (unnecessary to watch), according to the amazing community-led
+ [Anime Filler List](https://www.animefillerlist.com/).
 
 <sub><sup><sub><sup>
 omg I should have called this MyFillerList
@@ -39,16 +39,17 @@ git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 
 ### Build and run using Maven
 
-To build:\
+To build:
 1.  Run the command `mvn package` in the repository folder
-To run:\
+
+To run:
 2.  Open the target directory e.g. `cd target`
 3.  Run the command `java -jar --enable-preview "AFM.jar"`\
     OR double click executable JAR `[REPO_FOLDER]/target/AFM.jar`
 
 ## Built With
 
--  [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language
+-  [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
 -  [Maven](https://maven.apache.org/) - Project Management
 -  [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
 -  [SQLite](https://www.sqlite.org/index.html) - Database Management System
