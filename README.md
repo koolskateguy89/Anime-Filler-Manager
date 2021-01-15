@@ -46,6 +46,11 @@ To run:\
 2.  Open the target directory e.g. `cd target`
 3.  Run the command `java -jar --enable-preview "AFM.jar"` OR 'open' the executable JAR at `[REPO_FOLDER]/target/AFM.jar`
 
+## Important things to know when running
+
+1. To search for an anime, you HAVE to have selected an anime
+2. More coming soon...
+
 ## Built With
 
 - [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
