@@ -47,7 +47,7 @@ This application mainly uses [web scraping](https://jsoup.org/) to enable you to
 
 ### Prerequisites
 
-- [Java 14](https://www.oracle.com/uk/java/technologies/javase-downloads.html) (with preview features)
+- [Java 14](https://www.oracle.com/uk/java/technologies/javase-downloads.html) (with preview features enabled)
 - [JavaFX 15](https://openjfx.io/)
 - [ControlsFX 11.0.3](https://github.com/controlsfx/controlsfx)
 - [Guava 30.1-jre](https://github.com/google/guava)
