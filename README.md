@@ -4,6 +4,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/774d8a80335d28beb533/maintainability)](https://codeclimate.com/github/koolskateguy89/Anime-Filler-Manager/maintainability)
 
 This is for my IB CS IA
+<sub><sup><sub><sup>
+Currently sitting on 5337 lines
+</sup></sub></sup></sub>
 
 Anime Filler Manager is a Java application to search for anime from \
 [MyAnimeList](https://myanimelist.net/) \
@@ -52,7 +55,7 @@ To run:\
 
 ## How does it work?
 
-This application mainly uses web scraping to enable you to find the anime of your dreams and to find out which episodes are not worth watching. It also employs database management to be able to store the anime you're currently watching/want to watch.
+This application mainly uses [web scraping](https://jsoup.org/) to enable you to find the anime of your dreams and to find out which episodes are not worth watching. It also employs [database management](https://github.com/xerial/sqlite-jdbc) to be able to store the anime you're currently watching/want to watch.
 
 ## License
 
