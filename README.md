@@ -21,12 +21,12 @@ omg I should have called this MyFillerList
 
 ### Prerequisites
 
--  [Java 14](https://www.oracle.com/uk/java/technologies/javase-downloads.html) (with preview features)
--  [JavaFX 15](https://openjfx.io/)
--  [ControlsFX 11.0.3](https://github.com/controlsfx/controlsfx)
--  [Guava 30.1-jre](https://github.com/google/guava)
--  [jsoup 1.13.1](https://jsoup.org/)
--  [SQLite JDBC Driver 3.34.0](https://github.com/xerial/sqlite-jdbc)
+ - [Java 14](https://www.oracle.com/uk/java/technologies/javase-downloads.html) (with preview features)
+ - [JavaFX 15](https://openjfx.io/)
+ - [ControlsFX 11.0.3](https://github.com/controlsfx/controlsfx)
+- [Guava 30.1-jre](https://github.com/google/guava)
+- [jsoup 1.13.1](https://jsoup.org/)
+- [SQLite JDBC Driver 3.34.0](https://github.com/xerial/sqlite-jdbc)
 
 ### Installing
 
@@ -48,11 +48,11 @@ To run:\
 
 ## Built With
 
--  [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
--  [Maven](https://maven.apache.org/) - Project Management
--  [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
-    * [FXML](https://en.wikipedia.org/wiki/FXML) - GUI Development
--  [SQLite](https://www.sqlite.org/index.html) - Database Management System
+ - [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
+ - [Maven](https://maven.apache.org/) - Project Management
+ - [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
+    - [FXML](https://en.wikipedia.org/wiki/FXML) - GUI Development
+ - [SQLite](https://www.sqlite.org/index.html) - Database Management System
 
 ## How does it work?
 
