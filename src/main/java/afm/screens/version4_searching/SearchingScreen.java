@@ -185,7 +185,8 @@ public class SearchingScreen extends Pane {
 		 * 2 after peakflat (left&right) are to be fading out,
 		 * rest invisible
 		 *
-		 * All ternary operators below are to solve over/underflow
+		 * All ternary operators below are to solve over/underflow.
+		 * The way it is, I can change size however I want and it should work.
 		 */
 		@Override
 		protected Task<Void> createTask() {
@@ -198,7 +199,7 @@ public class SearchingScreen extends Pane {
 				protected Void call() throws Exception {
 					          /* Position, opacity of each circle*/
 					HashMap<Integer, Double> circleMap = new HashMap<>();
-					
+
 					IntStream.range(0, size)
 							 .forEach(i -> circleMap.put(i, 0d));
 
@@ -235,7 +236,7 @@ public class SearchingScreen extends Pane {
 						);
 						circleMap.clear();
 					});
-					
+
 					sleep(130);
 					// Move the circle at the end to the start, imitating a cycle
 					while (!stopLoading) {

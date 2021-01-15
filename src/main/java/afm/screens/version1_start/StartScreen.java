@@ -191,7 +191,7 @@ public class StartScreen extends Pane {
 				else if (loadLbl.getOpacity() <= 0)
 					fadeOut = false;
 
-				Utils.sleep(60);
+				sleep(60);
 			}
 		});
 
