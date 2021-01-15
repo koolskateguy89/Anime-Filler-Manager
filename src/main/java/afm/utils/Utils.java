@@ -330,7 +330,7 @@ public final class Utils {
 	// Stop user from typing any characters that aren't numeric
 	public static ChangeListener<String> onlyAllowIntegersListener() {
 		return (obs, oldVal, newVal) -> {
-			if (newVal.equals(""))
+			if (newVal.isEmpty())
 				((StringProperty) obs).setValue("0");
 			else if (!isStrictInteger(newVal))
 				((StringProperty) obs).setValue(oldVal);

@@ -57,7 +57,7 @@ public class MyListInfoWindow extends InfoWindow {
     			MyList.update(anime);
     			s.setValue(Integer.toString(anime.getCurrEp()));
     			return;
-			} else if (!newVal.equals("")) {
+			} else if (!newVal.isEmpty()) {
 				s.setValue(oldVal);
 			}
 		});
