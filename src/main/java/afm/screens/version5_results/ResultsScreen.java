@@ -48,7 +48,7 @@ public class ResultsScreen extends Pane {
 		tableItems.addAll(results);
 	}
 
-	@SuppressWarnings("unchecked") @FXML
+	@FXML @SuppressWarnings("unchecked")
 	private void initialize() {
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		Utils.wrapColText(nameCol);

@@ -2,7 +2,6 @@ package afm.anime;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.Closeable;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -44,7 +43,7 @@ import afm.utils.Utils;
  * 11 +fillers - String (fillers as a String)
  *
  */
-public final class Anime implements Closeable {
+public final class Anime {
 
 	//episode count
 	public static final int NOT_FINISHED = -1;
