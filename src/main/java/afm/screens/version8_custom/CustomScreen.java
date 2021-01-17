@@ -5,13 +5,6 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import afm.anime.Anime;
-import afm.anime.Genre;
-import afm.anime.Season;
-import afm.anime.Anime.AnimeBuilder;
-import afm.database.MyList;
-import afm.database.ToWatch;
-import afm.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
@@ -27,6 +20,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+
+import afm.anime.Anime;
+import afm.anime.Anime.AnimeBuilder;
+import afm.anime.Genre;
+import afm.anime.Season;
+import afm.database.MyList;
+import afm.database.ToWatch;
+import afm.utils.Utils;
 
 /*
  * A lot of things here are identical to SearchScreen

@@ -3,9 +3,6 @@ package afm.screens.version5_results;
 import java.io.IOException;
 import java.util.List;
 
-import afm.anime.Anime;
-import afm.anime.Season;
-import afm.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -13,6 +10,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+
+import afm.anime.Anime;
+import afm.anime.Season;
+import afm.utils.Utils;
 
 public class ResultsScreen extends Pane {
 

@@ -8,11 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -23,7 +23,6 @@ import afm.utils.Browser;
 import afm.utils.Handler;
 import afm.utils.NotificationFactory;
 import afm.utils.Utils;
-
 
 public abstract class InfoWindow extends Stage {
 

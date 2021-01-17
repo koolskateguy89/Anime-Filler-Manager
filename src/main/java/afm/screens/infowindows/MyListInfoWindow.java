@@ -2,16 +2,17 @@ package afm.screens.infowindows;
 
 import java.io.IOException;
 
-import afm.anime.Anime;
-import afm.database.MyList;
-import afm.database.ToWatch;
-import afm.utils.Utils;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
+import afm.anime.Anime;
+import afm.database.MyList;
+import afm.database.ToWatch;
+import afm.utils.Utils;
 
 // Refreshing of MyList table is done in MyList.add(Anime)
 public class MyListInfoWindow extends InfoWindow {

@@ -2,13 +2,14 @@ package afm.screens.version2_welcome;
 
 import java.io.IOException;
 
-import afm.Main;
-import afm.utils.Handler;
-import afm.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
+
+import afm.Main;
+import afm.utils.Handler;
+import afm.utils.Utils;
 
 // now also being used as a Home Screen
 public class WelcomeScreen extends VBox {

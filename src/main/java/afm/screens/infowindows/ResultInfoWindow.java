@@ -2,15 +2,16 @@ package afm.screens.infowindows;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+
 import afm.anime.Anime;
 import afm.database.MyList;
 import afm.database.ToWatch;
 import afm.screens.Menu;
 import afm.utils.Utils;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 
 public class ResultInfoWindow extends InfoWindow {
 

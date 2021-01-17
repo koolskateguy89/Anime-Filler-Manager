@@ -2,14 +2,15 @@ package afm.screens.infowindows;
 
 import java.io.IOException;
 
-import afm.anime.Anime;
-import afm.database.MyList;
-import afm.database.ToWatch;
-import afm.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+
+import afm.anime.Anime;
+import afm.database.MyList;
+import afm.database.ToWatch;
+import afm.utils.Utils;
 
 //Refreshing of ToWatch table is done in ToWatch.add(Anime)
 public class ToWatchInfoWindow extends InfoWindow {

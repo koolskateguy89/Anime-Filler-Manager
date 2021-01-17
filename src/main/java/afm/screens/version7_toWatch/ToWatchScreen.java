@@ -2,10 +2,6 @@ package afm.screens.version7_toWatch;
 
 import java.io.IOException;
 
-import afm.anime.Anime;
-import afm.anime.Season;
-import afm.database.ToWatch;
-import afm.utils.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +10,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+
+import afm.anime.Anime;
+import afm.anime.Season;
+import afm.database.ToWatch;
+import afm.utils.Utils;
 
 public class ToWatchScreen extends Pane {
 

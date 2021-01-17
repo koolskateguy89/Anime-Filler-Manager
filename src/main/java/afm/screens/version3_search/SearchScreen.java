@@ -4,12 +4,7 @@ import java.io.IOException;
 import java.util.EnumSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import afm.anime.Genre;
-import afm.anime.Search;
-import afm.anime.Season;
-import afm.screens.infowindows.GenreInfoWindow;
-import afm.utils.Handler;
-import afm.utils.Utils;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
@@ -26,6 +21,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+
+import afm.anime.Genre;
+import afm.anime.Search;
+import afm.anime.Season;
+import afm.screens.infowindows.GenreInfoWindow;
+import afm.utils.Handler;
+import afm.utils.Utils;
 
 public final class SearchScreen extends GridPane {
 
