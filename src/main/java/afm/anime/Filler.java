@@ -117,17 +117,7 @@ public class Filler implements Comparable<Filler> {
 				lastWasNonAlpha = true;
 			}
 		}
-		/*
-		for (char ch : s.toCharArray()) {
-			if (Character.isLetterOrDigit(ch)) {
-				sb.append(ch);
-				lastWasNonAlpha = false;
-			} else if (!lastWasNonAlpha) {
-				sb.append(replace);
-				lastWasNonAlpha = true;
-			}
-		}
-		*/
+
 		return sb.toString();
 	}
 
@@ -138,14 +128,6 @@ public class Filler implements Comparable<Filler> {
 	private Filler(int start, int end) {
 		this.start = start;
 		this.end = end;
-	}
-
-//	private Filler(int episode) {
-//		this(episode, episode);
-//	}
-
-	public int length() {
-		return end - start + 1;
 	}
 
 	@Override
