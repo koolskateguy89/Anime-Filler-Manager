@@ -16,13 +16,6 @@ public class Filler implements Comparable<Filler> {
 					  /* Start ,  End  , Object */
 	private static final HashBasedTable<Integer, Integer, Filler> CACHE = HashBasedTable.create();
 
-//	// load some values into cache
-//	static {
-//		for (int i = 5; i <= 200; i++) {
-//			CACHE.put(i, i, new Filler(i));
-//		}
-//	}
-
 	// For one episode filler
 	public static Filler of(int episode) {
 		return of(episode, episode);
