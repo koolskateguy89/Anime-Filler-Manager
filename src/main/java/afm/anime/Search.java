@@ -38,7 +38,7 @@ import afm.utils.Utils;
  *
  *  The removeBecause[X] methods in this are in order of how they are used.
  */
-public class Search {
+public final class Search {
 
 	/* search filters */
 	private String name;

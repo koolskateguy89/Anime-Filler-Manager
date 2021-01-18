@@ -9,7 +9,7 @@ public final class Season implements Comparable<Season> {
 
 	public static final int SPRING = 0, SUMMER = 1, FALL = 2, WINTER = 3;
 	// [last 2 digits of year][season(spring/...)]
-	private static Season[][] seasons = new Season[100][4];
+	private static final Season[][] seasons = new Season[100][4];
 
 	// For edge case anime that have "??? ??, ????" as their date
 	public static final Season UNDEF = new Season("undef", -1);
@@ -33,7 +33,7 @@ public final class Season implements Comparable<Season> {
 	 ***********************************************/
 
 	// not used atm >:(
-	public static final Season[] values() {
+	public static Season[] values() {
 		// Size should be equal to number of years * number of seasons
 		Season[] values = new Season[(Utils.getCurrentYear()-1999+1)*4];
 		int i = 0;
@@ -51,18 +51,17 @@ public final class Season implements Comparable<Season> {
 	}
 
 	// return the String for a season given its int
-	private static final String getSeasonFromInt(int num) {
-		return
-			switch (num) {
-				case SPRING -> "Spring";
-				case SUMMER -> "Summer";
-				case FALL -> "Fall";
-				default -> "Winter";
-			};
+	private static String getSeasonFromInt(int num) {
+		return switch (num) {
+			case SPRING -> "Spring";
+			case SUMMER -> "Summer";
+			case FALL -> "Fall";
+			default -> "Winter";
+		};
 	}
 
 	// returns a Season given its toString() output as input
-	public static final Season getSeasonFromToString(String str) {
+	public static Season getSeasonFromToString(String str) {
 		if (str == null)
 			return null;
 
@@ -75,19 +74,18 @@ public final class Season implements Comparable<Season> {
 	}
 
 	// helper for sorting and parsing
-	private static final int getSeasonInt(String season) {
-		return
-				switch (season) {
-					case "Spring" -> SPRING;
-					case "Summer" -> SUMMER;
-					case "Fall" -> FALL;
-					default -> WINTER;
-				};
+	private static int getSeasonInt(String season) {
+		return switch (season) {
+			case "Spring" -> SPRING;
+			case "Summer" -> SUMMER;
+			case "Fall" -> FALL;
+			default -> WINTER;
+		};
 	}
 
 	// returns a Season given the season(String e.g. Winter) and year
 	// used in search & custom screen
-	public static final Season getSeason(String season, int year) {
+	public static Season getSeason(String season, int year) {
 		try {
 			return seasons[year % 100][Season.getSeasonInt(season)];
 		} catch (IndexOutOfBoundsException e) {
@@ -95,7 +93,7 @@ public final class Season implements Comparable<Season> {
 		}
 	}
 
-	public static final Season getSeason(int szn, int year) {
+	public static Season getSeason(int szn, int year) {
 		try {
 			return seasons[year % 100][szn];
 		} catch (IndexOutOfBoundsException e) {
@@ -103,8 +101,10 @@ public final class Season implements Comparable<Season> {
 		}
 	}
 
-	/** Helper for parsing web scraped data, see {@link #parseSeasonFromMALDate(String) parseSeasonFromMALDate} below */
-	private static final int getSznFromMonth(String month) {
+	/** Helper for parsing web scraped data, see {@link #parseSeasonFromMALDate(String)
+	 * parseSeasonFromMALDate} below
+	 */
+	private static int getSznFromMonth(String month) {
 		return
 				switch (month) {
 					case "Dec", "Jan", "Feb" -> WINTER;
@@ -134,8 +134,8 @@ public final class Season implements Comparable<Season> {
 
 	/* Concrete implementation members */
 
-	private String szn;
-	private int year;
+	private final String szn;
+	private final int year;
 
 	private Season(String s, int y) {
 		szn = s;
@@ -143,7 +143,8 @@ public final class Season implements Comparable<Season> {
 	}
 
 	@SuppressWarnings("preview")
-	@Override public final boolean equals(Object o) {
+	@Override
+	public final boolean equals(Object o) {
 		// identity check
 		if (this == o)
 			return true;
@@ -155,27 +156,21 @@ public final class Season implements Comparable<Season> {
 		return false;
 	}
 
-	@Override public final int hashCode() {
+	@Override
+	public final int hashCode() {
 		return Objects.hash(szn, year);
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		if (this.equals(UNDEF))
 			return "-";
 
 		return szn + " " + year;
 	}
 
-	public String getSeason() {
-		return szn;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	// Ascending order: negative = this before
-	@Override public int compareTo(Season other) {
+	@Override
+	public int compareTo(Season other) {
 		return (this.year != other.year) ? this.year - other.year : this.getSeasonInt() - other.getSeasonInt();
 	}
 

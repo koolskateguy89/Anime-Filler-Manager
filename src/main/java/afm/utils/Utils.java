@@ -40,10 +40,10 @@ public final class Utils {
 		throw new AssertionError("class Utils cannot be instantiated");
 	}
 
-	private static final Calendar calendar = Calendar.getInstance();
+	private static final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
 
 	public static int getCurrentYear() {
-		return calendar.get(Calendar.YEAR);
+		return CURRENT_YEAR;
 	}
 
 	// this 500ns vs regex 2000ns
