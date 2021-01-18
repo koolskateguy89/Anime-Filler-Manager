@@ -62,9 +62,6 @@ public final class Settings {
 	public static boolean nameOrder() {
 		return nameOrder;
 	}
-	public static boolean insertionOrder() {
-		return !nameOrder;
-	}
 
 	public static void invertNameOrder() {
 		nameOrder = !nameOrder;
