@@ -22,6 +22,7 @@ public enum Genre {
 	Genre() {
 		index = findIndex(this.name());
 	}
+	
 	Genre(String info) {
 		this();
 		this.info = info;
