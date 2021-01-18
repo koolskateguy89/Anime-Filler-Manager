@@ -4,7 +4,6 @@ import static afm.utils.Utils.inJar;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -113,7 +112,7 @@ public class Search {
 	}
 
 	// Scrapes the document, adding all appropriate anime to result
-	private final void scrapeDocument(Document doc) {
+	private void scrapeDocument(Document doc) {
 		Elements linkTitles = doc.select(Search.LINK_TITLE);
 
 		// 1 line each genre list, delimiter is space " "
@@ -262,7 +261,7 @@ public class Search {
 	 * Link will be in form:
 	 * https://myanimelist.net/anime/[ID]/[TITLE]
 	 */
-	private static final int parseIDfromURL(String url) {
+	private static int parseIDfromURL(String url) {
 		int start = 30;	//where ID starts
 		int end = url.indexOf('/', start+1);
 
@@ -275,7 +274,7 @@ public class Search {
 
 	// return the genres of the anime - from genreList (from MAL website)
 	// (this effectively parses the data from MAL website to a Genre set)
-	private static final EnumSet<Genre> getGenreSet(String[] genreList) {
+	private static EnumSet<Genre> getGenreSet(String[] genreList) {
 		EnumSet<Genre> genreSet = EnumSet.noneOf(Genre.class);
 
 		for (int i = 0; i < genreList.length; i++) {
@@ -321,7 +320,7 @@ public class Search {
 	/* (contains)
 	 * if user entered a name, filter out all anime that don't contain that name (ignore case)
 	 */
-	private final boolean removeBecauseName(String animeName) {
+	private boolean removeBecauseName(String animeName) {
 		return name!= null && !animeName.toLowerCase().contains(name.toLowerCase());
 	}
 
@@ -329,7 +328,7 @@ public class Search {
 	 * (pretty sure this takes O(n^2) time, yikes)
 	 * Remove all anime that don't contain all genres the user selected
 	 */
-	private final boolean removeBecauseGenres(EnumSet<Genre> genreSet) {
+	private boolean removeBecauseGenres(EnumSet<Genre> genreSet) {
 		return !genreSet.containsAll(this.genres);
 	}
 
@@ -383,21 +382,9 @@ public class Search {
 		genres.addAll(set);
 	}
 
-	public void addGenre(Genre g) {
-		genres.add(g);
-	}
-
-	public void addGenres(Collection<Genre> c) {
-		genres.addAll(c);
-	}
-
 	public void setSeasons(Set<Season> set) {
 		seasons.clear();
 		seasons.addAll(set);
-	}
-
-	public void addSeason(Season s) {
-		seasons.add(s);
 	}
 
 	public void setMinEpisodes(int n) {
