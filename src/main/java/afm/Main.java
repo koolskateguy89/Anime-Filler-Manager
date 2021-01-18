@@ -66,12 +66,13 @@ public class Main extends Application {
 	public void moveToWelcomeScreen() {
 		InfoWindow.closeAllOpenWindows();
 
-		if (welcomeScreen == null)
+		if (welcomeScreen == null) {
 			try {
 				welcomeScreen = new WelcomeScreen(h);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
 
 		normalSize();
 		scene.setRoot(welcomeScreen);
@@ -82,8 +83,7 @@ public class Main extends Application {
 	}
 
 	// Set up mainScreen variable & screenList & scene root.
-	// Changed it to return Main so welcomeScreen is more memory
-	// efficient :)
+	// Changed it to return Main so welcomeScreen can do method chaining
 	public Main initMainScreen() {
 		if (mainScreen == null || screenList == null)
 			try {
@@ -207,23 +207,6 @@ public class Main extends Application {
 			Platform.exit();
 		}
 	}
-
-	/*
-	private static void onClose() {
-		// close all open windows as well as this window
-		InfoWindow.closeAllOpenWindows();
-
-		// save runtime MyList & ToWatch into database
-//		Thread saveThread = new Thread(() -> {
-//			Settings.save();
-//			Database.saveAll();
-//		}, "Save DB Thread");
-//		saveThread.setDaemon(false);
-//		saveThread.start();
-
-		Thread onClose = OnClose.getInstance();
-		//onClose.start();
-	}*/
 
 	static void launch0(String[] args) {
 		launch(args);

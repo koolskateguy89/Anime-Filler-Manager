@@ -17,6 +17,14 @@
     </properties>
 
     <dependencies>
+		<!-- Project Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.16</version>
+			<scope>provided</scope>
+		</dependency>
+
     	<!-- JavaFX -->
     	<dependency>
             <groupId>org.openjfx</groupId>

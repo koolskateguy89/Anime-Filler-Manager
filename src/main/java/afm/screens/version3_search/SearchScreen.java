@@ -66,7 +66,7 @@ public final class SearchScreen extends GridPane {
     private Button searchBtn;
 
     private final ObservableSet<Genre> genreSet = FXCollections.observableSet(EnumSet.noneOf(Genre.class));
-    private final ObservableSet<Season> seasonSet = FXCollections.observableSet(new TreeSet<Season>());
+    private final ObservableSet<Season> seasonSet = FXCollections.observableSet(new TreeSet<>());
 
 
 	public SearchScreen(Handler h) throws IOException {
@@ -116,7 +116,8 @@ public final class SearchScreen extends GridPane {
     @FXML
     void addGenre(ActionEvent event) {
     	final Genre selectedGenre = genreCombo.getValue();
-    	if (selectedGenre != null) {	// if a genre has been selected
+		// if a genre has been selected
+    	if (selectedGenre != null) {
     		genreSet.add(selectedGenre);
     	}
     }
