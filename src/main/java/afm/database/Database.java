@@ -70,12 +70,12 @@ public final class Database {
 						Map.entry("imageURL", 10), Map.entry("fillers", 11));
 	}
 
-	private static final Properties PROP = new Properties();
+	private static final Properties prop = new Properties();
 
 
 	// load myList & toWatch contents into runtime linkedHSs
 	public static void init(Handler handler) {
-		PROP.put("rewriteBatchedStatements", "true");
+		prop.put("rewriteBatchedStatements", "true");
 
 		if (inJar() && firstRun())
 			clearTables();
@@ -86,6 +86,10 @@ public final class Database {
 		ToWatch.init(handler);
 	}
 
+	private static Connection newConnection() throws SQLException {
+		return DriverManager.getConnection(DB_URL, prop);
+	}
+
 	/*
 	 * [If in JAR & first time running, clear database tables]
 	 * This is very important for exporting as jar - jar will be effectively 'fresh'
@@ -94,7 +98,7 @@ public final class Database {
 	 * (Preferences are cleared whenever a jar is built using batch file clearprefs)
 	 */
 	private static void clearTables() {
-		try(Connection con = DriverManager.getConnection(DB_URL, PROP); Statement s = con.createStatement()) {
+		try(Connection con = newConnection(); Statement s = con.createStatement()) {
 
 			s.addBatch("DELETE FROM MyList");
 			s.addBatch("DELETE FROM ToWatch");
@@ -106,8 +110,7 @@ public final class Database {
 	}
 
 	private static void loadAll() {
-		try (Connection con = DriverManager.getConnection(DB_URL, PROP);
-			 Statement s = con.createStatement()) {
+		try (Connection con = newConnection(); Statement s = con.createStatement()) {
 
 			s.setQueryTimeout(30);
 
@@ -174,7 +177,7 @@ public final class Database {
 	}
 
 	public static void saveAll() {
-		try (Connection con = DriverManager.getConnection(DB_URL, PROP)){
+		try (Connection con = newConnection()){
 			con.setAutoCommit(false);
 
 			saveMyList(con);
