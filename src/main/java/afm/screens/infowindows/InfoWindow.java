@@ -150,8 +150,15 @@ public abstract class InfoWindow extends Stage {
 		close();
 	}
 
+	private Stage imageStage;
 	@FXML
 	void openImage(MouseEvent event) {
+		if (imageStage != null && imageStage.isShowing()) {
+			imageStage.toFront();
+			imageStage.requestFocus();
+			return;
+		}
+
 		final ImageView v = (ImageView)event.getSource();
 		final Image img = v.getImage();
 		if (img == null)
@@ -165,23 +172,23 @@ public abstract class InfoWindow extends Stage {
 		Pane root = new Pane(view);
 		Scene scene = new Scene(root);
 
-		Stage stage = new Stage();
-		stage.setTitle(anime.getName());
-		stage.getIcons().add(img);
+		imageStage = new Stage();
+		imageStage.setTitle(anime.getName());
+		imageStage.getIcons().add(img);
 
 		// Roughly maintain the aspect ratio of the original image
-		stage.setMinHeight(img.getHeight() / 2);
-		stage.setMinWidth(img.getWidth() / 2);
+		imageStage.setMinHeight(img.getHeight() / 2);
+		imageStage.setMinWidth(img.getWidth() / 2);
 
 		// The ImageView will always take up the entire window
 		view.fitWidthProperty().bind(scene.widthProperty());
 		view.fitHeightProperty().bind(scene.heightProperty());
 
-		addWindow(stage);
-		stage.setOnCloseRequest(e -> removeWindow(stage));
+		addWindow(imageStage);
+		imageStage.setOnCloseRequest(e -> removeWindow(imageStage));
 
-		stage.setScene(scene);
-		stage.centerOnScreen();
-		stage.show();
+		imageStage.setScene(scene);
+		imageStage.centerOnScreen();
+		imageStage.show();
 	}
 }
