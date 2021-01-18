@@ -142,18 +142,6 @@ public final class Anime {
 			return this;
 		}
 
-		public AnimeBuilder addGenre(Genre genre) {
-			genres.add(genre);
-			return this;
-		}
-
-		public AnimeBuilder addGenre(String genreName) {
-			Genre g = Genre.getGenre(genreName);
-			if (g != null)
-				genres.add(g);
-			return this;
-		}
-
 		public AnimeBuilder addFiller(Filler filler) {
 			fillers.add(filler);
 			return this;
@@ -196,21 +184,21 @@ public final class Anime {
 
 	private final String name;
 	private final String studio;
-	private Season season;
+	private final Season season;
 
 	private final ImmutableSet<Genre> genres;
-	private String genreString;
+	private final String genreString;
 
 	private TreeSet<Filler> fillers = new TreeSet<>();
 
-	private String info;
+	private final String info;
 
-	private String imageURL;
+	private final String imageURL;
 	private Image image;
 
 	private int episodes;
 	private int currEp;
-	private Integer id; //for MAL website
+	private final Integer id; //for MAL website
 	private final boolean custom;
 
 	private Range<Integer> episodeRange;
@@ -329,18 +317,6 @@ public final class Anime {
 		return EnumSet.copyOf(genres);
 	}
 
-	public boolean hasGenre(Genre genre) {
-		return genres.contains(genre);
-	}
-
-	public boolean hasGenre(String genreName) {
-		for (Genre g : genres) {
-			if (g.name().equalsIgnoreCase(genreName))
-				return true;
-		}
-		return false;
-	}
-
 	public String getGenreString() {
 		return genreString;
 	}
@@ -385,11 +361,6 @@ public final class Anime {
 		return fillers;
 	}
 
-	public void setFillers(Set<Filler> fillers) {
-		this.fillers.clear();
-		this.fillers.addAll(fillers);
-	}
-
 	public void addFiller(Filler filler) {
 		fillers.add(filler);
 	}
@@ -400,7 +371,7 @@ public final class Anime {
 
 	public String getURL() {
 		if (custom || id == null) return null;
-		return new StringBuilder("https://myanimelist.net/anime/").append(id).toString();
+		return "https://myanimelist.net/anime/" + id;
 	}
 
 	private void updateEpisodeRange() {
@@ -471,7 +442,7 @@ public final class Anime {
 	private static final String HIGHLIGHT = Menu.SELECTED;
 	private static final String SEE_INFO = "See info";
 
-	private final void initBtns() {
+	private void initBtns() {
 		initResultBtns();
 		initMyListBtns();
 		initToWatchBtns();
@@ -484,7 +455,7 @@ public final class Anime {
 	private Button myListBtn;
 	private Button toWatchBtn;
 
-	private final void initResultBtns() {
+	private void initResultBtns() {
 		myListBtn = new Button("Add");
 		toWatchBtn = new Button("Add");
 		infoBtn = new Button(SEE_INFO);
@@ -559,9 +530,9 @@ public final class Anime {
 			MyListInfoWindow.open(this, myListInfoBtn);
 		});
 
-		myListRemoveBtn.setOnAction(event -> {
-			MyList.remove(this);
-		});
+		myListRemoveBtn.setOnAction(event ->
+			MyList.remove(this)
+		);
 
 		moveToToWatchBtn.setOnAction(event -> {
 			MyList.remove(this);
@@ -598,9 +569,9 @@ public final class Anime {
 			ToWatchInfoWindow.open(this, toWatchInfoBtn);
 		});
 
-		toWatchRemoveBtn.setOnAction(event -> {
-			ToWatch.remove(this);
-		});
+		toWatchRemoveBtn.setOnAction(event ->
+			ToWatch.remove(this)
+		);
 
 		moveToMyListBtn.setOnAction(event -> {
 			ToWatch.remove(this);
