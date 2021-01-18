@@ -307,15 +307,8 @@ public final class Anime {
 		return EnumSet.copyOf(genres);
 	}
 
-	//private static final WeakHashMap<String,Image> IMG_CACHE = new WeakHashMap<>();
-
-	/*
-	 * This method should only be called by MyList/ToWatch, however it isn't too problematic
-	 * if it's called anywhere else as image will just be reloaded.
-	 */
-	public void close() {
+	public void recycle() {
 		image = null;
-		//IMG_CACHE.remove(imageURL);
 	}
 
 	public Image getImage() {
@@ -327,8 +320,6 @@ public final class Anime {
 		}
 
 		return image;
-		// Lazily/Atomically load Image
-		//return IMG_CACHE.computeIfAbsent(imageURL, Image::new);
 	}
 
 	public void addFiller(Filler filler) {
