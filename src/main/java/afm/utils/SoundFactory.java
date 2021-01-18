@@ -12,11 +12,16 @@ public class SoundFactory {
 
 	static {
 		URL pingURL = SoundFactory.class.getClassLoader().getResource("sounds/ping.mp3");
-		PING = new AudioClip(pingURL.toString());
-		PING.setVolume(.5);
+		if (pingURL != null) {
+			PING = new AudioClip(pingURL.toString());
+			PING.setVolume(.5);
+		} else {
+			PING = null;
+		}
 	}
 
 	public static void ping() {
-		PING.play();
+		if (PING != null)
+			PING.play();
 	}
 }

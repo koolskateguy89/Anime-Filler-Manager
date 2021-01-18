@@ -87,7 +87,7 @@ public class Browser {
 				Runtime.getRuntime().exec(new String[] { "xdg-open", url });
 				return true;
 			}
-		} catch (IOException io) {
+		} catch (IOException ignored) {
 		}
 		return false;
 	}

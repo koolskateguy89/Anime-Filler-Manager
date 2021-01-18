@@ -30,10 +30,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
-import com.google.common.math.DoubleMath;
-
 import afm.anime.Anime;
 import afm.anime.Genre;
+import com.google.common.math.DoubleMath;
 
 public final class Utils {
 
@@ -61,11 +60,11 @@ public final class Utils {
 		}
 
 		// add remaining
-		res.add(input.substring(start, input.length()));
+		res.add(input.substring(start));
 
 		res.removeIf(s -> s == null || s.isBlank());
 
-		return res.toArray(new String[res.size()]);
+		return res.toArray(new String[0]);
 	}
 
 	private static String currDir;
@@ -95,21 +94,21 @@ public final class Utils {
 		return inJar;
 	}
 
-	private static boolean firstRun;
+	private static final boolean FIRST_RUN;
 	private static final String KEY = "FIRST_RUN";
 
 	static {
 		Preferences prefs = Preferences.userRoot().node(Utils.class.getSimpleName());
 		// Returns the value associated to the key (param 0), if the value does not exist,
 		// it is the first run, so return true (param 1).
-		firstRun = prefs.getBoolean(KEY, true);
+		FIRST_RUN = prefs.getBoolean(KEY, true);
 		// Sets the value associated to the key such that next time, the call above will return
 		// false
 		prefs.putBoolean(KEY, false);
 	}
 
 	public static boolean firstRun() {
-		return firstRun;
+		return FIRST_RUN;
 	}
 
 	public static URL getFxmlUrl(String fname) {
@@ -208,7 +207,7 @@ public final class Utils {
 	private static <T extends Styleable> void changeStyle(T target, String style) {
 		String newStyle = target.getStyle();
 		if (newStyle != null && !newStyle.isEmpty())
-			newStyle = new StringBuilder(newStyle).append("; ").append(style).toString();
+			newStyle = newStyle + "; " + style;
 		else
 			newStyle = style;
 
@@ -253,36 +252,40 @@ public final class Utils {
 	}
 
 	/*
-	 * public static byte[] serialize(EnumSet<Genre> genreSet) throws IOException {
-	 * // generate a mask of the set so nothing happens to original set
-	 * EnumSet<Genre> mask = genreSet.clone();
-	 *
-	 * ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutputStream
-	 * out = new ObjectOutputStream(bos);
-	 *
-	 * out.writeObject(mask); out.close();
-	 *
-	 * // this is what is to be saved into database blob: byte[] bytes =
-	 * bos.toByteArray(); bos.close();
-	 *
-	 * return bytes; }
-	 *
-	 * @SuppressWarnings("unchecked") public static EnumSet<Genre>
-	 * deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
-	 * EnumSet<Genre> genres;
-	 *
-	 * ByteArrayInputStream bis = new ByteArrayInputStream(bytes); ObjectInputStream
-	 * in = new ObjectInputStream(bis);
-	 *
-	 * genres = (EnumSet<Genre>) in.readObject();
-	 *
-	 * in.close(); bis.close();
-	 *
-	 * return genres; }
-	 */
+	 public static byte[] serialize(EnumSet<Genre> genreSet) throws IOException {
+		 // generate a mask of the set so nothing happens to original set
+		 EnumSet<Genre> mask = genreSet.clone();
+
+		 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		 ObjectOutputStream out = new ObjectOutputStream(bos);
+
+		 out.writeObject(mask);
+		 out.close();
+
+		 // this is what is to be saved into database blob: byte[] bytes =
+		 byte[] bytes = bos.toByteArray();
+		 bos.close();
+
+		 return bytes;
+	 }
+
+	 @SuppressWarnings("unchecked")
+	 public static EnumSet<Genre> deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+		 EnumSet<Genre> genres;
+
+		 ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		 ObjectInputStream in = new ObjectInputStream(bis);
+
+		 genres = (EnumSet<Genre>) in.readObject();
+		 in.close();
+		 bis.close();
+		 return genres;
+	 }
+	*/
+
 
 	public static Property<Button> makeButtonProperty(String name, Button btn) {
-		return new Property<Button>() {
+		return new Property<>() {
 
 			@Override public String getName() {
 				return name;
