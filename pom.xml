@@ -83,7 +83,9 @@
         			<compilerArgs>
         				<arg>--enable-preview</arg>
         			</compilerArgs>
-        		</configuration>
+                    <source>15</source>
+                    <target>15</target>
+                </configuration>
         	</plugin>
 
         	<!-- Build an executable 'shaded' JAR -->

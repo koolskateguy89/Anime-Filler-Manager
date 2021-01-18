@@ -30,7 +30,7 @@ public abstract class InfoWindow extends Stage {
 		GenreInfoWindow.init(h);
 	}
 
-	private static HashSet<Stage> openWindows = new HashSet<>();
+	private static final HashSet<Stage> openWindows = new HashSet<>();
 
 	private static void addWindow(Stage w) {
 		openWindows.add(w);
@@ -154,6 +154,8 @@ public abstract class InfoWindow extends Stage {
 	@FXML
 	void openImage(MouseEvent event) {
 		if (imageStage != null && imageStage.isShowing()) {
+			addWindow(imageStage);
+			imageStage.show();
 			imageStage.toFront();
 			imageStage.requestFocus();
 			return;
