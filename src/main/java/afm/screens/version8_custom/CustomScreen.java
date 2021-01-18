@@ -116,7 +116,7 @@ public class CustomScreen extends GridPane {
     	// Get list form of genreSet and append to sb (new genreText),
     	// removing the leading and trailing bracket at the same time
     	final String genresString = genreSet.toString();
-    	sb.append(genresString.substring(1, genresString.length()-1));
+    	sb.append(genresString, 1, genresString.length()-1);
 
     	genreText.setText(sb.toString());
     }
@@ -134,13 +134,13 @@ public class CustomScreen extends GridPane {
     	 */
     	var genresAsMenuItems = genreSet.stream()
     					.map(genre -> new MenuItem("Remove: "+genre.toString()))
-    					.peek(mi -> {
+    					.peek(mi ->
     						mi.setOnAction(event -> {
     							final String s = mi.getText().replace("Remove: ", "");
     							final Genre g = Genre.parseGenreFromToString(s);
     							genreSet.remove(g);
-    						});
-    					})
+    						})
+    					)
     					.collect(Collectors.toList());
 
     	genreContextMenu.getItems().setAll(genresAsMenuItems);
@@ -171,7 +171,7 @@ public class CustomScreen extends GridPane {
     }
 
     // can only add an anime if the anime has a name & genre
-    private final boolean canAdd() {
+    private boolean cantAdd() {
     	boolean emptyName = nameField.getText().isBlank();
     	boolean emptyGenre = genreSet.isEmpty();
 
@@ -184,12 +184,11 @@ public class CustomScreen extends GridPane {
     		needGenre.showAndWait();
     	}
 
-    	final boolean emptyEssentialField = emptyName || emptyGenre;
-    	return !emptyEssentialField;
+    	return emptyName || emptyGenre;
     }
 
     // return Anime object, created from fields in this
-    private final Anime getAnimeFromFields() {
+    private Anime getAnimeFromFields() {
     	final AnimeBuilder builder = Anime.builder(nameField.getText());
 
     	builder.setCustom(true)
@@ -220,7 +219,7 @@ public class CustomScreen extends GridPane {
 
     @FXML
     void tryAddToMyList(ActionEvent event) {
-    	if (!canAdd()) return;
+    	if (cantAdd()) return;
 
     	// anime position is set by MyList
     	Anime anime = getAnimeFromFields();
@@ -252,7 +251,7 @@ public class CustomScreen extends GridPane {
 
     @FXML
     void tryAddToToWatch(ActionEvent event) {
-    	if (!canAdd()) return;
+    	if (cantAdd()) return;
 
     	// anime position is set by ToWatch
     	Anime anime = getAnimeFromFields();

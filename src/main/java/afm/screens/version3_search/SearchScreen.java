@@ -160,7 +160,7 @@ public final class SearchScreen extends GridPane {
     	// Get list form of genreSet and append to sb (new genreText),
     	// removing the leading and trailing bracket at the same time
     	final String genresString = genreSet.toString();
-    	sb.append(genresString.substring(1, genresString.length()-1));
+    	sb.append(genresString, 1, genresString.length()-1);
 
     	genreText.setText(sb.toString());
     }
@@ -178,13 +178,13 @@ public final class SearchScreen extends GridPane {
     	 */
     	var genresAsMenuItems = genreSet.stream()
     					.map(genre -> new MenuItem(REMOVE+genre.toString()))
-    					.peek(mi -> {
+    					.peek(mi ->
     						mi.setOnAction(event -> {
     							final String s = mi.getText().replace(REMOVE, "");
     							final Genre g = Genre.parseGenreFromToString(s);
     							genreSet.remove(g);
-    						});
-    					})
+    						})
+    					)
     					.collect(Collectors.toList());
 
     	genreContextMenu.getItems().setAll(genresAsMenuItems);
@@ -203,7 +203,7 @@ public final class SearchScreen extends GridPane {
     	// Get list form of seasonSet and append to sb,
     	// removing the leading and trailing bracket at the same time
     	final String seasonsString = seasonSet.toString();
-    	sb.append(seasonsString.substring(1, seasonsString.length()-1));
+    	sb.append(seasonsString, 1, seasonsString.length()-1);
 
     	seasonText.setText(sb.toString());
     }
@@ -220,13 +220,13 @@ public final class SearchScreen extends GridPane {
     	 */
     	var seasonsAsMenuItems = seasonSet.stream()
     					.map(season -> new MenuItem(REMOVE+season.toString()))
-    					.peek(mi -> {
+    					.peek(mi ->
     						mi.setOnAction(event -> {
     							final String str = mi.getText().replace(REMOVE, "");
     							final Season s = Season.getSeasonFromToString(str);
     							seasonSet.remove(s);
-    						});
-    					})
+    						})
+    					)
     					.collect(Collectors.toList());
 
     	seasonContextMenu.getItems().setAll(seasonsAsMenuItems);
@@ -338,7 +338,8 @@ public final class SearchScreen extends GridPane {
 				return true;
 		}
 
-		search.setName(name.trim());
+		if (name != null)
+			search.setName(name.trim());
     	return true;
     }
 
@@ -357,7 +358,8 @@ public final class SearchScreen extends GridPane {
 				return true;
 		}
 
-		search.setStudio(studio.trim());
+		if (studio != null)
+			search.setStudio(studio.trim());
 		return true;
     }
 }

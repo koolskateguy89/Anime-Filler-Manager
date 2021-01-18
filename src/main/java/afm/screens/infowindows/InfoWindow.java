@@ -89,7 +89,7 @@ public abstract class InfoWindow extends Stage {
 			urlBtn.setVisible(false);
 
 		int eps = anime.getEpisodes();
-		// not finished anime / undeterminable number of episodes
+		// not finished anime / indeterminable number of episodes
 		if (eps == Anime.NOT_FINISHED || eps == 0)
 			totalEpField.setText("Not finished");
 		else

@@ -34,7 +34,7 @@ public class SearchingScreen extends Pane {
 
 	private Search search;
 
-	private final List<Anime> results = Collections.synchronizedList(new ArrayList<Anime>());
+	private final List<Anime> results = Collections.synchronizedList(new ArrayList<>());
 
 	private ObservableList<Node> circles;
 
@@ -142,10 +142,10 @@ public class SearchingScreen extends Pane {
 
 				private boolean dim = true;	// start by dimming circles
 				private double opacity = 0.8;
-				private double step = 0.4;
+				private final double step = 0.4;
 
 				@Override
-				protected Void call() throws Exception {
+				protected Void call() {
 					// Start by making all circles visible
 					circles.forEach(c -> c.setOpacity(1));
 
@@ -193,10 +193,10 @@ public class SearchingScreen extends Pane {
 			return new Task<>() {
 
 				final int size = circles.size();
-				int peak = size / 2;	// start at middle
+				final int peak = size / 2;	// start at middle
 
 				@Override
-				protected Void call() throws Exception {
+				protected Void call() {
 					          /* Position, opacity of each circle*/
 					HashMap<Integer, Double> circleMap = new HashMap<>();
 
@@ -231,8 +231,8 @@ public class SearchingScreen extends Pane {
 					}
 
 					Platform.runLater(() -> {
-						circleMap.entrySet().forEach(entry ->
-							circles.get(entry.getKey()).setOpacity(entry.getValue())
+						circleMap.forEach((key, value) ->
+								circles.get(key).setOpacity(value)
 						);
 						circleMap.clear();
 					});

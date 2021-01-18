@@ -58,7 +58,7 @@ public class StartScreen extends Pane {
 		}
 
 		//Initialise the loadTask which loads all screens
-		loadTask = new Task<Void>() {
+		loadTask = new Task<>() {
 			protected Void call() {
 				try {
 					Platform.runLater(() -> {

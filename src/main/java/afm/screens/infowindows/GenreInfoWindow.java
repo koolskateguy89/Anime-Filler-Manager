@@ -68,7 +68,13 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.Josei, "Aimed towards young adult women");
 
-		tempMap.put(Genre.Kids, "Aimed at kids" + "\n\n\n\n" + "yikes");
+		tempMap.put(Genre.Kids, """
+								Aimed at kids
+
+
+
+								yikes
+								""");
 
 		tempMap.put(Genre.Magic, "Involves magic as a main feature");
 
@@ -162,7 +168,7 @@ public class GenreInfoWindow extends InfoWindow {
 
 	@FXML
 	void initialize() {
-		setTitle("Genre Expanations");
+		setTitle("Genre Explanations");
 
 		// add all Genres into the ComboBox
 		genreCombo.getItems().addAll(Genre.values());
