@@ -4,6 +4,8 @@ import static afm.utils.Utils.inJar;
 
 import java.io.IOException;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -12,7 +14,8 @@ import com.google.common.collect.HashBasedTable;
 
 import afm.utils.Utils;
 
-public class Filler implements Comparable<Filler> {
+@Immutable
+public final class Filler implements Comparable<Filler> {
 					  /* Start ,  End  , Object */
 	private static final HashBasedTable<Integer, Integer, Filler> CACHE = HashBasedTable.create();
 
@@ -141,7 +144,7 @@ public class Filler implements Comparable<Filler> {
 		return (start != o.start) ? start - o.start : end - o.end;
 	}
 
-	@Override @SuppressWarnings("preview")
+	@Override
 	public boolean equals(Object o) {
 		// identity check
 		if (this == o)

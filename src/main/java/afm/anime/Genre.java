@@ -19,15 +19,16 @@ public enum Genre {
 	 * */
 	int index;
 
-	private Genre() {
+	Genre() {
 		index = findIndex(this.name());
 	}
-	private Genre(String info) {
+	Genre(String info) {
 		this();
 		this.info = info;
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		String[] sp = Utils.splitByCapitals(this.name());
 
 		StringBuilder sb = new StringBuilder(sp[0]);
@@ -46,98 +47,53 @@ public enum Genre {
 
 	// Helper for myanimelist.net link (searching)
 	private static int findIndex(String s) {
-		switch (s) {
-			case "Action":
-				return 1;
-			case "Adventure":
-				return 2;
-			case "Cars":
-				return 3;
-			case "Comedy":
-				return 4;
-			case "Dementia":
-				return 5;
-			case "Demons":
-				return 6;
-			case "Drama":
-				return 8;
-			case "Ecchi":
-				return 9;
-			case "Fantasy":
-				return 10;
-			case "Game":
-				return 11;
-			case "Harem":
-				return 35;
-			case "Hentai":
-				return 12;
-			case "Historical":
-				return 13;
-			case "Horror":
-				return 14;
-			case "Josei":
-				return 43;
-			case "Kids":
-				return 15;
-			case "Magic":
-				return 16;
-			case "MartialArts":
-				return 17;
-			case "Mecha":
-				return 18;
-			case "Military":
-				return 38;
-			case "Music":
-				return 19;
-			case "Mystery":
-				return 7;
-			case "Parody":
-				return 20;
-			case "Police":
-				return 39;
-			case "Psychological":
-				return 40;
-			case "Romance":
-				return 22;
-			case "Samurai":
-				return 21;
-			case "School":
-				return 23;
-			case "SciFi":
-				return 24;
-			case "Sci-Fi":
-				return 24;
-			case "Seinen":
-				return 42;
-			case "Shoujo":
-				return 25;
-			case "ShoujoAi":
-				return 26;
-			case "Shounen":
-				return 27;
-			case "ShounenAi":
-				return 28;
-			case "SliceOfLife":
-				return 36;
-			case "Space":
-				return 29;
-			case "Sports":
-				return 30;
-			case "SuperPower":
-				return 31;
-			case "Supernatural":
-				return 37;
-			case "Thriller":
-				return 41;
-			case "Vampire":
-				return 32;
-			case "Yaoi":
-				return 33;
-			case "Yuri":
-				return 34;
-			default:
-				throw new IllegalArgumentException("Not a genre: " + s);
-		}
+		return switch (s) {
+			case "Action" -> 1;
+			case "Adventure" -> 2;
+			case "Cars" -> 3;
+			case "Comedy" -> 4;
+			case "Dementia" -> 5;
+			case "Demons" -> 6;
+			case "Drama" -> 8;
+			case "Ecchi" -> 9;
+			case "Fantasy" -> 10;
+			case "Game" -> 11;
+			case "Harem" -> 35;
+			case "Hentai" -> 12;
+			case "Historical" -> 13;
+			case "Horror" -> 14;
+			case "Josei" -> 43;
+			case "Kids" -> 15;
+			case "Magic" -> 16;
+			case "MartialArts" -> 17;
+			case "Mecha" -> 18;
+			case "Military" -> 38;
+			case "Music" -> 19;
+			case "Mystery" -> 7;
+			case "Parody" -> 20;
+			case "Police" -> 39;
+			case "Psychological" -> 40;
+			case "Romance" -> 22;
+			case "Samurai" -> 21;
+			case "School" -> 23;
+			case "SciFi" -> 24;
+			case "Sci-Fi" -> 24;
+			case "Seinen" -> 42;
+			case "Shoujo" -> 25;
+			case "ShoujoAi" -> 26;
+			case "Shounen" -> 27;
+			case "ShounenAi" -> 28;
+			case "SliceOfLife" -> 36;
+			case "Space" -> 29;
+			case "Sports" -> 30;
+			case "SuperPower" -> 31;
+			case "Supernatural" -> 37;
+			case "Thriller" -> 41;
+			case "Vampire" -> 32;
+			case "Yaoi" -> 33;
+			case "Yuri" -> 34;
+			default -> throw new IllegalArgumentException("Not a genre: " + s);
+		};
 	}
 
 	/* special implementation of binary search that ignores case for safety */

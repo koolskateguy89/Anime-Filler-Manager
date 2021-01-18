@@ -26,6 +26,7 @@ import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
 import afm.screens.infowindows.ToWatchInfoWindow;
 import afm.utils.Utils;
+import lombok.Getter;
 
 /*
  * Saving into database:
@@ -73,7 +74,6 @@ public final class Anime {
 	public static final class AnimeBuilder {
 
 		private String imageURL;
-
 		private String name;
 		private String studio;
 		private Season season;
@@ -181,27 +181,26 @@ public final class Anime {
 		}
 	}
 
-
-	private final String name;
-	private final String studio;
-	private final Season season;
+	@Getter private final String name;
+	@Getter private final String studio;
+	@Getter private final Season season;
 
 	private final ImmutableSet<Genre> genres;
-	private final String genreString;
+	@Getter private final String genreString;
 
-	private TreeSet<Filler> fillers = new TreeSet<>();
+	@Getter private TreeSet<Filler> fillers = new TreeSet<>();
 
-	private final String info;
+	@Getter private final String info;
 
 	private final String imageURL;
 	private Image image;
 
-	private int episodes;
+	@Getter private final int episodes;
 	private int currEp;
-	private final Integer id; //for MAL website
-	private final boolean custom;
+	@Getter private final Integer id; //for MAL website
+	@Getter private final boolean custom;
 
-	private Range<Integer> episodeRange;
+	private final Range<Integer> episodeRange;
 
 	@SuppressWarnings("unchecked")
 	private Anime(AnimeBuilder builder) {
@@ -237,13 +236,15 @@ public final class Anime {
 		initBtns();
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		return name + ( (studio == null || studio.equals("-"))? "" : ("  studio = "+studio) ) +
 					  ( (episodes == Anime.NOT_FINISHED || episodes == 0)? "" : "  episode(s) = "+episodes );
 	}
 
 	@SuppressWarnings("preview")
-	@Override public boolean equals(Object o) {
+	@Override
+	public boolean equals(Object o) {
 		// self (identity) check
 		if (this == o)
 			return true;
@@ -258,7 +259,8 @@ public final class Anime {
 		return false;
 	}
 
-	@Override public int hashCode() {
+	@Override
+	public int hashCode() {
 		int result = 1;
 		result = 31 * result + name.hashCode();
 		result = 31 * result + genres.hashCode();
@@ -300,25 +302,9 @@ public final class Anime {
 		Filler.addFillersTo(this);
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getStudio() {
-		return studio;
-	}
-
-	public Season getSeason() {
-		return season;
-	}
-
 	// defensively copy
 	public EnumSet<Genre> getGenres() {
 		return EnumSet.copyOf(genres);
-	}
-
-	public String getGenreString() {
-		return genreString;
 	}
 
 	//private static final WeakHashMap<String,Image> IMG_CACHE = new WeakHashMap<>();
@@ -345,52 +331,12 @@ public final class Anime {
 		//return IMG_CACHE.computeIfAbsent(imageURL, Image::new);
 	}
 
-	public String getImageURL() {
-		return imageURL;
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public boolean isCustom() {
-		return custom;
-	}
-
-	public TreeSet<Filler> getFillers() {
-		return fillers;
-	}
-
 	public void addFiller(Filler filler) {
 		fillers.add(filler);
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
 	public String getURL() {
-		if (custom || id == null) return null;
-		return "https://myanimelist.net/anime/" + id;
-	}
-
-	private void updateEpisodeRange() {
-		episodeRange = (episodes == NOT_FINISHED) ? Range.atLeast(0) : Range.closed(0, episodes);
-	}
-
-	public int getEpisodes() {
-		return episodes;
-	}
-
-	public void setEpisodes(int episodes) {
-		if (episodes < 0 && episodes != NOT_FINISHED) {
-			// this should NEVER happen due to filtering done in screens
-			throw new AssertionError(name + " eps set as: ("+episodes+").");
-		}
-
-		this.episodes = episodes;
-		updateEpisodeRange();
-		setCurrEp(currEp);
+		return custom || id == null ? null : "https://myanimelist.net/anime/" + id;
 	}
 
 	public int getCurrEp() {
@@ -447,8 +393,6 @@ public final class Anime {
 		initMyListBtns();
 		initToWatchBtns();
 	}
-
-
 	/* for ResultsScreen */
 
 	private Button infoBtn;
