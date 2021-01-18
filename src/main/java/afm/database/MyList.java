@@ -2,7 +2,6 @@ package afm.database;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -99,11 +98,6 @@ public final class MyList {
 
 	public static Set<Anime> values() {
 		return runTime;
-	}
-
-	// changes made by iterator are be reflected in map
-	public static Iterator<Anime> iterator() {
-		return values().iterator();
 	}
 
 	static Set<Anime> getAdded() {

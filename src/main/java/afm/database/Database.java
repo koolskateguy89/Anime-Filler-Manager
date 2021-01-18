@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -63,31 +61,21 @@ public final class Database {
 
 
 	// help performance with getting anime
-	private static final Map<String, Byte> COLUMN_MAP;
+	private static final Map<String, Integer> COLUMN_MAP;
 
 	static {
-		HashMap<String, Byte> m = new HashMap<>();
-		m.put("name", (byte)1);
-		m.put("genres", (byte)2);
-		m.put("id", (byte)3);
-		m.put("studio", (byte)4);
-		m.put("seasonString", (byte)5);
-		m.put("info", (byte)6);
-		m.put("custom", (byte)7);
-		m.put("currEp", (byte)8);
-		m.put("totalEps", (byte)9);
-		m.put("imageURL", (byte)10);
-		m.put("fillers", (byte)11);
-
-		COLUMN_MAP = Collections.unmodifiableMap(m);
+		COLUMN_MAP = Map.ofEntries(Map.entry("name", 1), Map.entry("genres", 2), Map.entry("id", 3),
+						Map.entry("studio", 4), Map.entry("seasonString", 5), Map.entry("info", 6),
+						Map.entry("custom", 7), Map.entry("currEp", 8), Map.entry("totalEps", 9),
+						Map.entry("imageURL", 10), Map.entry("fillers", 11));
 	}
 
-	private static Properties prop = new Properties();
+	private static final Properties PROP = new Properties();
 
 
 	// load myList & toWatch contents into runtime linkedHSs
 	public static void init(Handler handler) {
-		prop.put("rewriteBatchedStatements", "true");
+		PROP.put("rewriteBatchedStatements", "true");
 
 		if (inJar() && firstRun())
 			clearTables();
@@ -106,7 +94,7 @@ public final class Database {
 	 * (Preferences are cleared whenever a jar is built using batch file clearprefs)
 	 */
 	private static void clearTables() {
-		try(Connection con = DriverManager.getConnection(DB_URL, prop); Statement s = con.createStatement()) {
+		try(Connection con = DriverManager.getConnection(DB_URL, PROP); Statement s = con.createStatement()) {
 
 			s.addBatch("DELETE FROM MyList");
 			s.addBatch("DELETE FROM ToWatch");
@@ -118,8 +106,8 @@ public final class Database {
 	}
 
 	private static void loadAll() {
-		try (Connection con = DriverManager.getConnection(DB_URL, prop);
-				Statement s = con.createStatement()) {
+		try (Connection con = DriverManager.getConnection(DB_URL, PROP);
+			 Statement s = con.createStatement()) {
 
 			s.setQueryTimeout(30);
 
@@ -132,7 +120,7 @@ public final class Database {
 		}
 	}
 
-	private static final Anime loadAnimeFromResultSet(ResultSet rs) throws SQLException {
+	private static Anime loadAnimeFromResultSet(ResultSet rs) throws SQLException {
 		AnimeBuilder builder = Anime.builder();
 
 		builder.setName(rs.getString(COLUMN_MAP.get("name")))
@@ -186,7 +174,7 @@ public final class Database {
 	}
 
 	public static void saveAll() {
-		try (Connection con = DriverManager.getConnection(DB_URL, prop)){
+		try (Connection con = DriverManager.getConnection(DB_URL, PROP)){
 			con.setAutoCommit(false);
 
 			saveMyList(con);

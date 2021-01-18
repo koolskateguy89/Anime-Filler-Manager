@@ -2,7 +2,6 @@ package afm.database;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -48,16 +47,6 @@ public final class ToWatch {
 		added.add(anime);
 	}
 
-	public static void update(Anime anime) {
-		// For when an anime already exists in runTime, set it to be updated
-		// in database
-		if (!runTime.add(anime)) {
-			added.remove(anime);
-		}
-		removed.remove(anime.getName());
-		added.add(anime);
-	}
-
 	public static void addAll(Collection<Anime> col) {
 		for (Anime anime : col) {
 			add(anime);
@@ -88,11 +77,6 @@ public final class ToWatch {
 
 	public static Set<Anime> values() {
 		return runTime;
-	}
-
-	// changes made by iterator are be reflected in map
-	public static Iterator<Anime> iterator() {
-		return values().iterator();
 	}
 
 	static Set<Anime> getAdded() {
