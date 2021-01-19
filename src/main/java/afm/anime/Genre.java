@@ -5,7 +5,7 @@ import afm.utils.Utils;
 
 public enum Genre {
 	// They should all be CONSTANT_CASE but I really cannot be bothered to do that manually sooooo
-	// Plus I would then have to reactor the findIndex(String) method sooooo
+	// Plus I would then have to completely refactor the findIndex(String) method sooooo
 	Action, Adventure, Cars, Comedy, Dementia, Demons, Drama, Ecchi("(18+)"), Fantasy, Game, Harem, Hentai("(18+)"), Historical,
 	Horror, Josei, Kids, Magic, MartialArts, Mecha, Military, Music, Mystery, Parody, Police, Psychological, Romance, Samurai,
 	School, SciFi, Seinen, Shoujo, ShoujoAi, Shounen, ShounenAi, SliceOfLife, Space, Sports, SuperPower, Supernatural, Thriller,
