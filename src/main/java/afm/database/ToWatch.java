@@ -86,7 +86,7 @@ public final class ToWatch {
 	static String getRemovedSQL() {
 		return removed.stream()
 					  .map(name -> name.replace("'", "''"))	// escape quotes in SQL
-					  .map(name -> new StringBuilder(name).insert(0, '\'').append('\'').toString())
+					  .map(name -> '\'' + name + '\'')
 					  .collect(Collectors.joining(","));
 	}
 }

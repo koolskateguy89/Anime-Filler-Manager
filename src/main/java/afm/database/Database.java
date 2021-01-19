@@ -191,18 +191,14 @@ public final class Database {
 	/*
 	 * Delete all anime that were removed from MyList, from animeDB database.
 	 * Save all anime that were added to MyList(runtime) in animeDB database.
-	 *
-	 * Cannot lie I did not want to implement the try-with-resources, but I'm
-	 *   better off not risking it :)
 	 */
 	private static void saveMyList(Connection con) throws SQLException {
 		String removed = MyList.getRemovedSQL();
-		StringBuilder removeSQL = new StringBuilder("DELETE FROM MyList WHERE name IN (")
-						.append(removed).append(')');
 
 		if (!removed.isEmpty()) {
 			try (Statement st = con.createStatement()) {
-				st.executeUpdate(removeSQL.toString());
+				String removeSQL = "DELETE FROM MyList WHERE name IN (" + removed + ')';
+				st.executeUpdate(removeSQL);
 			}
 		}
 
@@ -236,12 +232,11 @@ public final class Database {
 	 */
 	private static void saveToWatch(Connection con) throws SQLException {
 		String removed = ToWatch.getRemovedSQL();
-		StringBuilder removeSQL = new StringBuilder("DELETE FROM ToWatch WHERE name IN (");
-		removeSQL.append(removed).append(')');
 
 		if (!removed.isEmpty()) {
 			try (Statement st = con.createStatement()) {
-				st.executeUpdate(removeSQL.toString());
+				String removeSQL = "DELETE FROM ToWatch WHERE name IN (" + removed + ')';
+				st.executeUpdate(removeSQL);
 			}
 		}
 

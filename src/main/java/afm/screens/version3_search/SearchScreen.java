@@ -2,6 +2,7 @@ package afm.screens.version3_search;
 
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -146,17 +147,13 @@ public final class SearchScreen extends GridPane {
 
     // Update genreText when genreSet has changed
     private void updateGenreText() {
-    	final StringBuilder sb = new StringBuilder("Genres: ");
+    	StringBuilder sb = new StringBuilder("Genres: ");
 
-    	if (genreSet.isEmpty()) {
-    		genreText.setText(sb.toString());
-    		return;
-    	}
-
-    	// Get list form of genreSet and append to sb (new genreText),
-    	// removing the leading and trailing bracket at the same time
-    	final String genresString = genreSet.toString();
-    	sb.append(genresString, 1, genresString.length()-1);
+	    Iterator<Genre> it = genreSet.iterator();
+	    if (it.hasNext())
+	    	sb.append(it.next());
+	    while (it.hasNext())
+	    	sb.append(", ").append(it.next());
 
     	genreText.setText(sb.toString());
     }
@@ -187,19 +184,13 @@ public final class SearchScreen extends GridPane {
     }
 
     private void updateSeasonText() {
-    	// new seasonText = sb.toString()
-    	StringBuilder sb = new StringBuilder();
-    	sb.append(seasonSet.size() <= 1 ? "Season: " : "Seasons: ");
+    	StringBuilder sb = new StringBuilder("Seasons: ");
 
-    	if (seasonSet.isEmpty()) {
-    		seasonText.setText(sb.toString());
-    		return;
-    	}
-
-    	// Get list form of seasonSet and append to sb,
-    	// removing the leading and trailing bracket at the same time
-    	final String seasonsString = seasonSet.toString();
-    	sb.append(seasonsString, 1, seasonsString.length()-1);
+    	Iterator<Season> it = seasonSet.iterator();
+    	if (it.hasNext())
+    		sb.append(it.next());
+    	while (it.hasNext())
+    		sb.append(", ").append(it.next());
 
     	seasonText.setText(sb.toString());
     }
@@ -295,13 +286,13 @@ public final class SearchScreen extends GridPane {
     		// if user 'selected' a Genre but didn't add it, ask if they want to add it
     		Genre potentialGenre = genreCombo.getValue();
     		if (potentialGenre != null) {
-
-			    String sb = "You haven't added any Genres, " + "but you have selected {" +
+				String content =
+						"You haven't added any Genres, " + "but you have selected {" +
 					    potentialGenre.toString().replace("(", "").replace(")", "") +
 					    '}' + '.' +
 					    '\n' +
 					    "Do you want to search for this genre?";
-			    ButtonType result = Utils.showAndWaitConfAlert(sb);
+			    ButtonType result = Utils.showAndWaitConfAlert(content);
     			if (result != ButtonType.YES)
     				return false;
 

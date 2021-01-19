@@ -43,8 +43,8 @@ public final class Search {
 	/* search filters */
 	private String name;
 	private String studio;
-	private EnumSet<Genre> genres = EnumSet.noneOf(Genre.class);
-	private HashSet<Season> seasons = new HashSet<>();
+	private final EnumSet<Genre> genres = EnumSet.noneOf(Genre.class);
+	private final HashSet<Season> seasons = new HashSet<>();
 	private Integer minEps = null;
 
 
@@ -52,8 +52,9 @@ public final class Search {
 	private int page = 1;
 	private boolean reachedLastPage = false;
 
-	/* not using LinkedHS as it's going to be sorted anyway */
-	private HashSet<Anime> result = new HashSet<>();
+	/* not using LinkedHS/TreeSet as it's going to be sorted anyway */
+	/* also we don't want duplicate anime */
+	private final HashSet<Anime> result = new HashSet<>();
 
 	private static final String MAL_URL = "https://myanimelist.net";
 	private static final String GENRE_URL = MAL_URL + "/anime/genre/"; //+genre.getIndex()
@@ -285,10 +286,9 @@ public final class Search {
 
 			String genreName = null;
 
-			if (genreList[i].equals("Sci-Fi"))
+			if (genreList[i].equals("Sci-Fi")) {
 				genreName = "SciFi";
-
-			else if (genreName == null && i < (genreList.length - 1)) {
+			} else if (i < (genreList.length - 1)) {
 				if (genreList[i].equals("Martial")) {
 					if (genreList[i+1].equals("Arts"))
 						genreName = "MartialArts";

@@ -2,6 +2,7 @@ package afm.screens.version8_custom;
 
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -100,17 +101,13 @@ public class CustomScreen extends GridPane {
 
     // Update genreText when genreSet has changed
     private void updateGenreText() {
-    	final StringBuilder sb = new StringBuilder("Genres: ");
+    	StringBuilder sb = new StringBuilder("Genres: ");
 
-    	if (genreSet.isEmpty()) {
-    		genreText.setText(sb.toString());
-    		return;
-    	}
-
-    	// Get list form of genreSet and append to sb (new genreText),
-    	// removing the leading and trailing bracket at the same time
-    	final String genresString = genreSet.toString();
-    	sb.append(genresString, 1, genresString.length()-1);
+	    Iterator<Genre> it = genreSet.iterator();
+	    if (it.hasNext())
+	    	sb.append(it.next());
+	    while (it.hasNext())
+	    	sb.append(", ").append(it.next());
 
     	genreText.setText(sb.toString());
     }
