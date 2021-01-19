@@ -18,7 +18,7 @@ public class Browser {
 	// see https://stackoverflow.com/a/18509384
 	public static boolean open(String url) {
 		boolean opened = false;
-		
+
 		if (PlatformUtil.isMac()) {
 			opened = openMac(url);
 		} else {
@@ -56,11 +56,11 @@ public class Browser {
 
 	private static boolean openWindows(String url) {
 		try {
-			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+			Runtime.getRuntime().exec(new String[] {"rundll32", "url.dll" "FileProtocolHandler", url});
 			return true;
 		} catch (IOException io) {
 			try {
-				Runtime.getRuntime().exec("start " + url);
+				Runtime.getRuntime().exec(new String[] {"start", url});
 				return true;
 			} catch (IOException io1) {
 				return false;
@@ -72,7 +72,7 @@ public class Browser {
 	// this might work for Unix, I'm not sure
 	private static boolean openMac(String url) {
 		try {
-			Runtime.getRuntime().exec("open " + url);
+			Runtime.getRuntime().exec(new String[] {"open", url});
 			return true;
 		} catch (IOException io) {
 			return open0(url);

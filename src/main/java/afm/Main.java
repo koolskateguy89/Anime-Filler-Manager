@@ -154,7 +154,8 @@ public class Main extends Application {
 			try {
 				searchingScreen = new SearchingScreen(h);
 			} catch (IOException e) {
-				if (!inJar()) e.printStackTrace();
+				e.printStackTrace();
+				Platform.exit();
 			}
 
 		searchingScreen.setSearch(s);
@@ -169,7 +170,8 @@ public class Main extends Application {
 			try {
 				resultsScreen = new ResultsScreen();
 			} catch (IOException e) {
-				if (!inJar()) e.printStackTrace();
+				e.printStackTrace();
+				Platform.exit();
 			}
 
 		resultsScreen.setResults(results);
