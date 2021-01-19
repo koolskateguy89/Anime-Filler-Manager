@@ -2,6 +2,7 @@ package afm.screens.version3_search;
 
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -89,8 +90,7 @@ public final class SearchScreen extends GridPane {
     	seasonItems.add("Winter");
 
     	final var yearItems = yearCombo.getItems();
-    	// Loop from current year to 1999
-    	for (int i = Utils.getCurrentYear(); i >= 1999; i--)
+    	for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
     		yearItems.add(i);
 
 
@@ -130,11 +130,10 @@ public final class SearchScreen extends GridPane {
     	if (s == null || year == null)
     		return;
 
-    	//Season season = Season.getSeason(s, year);
     	seasonSet.add(Season.getSeason(s, year));
     }
 
-    // add all Seasons in the currently selected year
+    // Add all Seasons in the currently selected year
     @FXML
     void addAllYear(ActionEvent event) {
     	final Integer year = yearCombo.getValue();
@@ -142,9 +141,7 @@ public final class SearchScreen extends GridPane {
     	if (year == null)
     		return;
 
-    	for (int szn = Season.SPRING; szn <= Season.WINTER; szn++) {
-    		seasonSet.add(Season.getSeason(szn, year));
-    	}
+    	seasonSet.addAll(List.of(Season.getAllSeasonsFromYear(year)));
     }
 
     // Update genreText when genreSet has changed
@@ -152,7 +149,6 @@ public final class SearchScreen extends GridPane {
     	final StringBuilder sb = new StringBuilder("Genres: ");
 
     	if (genreSet.isEmpty()) {
-    		sb.append("NONE");
     		genreText.setText(sb.toString());
     		return;
     	}
@@ -328,18 +324,22 @@ public final class SearchScreen extends GridPane {
     	// if user has only types whitespace in name field, confirm they still want to search
 		if (name != null && !name.isEmpty() && name.isBlank()) {
 			String header = "Name entered is only whitespace!";
-			String content = "The anime name will not be taken into account when \nsearching, "
-						   + "do you still want to search?";
-			if (Utils.showAndWaitConfAlert(header, content) != ButtonType.YES) {
+			String content = """
+                             The anime name will not be taken into account when
+                             searching, do you still want to search?
+							 """;
+
+			if (Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
+				return true;
+			} else {
 				nameField.setText(null);
 				return false;
 			}
-			else
-				return true;
 		}
 
 		if (name != null)
-			search.setName(name.trim());
+			search.setName(name.strip());
+
     	return true;
     }
 
@@ -348,18 +348,22 @@ public final class SearchScreen extends GridPane {
     	// if user has only types whitespace in studio field, confirm they still want to search
 		if (studio != null && !studio.isEmpty() && studio.isBlank()) {
 			String header = "Studio entered is only whitespace!";
-			String content = "The anime studio will not be taken into account when \nsearching, "
-					+ "do you still want to search?";
-			if (Utils.showAndWaitConfAlert(header, content) != ButtonType.YES) {
+			String content = """
+                             The anime studio will not be taken into account when
+                             searching, do you still want to search?
+							 """;
+
+			if (Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
+				return true;
+			} else {
 				studioField.setText(null);
 				return false;
 			}
-			else
-				return true;
 		}
 
 		if (studio != null)
-			search.setStudio(studio.trim());
+			search.setStudio(studio.strip());
+
 		return true;
     }
 }

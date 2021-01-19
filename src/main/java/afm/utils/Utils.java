@@ -117,6 +117,9 @@ public class Utils {
 	public static String getFileAsString(String path) throws IOException {
 		try (InputStream in = Utils.class.getClassLoader().getResourceAsStream(path);
 				ByteArrayOutputStream result = new ByteArrayOutputStream()) {
+			if (in == null)
+				return "";
+
 			byte[] buffer = new byte[1024];
 			int length;
 			while ((length = in.read(buffer)) != -1) {
@@ -128,13 +131,21 @@ public class Utils {
 
 	// inclusive of min & max
 	public static int randomNumberClosed(int min, int max) {
+		if (min == max)
+			return min;
+		else if (min > max) {
+			return randomNumberClosed(max, min);
+		}
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
 
 	// exclusive of max
 	public static int randomNumber(int min, int max) {
-		if (min == max)
-			return min;
+		if (Math.abs(max - min) == 1)
+			return Math.min(min, max);
+		else if (min >= max) {
+			return randomNumber(max, min);
+		}
 		return ThreadLocalRandom.current().nextInt(min, max);
 	}
 
@@ -160,13 +171,12 @@ public class Utils {
 		}
 	}
 
-	public static boolean isStrictInteger(String s) {
-		try {
-			Integer.parseInt(s);
-			return true;
-		} catch (NumberFormatException nfe) {
-			return false;
+	public static boolean isStrictInteger(final String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (!Character.isDigit(s.charAt(i)))
+				return false;
 		}
+		return true;
 	}
 
 	public static void sleep(long millis) {
@@ -248,6 +258,8 @@ public class Utils {
 			}
 		});
 	}
+
+	//No longer using serialization to save genre (see comments at top of Database)
 
 	/*
 	 public static byte[] serialize(EnumSet<Genre> genreSet) throws IOException {
@@ -331,7 +343,7 @@ public class Utils {
 	// Stop user from typing any characters that aren't numeric
 	public static ChangeListener<String> onlyAllowIntegersListener() {
 		return (obs, oldVal, newVal) -> {
-			if (newVal.isEmpty())
+			if (newVal == null || newVal.isEmpty())
 				((StringProperty) obs).setValue("0");
 			else if (!isStrictInteger(newVal))
 				((StringProperty) obs).setValue(oldVal);

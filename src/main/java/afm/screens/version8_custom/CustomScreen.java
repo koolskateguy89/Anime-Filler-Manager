@@ -29,11 +29,7 @@ import afm.database.MyList;
 import afm.database.ToWatch;
 import afm.utils.Utils;
 
-/*
- * A lot of things here are identical to SearchScreen
- *
- * Am I bothered to sanitize input? No.
- */
+// A lot of things here are identical to SearchScreen
 public class CustomScreen extends GridPane {
 
 	@FXML
@@ -80,8 +76,7 @@ public class CustomScreen extends GridPane {
     	szns.add("Winter");
 
     	final var years = yearCombo.getItems();
-    	// Loop from current year to 1999
-    	for (int i = Utils.getCurrentYear(); i >= 1999; i--)
+    	for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
     		years.add(i);
 
     	final SetChangeListener<Genre> genreListener = change -> {
@@ -108,7 +103,6 @@ public class CustomScreen extends GridPane {
     	final StringBuilder sb = new StringBuilder("Genres: ");
 
     	if (genreSet.isEmpty()) {
-    		sb.append("NONE");
     		genreText.setText(sb.toString());
     		return;
     	}
@@ -128,7 +122,8 @@ public class CustomScreen extends GridPane {
     		return;
     	}
 
-    	/* map from Genre to its 'corresponding' MenuItem;
+    	/*
+    	 * map from Genre to its 'corresponding' MenuItem;
     	 * add an ActionListener to the MenuItem - to remove the corresponding Genre;
     	 * collect to a List and set the contextMenu as that list
     	 */
@@ -187,16 +182,16 @@ public class CustomScreen extends GridPane {
     	return emptyName || emptyGenre;
     }
 
-    // return Anime object, created from fields in this
+	// Return an Anime object, built from fields in this screen
     private Anime getAnimeFromFields() {
-    	final AnimeBuilder builder = Anime.builder(nameField.getText());
+    	final AnimeBuilder builder = Anime.builder(nameField.getText().strip());
 
     	builder.setCustom(true)
     		   .setGenres(genreSet);
 
     	final String studio = studioField.getText();
     	if (studio != null && !studio.isBlank())
-    		builder.setStudio(studio);
+    		builder.setStudio(studio.strip());
 
     	final String szn = sznCombo.getValue();
     	final Integer year = yearCombo.getValue();
@@ -205,12 +200,12 @@ public class CustomScreen extends GridPane {
 
     	try {
     		builder.setEpisodes(Integer.parseInt(totalEpField.getText()));
-    	} catch (NumberFormatException nfe) {
+    	} catch (NumberFormatException ignored) {
     		// accept default value
     	}
     	try {
     		builder.setCurrEp(Integer.parseInt(currEpField.getText()));
-    	} catch (NumberFormatException nfe) {
+    	} catch (NumberFormatException ignored) {
     		// accept default value
     	}
 
@@ -225,7 +220,8 @@ public class CustomScreen extends GridPane {
     	Anime anime = getAnimeFromFields();
 
     	if (MyList.contains(anime)) {
-    		/* open Alert to ask if they want to overwrite it
+    		/*
+    		 * open Alert to ask if they want to overwrite it
     		 * if yes: carry on
     		 * otherwise: return
     		 */
@@ -257,7 +253,8 @@ public class CustomScreen extends GridPane {
     	Anime anime = getAnimeFromFields();
 
     	if (ToWatch.contains(anime)) {
-    		/* open Alert to ask if they want to overwrite it
+    		/*
+    		 * open Alert to ask if they want to overwrite it
     		 * if yes: carry on
     		 * otherwise: return
     		 */
@@ -267,7 +264,7 @@ public class CustomScreen extends GridPane {
     		alert.setHeaderText(null);
 
     		alert.setContentText("There is already a very similar anime in ToWatch, "
-    				+ "do you want to overwrite it?");
+    				            + "do you want to overwrite it?");
 
     		alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 

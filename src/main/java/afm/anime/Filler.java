@@ -1,7 +1,5 @@
 package afm.anime;
 
-import static afm.utils.Utils.inJar;
-
 import java.io.IOException;
 
 import javax.annotation.concurrent.Immutable;
@@ -11,13 +9,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 
 import afm.utils.Utils;
 
 @Immutable
 public final class Filler implements Comparable<Filler> {
-					  /* Start ,  End  , Object */
-	private static final HashBasedTable<Integer, Integer, Filler> CACHE = HashBasedTable.create();
+					         /* Start ,  End  , Object */
+	private static final Table<Integer, Integer, Filler> CACHE = HashBasedTable.create();
 
 	// For one episode filler
 	public static Filler of(int episode) {
@@ -73,8 +72,8 @@ public final class Filler implements Comparable<Filler> {
 			for (String f : fillerStrings) {
 				anime.addFiller(parseFiller(f));
 			}
-		} catch (IOException e) {
-			if (!inJar()) e.printStackTrace();
+		} catch (IOException ignored) {
+			// the page doesn't exist, most likely the MAL name is different to the AFL name
 		}
 	}
 

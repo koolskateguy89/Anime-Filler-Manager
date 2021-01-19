@@ -1,13 +1,20 @@
 package afm.anime;
 
 import java.util.Objects;
+
+import javax.annotation.concurrent.Immutable;
+
 import afm.utils.Utils;
 
-// This is immutable
-// could implement making it a Record instead
+// shouldn't use Record as doesn't provide private constructor
+// This basically mimics an Enum
+@Immutable
 public final class Season implements Comparable<Season> {
 
-	public static final int SPRING = 0, SUMMER = 1, FALL = 2, WINTER = 3;
+	public static final int START_YEAR = 1970;
+	public static final int END_YEAR = Utils.getCurrentYear();
+
+	private static final int SPRING = 0, SUMMER = 1, FALL = 2, WINTER = 3;
 	// [last 2 digits of year][season(spring/...)]
 	private static final Season[][] seasons = new Season[100][4];
 
@@ -15,9 +22,9 @@ public final class Season implements Comparable<Season> {
 	public static final Season UNDEF = new Season("undef", -1);
 
 	public static void init() {
-		// Loop through the years (1999 -> current year) and generate all seasons for that year
+		// Loop through the years (x -> current year) and generate all seasons for that year
 		int szn;
-		for (int year = 1999; year <= Utils.getCurrentYear(); year++) {
+		for (int year = START_YEAR; year <= END_YEAR; year++) {
 			szn = Season.SPRING;
 			while (szn <= Season.WINTER) {
 				seasons[year % 100][szn] = new Season(getSeasonFromInt(szn), year);
@@ -32,13 +39,18 @@ public final class Season implements Comparable<Season> {
 	 * 											   *
 	 ***********************************************/
 
+	private static Season[] values;
+
 	// not used atm >:(
 	public static Season[] values() {
+		if (values != null)
+			return values;
+
 		// Size should be equal to number of years * number of seasons
-		Season[] values = new Season[(Utils.getCurrentYear()-1999+1)*4];
+		values = new Season[(END_YEAR - START_YEAR + 1) * 4];
 		int i = 0;
 		int szn;
-		for (int year = 1999; i < values.length && year <= Utils.getCurrentYear(); year++) {
+		for (int year = START_YEAR; i < values.length && year <= END_YEAR; year++) {
 			szn = Season.SPRING;
 			while (szn <= Season.WINTER) {
 				values[i] = seasons[year % 100][szn];
@@ -87,7 +99,7 @@ public final class Season implements Comparable<Season> {
 	// used in search & custom screen
 	public static Season getSeason(String season, int year) {
 		try {
-			return seasons[year % 100][Season.getSeasonInt(season)];
+			return seasons[year % 100][getSeasonInt(season)];
 		} catch (IndexOutOfBoundsException e) {
 			return UNDEF;
 		}
@@ -101,17 +113,26 @@ public final class Season implements Comparable<Season> {
 		}
 	}
 
-	/** Helper for parsing web scraped data, see {@link #parseSeasonFromMALDate(String)
+	public static Season[] getAllSeasonsFromYear(int year) {
+		Season[] result = new Season[4];
+		int i = 0;
+		for (Season s : seasons[year % 100]) {
+			result[i++] = s;
+		}
+		return result;
+	}
+
+	/**
+	 * Helper for parsing web scraped data, see {@link #parseSeasonFromMALDate(String)
 	 * parseSeasonFromMALDate} below
 	 */
 	private static int getSznFromMonth(String month) {
-		return
-				switch (month) {
-					case "Dec", "Jan", "Feb" -> WINTER;
-					case "Mar", "Apr", "May" -> SPRING;
-					case "Jun", "Jul", "Aug" -> SUMMER;
-					default -> FALL;
-				};
+		return switch (month) {
+			case "Dec", "Jan", "Feb" -> WINTER;
+			case "Mar", "Apr", "May" -> SPRING;
+			case "Jun", "Jul", "Aug" -> SUMMER;
+			default -> FALL;
+		};
 	}
 
 	public static Season parseSeasonFromMALDate(String date) {
