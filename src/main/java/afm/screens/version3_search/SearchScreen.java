@@ -295,14 +295,13 @@ public final class SearchScreen extends GridPane {
     		// if user 'selected' a Genre but didn't add it, ask if they want to add it
     		Genre potentialGenre = genreCombo.getValue();
     		if (potentialGenre != null) {
-    			StringBuilder sb = new StringBuilder("You haven't added any Genres, ");
-    			sb.append("but you have selected {")
-    			  .append(potentialGenre.toString().replace("(", "").replace(")", ""))
-    			  .append('}').append('.')
-    			  .append('\n');
-    			sb.append("Do you want to search for this genre?");
 
-    			ButtonType result = Utils.showAndWaitConfAlert(sb.toString());
+			    String sb = "You haven't added any Genres, " + "but you have selected {" +
+					    potentialGenre.toString().replace("(", "").replace(")", "") +
+					    '}' + '.' +
+					    '\n' +
+					    "Do you want to search for this genre?";
+			    ButtonType result = Utils.showAndWaitConfAlert(sb);
     			if (result != ButtonType.YES)
     				return false;
 
