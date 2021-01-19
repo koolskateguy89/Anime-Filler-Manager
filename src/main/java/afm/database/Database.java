@@ -4,21 +4,21 @@ import static afm.utils.Utils.firstRun;
 import static afm.utils.Utils.inJar;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.EnumSet;
 import java.util.Map;
-import java.util.Properties;
+
+import org.sqlite.SQLiteDataSource;
 
 import com.google.common.base.Strings;
 
 import afm.anime.Anime;
+import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;
 import afm.anime.Season;
-import afm.anime.Anime.AnimeBuilder;
 import afm.utils.Handler;
 
 /*
@@ -70,13 +70,8 @@ public final class Database {
 						Map.entry("imageURL", 10), Map.entry("fillers", 11));
 	}
 
-	private static final Properties prop = new Properties();
-
-
 	// load myList & toWatch contents into runtime linkedHSs
 	public static void init(Handler handler) {
-		prop.put("rewriteBatchedStatements", "true");
-
 		if (inJar() && firstRun())
 			clearTables();
 		else
@@ -86,8 +81,10 @@ public final class Database {
 		ToWatch.init(handler);
 	}
 
-	private static Connection newConnection() throws SQLException {
-		return DriverManager.getConnection(DB_URL, prop);
+	private static final SQLiteDataSource ds = new SQLiteDataSource();
+
+	static {
+		ds.setUrl(DB_URL);
 	}
 
 	/*
@@ -98,7 +95,7 @@ public final class Database {
 	 * (Preferences are cleared whenever a jar is built using batch file clearprefs)
 	 */
 	private static void clearTables() {
-		try(Connection con = newConnection(); Statement s = con.createStatement()) {
+		try(Connection con = ds.getConnection(); Statement s = con.createStatement()) {
 
 			s.addBatch("DELETE FROM MyList");
 			s.addBatch("DELETE FROM ToWatch");
@@ -110,7 +107,7 @@ public final class Database {
 	}
 
 	private static void loadAll() {
-		try (Connection con = newConnection(); Statement s = con.createStatement()) {
+		try (Connection con = ds.getConnection(); Statement s = con.createStatement()) {
 
 			s.setQueryTimeout(30);
 
@@ -177,7 +174,7 @@ public final class Database {
 	}
 
 	public static void saveAll() {
-		try (Connection con = newConnection()){
+		try (Connection con = ds.getConnection()){
 			con.setAutoCommit(false);
 
 			saveMyList(con);
