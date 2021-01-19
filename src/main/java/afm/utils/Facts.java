@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import javafx.util.Pair;
 
-public final class Facts {
+public class Facts {
 
-	private Facts() {
-		throw new IllegalAccessError("class Facts cannot be instantiated");
-	}
+	private Facts() {}
 
 	// 15 facts at a time - 15 facts in a file
 	// atm only 2 fact files
@@ -39,7 +37,7 @@ public final class Facts {
 	}
 
 	public static Pair<Integer, String> getRandomFact() {
-		int id = Utils.randomNumber(1, factMap.size());
+		int id = Utils.randomNumberClosed(1, factMap.size());
 		String fact = factMap.get(id);
 
 		return fact != null ? new Pair<>(id, fact)

@@ -6,7 +6,7 @@ import javafx.scene.media.AudioClip;
 
 public class SoundFactory {
 
-	private SoundFactory() { }
+	private SoundFactory() {}
 
 	private static final AudioClip PING;
 

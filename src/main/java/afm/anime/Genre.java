@@ -2,7 +2,6 @@ package afm.anime;
 
 import afm.utils.Utils;
 
-
 public enum Genre {
 	// They should all be CONSTANT_CASE but I really cannot be bothered to do that manually sooooo
 	// Plus I would then have to completely refactor the findIndex(String) method sooooo
@@ -13,16 +12,17 @@ public enum Genre {
 
 
 	String info;
-	/* it is not index in the usual sense, it is index as in
-	 * the number in the MyAnimeList link
+	/*
+	 * it's not index in the usual sense, it is index as in the number in the MyAnimeList link of
+	 * a genre
 	 * (used when searching for anime)
-	 * */
+	 */
 	int index;
 
 	Genre() {
 		index = findIndex(this.name());
 	}
-	
+
 	Genre(String info) {
 		this();
 		this.info = info;
@@ -99,7 +99,7 @@ public enum Genre {
 
 	/* special implementation of binary search that ignores case for safety */
 	public static Genre parseGenreFromToString(String toString) {
-		var values = values();
+		Genre[] values = values();
 		int pos = Utils.binarySearch(values, toString);
 
 		if (pos == -1)

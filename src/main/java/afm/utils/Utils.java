@@ -34,11 +34,9 @@ import afm.anime.Anime;
 import afm.anime.Genre;
 import com.google.common.math.DoubleMath;
 
-public final class Utils {
+public class Utils {
 
-	private Utils() {
-		throw new AssertionError("class Utils cannot be instantiated");
-	}
+	private Utils() {}
 
 	private static final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
 

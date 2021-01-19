@@ -9,9 +9,7 @@ import javafx.util.Duration;
 
 public class NotificationFactory {
 
-	private NotificationFactory() {
-		throw new IllegalAccessError("Static class NotificationFactory cannot be instantiated");
-	}
+	private NotificationFactory() {}
 
 	private static final Duration DEFAULT_DUR = Duration.seconds(10);
 	private static final Duration DEFAULT_INFO_DUR = Duration.seconds(3);
