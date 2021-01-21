@@ -12,8 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <maven.compiler.release>15</maven.compiler.release>
+        <javafx.version>15.0.1</javafx.version>
     </properties>
 
     <dependencies>
@@ -29,22 +29,22 @@
     	<dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
-            <version>15.0.1</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>15.0.1</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>15.0.1</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
-            <version>15.0.1</version>
+            <version>${javafx.version}</version>
         </dependency>
 
         <!-- ControlsFX (mainly for Notification) -->
@@ -87,7 +87,6 @@
         		<artifactId>maven-compiler-plugin</artifactId>
         		<version>3.8.1</version>
         		<configuration>
-        			<release>15</release>
         			<compilerArgs>
         				<arg>--enable-preview</arg>
         			</compilerArgs>
