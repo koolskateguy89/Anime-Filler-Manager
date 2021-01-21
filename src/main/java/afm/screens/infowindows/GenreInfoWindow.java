@@ -34,10 +34,12 @@ public class GenreInfoWindow extends InfoWindow {
 
 		EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
 
-		tempMap.put(Genre.Action, "A genre in which the protagonist or "
-			+ "protagonists are thrust into a series of events that "
-			+ "typically include violence, extended fighting, physical "
-			+ "feats, rescues and frantic chases.");
+		tempMap.put(Genre.Action, """
+								  A genre in which the protagonist or \
+								  protagonists are thrust into a series of events that \
+								  typically include violence, extended fighting, physical \
+								  feats, rescues and frantic chases.
+								  """);
 
 		tempMap.put(Genre.Adventure, "Travelling and undertaking an adventure in a certain place");
 
