@@ -47,7 +47,7 @@
             <version>${javafx.version}</version>
         </dependency>
 
-        <!-- ControlsFX (mainly for Notification) -->
+        <!-- ControlsFX (only for Notification atm) -->
         <dependency>
         	<groupId>org.controlsfx</groupId>
         	<artifactId>controlsfx</artifactId>
