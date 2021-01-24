@@ -35,7 +35,7 @@ omg I should have called this MyFillerList
 
 ## Built With
 
-- [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language & development tool
+- [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language
 - [Maven](https://maven.apache.org/) - Project Management
 - [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
     - [FXML](https://en.wikipedia.org/wiki/FXML)
@@ -49,7 +49,7 @@ This application mainly uses [web scraping](https://jsoup.org/) to enable you to
 
 ### Prerequisites
 
-- [Java 15](https://www.oracle.com/uk/java/technologies/javase-downloads.html) (with preview features enabled)
+- [Java 15](https://www.oracle.com/uk/java/technologies/javase-downloads.html)
 - [JavaFX 15](https://openjfx.io/)
 - [ControlsFX 11.0.3](https://github.com/controlsfx/controlsfx)
 - [Guava 30.1-jre](https://github.com/google/guava)
@@ -63,9 +63,13 @@ Clone this repository:
 git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 ```
 
-(p.s. if using Eclipse, you can import this as a Java Project, but you will probably have to configure the project build path to include all the prerequisites)
-
 ### Building and running using Maven
+
+Note: the only prerequisites needed for this are Java 15 & Maven.
+
+If you are on Windows, see the [res](res) folder for some batch files to help build and/or run.
+
+<br/>
 
 To build:
 1.  Run the command `mvn package` in the repository folder
@@ -73,7 +77,7 @@ To build:
 To run:
 
 2.  Open the target directory e.g. `cd target`
-3.  Run the command `java -jar --enable-preview "AFM.jar"` OR 'open' the executable JAR at `[REPO_FOLDER]/target/AFM.jar`
+3.  Run the command `java -jar "AFM.jar"` OR 'open' the executable JAR at `[REPO_FOLDER]/target/AFM.jar`
 
 ## Important things to know when running
 
