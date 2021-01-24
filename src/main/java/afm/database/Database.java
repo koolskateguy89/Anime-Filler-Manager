@@ -125,11 +125,11 @@ public final class Database {
 
 			s.setQueryTimeout(30);
 
-			double diff = (end - start) / 2;
+			double halfDiff = (end - start) / 2;
 
-			loadMyList(s, task, start, end - diff);
+			loadMyList(s, task, start, end - halfDiff);
 
-			loadToWatch(s, task, start + diff, end);
+			loadToWatch(s, task, start + halfDiff, end);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
