@@ -1,7 +1,5 @@
 package afm;
 
-import static afm.utils.Utils.inJar;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -195,6 +193,8 @@ public class Main extends Application {
 
 			// OnClose thread will be run upon JVM trying to exit
 			Runtime.getRuntime().addShutdownHook(OnClose.getInstance());
+
+			stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
 
 			// start loading is done internally (button action)
 			startScreen = new StartScreen(h);

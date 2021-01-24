@@ -368,7 +368,6 @@ public final class Anime {
 
 		infoBtn.setOnAction(event -> {
 			infoBtn.setStyle(HIGHLIGHT);
-			infoBtn.setMouseTransparent(true);
 			ResultInfoWindow.open(this, infoBtn, myListBtn, toWatchBtn);
 		});
 
@@ -380,7 +379,6 @@ public final class Anime {
 		// anime is already in ToWatch
 		} else if (ToWatch.contains(this)) {
 			toWatchBtn.setStyle(HIGHLIGHT);
-
 			toWatchBtn.setMouseTransparent(true);
 			myListBtn.setMouseTransparent(true);
 		// anime is in neither MyList nor ToWatch
@@ -432,7 +430,6 @@ public final class Anime {
 
 		myListInfoBtn.setOnAction(event -> {
 			myListInfoBtn.setStyle(HIGHLIGHT);
-			myListInfoBtn.setMouseTransparent(true);
 			MyListInfoWindow.open(this, myListInfoBtn);
 		});
 

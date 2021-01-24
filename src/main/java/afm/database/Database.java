@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.sqlite.SQLiteDataSource;
@@ -19,6 +21,7 @@ import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;
 import afm.anime.Season;
+import afm.screens.version1_start.StartScreen;
 import afm.utils.Handler;
 
 /*
@@ -64,18 +67,29 @@ public final class Database {
 	private static final Map<String, Integer> COLUMN_MAP;
 
 	static {
-		COLUMN_MAP = Map.ofEntries(Map.entry("name", 1), Map.entry("genres", 2), Map.entry("id", 3),
-						Map.entry("studio", 4), Map.entry("seasonString", 5), Map.entry("info", 6),
-						Map.entry("custom", 7), Map.entry("currEp", 8), Map.entry("totalEps", 9),
-						Map.entry("imageURL", 10), Map.entry("fillers", 11));
+		Map<String, Integer> temp = new HashMap<>();
+
+		temp.put("name", 1);
+		temp.put("genres", 2);
+		temp.put("id", 3);
+		temp.put("studio", 4);
+		temp.put("seasonString", 5);
+		temp.put("info", 6);
+		temp.put("custom", 7);
+		temp.put("currEp", 8);
+		temp.put("totalEps", 9);
+		temp.put("imageURL", 10);
+		temp.put("fillers", 11);
+
+		COLUMN_MAP = Collections.unmodifiableMap(temp);
 	}
 
 	// load myList & toWatch contents into runtime linkedHSs
-	public static void init(Handler handler) {
+	public static void init(Handler handler, StartScreen.LoadTask task, double start, double end) {
 		if (inJar() && firstRun())
 			clearTables();
 		else
-			loadAll();
+			loadAll(task, start, end);
 
 		MyList.init(handler);
 		ToWatch.init(handler);
@@ -102,73 +116,66 @@ public final class Database {
 
 			s.executeBatch();
 		} catch (SQLException e) {
-			if (!inJar()) e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
-	private static void loadAll() {
+	private static void loadAll(StartScreen.LoadTask task, double start, double end) {
 		try (Connection con = ds.getConnection(); Statement s = con.createStatement()) {
 
 			s.setQueryTimeout(30);
 
-			loadMyList(s);
+			double diff = (end - start) / 2;
 
-			loadToWatch(s);
+			loadMyList(s, task, start, end - diff);
+
+			loadToWatch(s, task, start + diff, end);
 
 		} catch (SQLException e) {
-			/*if (!inJar())*/ e.printStackTrace();
+			e.printStackTrace();
 		}
-	}
-
-	private static Anime loadAnimeFromResultSet(ResultSet rs) throws SQLException {
-		AnimeBuilder builder = Anime.builder();
-
-		builder.setName(rs.getString(COLUMN_MAP.get("name")))
-			   .setStudio(rs.getString(COLUMN_MAP.get("studio")))
-			   .setInfo(rs.getString(COLUMN_MAP.get("info")));
-
-		// this returns null if input is null so its fine
-		Season season = Season.getSeasonFromToString(rs.getString(COLUMN_MAP.get("seasonString")));
-		builder.setSeason(season);
-
-		builder.setCurrEp(rs.getInt(COLUMN_MAP.get("currEp")))
-			   .setEpisodes(rs.getInt(COLUMN_MAP.get("totalEps")));
-
-		builder.setImageURL(rs.getString(COLUMN_MAP.get("imageURL")));
-
-		builder.setId(rs.getInt(COLUMN_MAP.get("id")))
-			   .setCustom(rs.getBoolean(COLUMN_MAP.get("custom")));
-
-		String genreString = rs.getString(COLUMN_MAP.get("genres"));
-		EnumSet<Genre> genreSet = EnumSet.noneOf(Genre.class);
-		for (String g :  genreString.split(", ")) {
-			genreSet.add(Genre.parseGenreFromToString(g));
-		}
-		builder.setGenres(genreSet);
-
-		String fillerString = rs.getString(COLUMN_MAP.get("fillers"));
-		if (!Strings.isNullOrEmpty(fillerString)) {
-			for (String f : fillerString.split(", "))
-				builder.addFillerAsString(f);
-		}
-
-		return builder.build();
 	}
 
 	// Load contents of MyList table into runtime MyList
-	private static void loadMyList(Statement statement) throws SQLException {
+	private static void loadMyList(Statement statement, StartScreen.LoadTask task,
+	                               double start, double end) throws SQLException {
+		double diff = end - start;
+		double step;
+		int size = getTableSize(statement, "MyList");
+
+		if (size == 0) {
+			task.incrementProgress(diff);
+			return;
+		}
+
+		step = diff / size;
+
 		try (ResultSet rs = statement.executeQuery("SELECT * FROM MyList")) {
 			while (rs.next()) {
 				MyList.addSilent(loadAnimeFromResultSet(rs));
+				task.incrementProgress(step);
 			}
 		}
 	}
 
 	// Load contents of ToWatch table into runtime ToWatch
-	private static void loadToWatch(Statement statement) throws SQLException {
+	private static void loadToWatch(Statement statement, StartScreen.LoadTask task,
+	                                double start, double end) throws SQLException {
+		double diff = end - start;
+		double step;
+		int size = getTableSize(statement, "ToWatch");
+
+		if (size == 0) {
+			task.incrementProgress(diff);
+			return;
+		}
+
+		step = diff / size;
+
 		try (ResultSet rs = statement.executeQuery("SELECT * FROM ToWatch")) {
 			while (rs.next()) {
 				ToWatch.addSilent(loadAnimeFromResultSet(rs));
+				task.incrementProgress(step);
 			}
 		}
 	}
@@ -261,6 +268,48 @@ public final class Database {
 				if (batchSize > 0)
 					ps.executeBatch();
 			}
+		}
+	}
+
+	private static Anime loadAnimeFromResultSet(ResultSet rs) throws SQLException {
+		AnimeBuilder builder = Anime.builder();
+
+		builder.setName(rs.getString(COLUMN_MAP.get("name")))
+				.setStudio(rs.getString(COLUMN_MAP.get("studio")))
+				.setInfo(rs.getString(COLUMN_MAP.get("info")));
+
+		// this returns null if input is null so its fine
+		Season season = Season.getSeasonFromToString(rs.getString(COLUMN_MAP.get("seasonString")));
+		builder.setSeason(season);
+
+		builder.setCurrEp(rs.getInt(COLUMN_MAP.get("currEp")))
+				.setEpisodes(rs.getInt(COLUMN_MAP.get("totalEps")));
+
+		builder.setImageURL(rs.getString(COLUMN_MAP.get("imageURL")));
+
+		builder.setId(rs.getInt(COLUMN_MAP.get("id")))
+				.setCustom(rs.getBoolean(COLUMN_MAP.get("custom")));
+
+		String genreString = rs.getString(COLUMN_MAP.get("genres"));
+		EnumSet<Genre> genreSet = EnumSet.noneOf(Genre.class);
+		for (String g :  genreString.split(", ")) {
+			genreSet.add(Genre.parseGenreFromToString(g));
+		}
+		builder.setGenres(genreSet);
+
+		String fillerString = rs.getString(COLUMN_MAP.get("fillers"));
+		if (!Strings.isNullOrEmpty(fillerString)) {
+			for (String f : fillerString.split(", "))
+				builder.addFillerAsString(f);
+		}
+
+		return builder.build();
+	}
+
+	private static int getTableSize(Statement s, String tableName) throws SQLException {
+		try (ResultSet rs = s.executeQuery("SELECT COUNT(*) from " + tableName)) {
+			rs.next();
+			return rs.getInt(1);
 		}
 	}
 

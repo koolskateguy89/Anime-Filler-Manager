@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -27,12 +28,17 @@ public class MyListInfoWindow extends InfoWindow {
 
 	private final Button infoBtn;
 
+	private final EventHandler<ActionEvent> eventHandler;
+
 	@FXML
 	private TextField currEpField;
 
 	private MyListInfoWindow(Anime a, Button infoBtn) throws IOException {
 		super(a);
+
 		this.infoBtn = infoBtn;
+		eventHandler = infoBtn.getOnAction();
+		infoBtn.setOnAction(e -> this.requestFocus());
 
 		// load FXML file into this object
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("MyListInfoWindow"));
@@ -54,13 +60,19 @@ public class MyListInfoWindow extends InfoWindow {
 			StringProperty sp = (StringProperty)obs;
 
 			if (newVal.isEmpty()) {
-				sp.setValue("0");
+				anime.setCurrEp(0);
+				MyList.update(anime);
 			} else if (Utils.isStrictInteger(newVal)) {
 				int newEps = Integer.parseInt(newVal);
     			anime.setCurrEp(newEps);
     			MyList.update(anime);
-    			sp.setValue(Integer.toString(anime.getCurrEp()));
+
+    			// re-set value in case there's a problem such as the episode being outside
+				// of the anime's episode range
+				if (anime.getCurrEp() != newEps)
+					sp.setValue(Integer.toString(anime.getCurrEp()));
 			} else {
+				// the input is not acceptable, i.e. is not an integer
 				sp.setValue(oldVal);
 			}
 		});
@@ -78,7 +90,7 @@ public class MyListInfoWindow extends InfoWindow {
 	@Override @FXML
 	void closeWindow(ActionEvent event) {
 		infoBtn.setStyle("");
-		infoBtn.setMouseTransparent(false);
+		infoBtn.setOnAction(eventHandler);
 
 		super.closeWindow(event);
 	}

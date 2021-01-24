@@ -4,7 +4,6 @@ import static afm.utils.Utils.sleep;
 
 import java.io.IOException;
 
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class StartScreen extends Pane {
 
 	private final Handler h;
 	private Pair<Integer, String> fact;
-	private Task<Void> loadTask;
+	private LoadTask loadTask;
 
 	public StartScreen(Handler h) throws IOException {
 		this.h = h;
@@ -58,84 +57,7 @@ public class StartScreen extends Pane {
 		}
 
 		//Initialise the loadTask which loads all screens
-		loadTask = new Task<>() {
-			protected Void call() {
-				try {
-					Platform.runLater(() -> {
-						// Hide startBtn
-						startBtn.setDisable(true);
-						startBtn.setVisible(false);
-						// Enable progressBar
-						progressBar.setDisable(false);
-						// Show loadLbl
-						loadLbl.setOpacity(1);
-					});
-
-					updateProgress(5,100);
-
-					Season.init();
-					updateProgress(10,100);
-
-					InfoWindow.init(h);
-
-					//Load different Screens
-					final Main main = h.getMain();
-
-					main.welcomeScreen = new WelcomeScreen(h);
-					updateProgress(25,100);
-					main.menu = new Menu(h);
-					updateProgress(35,100);
-					main.settingsScreen = new SettingsScreen();
-					updateProgress(40,100);
-					main.searchScreen = new SearchScreen(h);
-					updateProgress(45,100);
-					main.myListScreen = new MyListScreen();
-					updateProgress(55,100);
-					main.toWatchScreen = new ToWatchScreen();
-					updateProgress(65,100);
-					main.customScreen = new CustomScreen();
-					updateProgress(80,100);
-
-					Thread updateThread = new Thread(() ->  {
-						long time = 1000; // i want it to take x seconds to fill rest of bar
-						long wait = time / (98 - 80);
-						for (int n = 80; n < 98; n++) {
-							sleep(wait);
-							updateProgress(n, 100);
-						}
-					});
-
-					updateThread.setDaemon(false);
-					updateThread.start();
-
-					// load MyList & ToWatch from database into run time memory
-					Database.init(h);
-
-					updateThread.join();
-
-					//Completely fill progressBar
-					updateProgress(100, 100);
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// apparently it's better to re-interrupt soooo
-					// "Restore interrupted state"
-					Thread.currentThread().interrupt();
-				}
-
-				return null;
-			}
-		};
-
-		//Once loading has been finished do:
-		loadTask.setOnSucceeded(event -> {
-			//change loadLbl text to notify user
-			loadLbl.setOpacity(1);
-			loadLbl.setText("Done!");
-			//enable startBtn
-			startBtn.setVisible(true);
-			startBtn.setDisable(false);
-		});
+		loadTask = new LoadTask();
 	}
 
 	@FXML
@@ -210,5 +132,78 @@ public class StartScreen extends Pane {
 		final Thread loadThread = new Thread(loadTask);
 		loadThread.setDaemon(true);
 		loadThread.start();
+	}
+
+	public class LoadTask extends Task<Void> {
+
+    	private final int max = 100;
+    	private double progress;
+
+    	public LoadTask() {
+		    setOnSucceeded(event -> {
+			    //change loadLbl text to notify user
+			    loadLbl.setOpacity(1);
+			    loadLbl.setText("Done!");
+			    //enable startBtn
+			    startBtn.setVisible(true);
+			    startBtn.setDisable(false);
+		    });
+	    }
+
+		protected Void call() {
+			try {
+				// Hide startBtn
+				startBtn.setDisable(true);
+				startBtn.setVisible(false);
+				// Enable progressBar
+				progressBar.setDisable(false);
+				// Show loadLbl
+				loadLbl.setOpacity(1);
+
+				updateProgress(5, max);
+
+				Season.init();
+				updateProgress(10, max);
+
+				InfoWindow.init(h);
+				updateProgress(15,  max);
+
+				// Load different Screens
+				final Main main = h.getMain();
+
+				main.welcomeScreen = new WelcomeScreen(h);
+				updateProgress(25, max);
+				main.menu = new Menu(h);
+				updateProgress(35, max);
+				main.settingsScreen = new SettingsScreen();
+				updateProgress(40, max);
+				main.searchScreen = new SearchScreen(h);
+				updateProgress(45, max);
+				main.myListScreen = new MyListScreen();
+				updateProgress(55, max);
+				main.toWatchScreen = new ToWatchScreen();
+				updateProgress(65, max);
+				main.customScreen = new CustomScreen();
+				updateProgress(80, max);
+
+				// load MyList & ToWatch from database into run time data structures
+				progress = 80;
+				Database.init(h, this, 80,  max);
+
+				// Completely fill progressBar
+				updateProgress(1.0,  1.0);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		public void incrementProgress(double inc) {
+			// for some reason it freezes when using (getProgress() + inc)
+			progress += inc;
+    		updateProgress(progress, max);
+		}
+
 	}
 }

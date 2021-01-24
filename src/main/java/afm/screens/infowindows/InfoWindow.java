@@ -24,6 +24,7 @@ import afm.utils.Handler;
 import afm.utils.NotificationFactory;
 import afm.utils.Utils;
 
+// not much point of it being abstract I think...
 public abstract class InfoWindow extends Stage {
 
 	public static void init(Handler h) {

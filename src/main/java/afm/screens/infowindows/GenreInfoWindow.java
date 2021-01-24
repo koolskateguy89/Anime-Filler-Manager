@@ -26,7 +26,7 @@ public class GenreInfoWindow extends InfoWindow {
 
 	static Handler h;
 
-	// maybe this should be in Genre c;ass
+	// maybe this should be in Genre class
 	private static ImmutableMap<Genre, String> genreDefMap;
 
 	public static void init(Handler h) {

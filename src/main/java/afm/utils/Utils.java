@@ -30,6 +30,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+import com.google.common.base.Strings;
 import com.google.common.math.DoubleMath;
 
 import afm.anime.Anime;
@@ -173,6 +174,9 @@ public class Utils {
 	}
 
 	public static boolean isStrictInteger(final String s) {
+		if (Strings.isNullOrEmpty(s))
+			return false;
+
 		for (int i = 0; i < s.length(); i++) {
 			if (!Character.isDigit(s.charAt(i)))
 				return false;
@@ -344,9 +348,10 @@ public class Utils {
 	// Stop user from typing any characters that aren't numeric
 	public static ChangeListener<String> onlyAllowIntegersListener() {
 		return (obs, oldVal, newVal) -> {
-			if (newVal == null || newVal.isEmpty())
+			/* if (newVal == null || newVal.isEmpty())
 				((StringProperty) obs).setValue("0");
-			else if (!isStrictInteger(newVal))
+			else */
+			if (!isStrictInteger(newVal))
 				((StringProperty) obs).setValue(oldVal);
 		};
 	}

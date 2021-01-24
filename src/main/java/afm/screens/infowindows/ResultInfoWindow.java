@@ -3,6 +3,7 @@ package afm.screens.infowindows;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -27,6 +28,8 @@ public class ResultInfoWindow extends InfoWindow {
 	private final Button MLbtn;
 	private final Button TWbtn;
 
+	private final EventHandler<ActionEvent> eventHandler;
+
 	@FXML
 	private Button myListBtn;
 
@@ -38,6 +41,9 @@ public class ResultInfoWindow extends InfoWindow {
 		this.infoBtn = infoBtn;
 		MLbtn = myListBtn;
 		TWbtn = toWatchBtn;
+
+		eventHandler = infoBtn.getOnAction();
+		infoBtn.setOnAction(e -> this.requestFocus());
 
 		// load FXML file into this object
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("ResultInfoWindow"));
@@ -86,7 +92,7 @@ public class ResultInfoWindow extends InfoWindow {
 	@Override @FXML
 	void closeWindow(ActionEvent event) {
 		infoBtn.setStyle("");
-		infoBtn.setMouseTransparent(false);
+		infoBtn.setOnAction(eventHandler);
 
 		super.closeWindow(event);
 	}
