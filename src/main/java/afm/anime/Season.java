@@ -1,14 +1,14 @@
 package afm.anime;
 
-import java.util.Objects;
-
 import javax.annotation.concurrent.Immutable;
 
 import afm.utils.Utils;
+import lombok.EqualsAndHashCode;
 
 // shouldn't use Record as doesn't provide private constructor
 // This basically mimics an Enum
 @Immutable
+@EqualsAndHashCode(cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
 public final class Season implements Comparable<Season> {
 
 	public static final int START_YEAR = 1970;
@@ -164,24 +164,6 @@ public final class Season implements Comparable<Season> {
 	}
 
 	@SuppressWarnings("preview")
-	@Override
-	public final boolean equals(Object o) {
-		// identity check
-		if (this == o)
-			return true;
-
-		// null and type check
-		if (o instanceof Season other) {
-			return year == other.year && szn.equals(other.szn);
-		}
-		return false;
-	}
-
-	@Override
-	public final int hashCode() {
-		return Objects.hash(szn, year);
-	}
-
 	@Override
 	public String toString() {
 		if (this.equals(UNDEF))

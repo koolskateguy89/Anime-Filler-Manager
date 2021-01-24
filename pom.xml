@@ -12,7 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>15</maven.compiler.release>
+        <maven.compiler.source>e15</maven.compiler.source>
+        <maven.compiler.target>15</maven.compiler.target>
         <javafx.version>15.0.1</javafx.version>
     </properties>
 
@@ -81,18 +82,6 @@
 		<finalName> ${project.name} </finalName>
 
         <plugins>
-       		<!-- Enable preview features (atm Pattern Matching) to be able to compile -->
-        	<plugin>
-        		<groupId>org.apache.maven.plugins</groupId>
-        		<artifactId>maven-compiler-plugin</artifactId>
-        		<version>3.8.1</version>
-        		<configuration>
-        			<compilerArgs>
-        				<arg>--enable-preview</arg>
-        			</compilerArgs>
-                </configuration>
-        	</plugin>
-
         	<!-- Build an executable 'shaded' JAR -->
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>

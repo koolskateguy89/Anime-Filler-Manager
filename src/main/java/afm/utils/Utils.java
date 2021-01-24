@@ -30,9 +30,10 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+import com.google.common.math.DoubleMath;
+
 import afm.anime.Anime;
 import afm.anime.Genre;
-import com.google.common.math.DoubleMath;
 
 public class Utils {
 
@@ -219,10 +220,10 @@ public class Utils {
 		else
 			newStyle = style;
 
-		if (target instanceof Node node) {
-			node.setStyle(newStyle);
-		} else if (target instanceof TableColumn tc) {
-			tc.setStyle(newStyle);
+		if (target instanceof Node) {
+			((Node)target).setStyle(newStyle);
+		} else if (target instanceof  TableColumn) {
+			((TableColumn)target).setStyle(newStyle);
 		}
 	}
 

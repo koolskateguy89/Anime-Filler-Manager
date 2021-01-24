@@ -136,7 +136,7 @@ public final class Filler implements Comparable<Filler> {
 
 	@Override
 	public String toString() {
-		return (end - start == 0) ? Integer.toString(end) : start + "-" + end;
+		return (start == end) ? Integer.toString(end) : start + "-" + end;
 	}
 
 	// This smaller -> negative result
