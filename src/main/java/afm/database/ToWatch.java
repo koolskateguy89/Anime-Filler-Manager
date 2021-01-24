@@ -57,7 +57,6 @@ public final class ToWatch {
 		// only add to [removed] if the anime was present in [runTime]
 		if (runTime.remove(anime)) {
 			removed.add(anime.getName());
-			anime.recycle();
 		}
 
 		added.remove(anime);

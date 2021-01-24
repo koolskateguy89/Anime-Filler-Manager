@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.annotation.concurrent.Immutable;
 
+import lombok.EqualsAndHashCode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -14,6 +15,7 @@ import com.google.common.collect.Table;
 import afm.utils.Utils;
 
 @Immutable
+@EqualsAndHashCode
 public final class Filler implements Comparable<Filler> {
 					         /* Start ,  End  , Object */
 	private static final Table<Integer, Integer, Filler> CACHE = HashBasedTable.create();
@@ -143,24 +145,4 @@ public final class Filler implements Comparable<Filler> {
 		return (start != o.start) ? start - o.start : end - o.end;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		// identity check
-		if (this == o)
-			return true;
-
-		// null and type check
-		if (o instanceof Filler other) {
-			return start == other.start && end == other.end;
-		}
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = 1;
-		result = 31 * result + start;
-		result = 31 * result + end;
-		return result;
-	}
 }

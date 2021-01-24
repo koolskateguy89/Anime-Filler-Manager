@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.EnumSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -26,6 +25,7 @@ import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
 import afm.screens.infowindows.ToWatchInfoWindow;
 import afm.utils.Utils;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /*
@@ -44,6 +44,7 @@ import lombok.Getter;
  * 11 +fillers - String (fillers as a String)
  *
  */
+@EqualsAndHashCode(doNotUseGetters = true, onlyExplicitlyIncluded = true)
 public final class Anime {
 
 	//episode count
@@ -181,11 +182,11 @@ public final class Anime {
 		}
 	}
 
-	@Getter private final String name;
-	@Getter private final String studio;
-	@Getter private final Season season;
+	@EqualsAndHashCode.Include @Getter private final String name;
+	@EqualsAndHashCode.Include @Getter private final String studio;
+	@EqualsAndHashCode.Include @Getter private final Season season;
 
-	private final ImmutableSet<Genre> genres;
+	@EqualsAndHashCode.Include private final ImmutableSet<Genre> genres;
 	@Getter private final String genreString;
 
 	@Getter private TreeSet<Filler> fillers = new TreeSet<>();
@@ -242,34 +243,6 @@ public final class Anime {
 					  ( (episodes == Anime.NOT_FINISHED || episodes == 0)? "" : "  episode(s) = "+episodes );
 	}
 
-	@SuppressWarnings("preview")
-	@Override
-	public boolean equals(Object o) {
-		// self (identity) check
-		if (this == o)
-			return true;
-
-		// null and type check
-		if (o instanceof Anime other) {
-			return name.equals(other.name)
-					&& genres.equals(other.genres)
-					&& Objects.equals(studio, other.studio)
-					&& Objects.equals(season, other.season);
-		}
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = 1;
-		result = 31 * result + name.hashCode();
-		result = 31 * result + genres.hashCode();
-		result = 31 * result + Objects.hashCode(studio);
-		result = 31 * result + Objects.hashCode(season);
-
-		return result;
-	}
-
 	// Set up a PreparedStatement to be ready to write this anime into database
 	public void prepareStatement(PreparedStatement ps) throws SQLException {
 		ps.setString(1,  this.name.replace(";", ""));
@@ -307,10 +280,6 @@ public final class Anime {
 		return EnumSet.copyOf(genres);
 	}
 
-	public void recycle() {
-		image = null;
-	}
-
 	public Image getImage() {
 		if (imageURL == null)
 			return null;
@@ -327,7 +296,7 @@ public final class Anime {
 	}
 
 	public String getURL() {
-		return custom || id == null ? null : "https://myanimelist.net/anime/" + id;
+		return (custom || id == null) ? null : "https://myanimelist.net/anime/" + id;
 	}
 
 	public int getCurrEp() {

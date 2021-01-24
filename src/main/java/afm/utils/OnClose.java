@@ -21,7 +21,7 @@ public class OnClose extends Thread {
 		setName("On close thread");
 	}
 
-	// Save Settings preferences & Save MyList & ToWAtch into database
+	// Save Settings preferences & Save MyList & ToWatch into database
 	@Override
 	public void run() {
 		Settings.save();
