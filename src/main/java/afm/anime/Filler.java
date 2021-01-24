@@ -15,7 +15,7 @@ import com.google.common.collect.Table;
 import afm.utils.Utils;
 
 @Immutable
-@EqualsAndHashCode
+@EqualsAndHashCode(cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
 public final class Filler implements Comparable<Filler> {
 					         /* Start ,  End  , Object */
 	private static final Table<Integer, Integer, Filler> CACHE = HashBasedTable.create();

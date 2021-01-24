@@ -44,7 +44,9 @@ import lombok.Getter;
  * 11 +fillers - String (fillers as a String)
  *
  */
-@EqualsAndHashCode(doNotUseGetters = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(doNotUseGetters = true,
+				   onlyExplicitlyIncluded = true,
+				   cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
 public final class Anime {
 
 	//episode count
