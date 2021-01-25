@@ -108,8 +108,8 @@ public abstract class InfoWindow extends Stage {
 	void openFillers(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 
+		alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
 		alert.setTitle("Filler episodes for: " + anime.getName());
-		alert.setHeaderText(null);	// hide header
 
 		String fillerString = anime.getFillers().toString();
 		alert.setContentText(fillerString.substring(1, fillerString.length()-1));

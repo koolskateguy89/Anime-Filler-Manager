@@ -4,13 +4,15 @@ import java.io.IOException;
 
 import javax.annotation.concurrent.Immutable;
 
-import lombok.EqualsAndHashCode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import afm.utils.Utils;
 
@@ -126,12 +128,18 @@ public final class Filler implements Comparable<Filler> {
 	}
 
 
+	@Getter
 	private final int start;
+	@Getter
 	private final int end;
 
 	private Filler(int start, int end) {
 		this.start = start;
 		this.end = end;
+	}
+
+	public boolean contains(int n) {
+		return start <= n && n <= end;
 	}
 
 	@Override

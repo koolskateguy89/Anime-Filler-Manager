@@ -297,6 +297,24 @@ public final class Anime {
 		fillers.add(filler);
 	}
 
+	// taking filler into account
+	public int getNextEpisode() {
+		int nextEp = currEp + 1;
+		for (Filler filler : fillers) {
+			if (filler.contains(nextEp)) {
+				// 'skip' to the end of the filler range
+				// this is fine as consecutive filler SHOULD be in the same range
+				return filler.getEnd() + 1;
+			}
+			if (currEp < filler.getStart()) {
+				// if this if clause is triggered, we have gone past our episode
+				// this should happen if the next episode is not filler
+				break;
+			}
+		}
+		return nextEp;
+	}
+
 	public String getURL() {
 		return (custom || id == null) ? null : "https://myanimelist.net/anime/" + id;
 	}
