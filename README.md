@@ -16,8 +16,6 @@
 - [Important notes](#important-things-to-know-when-running)
 - [License](#license)
 
-- [ ] test
-
 ## Introduction
 
 This is for my IB CS IA
