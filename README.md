@@ -16,12 +16,14 @@
 - [Important notes](#important-things-to-know-when-running)
 - [License](#license)
 
+- [ ] test
+
 ## Introduction
 
 This is for my IB CS IA
 
 <sub><sup>
-Currently sitting on 5083 lines & 3593 loc (lines of code)
+Currently sitting on 5101 lines & ~3593 loc (lines of code)
 </sup></sub>
 
 Anime Filler Manager is a Java application to search for anime from
