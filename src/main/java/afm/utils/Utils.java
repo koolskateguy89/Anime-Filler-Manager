@@ -216,7 +216,7 @@ public class Utils {
 			return binarySearch(arr, key, mid + 1, end);
 	}
 
-	@SuppressWarnings({ "preview", "rawtypes" })
+	@SuppressWarnings("rawtypes")
 	private static <T extends Styleable> void changeStyle(T target, String style) {
 		String newStyle = target.getStyle();
 		if (newStyle != null && !newStyle.isEmpty())

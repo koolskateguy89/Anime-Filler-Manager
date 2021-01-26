@@ -2,8 +2,6 @@ package afm.anime;
 
 import java.io.IOException;
 
-import javax.annotation.concurrent.Immutable;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -16,7 +14,6 @@ import lombok.Getter;
 
 import afm.utils.Utils;
 
-@Immutable
 @EqualsAndHashCode(cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
 public final class Filler implements Comparable<Filler> {
 					         /* Start ,  End  , Object */

@@ -1,13 +1,10 @@
 package afm.anime;
 
-import javax.annotation.concurrent.Immutable;
-
 import afm.utils.Utils;
 import lombok.EqualsAndHashCode;
 
 // shouldn't use Record as doesn't provide private constructor
 // This basically mimics an Enum
-@Immutable
 @EqualsAndHashCode(cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
 public final class Season implements Comparable<Season> {
 
@@ -163,7 +160,6 @@ public final class Season implements Comparable<Season> {
 		year = y;
 	}
 
-	@SuppressWarnings("preview")
 	@Override
 	public String toString() {
 		if (this.equals(UNDEF))
