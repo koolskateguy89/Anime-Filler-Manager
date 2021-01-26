@@ -189,14 +189,12 @@ public class Main extends Application {
 
 			stage.setResizable(false);
 
-			//stage.setOnCloseRequest(event -> onClose());
+			stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
 
 			// OnClose thread will be run upon JVM trying to exit
 			Runtime.getRuntime().addShutdownHook(OnClose.getInstance());
 
-			stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
-
-			// start loading is done internally (button action)
+			// start loading is done internally in start screen (by button action)
 			startScreen = new StartScreen(h);
 			scene = new Scene(startScreen);
 

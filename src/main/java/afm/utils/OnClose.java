@@ -2,12 +2,19 @@ package afm.utils;
 
 import afm.database.Database;
 import afm.user.Settings;
+import lombok.Getter;
 
 // Singleton
 public class OnClose extends Thread {
 
-	private static OnClose instance;
+	@Getter(lazy = true)
+	private static final OnClose instance = new OnClose();
 
+	static {
+		System.out.println(instance);
+	}
+
+   /*
 	public static OnClose getInstance() {
 		if (instance == null) {
 			instance = new OnClose();
@@ -15,6 +22,7 @@ public class OnClose extends Thread {
 
 		return instance;
 	}
+	*/
 
 	private OnClose() {
 		setDaemon(false);
