@@ -10,10 +10,6 @@ public class OnClose extends Thread {
 	@Getter(lazy = true)
 	private static final OnClose instance = new OnClose();
 
-	static {
-		System.out.println(instance);
-	}
-
    /*
 	public static OnClose getInstance() {
 		if (instance == null) {
