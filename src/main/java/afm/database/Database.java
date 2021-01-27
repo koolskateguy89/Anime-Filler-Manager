@@ -44,7 +44,7 @@ import afm.utils.Handler;
  * Batches, decreasing number of network round trips to 2 (1 to format ps and 1
  * to do update
  */
-public final class Database {
+public class Database {
 
 	// don't allow this to be instantiated
 	private Database() { }

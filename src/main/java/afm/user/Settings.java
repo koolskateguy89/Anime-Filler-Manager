@@ -5,7 +5,7 @@ import java.util.prefs.Preferences;
 
 import afm.utils.Utils;
 
-public final class Settings {
+public class Settings {
 
 	// Don't allow this class to be instantiated
 	private Settings() { }
