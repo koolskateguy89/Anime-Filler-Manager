@@ -82,6 +82,12 @@
 		<finalName> ${project.name} </finalName>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+
         	<!-- Build an executable 'shaded' JAR -->
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
@@ -120,6 +126,38 @@
             		</execution>
             	</executions>
             </plugin>
+
+            <!--
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>1.7.25</version>
+                <executions>
+                    <execution>
+                    <id>l4j-gui</id>
+                    <phase>package</phase>
+                    <goals><goal>launch4j</goal></goals>
+                    <configuration>
+                        <headerType>gui</headerType>
+                        <outfile>target/AFM.exe</outfile>
+                        <jar>target/AFM.jar</jar>
+                        <errTitle>AFM err</errTitle>
+                        <classPath>
+                            <mainClass>afm.Launcher</mainClass>
+                            <addDependencies>false</addDependencies>
+                            <preCp>anything</preCp>
+                        </classPath>
+                        <!- - Trying to use icon breaks it :/
+                        <icon>src/main/resources/icons/InfoIcon.png</icon>
+                        - - >
+                        <jre>
+                            <minVersion>15</minVersion>
+                        </jre>
+                    </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
 
         </plugins>
     </build>
