@@ -103,6 +103,19 @@
             					</transformer>
             				</transformers>
 
+                        <filters>
+                            <filter>
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>META-INF/license/**</exclude>
+                                    <exclude>META-INF/*</exclude>
+                                    <exclude>META-INF/maven/**</exclude>
+                                    <exclude>LICENSE</exclude>
+                                    <exclude>NOTICE</exclude>
+                                </excludes>
+                            </filter>
+                        </filters>
+
             			</configuration>
             		</execution>
             	</executions>
