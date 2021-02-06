@@ -86,7 +86,7 @@ public final class Anime {
 
 		private int episodes = Anime.NOT_FINISHED;
 		private int currEp = 0;
-		private Integer id; //for MAL web-site
+		private Integer id; //for MAL website
 		private boolean custom = false;
 
 		/** AnimeBuilder should be instantiated using {@link Anime#builder} */

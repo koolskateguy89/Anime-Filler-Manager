@@ -67,7 +67,7 @@ git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 
 Note: the only prerequisites needed for this are Java 15 & Maven.
 
-If you are on Windows, see the [res](res) folder for some batch files to help build and/or run.
+If you are on Windows, see the [res](res) folder for some bash & batch files to help build and run.
 
 <br/>
 

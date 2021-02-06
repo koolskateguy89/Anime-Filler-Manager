@@ -33,12 +33,12 @@ public abstract class InfoWindow extends Stage {
 
 	private static final HashSet<Stage> openWindows = new HashSet<>();
 
-	private static void addWindow(Stage w) {
-		openWindows.add(w);
+	private static void addWindow(Stage window) {
+		openWindows.add(window);
 	}
 
-	private static void removeWindow(Stage w) {
-		openWindows.remove(w);
+	private static void removeWindow(Stage window) {
+		openWindows.remove(window);
 	}
 
 	public static void closeAllOpenWindows() {
@@ -72,13 +72,13 @@ public abstract class InfoWindow extends Stage {
 	protected InfoWindow(Anime anime) {
 		this.anime = anime;
 		addWindow(this);
+
+		getIcons().add(new Image("icons/InfoIcon.png"));
+		setOnCloseRequest(event -> closeWindow(null));
 	}
 
 	protected void afterInitialize() {
-		getIcons().add(new Image("icons/InfoIcon.png"));
-
 		requestFocus();
-		setOnCloseRequest(event -> closeWindow(null));
 		centerOnScreen();
 
 		// if anime != null, totalEpField, fillerBtn, etc. will not be null
@@ -147,6 +147,9 @@ public abstract class InfoWindow extends Stage {
 
 	@FXML
 	void closeWindow(ActionEvent event) {
+		if (imageStage != null)
+			imageStage.close();
+
 		removeWindow(this);
 		close();
 	}
@@ -154,10 +157,14 @@ public abstract class InfoWindow extends Stage {
 	private Stage imageStage;
 	@FXML
 	void openImage(MouseEvent event) {
-		if (imageStage != null && imageStage.isShowing()) {
+		if (imageStage != null) {
 			addWindow(imageStage);
 			imageStage.show();
+			// if window is minimized, un-minimize it
+			imageStage.setIconified(false);
+			// move window to front
 			imageStage.toFront();
+			// request focus
 			imageStage.requestFocus();
 			return;
 		}
@@ -168,7 +175,7 @@ public abstract class InfoWindow extends Stage {
 			return;
 
 
-		// clone the original ImageView
+		// 'clone' the original ImageView
 		ImageView view = new ImageView(img);
 
 		// Create a new Stage (Window) to show the image

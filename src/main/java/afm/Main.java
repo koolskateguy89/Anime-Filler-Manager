@@ -104,7 +104,7 @@ public class Main extends Application {
 
 	// Change 'current' screen (right of splitpane)
 	private void setScreen(Pane newPane) {
-		InfoWindow.closeAllOpenWindows();
+		//InfoWindow.closeAllOpenWindows();
 
 		if (screenList.size() == 1)
 			screenList.add(newPane);
