@@ -298,7 +298,7 @@ public final class Anime {
 	}
 
 	// taking filler into account
-	public int getNextEpisode() {
+	public String getNextEpisode() {
 		int nextEp = currEp + 1;
 
 		for (Filler filler : fillers) {
@@ -316,7 +316,7 @@ public final class Anime {
 				break;
 			}
 		}
-		return nextEp > episodes ? episodes : nextEp;
+		return nextEp > episodes ? "-" : Integer.toString(nextEp);
 	}
 
 	public String getURL() {
