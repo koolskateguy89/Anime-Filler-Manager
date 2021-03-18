@@ -3,12 +3,17 @@ package afm.anime;
 import static afm.utils.Utils.inJar;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -99,6 +104,13 @@ public class Search {
 			try {
 				doc = Jsoup.connect(Search.GENRE_URL + genre.getIndex() + "/?page="+page).get();
 				scrapeDocument(doc);
+			} catch (UnknownHostException uhe) {
+				// no internet connection
+				Platform.runLater(() -> {
+					Alert a = new Alert(AlertType.ERROR, "No internet connection");
+					a.showAndWait();
+				});
+				// it sort of works but then it breaks and its not good no no no
 			} catch (HttpStatusException htse) {
 				/* For when page has gone past last page (e.g. for Action on 29/11/20 this is once
 				 * page = 40).
@@ -162,7 +174,7 @@ public class Search {
 
 			builder.setName(animeName);
 
-			// get the anime's URL
+			// get the anime's ID
 			int id = parseIDfromURL(nameElem.attr("abs:href"));
 			builder.setId(id);
 
