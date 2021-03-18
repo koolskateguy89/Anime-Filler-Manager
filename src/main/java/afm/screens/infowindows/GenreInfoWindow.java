@@ -48,7 +48,7 @@ public class GenreInfoWindow extends InfoWindow {
 		tempMap.put(Genre.Comedy, "Aims to make you laugh");
 		//tempMap.put(Genre.Comedy, "Anime: *plays*" + "\n" + "You: *laughs*");
 
-		tempMap.put(Genre.Dementia, "Memory loss and dat");
+		tempMap.put(Genre.Dementia, "A main character has lost their memory");
 
 		tempMap.put(Genre.Demons, "Involves demons as a main feature");
 
@@ -56,7 +56,7 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.Ecchi, "Almost cartoon porn");
 
-		tempMap.put(Genre.Fantasy, "Not real I guess");
+		tempMap.put(Genre.Fantasy, "Based in a fanatical world");
 
 		tempMap.put(Genre.Game, "Has gaming as a core aspect");
 
@@ -64,7 +64,7 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.Hentai, "Cartoon porn");
 
-		tempMap.put(Genre.Historical, "References the past innit");
+		tempMap.put(Genre.Historical, "Based on past historical events");
 
 		tempMap.put(Genre.Horror, "Horror");
 
@@ -82,17 +82,17 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.MartialArts, "MARTIAL ARTS");
 
-		tempMap.put(Genre.Mecha, "Robots and dat");
+		tempMap.put(Genre.Mecha, "Involves robotic entities as a main feature");
 
-		tempMap.put(Genre.Military, "Army and dat");
+		tempMap.put(Genre.Military, "Army");
 
-		tempMap.put(Genre.Music, "Headphones and concerts and dat");
+		tempMap.put(Genre.Music, "Headphones and concerts etc.");
 
 		tempMap.put(Genre.Mystery, "?");
 
 		tempMap.put(Genre.Parody, "Naruto -> Narudo" + "\n" + "Spiderman -> Spooderman");
 
-		tempMap.put(Genre.Police, "Bruh");
+		tempMap.put(Genre.Police, "Based on characters who are involved in a police force");
 
 		tempMap.put(Genre.Psychological, "Brain");
 
@@ -100,7 +100,7 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.Samurai, "Sword");
 
-		tempMap.put(Genre.School, "Learn?");
+		tempMap.put(Genre.School, "Based in a school setting");
 
 		tempMap.put(Genre.SciFi, "Science?");
 
@@ -112,19 +112,19 @@ public class GenreInfoWindow extends InfoWindow {
 		tempMap.put(Genre.Shounen, "Aimed at a \"young male audience\"");
 		tempMap.put(Genre.ShounenAi, "Relationship between two males");
 
-		tempMap.put(Genre.SliceOfLife, "Mimic real life I guess");
+		tempMap.put(Genre.SliceOfLife, "Aims to mimic real life through anime");
 
 		tempMap.put(Genre.Space, "NASA");
 
-		tempMap.put(Genre.Sports, "literally sports");
+		tempMap.put(Genre.Sports, "Literally sports, or rather, physical exertion...");
 
 		tempMap.put(Genre.Supernatural, "strange");
 
-		tempMap.put(Genre.SuperPower, "how do you not know what this is.");
+		tempMap.put(Genre.SuperPower, "Usually based in a word where having superpowers is the norm");
 
 		tempMap.put(Genre.Thriller, "scary?");
 
-		tempMap.put(Genre.Vampire, "Dracula and dat");
+		tempMap.put(Genre.Vampire, "Draculaaaaa");
 
 		tempMap.put(Genre.Yaoi, "Gay hentai");
 
