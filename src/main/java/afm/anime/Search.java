@@ -15,6 +15,8 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+import javax.net.ssl.SSLHandshakeException;
+
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -80,9 +82,9 @@ public class Search {
 		if (genres.isEmpty())
 			throw new IllegalArgumentException("There are no genres");
 
-		searchForEachGenre();
+		boolean searchWorked = searchForEachGenre();
 
-		if (!reachedLastPage && result.size() < 13 /*&& (name == null)*/) {
+		if (searchWorked && !reachedLastPage && result.size() < 13 /*&& (name == null)*/) {
 			page++;
 			/* I don't want it to continue as other search() calls
 			 * will sort - which only need to happen once */
@@ -98,8 +100,8 @@ public class Search {
 
 	// (and)
 	// searches the respective web page for each and every genre the user selected
-	private void searchForEachGenre() {
-		genres.forEach(genre -> {
+	private boolean searchForEachGenre() {
+		for (Genre genre : genres) {
 			final Document doc;
 			try {
 				doc = Jsoup.connect(Search.GENRE_URL + genre.getIndex() + "/?page="+page).get();
@@ -110,7 +112,7 @@ public class Search {
 					Alert a = new Alert(AlertType.ERROR, "No internet connection");
 					a.showAndWait();
 				});
-				// it sort of works but then it breaks and its not good no no no
+				return false;
 			} catch (HttpStatusException htse) {
 				/* For when page has gone past last page (e.g. for Action on 29/11/20 this is once
 				 * page = 40).
@@ -118,10 +120,20 @@ public class Search {
 				 * HTTP error fetching URL. Status=404, URL=https://myanimelist.net/anime/genre/[genre]/?page=[page]
 				 */
 				reachedLastPage = true;
+			} catch (SSLHandshakeException she) {
+				// most likely caused by MAL being blocked by ISP or something
+				Platform.runLater(() -> {
+					Alert a = new Alert(AlertType.ERROR, "Could not connect to MyAnimeList");
+					a.showAndWait();
+				});
+				return false;
 			} catch (IOException e) {
 				if (!inJar()) e.printStackTrace();
+				return false;
 			}
-		});
+		}
+
+		return true;
 	}
 
 	// Scrapes the document, adding all appropriate anime to result
