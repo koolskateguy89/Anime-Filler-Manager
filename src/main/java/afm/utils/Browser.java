@@ -9,27 +9,33 @@ import java.net.URISyntaxException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-import com.sun.javafx.PlatformUtil;
-
 public class Browser {
 
 	private Browser() { }
+
+	static final String OS = System.getProperty("os.name", "unknown").toLowerCase();
+
+	static final boolean isWindows = OS.contains("win");
+
+	static final boolean isUnix = !isWindows && (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"));
+
+	static final boolean isMac = !isUnix && (OS.contains("mac") || OS.contains("osx"));
 
 	// see https://stackoverflow.com/a/18509384
 	public static boolean open(String url) {
 		boolean opened;
 
-		if (PlatformUtil.isMac()) {
+		if (isMac) {
 			opened = openMac(url);
 		} else {
 			opened = open0(url);
 		}
 
 		if (!opened) {
-			if (PlatformUtil.isWindows()) {
+			if (isWindows) {
 				opened = openWindows(url);
-			} else if (PlatformUtil.isLinux()) {
-				opened = openLinux(url);
+			} else if (isUnix) {
+				opened = openUnix(url);
 			}
 		}
 
@@ -69,7 +75,6 @@ public class Browser {
 	}
 
 	// If it doesn't work, try opening the other way
-	// this might work for Unix, I'm not sure
 	private static boolean openMac(String url) {
 		try {
 			Runtime.getRuntime().exec(new String[] {"open", url});
@@ -79,9 +84,8 @@ public class Browser {
 		}
 	}
 
-	// see https://stackoverflow.com/a/37926900
-	// also maybe https://stackoverflow.com/a/28807079
-	private static boolean openLinux(String url) {
+	// only works if xdg-open command exists, which SHOULD be true
+	private static boolean openUnix(String url) {
 		try (InputStream is = Runtime.getRuntime().exec(new String[] { "which", "xdg-open" }).getInputStream()){
 			if (is.read() != -1) {
 				Runtime.getRuntime().exec(new String[] { "xdg-open", url });
