@@ -98,7 +98,7 @@ public class Utils {
 	private static final String KEY = "FIRST_RUN";
 
 	static {
-		Preferences prefs = Preferences.userRoot().node(Utils.class.getSimpleName());
+		Preferences prefs = Preferences.userRoot().node(Utils.class.getCanonicalName());
 		// Returns the value associated to the key (param 0), if the value does not exist,
 		// it is the first run, so return true (param 1).
 		FIRST_RUN = prefs.getBoolean(KEY, true);
