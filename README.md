@@ -18,10 +18,8 @@
 
 ## Introduction
 
-This is for my IB CS IA
-
 <sub><sup>
-Currently sitting on 5101 lines & ~3593 loc (lines of code)
+This is for my IB CS IA
 </sup></sub>
 
 Anime Filler Manager is a Java application to search for anime from
@@ -67,9 +65,9 @@ git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 
 Note: the only prerequisites needed for this are Java 15 & Maven.
 
-If you are on Windows, see the [res](res) folder for some bash & batch files to help build and run.
+See the [res](res) folder for some bash & batch files to help build and run.
 
-<br/>
+<!-- <br/> -->
 
 To build:
 1.  Run the command `mvn package` in the repository folder
@@ -82,7 +80,7 @@ To run:
 ## Important things to know when running
 
 1. To search for an anime, you HAVE to have selected an anime
-2. More coming soon...
+2. I cba
 
 ## License
 
