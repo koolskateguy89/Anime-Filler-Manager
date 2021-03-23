@@ -316,7 +316,7 @@ public final class Anime {
 				break;
 			}
 		}
-		return nextEp > episodes ? "-" : Integer.toString(nextEp);
+		return (nextEp > episodes && episodes != Anime.NOT_FINISHED) ? "-" : Integer.toString(nextEp);
 	}
 
 	public String getURL() {
