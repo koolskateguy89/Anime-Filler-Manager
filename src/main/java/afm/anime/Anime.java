@@ -145,6 +145,11 @@ public final class Anime {
 			return this;
 		}
 
+		public AnimeBuilder addGenre(Genre genre) {
+			this.genres.add(genre);
+			return this;
+		}
+
 		public AnimeBuilder addFiller(Filler filler) {
 			fillers.add(filler);
 			return this;
@@ -247,14 +252,14 @@ public final class Anime {
 
 	// Set up a PreparedStatement to be ready to write this anime into database
 	public void prepareStatement(PreparedStatement ps) throws SQLException {
-		ps.setString(1,  this.name.replace(";", ""));
+		ps.setString(1, this.name.replace(";", ""));
 
 		//ps.setBytes(2, Utils.serialize(this.genres));
 		ps.setString(2, this.genreString);
 
 		if (this.id != null)
 			ps.setInt(3, this.id);
-		ps.setString(4, this.studio);
+		ps.setString(4, this.studio.replace(";", ""));
 
 		if (this.season != null)
 			ps.setString(5, this.season.toString());

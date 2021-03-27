@@ -172,8 +172,14 @@ public class CustomScreen extends GridPane {
     		needName.showAndWait();
     	}
     	if (emptyGenre) {
-    		Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed!");
-    		needGenre.showAndWait();
+            Genre selected = genreCombo.getValue();
+
+            if (selected != null) {
+                emptyGenre = false;
+            } else {
+                Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed!");
+                needGenre.showAndWait();
+            }
     	}
 
     	return emptyName || emptyGenre;
@@ -183,8 +189,12 @@ public class CustomScreen extends GridPane {
     private Anime getAnimeFromFields() {
     	final AnimeBuilder builder = Anime.builder(nameField.getText().strip());
 
-    	builder.setCustom(true)
-    		   .setGenres(genreSet);
+    	builder.setCustom(true);
+
+        if (genreSet.isEmpty())
+            builder.addGenre(genreCombo.getValue());
+        else
+    		builder.setGenres(genreSet);
 
     	final String studio = studioField.getText();
     	if (studio != null && !studio.isBlank())
