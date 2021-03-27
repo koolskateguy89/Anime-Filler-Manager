@@ -127,7 +127,13 @@ public class Database {
 
 			double halfDiff = (end - start) / 2;
 
-			loadMyList(s, task, start, end - halfDiff);
+			// load MyList 'atomically' in case of error loading MyList
+			try {
+				loadMyList(s, task, start, end - halfDiff);
+			} catch (SQLException e) {
+				loadToWatch(s, task, start + halfDiff, end);
+				throw e;
+			}
 
 			loadToWatch(s, task, start + halfDiff, end);
 
@@ -184,14 +190,19 @@ public class Database {
 		try (Connection con = ds.getConnection()){
 			con.setAutoCommit(false);
 
-			saveMyList(con);
+			try {
+				saveMyList(con);
+			} catch (SQLException e) {
+				saveToWatch(con);
+				throw e;
+			}
 
 			saveToWatch(con);
 
 			con.commit();
 
 		} catch (SQLException e) {
-			if (!inJar()) e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
