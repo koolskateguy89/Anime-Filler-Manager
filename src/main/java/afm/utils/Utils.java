@@ -3,11 +3,11 @@ package afm.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.prefs.Preferences;
 
@@ -67,28 +67,21 @@ public class Utils {
 		return res.toArray(new String[0]);
 	}
 
-	private static String currDir;
-
-	// copied from StackOverflow
-	public static String getRunningDir() {
-		if (currDir == null) {
-			try {
-				currDir = Utils.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-				Platform.exit();
-				System.exit(0);
-			}
-		}
-
-		return currDir;
-	}
-
 	private static Boolean inJar;
 
+	// https://stackoverflow.com/a/47725176
 	public static boolean inJar() {
-		if (inJar == null)
-			inJar = getRunningDir().endsWith(".jar");
+		if (inJar == null) {
+			String protocol = Utils.class.getResource("").getProtocol();
+			if (Objects.equals(protocol, "jar")){
+		    	// run in jar
+		    	inJar = true;
+			}/* else if(Objects.equals(protocol, "file")) {
+		    	// run in ide
+			}*/ else {
+				inJar = false;
+			}
+		}
 
 		// Let Java decide how to unbox
 		return inJar;
