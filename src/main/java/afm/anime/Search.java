@@ -121,7 +121,7 @@ public class Search {
 				 */
 				reachedLastPage = true;
 			} catch (SSLHandshakeException she) {
-				// most likely caused by MAL being blocked by ISP or something
+				// most likely caused by MAL being blocked or something
 				Platform.runLater(() -> {
 					Alert a = new Alert(AlertType.ERROR, "Could not connect to MyAnimeList");
 					a.showAndWait();
