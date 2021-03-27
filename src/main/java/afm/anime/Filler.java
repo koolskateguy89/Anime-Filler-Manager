@@ -146,8 +146,8 @@ public final class Filler implements Comparable<Filler> {
 
 	// This smaller -> negative result
 	@Override
-	public int compareTo(Filler o) {
-		return (start != o.start) ? start - o.start : end - o.end;
+	public int compareTo(Filler other) {
+		return (start != other.start) ? start - other.start : end - other.end;
 	}
 
 }
