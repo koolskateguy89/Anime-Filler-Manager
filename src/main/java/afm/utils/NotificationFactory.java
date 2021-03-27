@@ -25,7 +25,6 @@ public class NotificationFactory {
 	public static void showNotification(String title, String text, Duration duration) {
 		Notifications noti = getNotification(title, text, duration);
 		Platform.runLater(noti::show);
-		Platform.runLater(getNotification(title, text, duration)::show);
 	}
 
 	public static void showInfoNotification(String text) {
