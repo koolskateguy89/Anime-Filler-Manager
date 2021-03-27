@@ -119,23 +119,23 @@ public class CustomScreen extends GridPane {
     		return;
     	}
 
-    	/*
-    	 * map from Genre to its 'corresponding' MenuItem;
-    	 * add an ActionListener to the MenuItem - to remove the corresponding Genre;
-    	 * collect to a List and set the contextMenu as that list
-    	 */
-    	var genresAsMenuItems = genreSet.stream()
-    					.map(genre -> new MenuItem("Remove: "+genre.toString()))
-    					.peek(mi ->
-    						mi.setOnAction(event -> {
-    							final String s = mi.getText().replace("Remove: ", "");
-    							final Genre g = Genre.parseGenreFromToString(s);
-    							genreSet.remove(g);
-    						})
-    					)
-    					.collect(Collectors.toList());
+    	/* map from Genre to its 'corresponding' MenuItem,
+         * collect to a List,
+         * add an ActionListener to each MenuItem - to remove the corresponding Genre,
+         * set the contextMenu as the List
+         */
+        var menuItems = genreSet.stream()
+                                .map(genre -> new MenuItem("Remove: "+genre.toString()))
+                                .collect(Collectors.toList());
 
-    	genreContextMenu.getItems().setAll(genresAsMenuItems);
+        menuItems.forEach(mi -> mi.setOnAction(event -> {
+                                    final String s = mi.getText().replace("Remove: ", "");
+                                    final Genre g = Genre.parseGenreFromToString(s);
+                                    genreSet.remove(g);
+                                })
+                         );
+
+        genreContextMenu.getItems().setAll(menuItems);
     }
 
     @FXML

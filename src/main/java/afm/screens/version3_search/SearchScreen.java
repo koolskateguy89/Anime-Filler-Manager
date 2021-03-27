@@ -166,21 +166,22 @@ public final class SearchScreen extends GridPane {
     	}
 
     	/* map from Genre to its 'corresponding' MenuItem,
-    	 * add an ActionListener to the MenuItem - to remove the corresponding Genre,
-    	 * collect to a List and set the contextMenu as that list
+    	 * collect to a List,
+    	 * add an ActionListener to each MenuItem - to remove the corresponding Genre,
+         * set the contextMenu as the List
     	 */
-    	var genresAsMenuItems = genreSet.stream()
-    					.map(genre -> new MenuItem(REMOVE+genre.toString()))
-    					.peek(mi ->
-    						mi.setOnAction(event -> {
-    							final String s = mi.getText().replace(REMOVE, "");
-    							final Genre g = Genre.parseGenreFromToString(s);
-    							genreSet.remove(g);
-    						})
-    					)
-    					.collect(Collectors.toList());
+        var menuItems = genreSet.stream()
+                                .map(genre -> new MenuItem(REMOVE+genre.toString()))
+                                .collect(Collectors.toList());
 
-    	genreContextMenu.getItems().setAll(genresAsMenuItems);
+        menuItems.forEach(mi -> mi.setOnAction(event -> {
+                                    final String s = mi.getText().replace(REMOVE, "");
+                                    final Genre g = Genre.parseGenreFromToString(s);
+                                    genreSet.remove(g);
+                                })
+                         );
+
+    	genreContextMenu.getItems().setAll(menuItems);
     }
 
     private void updateSeasonText() {
@@ -202,21 +203,22 @@ public final class SearchScreen extends GridPane {
     	}
 
     	/* map from Season to its 'corresponding' MenuItem,
-    	 * add an ActionListener to the MenuItem - to remove the corresponding Season,
-    	 * collect to a List and set the contextMenu as that list
+    	 * collect to a List,
+    	 * add an ActionListener to each MenuItem - to remove the corresponding Season,
+         * set the contextMenu as the List
     	 */
-    	var seasonsAsMenuItems = seasonSet.stream()
-    					.map(season -> new MenuItem(REMOVE+season.toString()))
-    					.peek(mi ->
-    						mi.setOnAction(event -> {
-    							final String str = mi.getText().replace(REMOVE, "");
-    							final Season s = Season.getSeasonFromToString(str);
-    							seasonSet.remove(s);
-    						})
-    					)
-    					.collect(Collectors.toList());
+        var menuItems = seasonSet.stream()
+                                 .map(season -> new MenuItem(REMOVE+season.toString()))
+                                 .collect(Collectors.toList());
 
-    	seasonContextMenu.getItems().setAll(seasonsAsMenuItems);
+        menuItems.forEach(mi -> mi.setOnAction(event -> {
+                                    final String str = mi.getText().replace(REMOVE, "");
+                                    final Season s = Season.getSeasonFromToString(str);
+                                    seasonSet.remove(s);
+                                })
+                         );
+
+    	seasonContextMenu.getItems().setAll(menuItems);
     }
 
     @FXML
