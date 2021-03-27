@@ -85,9 +85,11 @@ public abstract class InfoWindow extends Stage {
 		if (anime == null)
 			return;
 
-		// If the anime does not have a URL, hide URL button
-		if (anime.getURL() == null)
+		// If the anime does not have a URL, hide URL & browser button
+		if (anime.getURL() == null) {
 			urlBtn.setVisible(false);
+			browserBtn.setVisible(false);
+		}
 
 		int eps = anime.getEpisodes();
 		// not finished anime / indeterminable number of episodes
