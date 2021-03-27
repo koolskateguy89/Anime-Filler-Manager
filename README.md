@@ -14,6 +14,7 @@
     - [Installing](#installing)
     - [Building and running using Maven](#building-and-running-using-maven)
 - [Important notes](#important-things-to-know-when-running)
+- [TODO](#todo)
 - [License](#license)
 
 ## Introduction
@@ -81,6 +82,12 @@ To run:
 
 1. To search for an anime, you HAVE to have selected an anime
 2. I cba
+
+## Todo
+
+- [ ] Add refresh button to 'filler container' to check for new filler episodes
+    - How would I actually do this, considering I'm using an alert
+    - Maybe add a button to bottom of alert then check the result of Alert.showAndWait() - then reshow alert after checking
 
 ## License
 
