@@ -10,7 +10,8 @@ public class Settings {
 	// Don't allow this class to be instantiated
 	private Settings() { }
 
-	private static final String PREF_NAME = Utils.inJar() ? "jar:Settings" : "Settings";
+	private static final String name = Settings.class.getCanonicalName();
+	private static final String PREF_NAME = Utils.inJar() ? "jar:"+name : name;
 
 	static {
 		loadValues();
