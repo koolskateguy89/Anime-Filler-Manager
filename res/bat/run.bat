@@ -1,1 +1,1 @@
-@start javaw -jar %~dp0\..\target\AFM.jar
+@start javaw -jar "%~dp0\..\..\target\AFM.jar"

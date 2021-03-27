@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/env bash
 
 # Get script dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-. "$DIR/build.sh"
-. "$DIR/run.sh"
+source "$DIR/build.sh"
+source "$DIR/run.sh"
