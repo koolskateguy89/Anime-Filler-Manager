@@ -25,17 +25,17 @@ public class SettingsScreen extends Pane {
 
 	@FXML
 	private void initialize() {
-		if (Settings.get(NAMEORDER)) {
+		if (Settings.get(NAME_ORDER)) {
 			nameCheckBox.setSelected(true);
 		} else {
 			insertionCheckBox.setSelected(true);
 		}
 
-		factsCheckBox.setSelected(Settings.get(SHOWFACTS));
+		factsCheckBox.setSelected(Settings.get(SHOW_FACTS));
 
-		soundCheckBox.setSelected(Settings.get(PLAYSOUND));
+		soundCheckBox.setSelected(Settings.get(PLAY_SOUND));
 
-		alwaysOnTopBox.setSelected(Settings.get(ALWAYSONTOP));
+		alwaysOnTopBox.setSelected(Settings.get(ALWAYS_ON_TOP));
 	}
 
 	@FXML
@@ -55,30 +55,30 @@ public class SettingsScreen extends Pane {
 
     @FXML
     void insertion(ActionEvent event) {
-    	Settings.invert(NAMEORDER);
+    	Settings.invert(NAME_ORDER);
     	nameCheckBox.setSelected(!insertionCheckBox.isSelected());
     }
 
     @FXML
     void name(ActionEvent event) {
-	    Settings.invert(NAMEORDER);
+	    Settings.invert(NAME_ORDER);
     	insertionCheckBox.setSelected(!nameCheckBox.isSelected());
     }
 
     @FXML
     void showFacts(ActionEvent event) {
-	    Settings.invert(SHOWFACTS);
+	    Settings.invert(SHOW_FACTS);
     }
 
     @FXML
     void playSound(ActionEvent event) {
-	    Settings.invert(PLAYSOUND);
+	    Settings.invert(PLAY_SOUND);
     }
 
     @FXML
     void alwaysOnTop(ActionEvent event) {
-	    Settings.invert(ALWAYSONTOP);
-    	Main.getStage().setAlwaysOnTop(Settings.get(ALWAYSONTOP));
+	    Settings.invert(ALWAYS_ON_TOP);
+    	Main.getStage().setAlwaysOnTop(Settings.get(ALWAYS_ON_TOP));
     }
 
 }

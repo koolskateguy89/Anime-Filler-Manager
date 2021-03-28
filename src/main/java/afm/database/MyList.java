@@ -30,7 +30,7 @@ public final class MyList {
 	 * -Enforce insertion order by using a LinkedHS
 	 */
 	static {
-		Set<Anime> backingSet = Settings.get(Settings.Key.NAMEORDER) ? new TreeSet<>(Anime.SORT_BY_NAME)
+		Set<Anime> backingSet = Settings.get(Settings.Key.NAME_ORDER) ? new TreeSet<>(Anime.SORT_BY_NAME)
 																	 : new LinkedHashSet<>();
 		runTime = FXCollections.observableSet(backingSet);
 	}

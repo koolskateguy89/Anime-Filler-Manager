@@ -187,7 +187,7 @@ public class Main extends Application {
 		Main.instance = this;
 		try {
 			stage = primaryStage;
-			stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYSONTOP));
+			stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
 
 			stage.setTitle("Anime Filler Manager");
 

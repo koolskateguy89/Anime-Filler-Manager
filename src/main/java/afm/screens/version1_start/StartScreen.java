@@ -44,7 +44,7 @@ public class StartScreen extends Pane {
 	@FXML
 	void initialize() {
 		//Get a random fact and its id and display it in factText
-		if (Settings.get(Settings.Key.SHOWFACTS)) {
+		if (Settings.get(Settings.Key.SHOW_FACTS)) {
 			Facts.init(); // only need to init if showing facts
 			fact = Facts.getRandomFact();
 			factText.setText("Fact " + fact.getKey() + ": " + fact.getValue());
@@ -77,7 +77,7 @@ public class StartScreen extends Pane {
     		progressBar.progressProperty().bind(loadTask.progressProperty());
 
     		// Show a new fact
-    		if (Settings.get(Settings.Key.SHOWFACTS)) {
+    		if (Settings.get(Settings.Key.SHOW_FACTS)) {
     			fact = Facts.getRandomFact();
     			factText.setText("Fact " + fact.getKey() + ": " + fact.getValue());
     		}

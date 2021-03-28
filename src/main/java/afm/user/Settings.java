@@ -9,10 +9,10 @@ import afm.utils.Utils;
 public class Settings {
 
 	public enum Key {
-		SHOWFACTS(true),
-		NAMEORDER(false),
-		PLAYSOUND(false),
-		ALWAYSONTOP(false),
+		SHOW_FACTS(true),
+		NAME_ORDER(false),
+		PLAY_SOUND(false),
+		ALWAYS_ON_TOP(false),
 		;
 
 		final boolean def;
