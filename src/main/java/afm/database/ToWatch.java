@@ -23,7 +23,8 @@ public final class ToWatch {
 	private static final ObservableSet<Anime> runTime;
 
 	static {
-		Set<Anime> backingSet = Settings.nameOrder() ? new TreeSet<>(Anime.SORT_BY_NAME) : new LinkedHashSet<>();
+		Set<Anime> backingSet = Settings.get(Settings.Key.NAMEORDER) ? new TreeSet<>(Anime.SORT_BY_NAME)
+																	 : new LinkedHashSet<>();
 		runTime = FXCollections.observableSet(backingSet);
 	}
 

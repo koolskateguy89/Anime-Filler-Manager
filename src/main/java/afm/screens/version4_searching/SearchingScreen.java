@@ -100,7 +100,7 @@ public class SearchingScreen extends Pane {
 
 				blinking.restart();
 
-				if (Settings.playSound())
+				if (Settings.get(Settings.Key.PLAYSOUND))
 					SoundFactory.ping();
 			});
 

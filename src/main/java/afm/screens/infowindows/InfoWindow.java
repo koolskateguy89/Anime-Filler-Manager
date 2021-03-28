@@ -78,7 +78,7 @@ public abstract class InfoWindow extends Stage {
 
 		getIcons().add(new Image("icons/InfoIcon.png"));
 		setOnCloseRequest(event -> closeWindow(null));
-		setAlwaysOnTop(Settings.alwaysOnTop());
+		setAlwaysOnTop(Settings.get(Settings.Key.ALWAYSONTOP));
 		//initOwner(Main.getStage());
 	}
 

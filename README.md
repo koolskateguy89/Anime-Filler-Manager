@@ -89,11 +89,11 @@ To run:
     - This is particularly useful for long-running anime that are addedd to MyList/ToWatch 'early'
 - [x] Restructure Main to have static `getInstance` and `getStage` to make getting Stage & stuff easier
 - [x] Add asterisk to options that change upon restart
+- [x] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value] - **medium**
 - [ ] Add episodes column to all tablescreens - **quick-ish**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
 - [x] Add always on top option
-      - [ ] Add infoWindows always on top option - **quick-ish**
-- [ ] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value] - **medium** **WIP**
+  - [ ] Add infoWindows always on top option - **quick-ish**
 - [ ] Make subwindows open on top of current window (middle) - infoWindows & Alerts - **long**
 
 ## License
