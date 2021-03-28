@@ -1,6 +1,7 @@
 package afm.screens.infowindows;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -113,10 +117,62 @@ public abstract class InfoWindow extends Stage {
 		alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
 		alert.setTitle("Filler episodes for: " + anime.getName());
 
-		String fillerString = anime.getFillers().toString();
-		alert.setContentText(fillerString.substring(1, fillerString.length()-1));
 
-		alert.showAndWait();
+		String fillerString = anime.getFillers().toString();
+		fillerString = fillerString.substring(1, fillerString.length()-1);
+		//alert.setContentText(fillerString);
+
+		Label label = new Label(fillerString);
+		label.setWrapText(true);
+		alert.getDialogPane().setContent(label);
+
+		// use ButtonData.YES to put refresh button on left
+		ButtonType refresh = new ButtonType("Refresh", ButtonData.YES);
+		alert.getButtonTypes().add(refresh);
+
+		ButtonType result = alert.showAndWait().orElse(null);
+
+		if (result != refresh) {
+			anime.getFillers().clear();
+			if (MyList.contains(anime)) {
+				System.out.println("MyList");
+				MyList.update(anime);
+			} else if (ToWatch.contains(anime)) {
+				System.out.println("ToWatch");
+				ToWatch.add(anime);
+			} else {
+				System.out.println("None");
+			}
+		}
+
+		while (result == refresh) {
+			long start = System.nanoTime();
+
+			anime.findFillers();
+
+			if (MyList.contains(anime)) {
+				System.out.println("MyList");
+				MyList.update(anime);
+			} else if (ToWatch.contains(anime)) {
+				System.out.println("ToWatch");
+				ToWatch.add(anime);
+			} else {
+				System.out.println("None");
+			}
+
+			alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
+
+			fillerString = anime.getFillers().toString();
+			fillerString = fillerString.substring(1, fillerString.length()-1);
+			label.setText(fillerString);
+
+			long end = System.nanoTime();
+			long elapsed = end - start;
+			long millis = elapsed / 1_000_000;
+			System.out.println(millis);
+
+			result = alert.showAndWait().orElse(null);
+		}
 	}
 
 	@FXML
