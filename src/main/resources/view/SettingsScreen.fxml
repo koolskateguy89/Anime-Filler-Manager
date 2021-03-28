@@ -12,7 +12,7 @@
 <fx:root prefHeight="445.0" prefWidth="588.0" styleClass="Panes" stylesheets="@application.css" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
 
-      <Label layoutX="146.0" layoutY="93.0" text="Sort MyList and ToWatch in name order or insertion order?" textAlignment="CENTER" textFill="WHITE" />
+      <Label layoutX="146.0" layoutY="93.0" text="*Sort MyList and ToWatch in name order or insertion order?" textAlignment="CENTER" textFill="WHITE" />
       <HBox alignment="CENTER" layoutX="209.0" layoutY="117.0" prefHeight="36.0" prefWidth="171.0" spacing="30.0">
          <children>
             <Label contentDisplay="RIGHT" text="Insertion" textFill="WHITE">
@@ -36,7 +36,7 @@
         </rowConstraints>
 
          <children>
-            <Label contentDisplay="RIGHT" text="Show facts?" textAlignment="CENTER" textFill="WHITE">
+            <Label contentDisplay="RIGHT" text="*Show facts?" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -56,10 +56,15 @@
 
       </GridPane>
 
-      <Label layoutX="211.0" layoutY="324.0" prefHeight="63.0" prefWidth="181.0" text="(Some changes will only take place upon closing and opening)" textAlignment="CENTER" textFill="#fff82c" wrapText="true">
+      <Label layoutX="204.0" layoutY="348.0" prefHeight="63.0" prefWidth="181.0" text="(Some changes will only take place upon closing and opening)" textAlignment="CENTER" textFill="#fff82c" wrapText="true">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
+      </Label>
+      <Label contentDisplay="RIGHT" layoutX="244.0" layoutY="276.0" text="*Always on top" textFill="WHITE">
+         <graphic>
+            <CheckBox fx:id="alwaysOnTopBox" mnemonicParsing="false" onAction="#alwaysOnTop" />
+         </graphic>
       </Label>
 
    </children>
