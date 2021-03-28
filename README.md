@@ -85,9 +85,8 @@ To run:
 
 ## TODO
 
-- [ ] Add refresh button to 'filler container' to check for new filler episodes
-    - How would I actually do this, considering I'm using an Alert
-    - Maybe add a button to bottom of alert then check the result of Alert.showAndWait() - then reshow alert if refresh
+- [x] Add refresh button to 'filler container' to check for new filler episodes
+    - This is particularly useful for long-running anime that are addedd to MyList/ToWatch 'early'
 - [ ] Add episodes column to all tablescreens - **quick-ish**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
 - [ ] Add always on top option ([Settings](src/main/java/afm/user/Settings.java) & [Main](src/main/java/afm/Main.java)) - **quick**

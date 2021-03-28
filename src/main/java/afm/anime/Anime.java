@@ -279,6 +279,7 @@ public final class Anime {
 		if (episodes < 48 && episodes != NOT_FINISHED)
 			return;
 
+		fillers.clear();
 		Filler.addFillersTo(this);
 	}
 
