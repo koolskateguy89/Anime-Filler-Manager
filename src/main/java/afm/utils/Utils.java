@@ -30,6 +30,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+import afm.Main;
 import com.google.common.base.Strings;
 import com.google.common.math.DoubleMath;
 
@@ -75,11 +76,11 @@ public class Utils {
 			String protocol = Utils.class.getResource("").getProtocol();
 			if (Objects.equals(protocol, "jar")){
 		    	// run in jar
-		    	inJar = true;
+		    	inJar = Boolean.TRUE;
 			}/* else if(Objects.equals(protocol, "file")) {
 		    	// run in ide
 			}*/ else {
-				inJar = false;
+				inJar = Boolean.FALSE;
 			}
 		}
 
@@ -329,8 +330,9 @@ public class Utils {
 	// make Alert wrap text: https://stackoverflow.com/a/36938061
 	public static ButtonType showAndWaitConfAlert(String header, String content) {
 		Alert alert = new Alert(AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO);
+		alert.initOwner(Main.getStage());
 
-		// TODO: alert.initOwner(Handler.getStage())
+		// TODO: alert.initOwner(Main.getStage())
 		if (header != null)
 			alert.setHeaderText(header);
 
