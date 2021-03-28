@@ -36,8 +36,10 @@ public class SearchingScreen extends Pane {
 
 	private ObservableList<Node> circles;
 
-	@FXML private HBox loadingBox;
-	@FXML private Button resultsBtn;
+	@FXML
+	private HBox loadingBox;
+	@FXML
+	private Button resultsBtn;
 
 
 	public SearchingScreen() throws IOException {

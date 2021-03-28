@@ -17,7 +17,7 @@ public enum Genre {
 	 * a genre
 	 * (used when searching for anime)
 	 */
-	int index;
+	final int index;
 
 	Genre() {
 		index = findIndex(this.name());

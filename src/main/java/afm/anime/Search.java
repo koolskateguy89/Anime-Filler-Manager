@@ -393,7 +393,10 @@ public class Search {
 
 
 	private boolean removeBecauseMinEps(Integer eps) {
-		return (minEps == null || eps == null || eps == Anime.NOT_FINISHED) ? false : eps < minEps;
+		if (minEps == null || eps == null || eps == Anime.NOT_FINISHED)
+			return false;
+		else
+			return eps < minEps;
 	}
 
 	public void setName(String n) {

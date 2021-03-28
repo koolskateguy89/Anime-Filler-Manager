@@ -79,7 +79,7 @@ public abstract class InfoWindow extends Stage {
 		getIcons().add(new Image("icons/InfoIcon.png"));
 		setOnCloseRequest(event -> closeWindow(null));
 		setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
-		//initOwner(Main.getStage());
+		//initOwner(Main.getStage()); // this always on top of primaryStage
 	}
 
 	protected void afterInitialize() {
@@ -184,7 +184,13 @@ public abstract class InfoWindow extends Stage {
 		if (url == null) return;
 
 		NotificationFactory.showInfoNotification("Opening browser...");
-		Browser.open(url, this);
+
+		boolean opened = Browser.open(url);
+		if (!opened) {
+			Alert a = new Alert(AlertType.ERROR, "Browser could not be opened.");
+			a.initOwner(this);
+			a.showAndWait();
+		}
 	}
 
 	@FXML
