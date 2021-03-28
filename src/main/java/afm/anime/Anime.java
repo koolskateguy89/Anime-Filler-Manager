@@ -18,6 +18,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import afm.database.MyList;
 import afm.database.ToWatch;
 import afm.screens.Menu;
@@ -25,9 +28,6 @@ import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
 import afm.screens.infowindows.ToWatchInfoWindow;
 import afm.utils.Utils;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 /*
  * Saving into database:

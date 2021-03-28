@@ -1,8 +1,9 @@
 package afm.utils;
 
+import lombok.Getter;
+
 import afm.database.Database;
 import afm.user.Settings;
-import lombok.Getter;
 
 // Singleton
 public class OnClose extends Thread {

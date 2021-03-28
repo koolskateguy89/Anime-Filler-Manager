@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 public class Browser {
 
@@ -22,7 +23,7 @@ public class Browser {
 	static final boolean isMac = !isUnix && (OS.contains("mac") || OS.contains("osx"));
 
 	// see https://stackoverflow.com/a/18509384
-	public static boolean open(String url) {
+	public static boolean open(String url, Stage owner) {
 		boolean opened;
 
 		if (isMac) {
@@ -41,6 +42,7 @@ public class Browser {
 
 		if (!opened) {
 			Alert a = new Alert(AlertType.ERROR, "Browser could not be opened.");
+			a.initOwner(owner);
 			a.showAndWait();
 		}
 

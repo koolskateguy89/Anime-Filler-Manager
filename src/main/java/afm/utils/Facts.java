@@ -2,6 +2,7 @@ package afm.utils;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 import javafx.util.Pair;
 
 public class Facts {

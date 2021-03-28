@@ -17,7 +17,6 @@ import org.sqlite.SQLiteDataSource;
 
 import com.google.common.base.Strings;
 
-import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;

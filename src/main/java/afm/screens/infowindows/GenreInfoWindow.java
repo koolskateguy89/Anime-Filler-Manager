@@ -13,10 +13,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.InputEvent;
 
-import afm.Main;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import afm.Main;
 import afm.anime.Genre;
 import afm.screens.Menu;
 import afm.utils.Utils;

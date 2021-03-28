@@ -11,7 +11,6 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.prefs.Preferences;
 
-import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.Property;
 import javafx.beans.property.StringProperty;
@@ -30,10 +29,10 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
-import afm.Main;
 import com.google.common.base.Strings;
 import com.google.common.math.DoubleMath;
 
+import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Genre;
 
@@ -332,7 +331,6 @@ public class Utils {
 		Alert alert = new Alert(AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO);
 		alert.initOwner(Main.getStage());
 
-		// TODO: alert.initOwner(Main.getStage())
 		if (header != null)
 			alert.setHeaderText(header);
 

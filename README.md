@@ -46,7 +46,7 @@ This application mainly uses [web scraping](https://jsoup.org/) to enable you to
 
 ## Getting Started
 
-### Prerequisites
+### Prerequisites - ish
 
 - [Java 15](https://www.oracle.com/uk/java/technologies/javase-downloads.html)
 - [JavaFX 15](https://openjfx.io/)
@@ -87,13 +87,14 @@ To run:
 
 - [x] Add refresh button to 'filler container' to check for new filler episodes
     - This is particularly useful for long-running anime that are addedd to MyList/ToWatch 'early'
+- [x] Restructure Main to have static `getInstance` and `getStage` to make getting Stage & stuff easier
+- [x] Add asterisk to options that change upon restart
 - [ ] Add episodes column to all tablescreens - **quick-ish**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
-- [x] Add always on top option ([Settings](src/main/java/afm/user/Settings.java) & [Main](src/main/java/afm/Main.java))
-- [x] Add asterisk to options that change upon restart ([Settings fxml](src/main/resources/view/SettingsScreen.fxml))
-- [ ] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value] ([Settings](src/main/java/afm/user/Settings.java)) - **medium**
-- [x] Restructure Main to have static `getInstance` and `getStage` to make getting Stage & stuff easier - **long**
-- [ ] Make subwindows open on top of current window (middle) - infoWindowd * Alerts - **long**
+- [x] Add always on top option
+      - [ ] Add infoWindows always on top option - **quick-ish**
+- [ ] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value] - **medium** **WIP**
+- [ ] Make subwindows open on top of current window (middle) - infoWindows & Alerts - **long**
 
 ## License
 

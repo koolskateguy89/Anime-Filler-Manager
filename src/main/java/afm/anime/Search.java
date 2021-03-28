@@ -11,11 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.net.ssl.SSLHandshakeException;
+
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-
-import javax.net.ssl.SSLHandshakeException;
 
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -23,6 +23,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import afm.Main;
 import afm.anime.Anime.AnimeBuilder;
 import afm.utils.Utils;
 
@@ -110,6 +111,7 @@ public class Search {
 				// no internet connection
 				Platform.runLater(() -> {
 					Alert a = new Alert(AlertType.ERROR, "No internet connection");
+					a.initOwner(Main.getStage());
 					a.showAndWait();
 				});
 				return false;
@@ -124,6 +126,7 @@ public class Search {
 				// most likely caused by MAL being blocked or something
 				Platform.runLater(() -> {
 					Alert a = new Alert(AlertType.ERROR, "Could not connect to MyAnimeList");
+					a.initOwner(Main.getStage());
 					a.showAndWait();
 				});
 				return false;

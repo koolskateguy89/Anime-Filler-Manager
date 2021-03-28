@@ -79,6 +79,7 @@ public abstract class InfoWindow extends Stage {
 		getIcons().add(new Image("icons/InfoIcon.png"));
 		setOnCloseRequest(event -> closeWindow(null));
 		setAlwaysOnTop(Settings.alwaysOnTop());
+		//initOwner(Main.getStage());
 	}
 
 	protected void afterInitialize() {
@@ -122,6 +123,7 @@ public abstract class InfoWindow extends Stage {
 	@FXML
 	void openFillers(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.initOwner(this);
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);	// wrap text
 
 		alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
@@ -182,7 +184,7 @@ public abstract class InfoWindow extends Stage {
 		if (url == null) return;
 
 		NotificationFactory.showInfoNotification("Opening browser...");
-		Browser.open(url);
+		Browser.open(url, this);
 	}
 
 	@FXML
@@ -223,6 +225,7 @@ public abstract class InfoWindow extends Stage {
 		Scene scene = new Scene(root);
 
 		imageStage = new Stage();
+		imageStage.initOwner(this);
 		imageStage.setTitle(anime.getName());
 		imageStage.getIcons().add(img);
 

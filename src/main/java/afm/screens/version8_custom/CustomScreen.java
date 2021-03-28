@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;
@@ -169,6 +170,7 @@ public class CustomScreen extends GridPane {
 
     	if (emptyName) {
     		Alert needName = new Alert(AlertType.ERROR, "The anime needs a name!");
+    		needName.initOwner(Main.getStage());
     		needName.showAndWait();
     	}
     	if (emptyGenre) {
@@ -178,6 +180,7 @@ public class CustomScreen extends GridPane {
                 emptyGenre = false;
             } else {
                 Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed!");
+	            needGenre.initOwner(Main.getStage());
                 needGenre.showAndWait();
             }
     	}

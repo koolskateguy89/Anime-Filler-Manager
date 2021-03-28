@@ -2,10 +2,10 @@ package afm.utils;
 
 import static java.util.Objects.requireNonNullElse;
 
-import org.controlsfx.control.Notifications;
-
 import javafx.application.Platform;
 import javafx.util.Duration;
+
+import org.controlsfx.control.Notifications;
 
 public class NotificationFactory {
 
