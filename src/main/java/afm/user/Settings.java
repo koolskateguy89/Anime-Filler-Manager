@@ -1,5 +1,6 @@
 package afm.user;
 
+import java.util.HashMap;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -23,11 +24,6 @@ public class Settings {
 		static final boolean playSound = false;
 		static final boolean alwaysOnTop = false;
 	}
-
-	/*private static final boolean DEFAULT_SHOWFACTS = true;
-	private static final boolean DEFAULT_NAMEORDER = false;
-	private static final boolean DEFAULT_PLAYSOUND = false;
-	private static final boolean DEFAULT_ALWAYSONTOP = false;*/
 
 	private static void loadValues() {
 		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
@@ -54,6 +50,21 @@ public class Settings {
 		}
 	}
 
+	private static HashMap<String, Boolean> map = new HashMap<>();
+
+	// probably not gonna be used tbh
+	public static void put(String key, boolean value) {
+		map.put(key, value);
+	}
+
+	public static boolean get(String key) {
+		Boolean value = map.get(key);
+		return value != null ? value : false;   // default to false
+	}
+
+	public static void invert(String key) {
+		Boolean value = map.get(key);
+	}
 
 	private static boolean showFacts;
 
