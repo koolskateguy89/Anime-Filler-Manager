@@ -61,7 +61,7 @@ public class MyListInfoWindow extends InfoWindow {
 
 			if (newVal.isEmpty()) {
 				anime.setCurrEp(0);
-				MyList.update(anime);
+				MyList.add(anime);
 			} else if (Utils.isStrictInteger(newVal)) {
 				int newEps = Integer.parseInt(newVal);
     			anime.setCurrEp(newEps);
