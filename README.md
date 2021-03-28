@@ -10,7 +10,7 @@
 - [Built With](#built-with)
 - [How Does It Work?](#how-does-it-work?)
 - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
+    - [Prerequisites](#prerequisites---ish)
     - [Installing](#installing)
     - [Building and running using Maven](#building-and-running-using-maven)
 - [Important notes](#important-things-to-know-when-running)
@@ -91,10 +91,10 @@ To run:
 - [x] Add asterisk to options that change upon restart
 - [x] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value]
 - [ ] Add `reset to default` button to settings screen - **quick-ish**
-- [ ] Add episodes column to all tablescreens - **quick-ish**
+- [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
 - [x] Add always on top option
-  - [ ] Add infoWindows always on top option - **quick-ish**
+  - [ ] Add infoWindows always on top option - **quick-ish** (maybe)
 - [ ] Make subwindows open on top of current window (middle) - infoWindows & Alerts - **long**
 
 ## License
