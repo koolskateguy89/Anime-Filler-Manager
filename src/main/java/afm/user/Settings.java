@@ -102,7 +102,6 @@ public class Settings {
 	}
 
 	public static void reset() {
-		map.clear();
 		map.putAll(defaults);
 	}
 
