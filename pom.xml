@@ -88,6 +88,14 @@
                 <version>3.8.1</version>
             </plugin>
 
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
         	<!-- Build an executable 'shaded' JAR -->
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
