@@ -88,6 +88,10 @@ To run:
 - [ ] Add refresh button to 'filler container' to check for new filler episodes
     - How would I actually do this, considering I'm using an Alert
     - Maybe add a button to bottom of alert then check the result of Alert.showAndWait() - then reshow alert if refresh
+- [ ] Add episodes column to all tablescreens - **quick-ish**
+- [ ] Resize screens to all be same size (SceneBuilder) - **long**
+- [ ] Add always on top option ([Settings](src/main/java/afm/user/Settings.java) & [Main](src/main/java/afm/Main.java)) - **quick**
+- [ ] Add asterisk to options that change upon restart ([Settings fxml](src/main/resources/SettingsScreen.fxml)) - **quick**
 
 ## License
 
