@@ -330,6 +330,7 @@ public class Utils {
 	public static ButtonType showAndWaitConfAlert(String header, String content) {
 		Alert alert = new Alert(AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO);
 
+		// TODO: alert.initOwner(Handler.getStage())
 		if (header != null)
 			alert.setHeaderText(header);
 

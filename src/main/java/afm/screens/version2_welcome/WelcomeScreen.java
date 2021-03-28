@@ -8,17 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
 import afm.Main;
-import afm.utils.Handler;
 import afm.utils.Utils;
 
 // now also being used as a Home Screen
 public class WelcomeScreen extends VBox {
 
-	private final Handler h;
-
-	public WelcomeScreen(Handler h) throws IOException {
-		this.h = h;
-
+	public WelcomeScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("WelcomeScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -28,7 +23,7 @@ public class WelcomeScreen extends VBox {
 	// Initialise main screen & return main to be able to change screens easily
 	// Quite clever imo
 	private Main initMain() {
-		return h.getMain().initMainScreen();
+		return Main.getInstance().initMainScreen();
 	}
 
 	@FXML

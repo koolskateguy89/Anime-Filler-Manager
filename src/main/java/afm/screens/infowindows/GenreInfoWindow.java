@@ -13,26 +13,20 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.InputEvent;
 
+import afm.Main;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import afm.anime.Genre;
 import afm.screens.Menu;
-import afm.utils.Handler;
 import afm.utils.Utils;
 
-
 public class GenreInfoWindow extends InfoWindow {
-
-	static Handler h;
 
 	// maybe this should be in Genre class
 	private static ImmutableMap<Genre, String> genreDefMap;
 
-	public static void init(Handler h) {
-		GenreInfoWindow.h = h;
-
-		EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
+	public static void init() {EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
 
 		tempMap.put(Genre.Action, """
 								  A genre in which the protagonist or \
@@ -165,7 +159,7 @@ public class GenreInfoWindow extends InfoWindow {
 		loader.load();
 
 		// Stop main screen receiving input
-		h.getStage().addEventFilter(ALL_EVENTS, IGNORE_EVENT);
+		Main.getStage().addEventFilter(ALL_EVENTS, IGNORE_EVENT);
 	}
 
 	@FXML
@@ -196,6 +190,6 @@ public class GenreInfoWindow extends InfoWindow {
 		super.closeWindow(event);
 
 		// allow main screen to receive input again
-		h.getStage().removeEventFilter(ALL_EVENTS, IGNORE_EVENT);
+		Main.getStage().removeEventFilter(ALL_EVENTS, IGNORE_EVENT);
 	}
 }

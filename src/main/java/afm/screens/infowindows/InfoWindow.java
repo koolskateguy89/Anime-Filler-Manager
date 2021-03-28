@@ -1,7 +1,6 @@
 package afm.screens.infowindows;
 
 import java.util.HashSet;
-import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,16 +22,16 @@ import javafx.stage.Stage;
 import afm.anime.Anime;
 import afm.database.MyList;
 import afm.database.ToWatch;
+import afm.user.Settings;
 import afm.utils.Browser;
-import afm.utils.Handler;
 import afm.utils.NotificationFactory;
 import afm.utils.Utils;
 
 // not much point of it being abstract I think...
 public abstract class InfoWindow extends Stage {
 
-	public static void init(Handler h) {
-		GenreInfoWindow.init(h);
+	public static void init() {
+		GenreInfoWindow.init();
 	}
 
 	private static final HashSet<Stage> openWindows = new HashSet<>();
@@ -79,6 +78,7 @@ public abstract class InfoWindow extends Stage {
 
 		getIcons().add(new Image("icons/InfoIcon.png"));
 		setOnCloseRequest(event -> closeWindow(null));
+		setAlwaysOnTop(Settings.alwaysOnTop());
 	}
 
 	protected void afterInitialize() {

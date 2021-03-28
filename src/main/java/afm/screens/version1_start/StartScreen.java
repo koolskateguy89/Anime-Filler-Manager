@@ -27,18 +27,14 @@ import afm.screens.version7_toWatch.ToWatchScreen;
 import afm.screens.version8_custom.CustomScreen;
 import afm.user.Settings;
 import afm.utils.Facts;
-import afm.utils.Handler;
 import afm.utils.Utils;
 
 public class StartScreen extends Pane {
 
-	private final Handler h;
 	private Pair<Integer, String> fact;
 	private LoadTask loadTask;
 
-	public StartScreen(Handler h) throws IOException {
-		this.h = h;
-
+	public StartScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("StartScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -88,7 +84,7 @@ public class StartScreen extends Pane {
 
     		loadAll();
     	} else
-    		h.getMain().moveToWelcomeScreen();
+    		Main.getInstance().moveToWelcomeScreen();
     }
 
 	private void loadAll() {
@@ -165,19 +161,19 @@ public class StartScreen extends Pane {
 				Season.init();
 				updateProgress(10, max);
 
-				InfoWindow.init(h);
+				InfoWindow.init();
 				updateProgress(15,  max);
 
 				// Load different Screens
-				final Main main = h.getMain();
+				final Main main = Main.getInstance();
 
-				main.welcomeScreen = new WelcomeScreen(h);
+				main.welcomeScreen = new WelcomeScreen();
 				updateProgress(25, max);
-				main.menu = new Menu(h);
+				main.menu = new Menu();
 				updateProgress(35, max);
 				main.settingsScreen = new SettingsScreen();
 				updateProgress(40, max);
-				main.searchScreen = new SearchScreen(h);
+				main.searchScreen = new SearchScreen();
 				updateProgress(45, max);
 				main.myListScreen = new MyListScreen();
 				updateProgress(55, max);
@@ -188,7 +184,7 @@ public class StartScreen extends Pane {
 
 				// load MyList & ToWatch from database into run time data structures
 				progress = 80;
-				Database.init(h, this, 80,  max);
+				Database.init(this, 80,  max);
 
 				// Completely fill progressBar
 				updateProgress(1.0,  1.0);

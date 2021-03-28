@@ -17,12 +17,12 @@ import org.sqlite.SQLiteDataSource;
 
 import com.google.common.base.Strings;
 
+import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;
 import afm.anime.Season;
 import afm.screens.version1_start.StartScreen;
-import afm.utils.Handler;
 
 /*
  * I was initially using Serialization (EnumSet is Serializable) to store
@@ -85,14 +85,14 @@ public class Database {
 	}
 
 	// load myList & toWatch contents into runtime linkedHSs
-	public static void init(Handler handler, StartScreen.LoadTask task, double start, double end) {
+	public static void init(StartScreen.LoadTask task, double start, double end) {
 		if (inJar() && firstRun())
 			clearTables();
 		else
 			loadAll(task, start, end);
 
-		MyList.init(handler);
-		ToWatch.init(handler);
+		MyList.init();
+		ToWatch.init();
 	}
 
 	private static final SQLiteDataSource ds = new SQLiteDataSource();

@@ -12,6 +12,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.screens.MainScreen;
@@ -26,16 +29,17 @@ import afm.screens.version5_results.ResultsScreen;
 import afm.screens.version6_myList.MyListScreen;
 import afm.screens.version7_toWatch.ToWatchScreen;
 import afm.screens.version8_custom.CustomScreen;
-import afm.utils.Handler;
+import afm.user.Settings;
 import afm.utils.OnClose;
 
 // https://github.com/koolskateguy89/Anime-Filler-Manager
 public class Main extends Application {
 
-	final Handler h = new Handler(this);
+	@Getter(AccessLevel.PUBLIC)
+	private static Main instance;
 
-	public Stage getStage() {
-		return stage;
+	public static Stage getStage() {
+		return instance.stage;
 	}
 
 	private Stage stage;
@@ -66,7 +70,7 @@ public class Main extends Application {
 
 		if (welcomeScreen == null) {
 			try {
-				welcomeScreen = new WelcomeScreen(h);
+				welcomeScreen = new WelcomeScreen();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -150,7 +154,7 @@ public class Main extends Application {
 	public void moveToSearchingScreen(Search s) {
 		if (searchingScreen == null)
 			try {
-				searchingScreen = new SearchingScreen(h);
+				searchingScreen = new SearchingScreen();
 			} catch (IOException e) {
 				e.printStackTrace();
 				Platform.exit();
@@ -180,8 +184,10 @@ public class Main extends Application {
 
 	@Override
 	public void start(final Stage primaryStage) {
+		Main.instance = this;
 		try {
 			stage = primaryStage;
+			stage.setAlwaysOnTop(Settings.alwaysOnTop());
 
 			stage.setTitle("Anime Filler Manager");
 
@@ -195,7 +201,7 @@ public class Main extends Application {
 			Runtime.getRuntime().addShutdownHook(OnClose.getInstance());
 
 			// start loading is done internally in start screen (by button action)
-			startScreen = new StartScreen(h);
+			startScreen = new StartScreen();
 			scene = new Scene(startScreen);
 
 			stage.setScene(scene);

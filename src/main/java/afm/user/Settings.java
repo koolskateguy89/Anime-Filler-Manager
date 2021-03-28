@@ -17,16 +17,25 @@ public class Settings {
 		loadValues();
 	}
 
-	private static final boolean DEFAULT_SHOWFACTS = true;
+	static class Default {
+		static final boolean showFacts = true;
+		static final boolean nameOrder = false;
+		static final boolean playSound = false;
+		static final boolean alwaysOnTop = false;
+	}
+
+	/*private static final boolean DEFAULT_SHOWFACTS = true;
 	private static final boolean DEFAULT_NAMEORDER = false;
 	private static final boolean DEFAULT_PLAYSOUND = false;
+	private static final boolean DEFAULT_ALWAYSONTOP = false;*/
 
 	private static void loadValues() {
 		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
 
-		showFacts = prefs.getBoolean("showFacts", DEFAULT_SHOWFACTS);
-		nameOrder = prefs.getBoolean("nameOrder", DEFAULT_NAMEORDER);
-		playSound = prefs.getBoolean("playSound", DEFAULT_PLAYSOUND);
+		showFacts = prefs.getBoolean("showFacts", Default.showFacts);
+		nameOrder = prefs.getBoolean("nameOrder", Default.nameOrder);
+		playSound = prefs.getBoolean("playSound", Default.playSound);
+		alwaysOnTop = prefs.getBoolean("alwaysOnTop", Default.alwaysOnTop);
 	}
 
 	// OnClose
@@ -36,11 +45,12 @@ public class Settings {
 		prefs.putBoolean("showFacts", showFacts);
 		prefs.putBoolean("nameOrder", nameOrder);
 		prefs.putBoolean("playSound", playSound);
+		prefs.putBoolean("alwaysOnTop", alwaysOnTop);
 
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -50,6 +60,8 @@ public class Settings {
 	private static boolean playSound;
 
 	private static boolean nameOrder;
+
+	private static boolean alwaysOnTop;
 
 	public static boolean showFacts() {
 		return showFacts;
@@ -75,6 +87,15 @@ public class Settings {
 
 	public static void invertPlaySound() {
 		playSound = !playSound;
+	}
+
+
+	public static boolean alwaysOnTop() {
+		return alwaysOnTop;
+	}
+
+	public static void invertAlwaysOnTop() {
+		alwaysOnTop = !alwaysOnTop;
 	}
 
 }

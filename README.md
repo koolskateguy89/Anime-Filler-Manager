@@ -89,9 +89,11 @@ To run:
     - This is particularly useful for long-running anime that are addedd to MyList/ToWatch 'early'
 - [ ] Add episodes column to all tablescreens - **quick-ish**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
-- [ ] Add always on top option ([Settings](src/main/java/afm/user/Settings.java) & [Main](src/main/java/afm/Main.java)) - **quick**
-- [x] Add asterisk to options that change upon restart ([Settings fxml](src/main/resources/view/SettingsScreen.fxml)) - **quick**
+- [x] Add always on top option ([Settings](src/main/java/afm/user/Settings.java) & [Main](src/main/java/afm/Main.java))
+- [x] Add asterisk to options that change upon restart ([Settings fxml](src/main/resources/view/SettingsScreen.fxml))
 - [ ] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value] ([Settings](src/main/java/afm/user/Settings.java)) - **medium**
+- [x] Restructure Main to have static `getInstance` and `getStage` to make getting Stage & stuff easier - **long**
+- [ ] Make subwindows open on top of current window (middle) - infoWindowd * Alerts - **long**
 
 ## License
 

@@ -11,9 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 
+import afm.Main;
 import afm.anime.Anime;
 import afm.user.Settings;
-import afm.utils.Handler;
 
 public final class MyList {
 
@@ -35,8 +35,8 @@ public final class MyList {
 		runTime = FXCollections.observableSet(backingSet);
 	}
 
-	public static void init(Handler handler) {
-		SetChangeListener<Anime> changeListener = change -> handler.getMain().myListScreen.refreshTable();
+	public static void init() {
+		SetChangeListener<Anime> changeListener = change -> Main.getInstance().myListScreen.refreshTable();
 		runTime.addListener(changeListener);
 	}
 

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 
+import afm.Main;
 import afm.user.Settings;
 import afm.utils.Utils;
 
@@ -31,6 +32,8 @@ public class SettingsScreen extends Pane {
 		factsCheckBox.setSelected(Settings.showFacts());
 
 		soundCheckBox.setSelected(Settings.playSound());
+
+		alwaysOnTopBox.setSelected(Settings.alwaysOnTop());
 	}
 
 	@FXML
@@ -45,12 +48,17 @@ public class SettingsScreen extends Pane {
 	@FXML
 	private CheckBox soundCheckBox;
 
-    @FXML void insertion(ActionEvent event) {
+	@FXML
+	private CheckBox alwaysOnTopBox;
+
+    @FXML
+    void insertion(ActionEvent event) {
     	Settings.invertNameOrder();
     	nameCheckBox.setSelected(!insertionCheckBox.isSelected());
     }
 
-    @FXML void name(ActionEvent event) {
+    @FXML
+    void name(ActionEvent event) {
     	Settings.invertNameOrder();
     	insertionCheckBox.setSelected(!nameCheckBox.isSelected());
     }
@@ -63,6 +71,12 @@ public class SettingsScreen extends Pane {
     @FXML
     void playSound(ActionEvent event) {
     	Settings.invertPlaySound();
+    }
+
+    @FXML
+    void alwaysOnTop(ActionEvent event) {
+    	Settings.invertAlwaysOnTop();
+    	Main.getStage().setAlwaysOnTop(Settings.alwaysOnTop());
     }
 
 }

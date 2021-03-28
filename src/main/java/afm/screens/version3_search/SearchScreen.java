@@ -24,18 +24,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import afm.Main;
 import afm.anime.Genre;
 import afm.anime.Search;
 import afm.anime.Season;
 import afm.screens.infowindows.GenreInfoWindow;
-import afm.utils.Handler;
 import afm.utils.Utils;
 
 public final class SearchScreen extends GridPane {
 
 	private static final String REMOVE = "Remove ";
-
-	private final Handler h;
 
 	@FXML
     private TextField nameField;
@@ -71,9 +69,7 @@ public final class SearchScreen extends GridPane {
     private final ObservableSet<Season> seasonSet = FXCollections.observableSet(new TreeSet<>());
 
 
-	public SearchScreen(Handler h) throws IOException {
-		this.h = h;
-
+	public SearchScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("SearchScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -279,7 +275,7 @@ public final class SearchScreen extends GridPane {
 			search.setMinEpisodes(Integer.parseInt(minEps));
 		}
 
-		h.getMain().moveToSearchingScreen(search);
+		Main.getInstance().moveToSearchingScreen(search);
 		clearFields(null);
     }
 

@@ -10,43 +10,49 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-import afm.utils.Handler;
+import afm.Main;
 import afm.utils.Utils;
 
 public final class Menu extends Pane {
-
-	private final Handler h;
 
 	public static final String SELECTED = "-fx-background-color: #77DBE5; -fx-text-fill: #300E4E",
 								 NORMAL = "-fx-background-color: #282828; -fx-text-fill: #E8E8E8",
 								RESULTS = "-fx-background-color: #0044FF; -fx-text-fill: #FAFAFA";
 
-	public Menu(Handler h) throws IOException {
+
+	final Main main = Main.getInstance();
+
+	public Menu() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("Menu"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
-
-		this.h = h;
 	}
 
-    @FXML private Button searchBtn;
+    @FXML
+    private Button searchBtn;
 
-    @FXML private Button myListBtn;
+    @FXML
+    private Button myListBtn;
 
-    @FXML private Button toWatchBtn;
+    @FXML
+    private Button toWatchBtn;
 
-    @FXML private Button customBtn;
+    @FXML
+    private Button customBtn;
 
-    @FXML private Button homeBtn;
+    @FXML
+    private Button homeBtn;
 
-    @FXML private Button settingsBtn;
+    @FXML
+    private Button settingsBtn;
 
     /*
      * Load the icons here rather than set it through Scenebuilder as it is
      * easier to get them to be the desired size like this
      */
-    @FXML void initialize() {
+    @FXML
+    void initialize() {
     	Image homeIcon = new Image("icons/HomeIcon.png", 16, 16, true, true);
     	ImageView iv = new ImageView(homeIcon);
     	iv.setSmooth(true);
@@ -70,38 +76,44 @@ public final class Menu extends Pane {
     	customBtn.setStyle(NORMAL);
     }
 
-    @FXML void searchButtonPressed(ActionEvent event) {
+    @FXML
+    void searchButtonPressed(ActionEvent event) {
     	resetAllStyles();
     	searchBtn.setStyle(SELECTED);
-    	h.getMain().openSearchScreen();
+	    main.openSearchScreen();
     }
 
-    @FXML void myListButtonPressed(ActionEvent event) {
+    @FXML
+    void myListButtonPressed(ActionEvent event) {
     	resetAllStyles();
     	myListBtn.setStyle(SELECTED);
-    	h.getMain().openMyListScreen();
+	    main.openMyListScreen();
     }
 
-    @FXML void toWatchButtonPressed(ActionEvent event) {
+    @FXML
+    void toWatchButtonPressed(ActionEvent event) {
     	resetAllStyles();
     	toWatchBtn.setStyle(SELECTED);
-    	h.getMain().openToWatchScreen();
+	    main.openToWatchScreen();
     }
 
-    @FXML void customButtonPressed(ActionEvent event) {
+    @FXML
+    void customButtonPressed(ActionEvent event) {
     	resetAllStyles();
     	customBtn.setStyle(SELECTED);
-    	h.getMain().openCustomScreen();
+    	main.openCustomScreen();
     }
 
-    @FXML void openHomeScreen(ActionEvent event) {
+    @FXML
+    void openHomeScreen(ActionEvent event) {
     	resetAllStyles();
-    	h.getMain().moveToWelcomeScreen();
+	    main.moveToWelcomeScreen();
     }
 
-    @FXML void openSettingsScreen(ActionEvent event) {
+    @FXML
+    void openSettingsScreen(ActionEvent event) {
     	resetAllStyles();
-    	h.getMain().openSettingsScreen();
+	    main.openSettingsScreen();
     }
 
     public void openSearchScreenFromWelcome() {

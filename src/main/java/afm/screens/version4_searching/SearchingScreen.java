@@ -21,16 +21,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.user.Settings;
-import afm.utils.Handler;
 import afm.utils.SoundFactory;
 import afm.utils.Utils;
 
 public class SearchingScreen extends Pane {
-
-	private final Handler h;
 
 	private Search search;
 
@@ -42,13 +40,11 @@ public class SearchingScreen extends Pane {
 	@FXML private Button resultsBtn;
 
 
-	public SearchingScreen(Handler h) throws IOException {
+	public SearchingScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("SearchingScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
-
-		this.h = h;
 	}
 
 	// change search
@@ -87,7 +83,7 @@ public class SearchingScreen extends Pane {
 	@FXML
 	void openResults(ActionEvent event) {
 		stopBlinking = true;
-		h.getMain().moveToResultsScreen(results);
+		Main.getInstance().moveToResultsScreen(results);
 	}
 
 	// Helper Service classes

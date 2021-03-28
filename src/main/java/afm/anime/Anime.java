@@ -25,6 +25,7 @@ import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
 import afm.screens.infowindows.ToWatchInfoWindow;
 import afm.utils.Utils;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

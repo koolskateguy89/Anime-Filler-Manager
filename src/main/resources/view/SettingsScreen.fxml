@@ -61,7 +61,7 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label contentDisplay="RIGHT" layoutX="244.0" layoutY="276.0" text="*Always on top" textFill="WHITE">
+      <Label contentDisplay="RIGHT" layoutX="244.0" layoutY="276.0" text="Always on top" textFill="WHITE">
          <graphic>
             <CheckBox fx:id="alwaysOnTopBox" mnemonicParsing="false" onAction="#alwaysOnTop" />
          </graphic>
