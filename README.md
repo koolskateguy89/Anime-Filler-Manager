@@ -8,7 +8,7 @@
 
 - [Introduction](#introduction)
 - [Built With](#built-with)
-- [How Does It Work?](#how-does-it-work?)
+- [How Does It Work?](#how-does-it-work)
 - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites---ish)
     - [Installing](#installing)
