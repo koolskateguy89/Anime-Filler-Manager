@@ -39,9 +39,7 @@ public class Settings {
 	// now that I think about it, I could start this Map out as the default map
 	// similar to how it is now, but there's no need for the `defaults` map
 	// also maybe use EnumMap<Key,Boolean>
-	private static final HashMap<String, Boolean> map = new HashMap<>() {{
-		putAll(defaults);
-	}};
+	private static final HashMap<String, Boolean> map = new HashMap<>(defaults);
 
 	static {
 		loadValues();
@@ -101,6 +99,11 @@ public class Settings {
 		Boolean value = map.get(key);
 		if (value != null)
 			map.put(key, !value);
+	}
+
+	public static void reset() {
+		map.clear();
+		map.putAll(defaults);
 	}
 
 }

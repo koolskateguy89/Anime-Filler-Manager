@@ -90,7 +90,7 @@ To run:
 - [x] Restructure Main to have static `getInstance` and `getStage` to make getting Stage & stuff easier
 - [x] Add asterisk to options that change upon restart
 - [x] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value]
-- [ ] Add `reset to default` button to settings screen - **quick-ish**
+- [x] Add `reset to default` button to settings screen
 - [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
 - [x] Add always on top option

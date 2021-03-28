@@ -81,4 +81,12 @@ public class SettingsScreen extends Pane {
     	Main.getStage().setAlwaysOnTop(Settings.get(ALWAYS_ON_TOP));
     }
 
+    @FXML
+	void resetToDefault(ActionEvent event) {
+    	nameCheckBox.setSelected(false);
+    	insertionCheckBox.setSelected(false);
+    	Settings.reset();
+    	initialize();
+    }
+
 }
