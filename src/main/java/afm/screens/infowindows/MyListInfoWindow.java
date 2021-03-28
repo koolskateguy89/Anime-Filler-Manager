@@ -65,7 +65,7 @@ public class MyListInfoWindow extends InfoWindow {
 			} else if (Utils.isStrictInteger(newVal)) {
 				int newEps = Integer.parseInt(newVal);
     			anime.setCurrEp(newEps);
-    			MyList.update(anime);
+    			MyList.add(anime);
 
     			// re-set value in case there's a problem such as the episode being outside
 				// of the anime's episode range

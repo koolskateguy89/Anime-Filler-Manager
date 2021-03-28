@@ -58,16 +58,6 @@ public final class MyList {
 		added.add(anime);
 	}
 
-	public static void update(Anime anime) {
-		// For when an anime already exists in runTime, set it to be updated
-		// in database
-		if (!runTime.add(anime)) {
-			added.remove(anime);
-		}
-		removed.remove(anime.getName());
-		added.add(anime);
-	}
-
 	public static void addAll(Collection<Anime> col) {
 		for (Anime anime : col) {
 			add(anime);
