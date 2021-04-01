@@ -84,21 +84,18 @@ To run:
 2. I cba
 
 ## TODO
+Key:
+_italicized = WIP/next-to-do_
 
-- [x] Add refresh button to 'filler container' to check for new filler episodes
-    - This is particularly useful for long-running anime that are addedd to MyList/ToWatch 'early'
-- [x] Restructure Main to have static `getInstance` and `getStage` to make getting Stage & stuff easier
-- [x] Add asterisk to options that change upon restart
-- [x] Make Settings use a Map<String,Boolean> mapping [setting-name]->[value]
-- [x] Add `reset to default` button to settings screen
 - [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
-- [x] Add always on top option
-  - [ ] Add infoWindows always on top option - **quick-ish** (maybe)
+- [x] Add always-on-top option
+  - [ ] _Add transparency option for when not focused - **no idea** (maybe)_
+  - [ ] Add infoWindows always-on-top option - **quick-ish** (maybe)
 - [ ] Make subwindows open on top of current window (middle) - infoWindows & Alerts - **long**
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**
-- [ ] Add option to skip loading screen - **quick-ish**
+- [ ] _Add option to skip loading screen - **quick-ish**_
 
 ## License
 
