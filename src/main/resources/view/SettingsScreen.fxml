@@ -61,7 +61,7 @@
             <CheckBox fx:id="alwaysOnTopBox" mnemonicParsing="false" onAction="#alwaysOnTop" />
          </graphic>
       </Label>
-      <Label contentDisplay="RIGHT" layoutX="203.0" layoutY="257.0" text="*Automate loading screen" textFill="WHITE">
+      <Label contentDisplay="RIGHT" layoutX="198.0" layoutY="257.0" text="*Automate loading screen" textFill="WHITE">
          <graphic>
             <CheckBox fx:id="skipLoadingBox" mnemonicParsing="false" onAction="#skipLoading" />
          </graphic>

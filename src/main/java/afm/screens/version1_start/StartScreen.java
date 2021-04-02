@@ -54,7 +54,7 @@ public class StartScreen extends Pane {
 
 		//Initialise the loadTask which loads all screens
 		loadTask = new LoadTask();
-		
+
 		// automate the loading process
 		if (Settings.get(Settings.Key.SKIP_LOADING)) {
 			startBtn.fire();

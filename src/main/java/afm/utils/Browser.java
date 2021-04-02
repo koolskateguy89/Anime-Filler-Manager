@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javafx.stage.Stage;
-
 public class Browser {
 
 	private Browser() { }
