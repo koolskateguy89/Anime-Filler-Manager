@@ -297,6 +297,7 @@ public final class SearchScreen extends GridPane {
     			genreSet.add(potentialGenre);
     		} else {
     			Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed to search!");
+    			needGenre.initOwner(Main.getStage());
     			needGenre.showAndWait();
     			return false;
     		}

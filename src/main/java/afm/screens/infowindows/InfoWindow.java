@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+import afm.Main;
 import afm.anime.Anime;
 import afm.database.MyList;
 import afm.database.ToWatch;

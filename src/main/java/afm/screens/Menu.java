@@ -15,15 +15,6 @@ import afm.Main;
 import afm.utils.Utils;
 
 public final class Menu extends VBox {
-
-    /*
-     * Need to change this to change styleclass instead of changing style to
-     * make making changes easier (only have to change stylesheet)
-     */
-
-	/*public static final String SELECTED = "-fx-background-color: #77DBE5; -fx-text-fill: #300E4E",
-								 NORMAL = "-fx-background-color: #291965; -fx-text-fill: #E8E8E8",
-								RESULTS = "-fx-background-color: #0044FF; -fx-text-fill: #FAFAFA";*/
 	
 	public static final List<String> SELECTED = List.of("button", "Selected"),
 									   NORMAL = List.of("button", "MenuButton"),
@@ -61,7 +52,6 @@ public final class Menu extends VBox {
     public void resultsScreen() {
     	resetAllStyles();
     	setStyleClass(searchBtn, RESULTS);
-    	//searchBtn.setStyle(RESULTS);
     }
 
     private void resetAllStyles() {
@@ -69,17 +59,11 @@ public final class Menu extends VBox {
 	    setStyleClass(myListBtn, NORMAL);
 	    setStyleClass(toWatchBtn, NORMAL);
 	    setStyleClass(customBtn, NORMAL);
-
-    	/*searchBtn.setStyle(NORMAL);
-    	myListBtn.setStyle(NORMAL);
-    	toWatchBtn.setStyle(NORMAL);
-    	customBtn.setStyle(NORMAL);*/
     }
 
     @FXML
     void searchButtonPressed(ActionEvent event) {
     	resetAllStyles();
-    	//searchBtn.setStyle(SELECTED);
 	    setStyleClass(searchBtn, SELECTED_MENU);
 	    main.openSearchScreen();
     }
@@ -87,7 +71,6 @@ public final class Menu extends VBox {
     @FXML
     void myListButtonPressed(ActionEvent event) {
     	resetAllStyles();
-    	//myListBtn.setStyle(SELECTED);
 	    setStyleClass(myListBtn, SELECTED_MENU);
 	    main.openMyListScreen();
     }
@@ -96,7 +79,6 @@ public final class Menu extends VBox {
     void toWatchButtonPressed(ActionEvent event) {
     	resetAllStyles();
     	setStyleClass(toWatchBtn, SELECTED_MENU);
-    	//toWatchBtn.setStyle(SELECTED);
 	    main.openToWatchScreen();
     }
 
@@ -104,7 +86,6 @@ public final class Menu extends VBox {
     void customButtonPressed(ActionEvent event) {
     	resetAllStyles();
     	setStyleClass(customBtn, SELECTED_MENU);
-    	//customBtn.setStyle(SELECTED);
     	main.openCustomScreen();
     }
 
