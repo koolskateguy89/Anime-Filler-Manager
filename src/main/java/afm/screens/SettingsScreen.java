@@ -36,6 +36,8 @@ public class SettingsScreen extends Pane {
 		soundCheckBox.setSelected(Settings.get(PLAY_SOUND));
 
 		alwaysOnTopBox.setSelected(Settings.get(ALWAYS_ON_TOP));
+
+		skipLoadingBox.setSelected(Settings.get(SKIP_LOADING));
 	}
 
 	@FXML
@@ -52,6 +54,9 @@ public class SettingsScreen extends Pane {
 
 	@FXML
 	private CheckBox alwaysOnTopBox;
+
+	@FXML
+	private CheckBox skipLoadingBox;
 
     @FXML
     void insertion(ActionEvent event) {
@@ -79,6 +84,11 @@ public class SettingsScreen extends Pane {
     void alwaysOnTop(ActionEvent event) {
 	    Settings.invert(ALWAYS_ON_TOP);
     	Main.getStage().setAlwaysOnTop(Settings.get(ALWAYS_ON_TOP));
+    }
+
+    @FXML
+    void skipLoading(ActionEvent event) {
+    	Settings.invert(SKIP_LOADING);
     }
 
     @FXML

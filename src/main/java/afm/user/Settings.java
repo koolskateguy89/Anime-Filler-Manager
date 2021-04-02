@@ -13,14 +13,15 @@ public class Settings {
 		NAME_ORDER(false),
 		PLAY_SOUND(false),
 		ALWAYS_ON_TOP(false),
+		SKIP_LOADING(false),
 		;
 
-		final boolean def;
+		final boolean defaultValue;
 		Key(boolean def) {
-			this.def = def;
+			this.defaultValue = def;
 		}
 		public boolean getDefault() {
-			return def;
+			return defaultValue;
 		}
 	}
 
