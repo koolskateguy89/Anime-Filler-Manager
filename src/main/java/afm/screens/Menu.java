@@ -15,7 +15,7 @@ import afm.Main;
 import afm.utils.Utils;
 
 public final class Menu extends VBox {
-	
+
 	public static final List<String> SELECTED = List.of("button", "Selected"),
 									   NORMAL = List.of("button", "MenuButton"),
 									  RESULTS = List.of("button", "Results");

@@ -26,14 +26,14 @@
 .SelectedMenuButton {
     -fx-background-color: #282828;
 }
+.Results {
+    -fx-background-color: #0044FF;
+    -fx-text-fill: #FAFAFA;
+}
 
 .Selected {
     -fx-background-color: #77DBE5;
 	-fx-text-fill: #300E4E;
-}
-.Results {
-    -fx-background-color: #0044FF;
-    -fx-text-fill: #FAFAFA;
 }
 
 .Text-area {

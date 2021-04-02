@@ -92,7 +92,8 @@ _italicized = WIP/next-to-do_
 - [x] Redesign menu panel (make it a VBox with icons on buttons - make buttons 'seamless')
 - [x] Add always-on-top option
       - [ ] _Add transparency option for when not focused - **no idea** (maybe)_
-      - [ ] Add infoWindows always-on-top option - **quick-ish** (maybe)  
+      - [ ] Add infoWindows always-on-top option - **quick-ish** (maybe)
+    
 - [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
 - [ ] _Make subwindows open on top of current window (middle) - infoWindows - **long**_
