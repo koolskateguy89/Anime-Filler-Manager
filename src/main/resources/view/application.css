@@ -15,16 +15,18 @@
 	-fx-background-color: #282828;
 	-fx-text-fill: #E8E8E8;
 }
+.button:hover {
+    -fx-background-color: #363434;
+}
+
 .MenuButton {
 	-fx-background-color: #484848;
     -fx-text-fill: #E8E8E8;
 }
-.MenuButton:hover {
-    -fx-background-color: #363434;
-}
 .SelectedMenuButton {
     -fx-background-color: #282828;
 }
+
 .Selected {
     -fx-background-color: #77DBE5;
 	-fx-text-fill: #300E4E;

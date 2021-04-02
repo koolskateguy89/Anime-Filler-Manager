@@ -78,10 +78,10 @@ public class Search {
 
 
 	public List<Anime> search() {
-		/* this should never happen because it's already taken care of
+		/* this should be impossible because it's already taken care of
 		   in SearchScreen */
 		if (genres.isEmpty())
-			throw new RuntimeException("No genres selected for searching");
+			throw new Error(new IllegalArgumentException("No genres selected for searching"));
 
 		boolean searchWorked = searchForEachGenre();
 
