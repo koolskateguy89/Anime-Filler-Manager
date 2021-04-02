@@ -1,26 +1,37 @@
 package afm.screens;
 
+import static afm.utils.Utils.setStyleClass;
+
 import java.io.IOException;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import afm.Main;
 import afm.utils.Utils;
 
-public final class Menu extends Pane {
+public final class Menu extends VBox {
 
-	public static final String SELECTED = "-fx-background-color: #77DBE5; -fx-text-fill: #300E4E",
-								 NORMAL = "-fx-background-color: #282828; -fx-text-fill: #E8E8E8",
-								RESULTS = "-fx-background-color: #0044FF; -fx-text-fill: #FAFAFA";
+    /*
+     * Need to change this to change styleclass instead of changing style to
+     * make making changes easier (only have to change stylesheet)
+     */
 
+	/*public static final String SELECTED = "-fx-background-color: #77DBE5; -fx-text-fill: #300E4E",
+								 NORMAL = "-fx-background-color: #291965; -fx-text-fill: #E8E8E8",
+								RESULTS = "-fx-background-color: #0044FF; -fx-text-fill: #FAFAFA";*/
+	
+	public static final List<String> SELECTED = List.of("button", "Selected"),
+									   NORMAL = List.of("button", "MenuButton"),
+									  RESULTS = List.of("button", "Results");
 
-	final Main main = Main.getInstance();
+	private static final List<String> SELECTED_MENU = List.of("button", "SelectedMenuButton");
+
+	private final Main main = Main.getInstance();
 
 	public Menu() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("Menu"));
@@ -47,60 +58,53 @@ public final class Menu extends Pane {
     @FXML
     private Button settingsBtn;
 
-    /*
-     * Load the icons here rather than set it through Scenebuilder as it is
-     * easier to get them to be the desired size like this
-     */
-    @FXML
-    void initialize() {
-    	Image homeIcon = new Image("icons/HomeIcon.png", 16, 16, true, true);
-    	ImageView iv = new ImageView(homeIcon);
-    	iv.setSmooth(true);
-    	homeBtn.setGraphic(iv);
-
-    	Image settingsIcon = new Image("icons/SettingsIcon.gif", 16, 16, true, true);
-    	iv = new ImageView(settingsIcon);
-    	iv.setSmooth(true);
-    	settingsBtn.setGraphic(iv);
-    }
-
     public void resultsScreen() {
     	resetAllStyles();
-    	searchBtn.setStyle(RESULTS);
+    	setStyleClass(searchBtn, RESULTS);
+    	//searchBtn.setStyle(RESULTS);
     }
 
     private void resetAllStyles() {
-    	searchBtn.setStyle(NORMAL);
+    	setStyleClass(searchBtn, NORMAL);
+	    setStyleClass(myListBtn, NORMAL);
+	    setStyleClass(toWatchBtn, NORMAL);
+	    setStyleClass(customBtn, NORMAL);
+
+    	/*searchBtn.setStyle(NORMAL);
     	myListBtn.setStyle(NORMAL);
     	toWatchBtn.setStyle(NORMAL);
-    	customBtn.setStyle(NORMAL);
+    	customBtn.setStyle(NORMAL);*/
     }
 
     @FXML
     void searchButtonPressed(ActionEvent event) {
     	resetAllStyles();
-    	searchBtn.setStyle(SELECTED);
+    	//searchBtn.setStyle(SELECTED);
+	    setStyleClass(searchBtn, SELECTED_MENU);
 	    main.openSearchScreen();
     }
 
     @FXML
     void myListButtonPressed(ActionEvent event) {
     	resetAllStyles();
-    	myListBtn.setStyle(SELECTED);
+    	//myListBtn.setStyle(SELECTED);
+	    setStyleClass(myListBtn, SELECTED_MENU);
 	    main.openMyListScreen();
     }
 
     @FXML
     void toWatchButtonPressed(ActionEvent event) {
     	resetAllStyles();
-    	toWatchBtn.setStyle(SELECTED);
+    	setStyleClass(toWatchBtn, SELECTED_MENU);
+    	//toWatchBtn.setStyle(SELECTED);
 	    main.openToWatchScreen();
     }
 
     @FXML
     void customButtonPressed(ActionEvent event) {
     	resetAllStyles();
-    	customBtn.setStyle(SELECTED);
+    	setStyleClass(customBtn, SELECTED_MENU);
+    	//customBtn.setStyle(SELECTED);
     	main.openCustomScreen();
     }
 

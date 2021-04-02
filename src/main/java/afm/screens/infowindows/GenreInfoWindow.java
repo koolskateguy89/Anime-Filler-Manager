@@ -128,7 +128,8 @@ public class GenreInfoWindow extends InfoWindow {
 	}
 
 	public static void open(Button infoBtn) {
-		infoBtn.setStyle(Menu.SELECTED);
+		Utils.setStyleClass(infoBtn, Menu.SELECTED);
+
 		try {
 			new GenreInfoWindow(infoBtn).show();
 		} catch (IOException e) {
@@ -184,7 +185,7 @@ public class GenreInfoWindow extends InfoWindow {
 
 	@Override @FXML
 	void closeWindow(ActionEvent event) {
-		helpBtn.setStyle("");
+		helpBtn.getStyleClass().setAll("button");
 		helpBtn.setMouseTransparent(false);
 
 		super.closeWindow(event);

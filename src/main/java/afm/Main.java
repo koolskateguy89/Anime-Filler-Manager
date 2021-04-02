@@ -77,6 +77,8 @@ public class Main extends Application {
 		}
 
 		normalSize();
+		stage.setWidth(welcomeScreen.getPrefWidth());
+		//System.out.printf("%f\t%f\n", welcomeScreen.getPrefWidth(), stage.getWidth());
 		scene.setRoot(welcomeScreen);
 	}
 
@@ -110,25 +112,30 @@ public class Main extends Application {
 	private void setScreen(Pane newPane) {
 		//InfoWindow.closeAllOpenWindows();
 
-		if (screenList.size() == 1)
+		if (screenList.size() == 1) {
 			screenList.add(newPane);
-		else {
-			screenList.get(1).setDisable(true);
-			screenList.set(1, newPane);
+		} else {
+			// insert new pane & disable old pane
+			screenList.set(1, newPane).setDisable(true);
 		}
 		newPane.setDisable(false);
 
 		scene.setRoot(mainScreen);
 
 		// Resize window to properly fit new screen
-		stage.setWidth(menu.getPrefWidth() + newPane.getPrefWidth() + 25);
-		mainScreen.setDividerPosition(0, 0.13);
+		final double width = menu.getPrefWidth() + newPane.getPrefWidth() + 25;
+		stage.setWidth(width);
 
-		// only increase height if new screen is a screen with a table
-		if (newPane instanceof ResultsScreen || newPane instanceof MyListScreen || newPane instanceof ToWatchScreen) {
-			stage.setHeight(Math.max(menu.getPrefHeight(), newPane.getPrefHeight()) + 40);
-		} else {
-			normalSize();
+		double dividerPosition = menu.getPrefWidth() / width;
+		mainScreen.setDividerPosition(0, dividerPosition);
+
+		if (!stage.isFullScreen()) {
+			// only increase height if new screen is a screen with a table
+			if (newPane instanceof ResultsScreen || newPane instanceof MyListScreen || newPane instanceof ToWatchScreen) {
+				stage.setHeight(Math.max(menu.getPrefHeight(), newPane.getPrefHeight()) + 40);
+			} else {
+				normalSize();
+			}
 		}
 	}
 

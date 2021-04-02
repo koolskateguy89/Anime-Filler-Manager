@@ -15,13 +15,23 @@
 	-fx-background-color: #282828;
 	-fx-text-fill: #E8E8E8;
 }
-.button .MenuButtons {
-	-fx-pref-width: 74;
-	-fx-pref-height: 34;
-}
-.button .Invisible {
+.MenuButton {
 	-fx-background-color: #484848;
-	-fx-text-fill: #484848;
+    -fx-text-fill: #E8E8E8;
+}
+.MenuButton:hover {
+    -fx-background-color: #363434;
+}
+.SelectedMenuButton {
+    -fx-background-color: #282828;
+}
+.Selected {
+    -fx-background-color: #77DBE5;
+	-fx-text-fill: #300E4E;
+}
+.Results {
+    -fx-background-color: #0044FF;
+    -fx-text-fill: #FAFAFA;
 }
 
 .Text-area {

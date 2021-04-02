@@ -1,5 +1,7 @@
 package afm.screens.infowindows;
 
+import static afm.utils.Utils.setStyleClass;
+
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -70,7 +72,7 @@ public class ResultInfoWindow extends InfoWindow {
 	void addToMyList(ActionEvent event) {
 		ToWatch.remove(anime);
 		MyList.add(anime);
-		MLbtn.setStyle(Menu.SELECTED);
+		setStyleClass(MLbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
 		closeWindow(null);
     }
@@ -79,7 +81,7 @@ public class ResultInfoWindow extends InfoWindow {
 	void addToToWatch(ActionEvent event) {
 		MyList.remove(anime);
 		ToWatch.add(anime);
-		TWbtn.setStyle(Menu.SELECTED);
+		setStyleClass(TWbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
 		closeWindow(null);
     }
@@ -91,7 +93,7 @@ public class ResultInfoWindow extends InfoWindow {
 
 	@Override @FXML
 	void closeWindow(ActionEvent event) {
-		infoBtn.setStyle("");
+		infoBtn.getStyleClass().setAll("button");
 		infoBtn.setOnAction(eventHandler);
 
 		super.closeWindow(event);

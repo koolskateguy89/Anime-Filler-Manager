@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.prefs.Preferences;
@@ -16,6 +17,7 @@ import javafx.beans.property.Property;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.css.Style;
 import javafx.css.Styleable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -404,4 +406,10 @@ public class Utils {
 		moveCol.setPrefWidth(71.2000732421875);
 		return moveCol;
 	}
+
+	public static void setStyleClass(Styleable node, List<String> styleclass) {
+		var sc = node.getStyleClass();
+		sc.setAll(styleclass);
+	}
+
 }

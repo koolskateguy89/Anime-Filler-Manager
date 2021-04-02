@@ -76,8 +76,8 @@ public abstract class InfoWindow extends Stage {
 		this.anime = anime;
 		addWindow(this);
 
-		getIcons().add(new Image("icons/InfoIcon.png"));
-		setOnCloseRequest(event -> closeWindow(null));
+		getIcons().add(new Image("icons/Info.png"));
+		setOnCloseRequest(windowEvent -> closeWindow(null));
 		setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
 		//initOwner(Main.getStage()); // this always on top of primaryStage
 	}

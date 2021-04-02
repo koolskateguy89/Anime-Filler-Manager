@@ -1,11 +1,13 @@
 package afm.anime;
 
 import static java.util.Objects.requireNonNull;
+import static afm.utils.Utils.setStyleClass;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -376,7 +378,7 @@ public final class Anime {
 	 *  Also helps MyListScreen and ToWatchScreen to have appropriately functioning buttons
 	 */
 
-	private static final String HIGHLIGHT = Menu.SELECTED;
+	private static final List<String> HIGHLIGHT = Menu.SELECTED;
 	private static final String SEE_INFO = "See info";
 
 	private void initBtns() {
@@ -396,25 +398,25 @@ public final class Anime {
 		infoBtn = new Button(SEE_INFO);
 
 		infoBtn.setOnAction(event -> {
-			infoBtn.setStyle(HIGHLIGHT);
+			setStyleClass(infoBtn, HIGHLIGHT);
 			ResultInfoWindow.open(this, infoBtn, myListBtn, toWatchBtn);
 		});
 
 		// anime is already in MyList
 		if (MyList.contains(this)) {
-			myListBtn.setStyle(HIGHLIGHT);
+			setStyleClass(myListBtn, HIGHLIGHT);
 			myListBtn.setMouseTransparent(true);
 			toWatchBtn.setMouseTransparent(true);
 		// anime is already in ToWatch
 		} else if (ToWatch.contains(this)) {
-			toWatchBtn.setStyle(HIGHLIGHT);
+			setStyleClass(toWatchBtn, HIGHLIGHT);
 			toWatchBtn.setMouseTransparent(true);
 			myListBtn.setMouseTransparent(true);
 		// anime is in neither MyList nor ToWatch
 		} else {
 			myListBtn.setOnAction(event -> {
 				MyList.add(this);
-				myListBtn.setStyle(HIGHLIGHT);
+				setStyleClass(myListBtn, HIGHLIGHT);
 
 				myListBtn.setMouseTransparent(true);
 				toWatchBtn.setMouseTransparent(true);
@@ -422,7 +424,7 @@ public final class Anime {
 
 			toWatchBtn.setOnAction(event -> {
 				ToWatch.add(this);
-				toWatchBtn.setStyle(HIGHLIGHT);
+				setStyleClass(toWatchBtn, HIGHLIGHT);
 
 				toWatchBtn.setMouseTransparent(true);
 				myListBtn.setMouseTransparent(true);
@@ -458,7 +460,7 @@ public final class Anime {
 		moveToToWatchBtn = new Button("Move");
 
 		myListInfoBtn.setOnAction(event -> {
-			myListInfoBtn.setStyle(HIGHLIGHT);
+			setStyleClass(myListInfoBtn, HIGHLIGHT);
 			MyListInfoWindow.open(this, myListInfoBtn);
 		});
 
@@ -497,7 +499,7 @@ public final class Anime {
 		moveToMyListBtn = new Button("Move");
 
 		toWatchInfoBtn.setOnAction(event -> {
-			toWatchInfoBtn.setStyle(HIGHLIGHT);
+			setStyleClass(toWatchInfoBtn, HIGHLIGHT);
 			ToWatchInfoWindow.open(this, toWatchInfoBtn);
 		});
 

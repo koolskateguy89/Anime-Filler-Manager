@@ -58,7 +58,7 @@ public class ToWatchInfoWindow extends InfoWindow {
 
 	@Override @FXML
 	void closeWindow(ActionEvent event) {
-		infoBtn.setStyle("");
+		infoBtn.getStyleClass().setAll("button");
 		infoBtn.setOnAction(eventHandler);
 
 		super.closeWindow(event);
