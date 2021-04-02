@@ -81,7 +81,7 @@ public class Search {
 		/* this should never happen because it's already taken care of
 		   in SearchScreen */
 		if (genres.isEmpty())
-			throw new IllegalArgumentException("There are no genres");
+			throw new RuntimeException("No genres selected for searching");
 
 		boolean searchWorked = searchForEachGenre();
 
@@ -100,7 +100,8 @@ public class Search {
 	}
 
 	// (and)
-	// searches the respective web page for each and every genre the user selected
+	// searches for each and every genre the user selected
+	// returns if search 'worked'
 	private boolean searchForEachGenre() {
 		for (Genre genre : genres) {
 			final Document doc;
@@ -116,11 +117,7 @@ public class Search {
 				});
 				return false;
 			} catch (HttpStatusException htse) {
-				/* For when page has gone past last page (e.g. for Action on 29/11/20 this is once
-				 * page = 40).
-				 * it throws: (HttpStatusException)
-				 * HTTP error fetching URL. Status=404, URL=https://myanimelist.net/anime/genre/[genre]/?page=[page]
-				 */
+				// gone past last page
 				reachedLastPage = true;
 			} catch (SSLHandshakeException she) {
 				// most likely caused by MAL being blocked or something
@@ -190,7 +187,7 @@ public class Search {
 			builder.setName(animeName);
 
 			// get the anime's ID
-			int id = parseIDfromURL(nameElem.attr("abs:href"));
+			int id = getIdFromURl(nameElem.attr("abs:href"));
 			builder.setId(id);
 
 			EnumSet<Genre> genreSet = EnumSet.noneOf(Genre.class);
@@ -289,7 +286,7 @@ public class Search {
 	 * Link will be in form:
 	 * https://myanimelist.net/anime/[ID]/[TITLE]
 	 */
-	private static int parseIDfromURL(String url) {
+	private static int getIdFromURl(String url) {
 		int start = 30;	//where ID starts
 		int end = url.indexOf('/', start+1);
 
