@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+import afm.Main;
 //import afm.Main;
 import afm.anime.Anime;
 import afm.database.MyList;
@@ -85,7 +86,21 @@ public abstract class InfoWindow extends Stage {
 
 	protected void afterInitialize() {
 		requestFocus();
-		centerOnScreen();
+
+		this.setOnShown(e -> {
+			Stage main = Main.getStage();
+
+			final double mainWidth = main.getWidth();
+			final double width = this.getWidth();
+			double x = main.getX() + mainWidth/2 - width/2;
+
+			final double mainHeight = main.getHeight();
+			final double height = this.getHeight();
+			double y = main.getY() + mainHeight/2 - height/2;
+
+			setX(x);
+			setY(y);
+		});
 
 		// if anime != null, totalEpField, fillerBtn, etc. will not be null
 		if (anime == null)

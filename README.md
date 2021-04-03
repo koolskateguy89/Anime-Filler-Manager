@@ -93,9 +93,9 @@ _italicized = WIP/next-to-do_
 - [x] Add always-on-top option
       - [ ] _Add transparency option for when not focused - **no idea** (maybe)_
       - [ ] Add infoWindows always-on-top option - **quick-ish** (maybe)
+- [x] Make subwindows open on top of current window (middle) - infoWindows
 - [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
-- [ ] _Make subwindows open on top of current window (middle) - infoWindows - **long**_
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**
 - [ ] Add color themes option (use different stylesheets which the user picks from)
