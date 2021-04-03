@@ -214,6 +214,7 @@ public class Main extends Application {
 			stage.setScene(scene);
 			stage.centerOnScreen();
 			stage.show();
+			stage.toFront();
 
 		} catch (IOException e) {
 			e.printStackTrace();
