@@ -47,3 +47,14 @@
 .Text-area .content {
 	-fx-background-color: #272727;
 }
+
+/* https://stackoverflow.com/a/44062472 */
+.slider .axis {
+    -fx-tick-label-fill: white;
+}
+
+/* https://stackoverflow.com/a/16343529 */
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: #282828;
+}

@@ -8,17 +8,38 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import com.google.common.base.Strings;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import afm.utils.Utils;
 
 public class Settings {
 
+	// Don't allow this class to be instantiated
+	private Settings() { }
+
+	@AllArgsConstructor
+	private enum PrefKey {
+		DATABASE("DATABASE_URLS"),
+		SELECTED_DB("SELECTED_DATABASE"),
+		OPACITY,
+		INACTIVE_OPACITY,
+		;
+
+		String key;
+		PrefKey() {
+			this.key = this.name();
+		}
+	}
+
+	@AllArgsConstructor
 	public enum Key {
 		SHOW_FACTS(true),
 		NAME_ORDER(false),
@@ -28,16 +49,10 @@ public class Settings {
 		;
 
 		final boolean defaultValue;
-		Key(boolean def) {
-			this.defaultValue = def;
-		}
 		public boolean getDefault() {
 			return defaultValue;
 		}
 	}
-
-	// Don't allow this class to be instantiated
-	private Settings() { }
 
 	private static final String PREF_NAME;
 	static {
@@ -54,15 +69,14 @@ public class Settings {
 	// Maybe use EnumMap<Key,Boolean>
 	private static final HashMap<String, Boolean> map = new HashMap<>(defaults);
 
-
-	private static final String DATABASE_KEY = "DATABASE_URLS";
-	private static final String SELECTED_KEY = "SELECTED_DATABASE";
-
 	public static final StringProperty selectedDatabaseProperty = new SimpleStringProperty();
 
 	public static String getSelectedDatabase() {
 		return selectedDatabaseProperty.getValue();
 	}
+
+	public static final DoubleProperty opacityProperty = new SimpleDoubleProperty();
+	public static final DoubleProperty inactiveOpacityProperty = new SimpleDoubleProperty();
 
 	@Getter
 	private static final Set<String> databaseUrls = new LinkedHashSet<>();
@@ -71,6 +85,7 @@ public class Settings {
 		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
 		loadValues(prefs);
 		loadDatabaseUrls(prefs);
+		loadOpacities(prefs);
 	}
 
 	private static void loadValues(Preferences prefs) {
@@ -94,18 +109,25 @@ public class Settings {
 	 * '////' as the delimiter
 	 */
 	private static void loadDatabaseUrls(Preferences prefs) {
-		String selected = prefs.get(SELECTED_KEY, "Internal");
+		String selected = prefs.get(PrefKey.SELECTED_DB.key, "Internal");
 		selectedDatabaseProperty.setValue(selected);
 
-		String data = prefs.get(DATABASE_KEY, null);
+		String data = prefs.get(PrefKey.DATABASE.key, null);
 
-		if (Strings.isNullOrEmpty(data)) {
+		if (Strings.isNullOrEmpty(data))
 			return;
-		}
 
 		// https://stackoverflow.com/a/6374137
 		String[] urls = data.split(Pattern.quote("////"));
 		databaseUrls.addAll(Arrays.asList(urls));
+	}
+
+	private static void loadOpacities(Preferences prefs) {
+		double opacity = prefs.getDouble(PrefKey.OPACITY.key, 1.0);
+		opacityProperty.set(opacity);
+
+		double inactiveOpacity = prefs.getDouble(PrefKey.INACTIVE_OPACITY.key, 1.0);
+		inactiveOpacityProperty.set(inactiveOpacity);
 	}
 
 	// OnClose
@@ -115,11 +137,14 @@ public class Settings {
 		map.forEach(prefs::putBoolean);
 
 		String urls = String.join("////", databaseUrls);
-		prefs.put(DATABASE_KEY, urls);
+		prefs.put(PrefKey.DATABASE.key, urls);
 
 		String selectedDatabase = getSelectedDatabase();
 		if (selectedDatabase != null)
-			prefs.put(SELECTED_KEY, selectedDatabase);
+			prefs.put(PrefKey.SELECTED_DB.key, selectedDatabase);
+
+		prefs.putDouble(PrefKey.OPACITY.key, opacityProperty.get());
+		prefs.putDouble(PrefKey.INACTIVE_OPACITY.key, inactiveOpacityProperty.get());
 
 		try {
 			prefs.flush();

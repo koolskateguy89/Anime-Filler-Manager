@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 
 import afm.anime.Anime;
@@ -37,7 +36,7 @@ import afm.utils.Utils;
 // https://github.com/koolskateguy89/Anime-Filler-Manager
 public class Main extends Application {
 
-	@Getter(AccessLevel.PUBLIC)
+	@Getter
 	private static Main instance;
 
 	public static Stage getStage() {
@@ -199,6 +198,15 @@ public class Main extends Application {
 		Main.instance = this;
 		try {
 			stage = primaryStage;
+
+			stage.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
+				if (Boolean.TRUE.equals(isFocused)) {
+					stage.opacityProperty().bind(Settings.opacityProperty);
+				} else {
+					stage.opacityProperty().bind(Settings.inactiveOpacityProperty);
+				}
+			});
+
 			stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
 
 			stage.setTitle("Anime Filler Manager");
@@ -218,8 +226,8 @@ public class Main extends Application {
 
 			stage.setScene(scene);
 			stage.centerOnScreen();
-			stage.show();
 			stage.toFront();
+			stage.show();
 
 		} catch (IOException e) {
 			e.printStackTrace();

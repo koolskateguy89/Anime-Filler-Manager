@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,7 +16,7 @@
 
 <fx:root prefHeight="408.0" prefWidth="588.0" styleClass="Panes" stylesheets="@application.css" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="118.0" layoutY="21.0" prefHeight="63.0" prefWidth="321.0">
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="63.0" prefWidth="321.0">
          <children>
       
                         <Label text="*Sort MyList and ToWatch in name order or insertion order?" textAlignment="CENTER" textFill="WHITE" />
@@ -32,10 +33,10 @@
          </children>
       </VBox>
 
-      <GridPane layoutX="115.0" layoutY="97.0" prefHeight="61.0" prefWidth="328.0">
+      <GridPane layoutX="41.0" layoutY="77.0" prefHeight="61.0" prefWidth="268.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="252.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="94.4000244140625" minWidth="0.0" prefWidth="0.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="220.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="96.4000244140625" minWidth="0.0" prefWidth="48.80000000000001" />
         </columnConstraints>
 
         <rowConstraints>
@@ -63,17 +64,17 @@
          </children>
 
       </GridPane>
-      <Label contentDisplay="RIGHT" layoutX="229.0" layoutY="165.0" text="Always on top" textFill="WHITE">
+      <Label contentDisplay="RIGHT" layoutX="22.0" layoutY="165.0" text="Always on top" textFill="WHITE">
          <graphic>
             <CheckBox fx:id="alwaysOnTopBox" mnemonicParsing="false" onAction="#alwaysOnTop" />
          </graphic>
       </Label>
-      <Label contentDisplay="RIGHT" layoutX="197.0" layoutY="194.0" text="*Automate loading screen" textFill="WHITE">
+      <Label contentDisplay="RIGHT" layoutX="150.0" layoutY="165.0" text="*Automate loading screen" textFill="WHITE">
          <graphic>
             <CheckBox fx:id="skipLoadingBox" mnemonicParsing="false" onAction="#skipLoading" />
          </graphic>
       </Label>
-      <HBox alignment="TOP_CENTER" layoutX="32.0" layoutY="241.0" prefHeight="61.0" prefWidth="494.0" spacing="10.0">
+      <HBox alignment="TOP_CENTER" layoutX="14.0" layoutY="204.0" prefHeight="61.0" prefWidth="461.0" spacing="10.0">
          <children>
             <Label text="*Anime Database" textFill="WHITE" />
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="232.0" spacing="5.0">
@@ -105,6 +106,20 @@
             <Font name="System Bold" size="19.0" />
          </font>
       </Button>
+      <VBox layoutX="393.0" layoutY="14.0" prefHeight="123.0" prefWidth="181.0" spacing="5.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" text="Opacity" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <graphic>
+                  <Slider fx:id="opacitySlider" showTickLabels="true" showTickMarks="true" value="100.0" />
+               </graphic>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" text="Opacity while not active window" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <graphic>
+                  <Slider fx:id="inactiveOpacitySlider" showTickLabels="true" showTickMarks="true" value="100.0" />
+               </graphic>
+            </Label>
+         </children>
+      </VBox>
 
    </children>
 </fx:root>
