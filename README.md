@@ -83,7 +83,8 @@ To run:
 1. To search for an anime, you HAVE to have selected an anime
 2. The anime database has to have the tables MyList & ToWatch, in a specific format (just use the `Create new` button
    on the Settings screen, it's easier)
-   2.1. Tbh if you're actually gonna use this, I recommend using an external database so you can update without losing your data
+   - There is a [blank database](res/blank.db) with these in the [res](res) folder
+   - Tbh if you're actually gonna use this, I recommend using an external database so you can update without losing your data
 3. I cba
 
 ## TODO
@@ -94,8 +95,8 @@ _italicized = WIP/next-to-do_
 - [x] Add option to skip loading screen
 - [x] Redesign menu panel (make it a VBox with icons on buttons - make buttons 'seamless')
 - [x] Add always-on-top option
-      - [ ] _Add transparency option for when not focused - **no idea** (maybe)_
-      - [ ] Add infoWindows always-on-top option - **quick-ish** (maybe)
+  - [ ] _Add transparency option for when not focused - **no idea** (maybe)_
+  - [ ] Add infoWindows always-on-top option - **quick-ish** (maybe)
 - [x] Make subwindows open on top of current window (middle) - infoWindows
 - [x] Make settings screen button highlight when open
 - [x] Add option to use external database for MyList and ToWatch
