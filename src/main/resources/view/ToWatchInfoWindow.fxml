@@ -12,7 +12,7 @@
 <fx:root type="Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <scene>
         <Scene>
-         <Pane prefHeight="355.0" prefWidth="431.0" styleClass="Panes" stylesheets="@application.css">
+         <Pane prefHeight="355.0" prefWidth="431.0" styleClass="Panes" stylesheets="@stylesheets/application.css">
             <children>
                <ImageView fx:id="imageView" fitHeight="112.0" fitWidth="124.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#openImage" pickOnBounds="true" preserveRatio="true" />
                <Label layoutX="144.0" layoutY="15.0" text="Info:" textFill="WHITE" />

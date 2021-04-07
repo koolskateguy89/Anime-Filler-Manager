@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="107.0" styleClass="Panes" stylesheets="@application.css" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="107.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="searchBtn" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#searchButtonPressed" prefHeight="63.0" styleClass="MenuButton" text="Search">
          <graphic>

@@ -1,0 +1,60 @@
+.Panes {
+	-fx-background-color: #484848;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+	-fx-padding: 0.01;
+	-fx-background-color: black;
+}
+
+.progress-bar {
+	-fx-accent: #F5DF4D;
+}
+
+.button {
+	-fx-background-color: #282828;
+	-fx-text-fill: #E8E8E8;
+}
+.button:hover {
+    -fx-background-color: #363434;
+}
+
+.MenuButton {
+	-fx-background-color: #484848;
+    -fx-text-fill: #E8E8E8;
+}
+.SelectedMenuButton {
+    -fx-background-color: #282828;
+}
+
+.MiscMenuButton {
+    -fx-background-color: #FCFCFC;
+}
+
+.Results {
+    -fx-background-color: #0044FF;
+    -fx-text-fill: #FAFAFA;
+}
+
+.Selected {
+    -fx-background-color: #77DBE5;
+	-fx-text-fill: #300E4E;
+}
+
+.Text-area {
+	-fx-text-fill: #FCFCFC;
+}
+.Text-area .content {
+	-fx-background-color: #272727;
+}
+
+/* https://stackoverflow.com/a/44062472 */
+.slider .axis {
+    -fx-tick-label-fill: white;
+}
+
+/* https://stackoverflow.com/a/16343529 */
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: #282828;
+}
