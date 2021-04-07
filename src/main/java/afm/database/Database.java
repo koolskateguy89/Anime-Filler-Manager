@@ -100,6 +100,75 @@ public class Database {
 		ds.setUrl(DB_URL);
 	}
 
+	// https://stackoverflow.com/a/1604121
+	private static boolean tableExists(Connection con, String tableName) throws SQLException {
+		String sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='%s'".formatted(tableName);
+
+		try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+			return rs.next();
+		}
+	}
+
+	private static final String CREATE_MYLIST = """
+			CREATE TABLE MyList (
+				name         STRING  PRIMARY KEY ON CONFLICT REPLACE
+				                     UNIQUE ON CONFLICT REPLACE
+				                     NOT NULL,
+				genres       STRING  NOT NULL,
+				id           INT     UNIQUE ON CONFLICT REPLACE,
+				studio       STRING,
+				seasonString STRING,
+				info         STRING,
+				custom       BOOLEAN NOT NULL,
+				currEp       INT     NOT NULL
+				                     DEFAULT (0),
+				totalEps     INT     NOT NULL
+				                     DEFAULT ( -1),
+				imageURL     STRING,
+				fillers      STRING
+			);
+			""";
+
+	private static final String CREATE_TOWATCH = """
+			CREATE TABLE ToWatch (
+				name         STRING  PRIMARY KEY ON CONFLICT REPLACE
+				                     UNIQUE ON CONFLICT REPLACE
+				                     NOT NULL,
+				genres       STRING  NOT NULL,
+				id           INT     UNIQUE ON CONFLICT REPLACE,
+				studio       STRING,
+				seasonString STRING,
+				info         STRING,
+				custom       BOOLEAN NOT NULL,
+				currEp       INT     NOT NULL
+				                     DEFAULT (0),
+				totalEps     INT     NOT NULL
+				                     DEFAULT ( -1),
+				imageURL     STRING,
+				fillers      STRING    
+			);
+			""";
+
+	// if table already exists: clear it, else create new table
+	public static void initDatabase(String url) throws SQLException {
+		SQLiteDataSource ds = new SQLiteDataSource();
+		ds.setUrl("jdbc:sqlite:" + url);
+
+		try (Connection con = ds.getConnection(); Statement st = con.createStatement()) {
+			if (tableExists(con, "MyList")) {
+				st.executeUpdate("DELETE FROM MyList");
+			} else {
+				st.execute(CREATE_MYLIST);
+			}
+
+			if (tableExists(con, "ToWatch")) {
+				st.executeUpdate("DELETE FROM ToWatch");
+			} else {
+				st.execute(CREATE_TOWATCH);
+			}
+		}
+	}
+
 	/*
 	 * [If in JAR & first time running, clear database tables]
 	 * This is very important for exporting as jar - jar will be effectively 'fresh'
