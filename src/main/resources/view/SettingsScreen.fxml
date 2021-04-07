@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -72,11 +73,25 @@
             <CheckBox fx:id="skipLoadingBox" mnemonicParsing="false" onAction="#skipLoading" />
          </graphic>
       </Label>
-      <HBox alignment="CENTER" layoutX="84.0" layoutY="231.0" prefHeight="61.0" prefWidth="385.0" spacing="10.0">
+      <HBox alignment="TOP_CENTER" layoutX="32.0" layoutY="241.0" prefHeight="61.0" prefWidth="494.0" spacing="10.0">
          <children>
-            <Label text="*Database" textFill="WHITE" />
-            <ChoiceBox fx:id="databaseBox" prefWidth="150.0" />
-            <Button mnemonicParsing="false" onAction="#createDatabase" text="Create new" />
+            <Label text="*Anime Database" textFill="WHITE" />
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="232.0" spacing="5.0">
+               <children>
+                  <ChoiceBox fx:id="databaseBox" prefHeight="26.0" prefWidth="262.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ChoiceBox>
+                  <Button mnemonicParsing="false" onAction="#clearDatabases" prefHeight="26.0" prefWidth="58.0" text="Clear" />
+               </children>
+            </VBox>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addDatabase" text="Add" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createDatabase" text="Create new" />
+               </children>
+            </VBox>
          </children>
       </HBox>
 

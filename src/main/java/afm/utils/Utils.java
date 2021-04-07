@@ -323,6 +323,10 @@ public class Utils {
 		};
 	}
 
+	public static void wrapAlertText(Alert alert) {
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+	}
+
 	public static ButtonType showAndWaitConfAlert(String content) {
 		return showAndWaitConfAlert(null, content);
 	}
@@ -335,7 +339,7 @@ public class Utils {
 		if (header != null)
 			alert.setHeaderText(header);
 
-		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		wrapAlertText(alert);
 
 		return alert.showAndWait().orElse(ButtonType.NO);
 	}

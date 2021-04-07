@@ -15,21 +15,21 @@
 
 <fx:root alignment="CENTER" prefHeight="457.0" prefWidth="588.0" styleClass="Panes" stylesheets="@application.css" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="-Infinity" prefWidth="15.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="-Infinity" prefWidth="15.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.20001220703125" minWidth="10.0" prefWidth="90.00003662109376" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.39996337890625" minWidth="10.0" prefWidth="248.8" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.20001220703125" minWidth="10.0" prefWidth="139.40000000000003" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.20001220703125" minWidth="10.0" prefWidth="139.40000000000003" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="43.60001220703123" minHeight="10.0" prefHeight="43.60001220703123" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="85.60000000000002" minHeight="10.0" prefHeight="75.19998779296873" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="43.60001220703123" minHeight="10.0" prefHeight="43.60001220703123" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="85.60000000000002" minHeight="10.0" prefHeight="75.19998779296873" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label prefHeight="18.0" prefWidth="118.0" text="Name:" textFill="WHITE" GridPane.columnIndex="1" />
@@ -51,27 +51,21 @@
          </GridPane.margin>
       </Button>
       <Label text="Seasons:" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <children>
-            <ComboBox fx:id="sznCombo" prefHeight="26.0" prefWidth="127.0" promptText="Season" />
-            <ComboBox fx:id="yearCombo" prefHeight="26.0" prefWidth="127.0" promptText="Year" />
-         </children>
-      </HBox>
+       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+           <ComboBox fx:id="sznCombo" prefHeight="26.0" prefWidth="127.0" promptText="Season"/>
+           <ComboBox fx:id="yearCombo" prefHeight="26.0" prefWidth="127.0" promptText="Year"/>
+       </HBox>
       <Label prefHeight="18.0" prefWidth="118.0" text="Studio:" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <TextField fx:id="studioField" promptText="Studio" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <Label text="Episodes:" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-         <children>
-            <TextField fx:id="totalEpField" prefHeight="26.0" prefWidth="82.0" promptText="Total eps" />
-            <TextField fx:id="currEpField" prefHeight="26.0" prefWidth="82.0" promptText="Current ep" />
-         </children>
+         <TextField fx:id="totalEpField" prefHeight="26.0" prefWidth="82.0" promptText="Total eps" />
+         <TextField fx:id="currEpField" prefHeight="26.0" prefWidth="82.0" promptText="Current ep" />
       </HBox>
       <HBox alignment="CENTER" prefHeight="30.0" prefWidth="573.0" spacing="80.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-         <children>
-            <Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToMyList" prefHeight="46.0" prefWidth="98.0" text="Add to MyList" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-            <Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToToWatch" prefHeight="46.0" prefWidth="98.0" text="Add to ToWatch" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-            <Button alignment="CENTER" cancelButton="true" ellipsisString="" mnemonicParsing="false" onAction="#resetFields" prefHeight="46.0" prefWidth="98.0" style="-fx-text-fill: #FFFF00;" text="Reset" textAlignment="CENTER" textOverrun="CLIP" underline="true" />
-         </children>
+         <Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToMyList" prefHeight="46.0" prefWidth="98.0" text="Add to MyList" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+         <Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToToWatch" prefHeight="46.0" prefWidth="98.0" text="Add to ToWatch" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+         <Button alignment="CENTER" cancelButton="true" ellipsisString="" mnemonicParsing="false" onAction="#resetFields" prefHeight="46.0" prefWidth="98.0" style="-fx-text-fill: #FFFF00;" text="Reset" textAlignment="CENTER" textOverrun="CLIP" underline="true" />
          <padding>
             <Insets right="40.0" />
          </padding>

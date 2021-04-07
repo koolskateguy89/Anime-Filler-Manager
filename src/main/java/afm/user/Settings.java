@@ -1,8 +1,19 @@
 package afm.user;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import java.util.regex.Pattern;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import com.google.common.base.Strings;
+
+import lombok.Getter;
 
 import afm.utils.Utils;
 
@@ -28,8 +39,11 @@ public class Settings {
 	// Don't allow this class to be instantiated
 	private Settings() { }
 
-	private static final String name = Settings.class.getCanonicalName();
-	private static final String PREF_NAME = Utils.inJar() ? "jar:"+name : name;
+	private static final String PREF_NAME;
+	static {
+		String name = Settings.class.getCanonicalName();
+		PREF_NAME = Utils.inJar() ? "jar:"+name : name;
+	}
 
 	private static final HashMap<String, Boolean> defaults = new HashMap<>() {{
 		for (Key key : Key.values()) {
@@ -37,18 +51,29 @@ public class Settings {
 		}
 	}};
 
-	// now that I think about it, I could start this Map out as the default map
-	// similar to how it is now, but there's no need for the `defaults` map
-	// also maybe use EnumMap<Key,Boolean>
+	// Maybe use EnumMap<Key,Boolean>
 	private static final HashMap<String, Boolean> map = new HashMap<>(defaults);
 
-	static {
-		loadValues();
+
+	private static final String DATABASE_KEY = "DATABASE_URLS";
+	private static final String SELECTED_KEY = "SELECTED_DATABASE";
+
+	public static final StringProperty selectedDatabaseProperty = new SimpleStringProperty();
+
+	public static String getSelectedDatabase() {
+		return selectedDatabaseProperty.getValue();
 	}
 
-	private static void loadValues() {
-		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
+	@Getter
+	private static final Set<String> databaseUrls = new LinkedHashSet<>();
 
+	static {
+		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
+		loadValues(prefs);
+		loadDatabaseUrls(prefs);
+	}
+
+	private static void loadValues(Preferences prefs) {
 		try {
 			String[] keys = prefs.keys();
 			for (String key : keys) {
@@ -62,7 +87,25 @@ public class Settings {
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
+	}
 
+	/*
+	 * Most file systems don't allow '/' in file name so it should be safe to use
+	 * '////' as the delimiter
+	 */
+	private static void loadDatabaseUrls(Preferences prefs) {
+		String selected = prefs.get(SELECTED_KEY, "Internal");
+		selectedDatabaseProperty.setValue(selected);
+
+		String data = prefs.get(DATABASE_KEY, null);
+
+		if (Strings.isNullOrEmpty(data)) {
+			return;
+		}
+
+		// https://stackoverflow.com/a/6374137
+		String[] urls = data.split(Pattern.quote("////"));
+		databaseUrls.addAll(Arrays.asList(urls));
 	}
 
 	// OnClose
@@ -71,16 +114,18 @@ public class Settings {
 
 		map.forEach(prefs::putBoolean);
 
+		String urls = String.join("////", databaseUrls);
+		prefs.put(DATABASE_KEY, urls);
+
+		String selectedDatabase = getSelectedDatabase();
+		if (selectedDatabase != null)
+			prefs.put(SELECTED_KEY, selectedDatabase);
+
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
-	}
-
-	// probably not gonna be used tbh
-	public static void put(String key, boolean value) {
-		map.put(key, value);
 	}
 
 	public static boolean get(Key key) {

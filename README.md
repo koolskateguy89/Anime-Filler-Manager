@@ -81,7 +81,10 @@ To run:
 ## Important things to know when running
 
 1. To search for an anime, you HAVE to have selected an anime
-2. I cba
+2. The anime database has to have the tables MyList & ToWatch, in a specific format (just use the `Create new` button
+   on the Settings screen, it's easier)
+   2.1. Tbh if you're actually gonna use this, I recommend using an external database so you can update without losing your data
+3. I cba
 
 ## TODO
 Key:
@@ -95,14 +98,15 @@ _italicized = WIP/next-to-do_
       - [ ] Add infoWindows always-on-top option - **quick-ish** (maybe)
 - [x] Make subwindows open on top of current window (middle) - infoWindows
 - [x] Make settings screen button highlight when open
-- [ ] _Add option to use external database for MyList and ToWatch_ - **long**
-  - [ ] Add option to make new blank database
+- [x] Add option to use external database for MyList and ToWatch
+  - [x] Add option to make new blank database
 - [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**
-- [ ] Add color themes option (use different stylesheets which the user picks from)
+- [ ] _Add color themes option (use different stylesheets which the user picks from)_
 - [ ] Have no window resizing
+- [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log errors
 
 ## License
 

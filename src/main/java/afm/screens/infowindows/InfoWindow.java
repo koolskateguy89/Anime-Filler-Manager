@@ -16,11 +16,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import afm.Main;
-//import afm.Main;
 import afm.anime.Anime;
 import afm.database.MyList;
 import afm.database.ToWatch;
@@ -87,6 +85,7 @@ public abstract class InfoWindow extends Stage {
 	protected void afterInitialize() {
 		requestFocus();
 
+		// put this in the middle of primaryStage
 		this.setOnShown(e -> {
 			Stage main = Main.getStage();
 
@@ -140,7 +139,7 @@ public abstract class InfoWindow extends Stage {
 	void openFillers(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.initOwner(this);
-		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);	// wrap text
+		Utils.wrapAlertText(alert);
 
 		alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
 		alert.setTitle("Filler episodes for: " + anime.getName());

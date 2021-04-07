@@ -3,6 +3,8 @@ package afm.database;
 import static afm.utils.Utils.firstRun;
 import static afm.utils.Utils.inJar;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +15,13 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
+import afm.Main;
+import afm.user.Settings;
+import afm.utils.Utils;
 import org.sqlite.SQLiteDataSource;
 
 import com.google.common.base.Strings;
@@ -48,8 +57,68 @@ public class Database {
 	// don't allow this to be instantiated
 	private Database() { }
 
-	private static final String DB_URL = inJar() ? "jdbc:sqlite::resource:databases/animeDB.db"
-											     : "jdbc:sqlite:src/main/resources/databases/animeDB.db";
+	// From SQLiteStudio
+	public static final String[] FILE_EXTENSIONS = {
+		"*.db",
+		"*.db2",
+		"*.db3",
+		"*.sdb",
+		"*.s2db",
+		"*.s3db",
+		"*.sqlite",
+		"*.sqlite2",
+		"*.sqlite3",
+		"*.sl2",
+		"*.sl3",
+	};
+
+	private static final String DB_URL;
+
+	static {
+		String url = Settings.getSelectedDatabase();
+
+		// fallback on internal database
+		if ("Internal".equals(url) || !mayBeValidDatabase(url)) {
+			DB_URL = inJar() ? "jdbc:sqlite::resource:databases/animeDB.db"
+							 : "jdbc:sqlite:src/main/resources/databases/animeDB.db";
+		} else {
+			DB_URL = "jdbc:sqlite:" + url;
+		}
+	}
+
+	private static boolean mayBeValidDatabase(String url) {
+		boolean validString = !Strings.isNullOrEmpty(url);
+
+		if (!validString)
+			return false;
+
+		try {
+			boolean exists = Files.exists(Path.of(url));
+
+			if (!exists)    // go to catch clause
+				throw new IllegalArgumentException();
+
+			return true;
+
+		} catch (NullPointerException | IllegalArgumentException e) {
+			Settings.selectedDatabaseProperty.setValue("Internal");
+
+			Platform.runLater(() -> {
+				String content = """
+						Database file does not exist/is not a valid file.
+						Falling back on internal database.
+						""";
+
+				Alert alert = new Alert(AlertType.ERROR, content);
+				alert.initOwner(Main.getStage());
+				Utils.wrapAlertText(alert);
+
+				alert.showAndWait();
+			});
+		}
+
+		return false;
+	}
 
 	private static final String MYLIST_INSERT_QUERY  = "INSERT INTO MyList(name, genres, id, "
 													 + "studio, seasonString, info, custom, currEp, "
@@ -83,7 +152,7 @@ public class Database {
 		COLUMN_MAP = Collections.unmodifiableMap(temp);
 	}
 
-	// load myList & toWatch contents into runtime linkedHSs
+	// load myList & toWatch contents into runtime linkedHS's
 	public static void init(StartScreen.LoadTask task, double start, double end) {
 		if (inJar() && firstRun())
 			clearTables();
@@ -94,11 +163,9 @@ public class Database {
 		ToWatch.init();
 	}
 
-	private static final SQLiteDataSource ds = new SQLiteDataSource();
-
-	static {
-		ds.setUrl(DB_URL);
-	}
+	private static final SQLiteDataSource ds = new SQLiteDataSource() {{
+		setUrl(DB_URL);
+	}};
 
 	// https://stackoverflow.com/a/1604121
 	private static boolean tableExists(Connection con, String tableName) throws SQLException {
@@ -150,7 +217,8 @@ public class Database {
 			""";
 
 	// if table already exists: clear it, else create new table
-	public static void initDatabase(String url) throws SQLException {
+	// current impl. means table won't exist but I'll keep it like this for now
+	public static void createNew(String url) throws SQLException {
 		SQLiteDataSource ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:" + url);
 
@@ -199,7 +267,11 @@ public class Database {
 			try {
 				loadMyList(s, task, start, end - halfDiff);
 			} catch (SQLException e) {
-				loadToWatch(s, task, start + halfDiff, end);
+				try {
+					loadToWatch(s, task, start + halfDiff, end);
+				} catch (SQLException e2) {
+					e.setNextException(e2);
+				}
 				throw e;
 			}
 
