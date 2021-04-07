@@ -44,9 +44,6 @@ public final class Menu extends VBox {
     private Button customBtn;
 
     @FXML
-    private Button homeBtn;
-
-    @FXML
     private Button settingsBtn;
 
     public void resultsScreen() {
@@ -59,6 +56,8 @@ public final class Menu extends VBox {
 	    setStyleClass(myListBtn, NORMAL);
 	    setStyleClass(toWatchBtn, NORMAL);
 	    setStyleClass(customBtn, NORMAL);
+
+	    settingsBtn.getStyleClass().setAll("button", "MiscMenuButton");
     }
 
     @FXML
@@ -98,6 +97,7 @@ public final class Menu extends VBox {
     @FXML
     void openSettingsScreen(ActionEvent event) {
     	resetAllStyles();
+    	setStyleClass(settingsBtn, List.of("button", "Selected"));
 	    main.openSettingsScreen();
     }
 

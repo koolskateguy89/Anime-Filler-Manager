@@ -26,6 +26,11 @@
 .SelectedMenuButton {
     -fx-background-color: #282828;
 }
+
+.MiscMenuButton {
+    -fx-background-color: #FCFCFC;
+}
+
 .Results {
     -fx-background-color: #0044FF;
     -fx-text-fill: #FAFAFA;

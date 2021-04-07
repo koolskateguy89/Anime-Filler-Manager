@@ -407,8 +407,7 @@ public class Utils {
 	}
 
 	public static void setStyleClass(Styleable node, List<String> styleclass) {
-		var sc = node.getStyleClass();
-		sc.setAll(styleclass);
+		node.getStyleClass().setAll(styleclass);
 	}
 
 }
