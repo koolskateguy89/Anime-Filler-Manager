@@ -158,6 +158,9 @@ public class CustomScreen extends GridPane {
         sznCombo.getSelectionModel().clearSelection();
         yearCombo.getSelectionModel().clearSelection();
 
+        totalEpField.setText("");
+        currEpField.setText("");
+
         genreSet.clear();
 
     	// Problem: comboBox promptText isn't showing after reset (if smthn was selected)
