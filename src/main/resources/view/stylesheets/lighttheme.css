@@ -1,6 +1,6 @@
 * { /* variables */
-    -background: #484848;
-    -background-text-color: white;
+    -background: #E8E8E8;
+    -background-text-color: black;
 }
 
 .Panes {
@@ -42,6 +42,7 @@
 
 .MenuButton {
 	-fx-background-color: -background;
+	-fx-text-fill: -background-text-color;
 }
 /* Selected menu buttons look like normal buttons atm */
 .SelectedMenuButton {

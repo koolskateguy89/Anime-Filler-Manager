@@ -32,7 +32,7 @@ import afm.utils.Utils;
 public class StartScreen extends Pane {
 
 	private Pair<Integer, String> fact;
-	private LoadTask loadTask;
+	public LoadTask loadTask;
 
 	public StartScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("StartScreen"));

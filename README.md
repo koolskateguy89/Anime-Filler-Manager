@@ -101,13 +101,15 @@ _italicized = WIP/next-to-do_
 - [x] Make settings screen button highlight when open
 - [x] Add option to use external database for MyList and ToWatch
   - [x] Add option to make new blank database
-- [ ] Add episodes column to all tablescreens - **almost-long**
-- [ ] Resize screens to all be same size (SceneBuilder) - **long**
+- [x] Add color themes option (use different stylesheets which the user picks from)
+  - [ ] Light theme
+  - [ ] Idk maybe Dracula/Monokai/etc
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**
-- [ ] _Add color themes option (use different stylesheets which the user picks from)_
-- [ ] Have no window resizing
 - [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log errors
+- [ ] Have no window resizing
+- [ ] Add episodes column to all tablescreens - **almost-long**
+- [ ] Resize screens to all be same size (SceneBuilder) - **long**
 
 ## License
 

@@ -15,11 +15,11 @@
          <Pane prefHeight="355.0" prefWidth="431.0" styleClass="Panes" stylesheets="@stylesheets/application.css">
             <children>
                <ImageView fx:id="imageView" fitHeight="112.0" fitWidth="124.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#openImage" pickOnBounds="true" preserveRatio="true" />
-               <Label layoutX="144.0" layoutY="15.0" text="Info:" textFill="WHITE" />
+               <Label layoutX="144.0" layoutY="15.0" text="Info:" />
                <TextArea fx:id="infoTextArea" editable="false" layoutX="195.0" layoutY="14.0" opacity="0.44" prefHeight="121.0" prefWidth="222.0" wrapText="true" />
-               <Label layoutX="20.0" layoutY="153.0" text="Current episode:" textFill="WHITE" />
+               <Label layoutX="20.0" layoutY="153.0" text="Current episode:" />
                <TextField fx:id="currEpField" layoutX="121.0" layoutY="149.0" promptText="Current episode" />
-               <Label layoutX="20.0" layoutY="190.0" text="Total episodes:" textFill="WHITE" />
+               <Label layoutX="20.0" layoutY="190.0" text="Total episodes:" />
                <TextField fx:id="totalEpField" editable="false" layoutX="121.0" layoutY="186.0" opacity="0.61" promptText="Total episodes" />
                <Button fx:id="fillerBtn" layoutX="285.0" layoutY="165.0" mnemonicParsing="false" onAction="#openFillers" text="See fillers" />
                <Button fx:id="urlBtn" layoutX="35.0" layoutY="232.0" mnemonicParsing="false" onAction="#copyURL" text="Copy URL" />

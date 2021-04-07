@@ -248,7 +248,7 @@ public final class SearchScreen extends GridPane {
         sznCombo.getSelectionModel().clearSelection();
         yearCombo.getSelectionModel().clearSelection();
 
-        minEpsField.setText("");
+        minEpsField.setText(null);
 
         clearGenres(null);
         clearSeasons(null);

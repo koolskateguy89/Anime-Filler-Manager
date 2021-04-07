@@ -15,9 +15,9 @@
          <Pane prefHeight="355.0" prefWidth="431.0" styleClass="Panes" stylesheets="@stylesheets/application.css">
             <children>
                <ImageView fx:id="imageView" fitHeight="112.0" fitWidth="124.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#openImage" pickOnBounds="true" preserveRatio="true" />
-               <Label layoutX="144.0" layoutY="15.0" text="Info:" textFill="WHITE" />
+               <Label layoutX="144.0" layoutY="15.0" text="Info:" />
                <TextArea fx:id="infoTextArea" editable="false" layoutX="195.0" layoutY="14.0" opacity="0.44" prefHeight="121.0" prefWidth="222.0" wrapText="true" />
-               <Label layoutX="22.0" layoutY="174.0" text="Episodes" textFill="WHITE" />
+               <Label layoutX="22.0" layoutY="174.0" text="Episodes" />
                <TextField fx:id="totalEpField" editable="false" layoutX="81.0" layoutY="170.0" opacity="0.71" />
                <Button fx:id="fillerBtn" layoutX="275.0" layoutY="170.0" mnemonicParsing="false" onAction="#openFillers" text="See fillers" />
                <Button fx:id="urlBtn" layoutX="58.0" layoutY="219.0" mnemonicParsing="false" onAction="#copyURL" prefHeight="25.0" text="Copy URL" />

@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -26,7 +28,9 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import afm.Main;
 import afm.database.Database;
+import afm.screens.version1_start.StartScreen;
 import afm.user.Settings;
+import afm.user.Theme;
 import afm.utils.Utils;
 
 public class SettingsScreen extends Pane {
@@ -74,6 +78,30 @@ public class SettingsScreen extends Pane {
 			Settings.opacityProperty.bind(opacitySlider.valueProperty().multiply(0.01));
 			Settings.inactiveOpacityProperty.bind(inactiveOpacitySlider.valueProperty().multiply(0.01));
 		});
+
+		themeBox.getItems().addAll(Theme.values());
+		themeBox.valueProperty().bindBidirectional(Settings.themeProperty);
+
+		themeBox.valueProperty().addListener((obs, oldTheme, newTheme) -> {
+			if (newTheme != null)
+				Main.getInstance().applyTheme(newTheme);
+		});
+
+		Theme currentTheme = Settings.themeProperty.get();
+
+		// this applies the current theme once all screens have been loaded
+		if (currentTheme != Theme.DEFAULT) {
+			Platform.runLater(() -> {
+				StartScreen.LoadTask task = Main.getInstance().startScreen.loadTask;
+				EventHandler<WorkerStateEvent> onSucceeded = task.getOnSucceeded();
+
+				task.setOnSucceeded(event -> {
+					if (onSucceeded != null)
+						onSucceeded.handle(event);
+					Main.getInstance().applyTheme(currentTheme);
+				});
+			});
+		}
 	}
 
 	@FXML
@@ -101,6 +129,9 @@ public class SettingsScreen extends Pane {
 	private Slider opacitySlider;
 	@FXML
 	private Slider inactiveOpacitySlider;
+
+	@FXML
+	private ChoiceBox<Theme> themeBox;
 
     @FXML
     void insertion(ActionEvent event) {

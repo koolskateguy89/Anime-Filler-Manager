@@ -18,16 +18,15 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="63.0" prefWidth="321.0">
          <children>
-      
-                        <Label text="*Sort MyList and ToWatch in name order or insertion order?" textAlignment="CENTER" textFill="WHITE" />
+            <Label text="*Sort MyList and ToWatch in name order or insertion order?" textAlignment="CENTER" />
             <HBox alignment="CENTER" prefHeight="36.0" prefWidth="171.0" spacing="30.0">
                <children>
-                  <Label contentDisplay="RIGHT" text="Insertion" textFill="WHITE">
+                  <Label contentDisplay="RIGHT" text="Insertion">
                      <graphic>
-                        <CheckBox fx:id="insertionCheckBox" contentDisplay="TOP" mnemonicParsing="false" onAction="#insertion" textFill="WHITE" />
+                        <CheckBox fx:id="insertionCheckBox" contentDisplay="TOP" mnemonicParsing="false" onAction="#insertion" />
                      </graphic>
                   </Label>
-                  <CheckBox fx:id="nameCheckBox" mnemonicParsing="false" onAction="#name" prefHeight="17.0" prefWidth="62.0" text="Name" textFill="WHITE" />
+                  <CheckBox fx:id="nameCheckBox" mnemonicParsing="false" onAction="#name" prefHeight="17.0" prefWidth="62.0" styleClass="label" text="Name" />
                </children>
             </HBox>
          </children>
@@ -45,18 +44,18 @@
         </rowConstraints>
 
          <children>
-            <Label contentDisplay="RIGHT" text="*Show facts?" textAlignment="CENTER" textFill="WHITE">
+            <Label contentDisplay="RIGHT" text="*Show facts?" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <CheckBox fx:id="factsCheckBox" mnemonicParsing="false" onAction="#showFacts" textFill="WHITE" GridPane.columnIndex="1" />
-            <Label contentDisplay="RIGHT" text="Play sound upon search completion?" textFill="WHITE" GridPane.rowIndex="1">
+            <CheckBox fx:id="factsCheckBox" mnemonicParsing="false" onAction="#showFacts" GridPane.columnIndex="1" />
+            <Label contentDisplay="RIGHT" text="Play sound upon search completion?" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <CheckBox fx:id="soundCheckBox" mnemonicParsing="false" onAction="#playSound" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <CheckBox fx:id="soundCheckBox" mnemonicParsing="false" onAction="#playSound" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -64,19 +63,19 @@
          </children>
 
       </GridPane>
-      <Label contentDisplay="RIGHT" layoutX="22.0" layoutY="165.0" text="Always on top" textFill="WHITE">
+      <Label contentDisplay="RIGHT" layoutX="22.0" layoutY="165.0" text="Always on top">
          <graphic>
             <CheckBox fx:id="alwaysOnTopBox" mnemonicParsing="false" onAction="#alwaysOnTop" />
          </graphic>
       </Label>
-      <Label contentDisplay="RIGHT" layoutX="150.0" layoutY="165.0" text="*Automate loading screen" textFill="WHITE">
+      <Label contentDisplay="RIGHT" layoutX="150.0" layoutY="165.0" text="*Automate loading screen">
          <graphic>
             <CheckBox fx:id="skipLoadingBox" mnemonicParsing="false" onAction="#skipLoading" />
          </graphic>
       </Label>
       <HBox alignment="TOP_CENTER" layoutX="14.0" layoutY="204.0" prefHeight="61.0" prefWidth="461.0" spacing="10.0">
          <children>
-            <Label text="*Anime Database" textFill="WHITE" />
+            <Label text="*Anime Database" />
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="232.0" spacing="5.0">
                <children>
                   <ChoiceBox fx:id="databaseBox" prefHeight="26.0" prefWidth="262.0">
@@ -96,30 +95,35 @@
          </children>
       </HBox>
 
-      <Label layoutX="107.0" layoutY="322.0" prefHeight="63.0" prefWidth="181.0" text="*Changes will only take place upon restart" textAlignment="CENTER" textFill="#fff82c" wrapText="true">
+      <Label layoutX="107.0" layoutY="322.0" prefHeight="63.0" prefWidth="181.0" styleClass="Warning" text="*Changes will only take place upon restart" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Button layoutX="325.0" layoutY="330.0" mnemonicParsing="false" onAction="#resetToDefault" prefHeight="48.0" prefWidth="96.0" text="Reset" textFill="RED">
+      <Button layoutX="319.0" layoutY="337.0" mnemonicParsing="false" onAction="#resetToDefault" prefHeight="48.0" prefWidth="96.0" style="-fx-text-fill: red;" text="Reset">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Button>
       <VBox layoutX="393.0" layoutY="14.0" prefHeight="123.0" prefWidth="181.0" spacing="5.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" text="Opacity" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" text="Opacity" textAlignment="CENTER" wrapText="true">
                <graphic>
                   <Slider fx:id="opacitySlider" showTickLabels="true" showTickMarks="true" value="100.0" />
                </graphic>
             </Label>
-            <Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" text="Opacity while not active window" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" text="Opacity while not active window" textAlignment="CENTER" wrapText="true">
                <graphic>
                   <Slider fx:id="inactiveOpacitySlider" showTickLabels="true" showTickMarks="true" value="100.0" />
                </graphic>
             </Label>
          </children>
       </VBox>
+      <Label contentDisplay="RIGHT" layoutX="335.0" layoutY="161.0" text="Color theme">
+         <graphic>
+            <ChoiceBox fx:id="themeBox" prefWidth="150.0" />
+         </graphic>
+      </Label>
 
    </children>
 </fx:root>
