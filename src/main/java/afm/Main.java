@@ -6,8 +6,10 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -17,7 +19,6 @@ import lombok.Getter;
 
 import afm.anime.Anime;
 import afm.anime.Search;
-import afm.screens.MainScreen;
 import afm.screens.Menu;
 import afm.screens.SettingsScreen;
 import afm.screens.infowindows.InfoWindow;
@@ -31,6 +32,7 @@ import afm.screens.version7_toWatch.ToWatchScreen;
 import afm.screens.version8_custom.CustomScreen;
 import afm.user.Settings;
 import afm.utils.OnClose;
+import afm.utils.Utils;
 
 // https://github.com/koolskateguy89/Anime-Filler-Manager
 public class Main extends Application {
@@ -45,7 +47,7 @@ public class Main extends Application {
 	private Stage stage;
 	private Scene scene;
 
-	public MainScreen mainScreen;
+	public SplitPane mainScreen;
 	private ObservableList<Node> screenList;
 
 	public StartScreen startScreen;
@@ -76,9 +78,8 @@ public class Main extends Application {
 			}
 		}
 
-		normalSize();
+		normalHeight();
 		stage.setWidth(welcomeScreen.getPrefWidth());
-		//System.out.printf("%f\t%f\n", welcomeScreen.getPrefWidth(), stage.getWidth());
 		scene.setRoot(welcomeScreen);
 	}
 
@@ -91,7 +92,10 @@ public class Main extends Application {
 	public Main initMainScreen() {
 		if (mainScreen == null || screenList == null)
 			try {
-				mainScreen = new MainScreen();
+				FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("MainScreen"));
+				loader.setRoot(mainScreen);
+				loader.load();
+
 				screenList = mainScreen.getItems();
 				screenList.add(menu);
 			} catch (IOException e) {
@@ -104,7 +108,7 @@ public class Main extends Application {
 		return this;
 	}
 
-	private void normalSize() {
+	private void normalHeight() {
 		stage.setHeight(searchScreen.getPrefHeight()); // most screens have the same pref height
 	}
 
@@ -134,7 +138,7 @@ public class Main extends Application {
 			if (newPane instanceof ResultsScreen || newPane instanceof MyListScreen || newPane instanceof ToWatchScreen) {
 				stage.setHeight(Math.max(menu.getPrefHeight(), newPane.getPrefHeight()) + 40);
 			} else {
-				normalSize();
+				normalHeight();
 			}
 		}
 	}
