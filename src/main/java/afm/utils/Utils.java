@@ -350,7 +350,7 @@ public class Utils {
 			/* if (newVal == null || newVal.isEmpty())
 				((StringProperty) obs).setValue("0");
 			else */
-			if (!isStrictInteger(newVal))
+			if (!Strings.isNullOrEmpty(newVal) && !isStrictInteger(newVal))
 				((StringProperty) obs).setValue(oldVal);
 		};
 	}
