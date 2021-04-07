@@ -11,12 +11,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
@@ -62,6 +64,16 @@ public class SettingsScreen extends Pane {
 		databaseBox.setOnAction(event -> formatDatabaseBox());
 
 		databaseBox.valueProperty().bindBidirectional(Settings.selectedDatabaseProperty);
+
+		// multiply by 100 to convert from decimal to %
+		opacitySlider.setValue(Settings.opacityProperty.get() * 100);
+		inactiveOpacitySlider.setValue(Settings.inactiveOpacityProperty.get() * 100);
+
+		Platform.runLater(() -> {
+			// multiple by 0.01 to convert from % to decimal (divide by 100)
+			Settings.opacityProperty.bind(opacitySlider.valueProperty().multiply(0.01));
+			Settings.inactiveOpacityProperty.bind(inactiveOpacitySlider.valueProperty().multiply(0.01));
+		});
 	}
 
 	@FXML
@@ -84,6 +96,11 @@ public class SettingsScreen extends Pane {
 
 	@FXML
 	private ChoiceBox<String> databaseBox;
+
+	@FXML
+	private Slider opacitySlider;
+	@FXML
+	private Slider inactiveOpacitySlider;
 
     @FXML
     void insertion(ActionEvent event) {
@@ -167,14 +184,14 @@ public class SettingsScreen extends Pane {
     void createDatabase(ActionEvent event) {
     	FileChooser fc = getDatabaseFileChooser();
 
-    	File database = fc.showSaveDialog(Main.getStage());
+    	File file = fc.showSaveDialog(Main.getStage());
 
-	    if (database == null)
+	    if (file == null)
 	    	return;
 
-	    database.delete();
+	    file.delete();
 
-	    String url = database.getAbsolutePath();
+	    String url = file.getAbsolutePath();
 
 	    try {
 		    Database.createNew(url);
