@@ -92,6 +92,7 @@ public class Main extends Application {
 	public Main initMainScreen() {
 		if (mainScreen == null || screenList == null)
 			try {
+				mainScreen = new SplitPane();
 				FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("MainScreen"));
 				loader.setRoot(mainScreen);
 				loader.load();
