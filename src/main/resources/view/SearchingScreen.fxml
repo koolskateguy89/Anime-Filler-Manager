@@ -5,23 +5,23 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="584.0" style="-fx-background-color: #000000;" stylesheets="@application.css" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="SearchingPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="584.0" stylesheets="@stylesheets/application.css" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="resultsBtn" defaultButton="true" disable="true" layoutX="233.0" layoutY="287.0" mnemonicParsing="false" onAction="#openResults" prefHeight="58.0" prefWidth="118.0" text="Not yet..." textFill="WHITE" />
-      <HBox fx:id="loadingBox" alignment="CENTER" disable="true" fillHeight="false" layoutX="74.0" layoutY="145.0" prefHeight="70.0" prefWidth="437.0" spacing="10.0" style="-fx-border-color: #FFFFFF; -fx-border-radius: 6;">
+      <HBox id="SearchingCircleBox" fx:id="loadingBox" alignment="CENTER" disable="true" fillHeight="false" layoutX="74.0" layoutY="145.0" prefHeight="70.0" prefWidth="437.0" spacing="10.0" style="-fx-border-radius: 6;">
          <children>
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fill="WHITE" radius="10.0" stroke="#5f306e" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
+            <Circle radius="10.0" strokeType="INSIDE" strokeWidth="0.0" styleClass="Circle" />
          </children>
       </HBox>
+      <Button fx:id="resultsBtn" defaultButton="true" disable="true" layoutX="233.0" layoutY="287.0" mnemonicParsing="false" onAction="#openResults" prefHeight="58.0" prefWidth="118.0" text="Not yet..." />
    </children>
 </fx:root>

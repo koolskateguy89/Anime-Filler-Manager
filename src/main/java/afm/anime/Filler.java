@@ -16,7 +16,7 @@ import afm.utils.Utils;
 
 @EqualsAndHashCode(cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
 public final class Filler implements Comparable<Filler> {
-					         /* Start ,  End  , Object */
+							 /* Start ,  End  , Object */
 	private static final Table<Integer, Integer, Filler> CACHE = HashBasedTable.create();
 
 	// For one episode filler

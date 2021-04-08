@@ -75,7 +75,7 @@ public class ResultInfoWindow extends InfoWindow {
 		setStyleClass(MLbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
 		closeWindow(null);
-    }
+	}
 
 	@FXML
 	void addToToWatch(ActionEvent event) {
@@ -84,7 +84,7 @@ public class ResultInfoWindow extends InfoWindow {
 		setStyleClass(TWbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
 		closeWindow(null);
-    }
+	}
 
 	private void makeBothBtnsTransparent() {
 		MLbtn.setMouseTransparent(true);

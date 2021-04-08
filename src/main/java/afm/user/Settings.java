@@ -9,7 +9,9 @@ import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -20,6 +22,10 @@ import lombok.Getter;
 
 import afm.utils.Utils;
 
+/*
+ * TODO: Map<String, String> for String settings (database, selected db etc.)
+ *  basically make getting a String setting shorter (if I add more in future it won't clutter this)
+ */
 public class Settings {
 
 	// Don't allow this class to be instantiated
@@ -31,6 +37,7 @@ public class Settings {
 		SELECTED_DB("SELECTED_DATABASE"),
 		OPACITY,
 		INACTIVE_OPACITY,
+		THEME,
 		;
 
 		String key;
@@ -75,20 +82,23 @@ public class Settings {
 		return selectedDatabaseProperty.getValue();
 	}
 
-	public static final DoubleProperty opacityProperty = new SimpleDoubleProperty();
-	public static final DoubleProperty inactiveOpacityProperty = new SimpleDoubleProperty();
-
 	@Getter
 	private static final Set<String> databaseUrls = new LinkedHashSet<>();
 
+	public static final DoubleProperty opacityProperty = new SimpleDoubleProperty();
+	public static final DoubleProperty inactiveOpacityProperty = new SimpleDoubleProperty();
+
+	public static final ObjectProperty<Theme> themeProperty = new SimpleObjectProperty<>();
+
 	static {
 		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
-		loadValues(prefs);
+		loadBooleans(prefs);
 		loadDatabaseUrls(prefs);
 		loadOpacities(prefs);
+		loadRest(prefs);
 	}
 
-	private static void loadValues(Preferences prefs) {
+	private static void loadBooleans(Preferences prefs) {
 		try {
 			String[] keys = prefs.keys();
 			for (String key : keys) {
@@ -130,6 +140,11 @@ public class Settings {
 		inactiveOpacityProperty.set(inactiveOpacity);
 	}
 
+	private static void loadRest(Preferences prefs) {
+		String name = prefs.get(PrefKey.THEME.key, "DEFAULT");
+		themeProperty.set(Theme.valueOf(name));
+	}
+
 	// OnClose
 	public static void save() {
 		Preferences prefs = Preferences.userRoot().node(PREF_NAME);
@@ -145,6 +160,8 @@ public class Settings {
 
 		prefs.putDouble(PrefKey.OPACITY.key, opacityProperty.get());
 		prefs.putDouble(PrefKey.INACTIVE_OPACITY.key, inactiveOpacityProperty.get());
+
+		prefs.put(PrefKey.THEME.key, themeProperty.get().name());
 
 		try {
 			prefs.flush();

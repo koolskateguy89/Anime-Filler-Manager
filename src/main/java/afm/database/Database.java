@@ -95,7 +95,7 @@ public class Database {
 		try {
 			boolean exists = Files.exists(Path.of(url));
 
-			if (!exists)    // go to catch clause
+			if (!exists)	// go to catch clause
 				throw new IllegalArgumentException();
 
 			return true;
@@ -212,7 +212,7 @@ public class Database {
 				totalEps     INT     NOT NULL
 				                     DEFAULT ( -1),
 				imageURL     STRING,
-				fillers      STRING    
+				fillers      STRING
 			);
 			""";
 
@@ -284,7 +284,7 @@ public class Database {
 
 	// Load contents of MyList table into runtime MyList
 	private static void loadMyList(Statement statement, StartScreen.LoadTask task,
-	                               double start, double end) throws SQLException {
+								   double start, double end) throws SQLException {
 		double diff = end - start;
 		double step;
 		int size = getTableSize(statement, "MyList");
@@ -306,7 +306,7 @@ public class Database {
 
 	// Load contents of ToWatch table into runtime ToWatch
 	private static void loadToWatch(Statement statement, StartScreen.LoadTask task,
-	                                double start, double end) throws SQLException {
+									double start, double end) throws SQLException {
 		double diff = end - start;
 		double step;
 		int size = getTableSize(statement, "ToWatch");

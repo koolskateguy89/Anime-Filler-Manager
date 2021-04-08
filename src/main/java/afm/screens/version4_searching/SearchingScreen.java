@@ -195,7 +195,7 @@ public class SearchingScreen extends Pane {
 
 				@Override
 				protected Void call() {
-					          /* Position, opacity of each circle*/
+							  /* Position, opacity of each circle*/
 					HashMap<Integer, Double> circleMap = new HashMap<>();
 
 					IntStream.range(0, size)

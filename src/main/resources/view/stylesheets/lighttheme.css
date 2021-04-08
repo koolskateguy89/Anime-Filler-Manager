@@ -1,0 +1,114 @@
+* { /* variables */
+    -background: #DEE4E7;
+    -opposite-to-background-color: black;
+    -background-text-color: -opposite-to-background-color;
+    -button-color: #282828;
+}
+
+.Panes {
+	-fx-background-color: -background;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+	-fx-padding: 0.01;
+	-fx-background-color: black;
+}
+
+.progress-bar {
+	-fx-accent: #F5DF4D;
+}
+
+.label {
+    -fx-text-fill: -background-text-color;
+}
+
+.Text {
+    -fx-fill: -background-text-color;
+}
+
+#WelcomeLine {
+    -fx-stroke: -background-text-color;
+}
+
+.button {
+	-fx-background-color: -button-color;
+	-fx-text-fill: #E8E8E8;
+}
+.button:hover {
+    -fx-background-color: derive(-button-color, 30%);
+}
+
+.Warning {
+    -fx-text-fill: gold;
+}
+
+.MenuButton {
+	-fx-background-color: -background;
+	-fx-text-fill: -background-text-color;
+}
+/* Selected menu buttons look like normal buttons atm */
+.SelectedMenuButton {
+    -fx-background-color: -button-color;
+}
+
+.MiscMenuButton {
+    -fx-background-color: orange;
+}
+.MiscMenuButton:hover {
+    -fx-background-color: derive(orange, 30%);
+}
+
+.Results {
+    -fx-background-color: #0044FF;
+    -fx-text-fill: #FAFAFA;
+}
+.Results:hover {
+    -fx-background-color: derive(#0044FF, 30%);
+}
+
+.Selected {
+    -fx-background-color: #77DBE5;
+	-fx-text-fill: #300E4E;
+}
+.Selected:hover {
+    -fx-background-color: derive(#77DBE5, 30%);
+}
+
+.text-area {
+	-fx-text-fill: #FCFCFC;
+}
+.text-area .content {
+	-fx-background-color: #272727;
+}
+
+/* https://gist.github.com/kinsleykajiva/ac452bc8280bc52be384e9af98f2ba0c */
+.table-view .column-header .label {
+    -fx-text-fill: black;
+}
+
+.choice-box .label {
+    -fx-text-fill: black;
+}
+
+/* https://stackoverflow.com/a/44062472 */
+.slider .axis {
+    -fx-tick-label-fill: -background-text-color;
+}
+/* https://stackoverflow.com/a/16343529 */
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: -button-color;
+}
+
+#SearchingPane {
+    -fx-background-color: white;
+}
+
+#SearchingCircleBox {
+    -fx-border-color: -opposite-to-background-color;
+}
+
+.Circle {
+    -fx-fill: -opposite-to-background-color;
+    -fx-stroke: #5f306e;
+}

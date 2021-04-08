@@ -30,6 +30,7 @@ import afm.screens.version6_myList.MyListScreen;
 import afm.screens.version7_toWatch.ToWatchScreen;
 import afm.screens.version8_custom.CustomScreen;
 import afm.user.Settings;
+import afm.user.Theme;
 import afm.utils.OnClose;
 import afm.utils.Utils;
 
@@ -60,7 +61,6 @@ public class Main extends Application {
 	private ResultsScreen resultsScreen;
 
 	public MyListScreen myListScreen;
-
 	public ToWatchScreen toWatchScreen;
 
 	public CustomScreen customScreen;
@@ -163,14 +163,6 @@ public class Main extends Application {
 	}
 
 	public void moveToSearchingScreen(Search s) {
-		if (searchingScreen == null)
-			try {
-				searchingScreen = new SearchingScreen();
-			} catch (IOException e) {
-				e.printStackTrace();
-				Platform.exit();
-			}
-
 		searchingScreen.setSearch(s);
 		searchingScreen.startSearch();
 
@@ -179,18 +171,25 @@ public class Main extends Application {
 	}
 
 	public void moveToResultsScreen(List<Anime> results) {
-		if (resultsScreen == null)
-			try {
-				resultsScreen = new ResultsScreen();
-			} catch (IOException e) {
-				e.printStackTrace();
-				Platform.exit();
-			}
-
 		resultsScreen.setResults(results);
 
 		menu.resultsScreen();
 		setScreen(resultsScreen);
+	}
+
+	public void applyTheme(Theme theme) {
+		theme.apply(welcomeScreen);
+		theme.apply(menu);
+		theme.apply(settingsScreen);
+
+		theme.apply(searchScreen);
+		theme.apply(searchingScreen);
+		theme.apply(resultsScreen);
+
+		theme.apply(myListScreen);
+		theme.apply(toWatchScreen);
+
+		theme.apply(customScreen);
 	}
 
 	@Override
@@ -223,6 +222,10 @@ public class Main extends Application {
 			// start loading is done internally in start screen (by button action)
 			startScreen = new StartScreen();
 			scene = new Scene(startScreen);
+
+			// don't lazily load to make applying theme easier
+			searchingScreen = new SearchingScreen();
+			resultsScreen = new ResultsScreen();
 
 			stage.setScene(scene);
 			stage.centerOnScreen();

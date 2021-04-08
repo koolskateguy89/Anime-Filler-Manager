@@ -23,6 +23,7 @@ import afm.anime.Anime;
 import afm.database.MyList;
 import afm.database.ToWatch;
 import afm.user.Settings;
+import afm.user.Theme;
 import afm.utils.Browser;
 import afm.utils.NotificationFactory;
 import afm.utils.Utils;
@@ -52,7 +53,20 @@ public abstract class InfoWindow extends Stage {
 		openWindows.clear();
 	}
 
+	// apply new theme to all open infoWindows
+	public static void applyTheme(Theme theme) {
+		for (Stage stage : openWindows) {
+			if (stage instanceof InfoWindow) {
+				InfoWindow iw = (InfoWindow) stage;
+				theme.apply(iw.pane);
+			}
+		}
+	}
+
 	protected final Anime anime;
+
+	@FXML
+	private Pane pane;
 
 	@FXML
 	protected ImageView imageView;
@@ -79,10 +93,13 @@ public abstract class InfoWindow extends Stage {
 		getIcons().add(new Image("icons/Info.png"));
 		setOnCloseRequest(windowEvent -> closeWindow(null));
 		setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
+
 		//initOwner(Main.getStage()); // this always on top of primaryStage
 	}
 
 	protected void afterInitialize() {
+		// apply current theme to this
+		Settings.themeProperty.get().apply(pane);
 		requestFocus();
 
 		// put this in the middle of primaryStage
@@ -129,10 +146,10 @@ public abstract class InfoWindow extends Stage {
 	// https://stackoverflow.com/a/46395543
 	public static String wrapText(String message) {
 		StringBuilder sb = new StringBuilder(message);
-    	for (int i = 0; i < message.length(); i += 200) {
-    	    sb.insert(i, '\n');
-    	}
-    	return sb.toString();
+		for (int i = 0; i < message.length(); i += 200) {
+			sb.insert(i, '\n');
+		}
+		return sb.toString();
 	}
 
 	@FXML

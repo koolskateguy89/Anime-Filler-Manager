@@ -31,85 +31,85 @@ public final class Menu extends VBox {
 		loader.load();
 	}
 
-    @FXML
-    private Button searchBtn;
+	@FXML
+	private Button searchBtn;
 
-    @FXML
-    private Button myListBtn;
+	@FXML
+	private Button myListBtn;
 
-    @FXML
-    private Button toWatchBtn;
+	@FXML
+	private Button toWatchBtn;
 
-    @FXML
-    private Button customBtn;
+	@FXML
+	private Button customBtn;
 
-    @FXML
-    private Button settingsBtn;
+	@FXML
+	private Button settingsBtn;
 
-    public void resultsScreen() {
-    	resetAllStyles();
-    	setStyleClass(searchBtn, RESULTS);
-    }
+	public void resultsScreen() {
+		resetAllStyles();
+		setStyleClass(searchBtn, RESULTS);
+	}
 
-    private void resetAllStyles() {
-    	setStyleClass(searchBtn, NORMAL);
-	    setStyleClass(myListBtn, NORMAL);
-	    setStyleClass(toWatchBtn, NORMAL);
-	    setStyleClass(customBtn, NORMAL);
+	private void resetAllStyles() {
+		setStyleClass(searchBtn, NORMAL);
+		setStyleClass(myListBtn, NORMAL);
+		setStyleClass(toWatchBtn, NORMAL);
+		setStyleClass(customBtn, NORMAL);
 
-	    settingsBtn.getStyleClass().setAll("button", "MiscMenuButton");
-    }
+		settingsBtn.getStyleClass().setAll("button", "MiscMenuButton");
+	}
 
-    @FXML
-    void searchButtonPressed(ActionEvent event) {
-    	resetAllStyles();
-	    setStyleClass(searchBtn, SELECTED_MENU);
-	    main.openSearchScreen();
-    }
+	@FXML
+	void searchButtonPressed(ActionEvent event) {
+		resetAllStyles();
+		setStyleClass(searchBtn, SELECTED_MENU);
+		main.openSearchScreen();
+	}
 
-    @FXML
-    void myListButtonPressed(ActionEvent event) {
-    	resetAllStyles();
-	    setStyleClass(myListBtn, SELECTED_MENU);
-	    main.openMyListScreen();
-    }
+	@FXML
+	void myListButtonPressed(ActionEvent event) {
+		resetAllStyles();
+		setStyleClass(myListBtn, SELECTED_MENU);
+		main.openMyListScreen();
+	}
 
-    @FXML
-    void toWatchButtonPressed(ActionEvent event) {
-    	resetAllStyles();
-    	setStyleClass(toWatchBtn, SELECTED_MENU);
-	    main.openToWatchScreen();
-    }
+	@FXML
+	void toWatchButtonPressed(ActionEvent event) {
+		resetAllStyles();
+		setStyleClass(toWatchBtn, SELECTED_MENU);
+		main.openToWatchScreen();
+	}
 
-    @FXML
-    void customButtonPressed(ActionEvent event) {
-    	resetAllStyles();
-    	setStyleClass(customBtn, SELECTED_MENU);
-    	main.openCustomScreen();
-    }
+	@FXML
+	void customButtonPressed(ActionEvent event) {
+		resetAllStyles();
+		setStyleClass(customBtn, SELECTED_MENU);
+		main.openCustomScreen();
+	}
 
-    @FXML
-    void openHomeScreen(ActionEvent event) {
-    	resetAllStyles();
-	    main.moveToWelcomeScreen();
-    }
+	@FXML
+	void openHomeScreen(ActionEvent event) {
+		resetAllStyles();
+		main.moveToWelcomeScreen();
+	}
 
-    @FXML
-    void openSettingsScreen(ActionEvent event) {
-    	resetAllStyles();
-    	setStyleClass(settingsBtn, List.of("button", "Selected"));
-	    main.openSettingsScreen();
-    }
+	@FXML
+	void openSettingsScreen(ActionEvent event) {
+		resetAllStyles();
+		setStyleClass(settingsBtn, List.of("button", "Selected"));
+		main.openSettingsScreen();
+	}
 
-    public void openSearchScreenFromWelcome() {
-    	searchButtonPressed(null);
-    }
+	public void openSearchScreenFromWelcome() {
+		searchButtonPressed(null);
+	}
 
-    public void openMyListScreenFromWelcome() {
-    	myListButtonPressed(null);
-    }
+	public void openMyListScreenFromWelcome() {
+		myListButtonPressed(null);
+	}
 
-    public void openToWatchScreenFromWelcome() {
-    	toWatchButtonPressed(null);
-    }
+	public void openToWatchScreenFromWelcome() {
+		toWatchButtonPressed(null);
+	}
 }
