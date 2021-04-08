@@ -1,6 +1,8 @@
 * { /* variables */
-    -background: #E8E8E8;
-    -background-text-color: black;
+    -background: #DEE4E7;
+    -opposite-to-background-color: black;
+    -background-text-color: -opposite-to-background-color;
+    -button-color: #282828;
 }
 
 .Panes {
@@ -29,15 +31,15 @@
 }
 
 .button {
-	-fx-background-color: #282828;
+	-fx-background-color: -button-color;
 	-fx-text-fill: #E8E8E8;
 }
 .button:hover {
-    -fx-background-color: #363434;
+    -fx-background-color: derive(-button-color, 30%);
 }
 
 .Warning {
-    -fx-text-fill: yellow;
+    -fx-text-fill: gold;
 }
 
 .MenuButton {
@@ -46,27 +48,36 @@
 }
 /* Selected menu buttons look like normal buttons atm */
 .SelectedMenuButton {
-    -fx-background-color: #282828;
+    -fx-background-color: -button-color;
 }
 
 .MiscMenuButton {
-    -fx-background-color: #FCFCFC;
+    -fx-background-color: orange;
+}
+.MiscMenuButton:hover {
+    -fx-background-color: derive(orange, 30%);
 }
 
 .Results {
     -fx-background-color: #0044FF;
     -fx-text-fill: #FAFAFA;
 }
+.Results:hover {
+    -fx-background-color: derive(#0044FF, 30%);
+}
 
 .Selected {
     -fx-background-color: #77DBE5;
 	-fx-text-fill: #300E4E;
 }
+.Selected:hover {
+    -fx-background-color: derive(#77DBE5, 30%);
+}
 
-.Text-area {
+.text-area {
 	-fx-text-fill: #FCFCFC;
 }
-.Text-area .content {
+.text-area .content {
 	-fx-background-color: #272727;
 }
 
@@ -86,18 +97,18 @@
 /* https://stackoverflow.com/a/16343529 */
 .slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
     -fx-fill: null;
-    -fx-stroke: #282828;
+    -fx-stroke: -button-color;
 }
 
 #SearchingPane {
-    -fx-background-color: black;
+    -fx-background-color: white;
 }
 
 #SearchingCircleBox {
-    -fx-border-color: -background-text-color;
+    -fx-border-color: -opposite-to-background-color;
 }
 
 .Circle {
-    -fx-fill: -background-text-color;
+    -fx-fill: -opposite-to-background-color;
     -fx-stroke: #5f306e;
 }
