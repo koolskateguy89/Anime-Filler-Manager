@@ -138,143 +138,143 @@ public class SettingsScreen extends Pane {
 	@FXML
 	private ChoiceBox<Theme> themeBox;
 
-    @FXML
-    void insertion(ActionEvent event) {
-    	Settings.invert(NAME_ORDER);
-    	nameCheckBox.setSelected(!insertionCheckBox.isSelected());
-    }
+	@FXML
+	void insertion(ActionEvent event) {
+		Settings.invert(NAME_ORDER);
+		nameCheckBox.setSelected(!insertionCheckBox.isSelected());
+	}
 
-    @FXML
-    void name(ActionEvent event) {
-	    Settings.invert(NAME_ORDER);
-    	insertionCheckBox.setSelected(!nameCheckBox.isSelected());
-    }
+	@FXML
+	void name(ActionEvent event) {
+		Settings.invert(NAME_ORDER);
+		insertionCheckBox.setSelected(!nameCheckBox.isSelected());
+	}
 
-    @FXML
-    void showFacts(ActionEvent event) {
-	    Settings.invert(SHOW_FACTS);
-    }
+	@FXML
+	void showFacts(ActionEvent event) {
+		Settings.invert(SHOW_FACTS);
+	}
 
-    @FXML
-    void playSound(ActionEvent event) {
-	    Settings.invert(PLAY_SOUND);
-    }
+	@FXML
+	void playSound(ActionEvent event) {
+		Settings.invert(PLAY_SOUND);
+	}
 
-    @FXML
-    void alwaysOnTop(ActionEvent event) {
-	    Settings.invert(ALWAYS_ON_TOP);
-    	Main.getStage().setAlwaysOnTop(Settings.get(ALWAYS_ON_TOP));
-    }
+	@FXML
+	void alwaysOnTop(ActionEvent event) {
+		Settings.invert(ALWAYS_ON_TOP);
+		Main.getStage().setAlwaysOnTop(Settings.get(ALWAYS_ON_TOP));
+	}
 
-    @FXML
-    void skipLoading(ActionEvent event) {
-    	Settings.invert(SKIP_LOADING);
-    }
+	@FXML
+	void skipLoading(ActionEvent event) {
+		Settings.invert(SKIP_LOADING);
+	}
 
-    private static FileChooser getDatabaseFileChooser() {
-	    FileChooser fc = new FileChooser();
+	private static FileChooser getDatabaseFileChooser() {
+		FileChooser fc = new FileChooser();
 
-	    String s = String.join(" ", Database.FILE_EXTENSIONS);
+		String s = String.join(" ", Database.FILE_EXTENSIONS);
 
-	    ExtensionFilter filter = new ExtensionFilter(
-			    "All SQLite databases (%s)".formatted(s),
-			    Database.FILE_EXTENSIONS
-	    );
+		ExtensionFilter filter = new ExtensionFilter(
+				"All SQLite databases (%s)".formatted(s),
+				Database.FILE_EXTENSIONS
+		);
 
-	    fc.setTitle("Select anime database");
-	    fc.setInitialDirectory(new File("."));
-	    fc.getExtensionFilters().add(filter);
+		fc.setTitle("Select anime database");
+		fc.setInitialDirectory(new File("."));
+		fc.getExtensionFilters().add(filter);
 
-	    return fc;
-    }
+		return fc;
+	}
 
-    @FXML
-    void addDatabase(ActionEvent event) {
-    	FileChooser fc = getDatabaseFileChooser();
+	@FXML
+	void addDatabase(ActionEvent event) {
+		FileChooser fc = getDatabaseFileChooser();
 
-    	List<File> databases = fc.showOpenMultipleDialog(Main.getStage());
+		List<File> databases = fc.showOpenMultipleDialog(Main.getStage());
 
-    	if (databases == null || databases.isEmpty())   // it shouldn't be empty just check anyway
-    		return;
+		if (databases == null || databases.isEmpty())   // it shouldn't be empty just check anyway
+			return;
 
-    	var urls = Settings.getDatabaseUrls();
-    	var items = databaseBox.getItems();
+		var urls = Settings.getDatabaseUrls();
+		var items = databaseBox.getItems();
 
-	    for (File database : databases) {
-		    String url = database.getAbsolutePath();
-		    if (urls.add(url)) {
-			    items.add(url);
-		    }
-	    }
+		for (File database : databases) {
+			String url = database.getAbsolutePath();
+			if (urls.add(url)) {
+				items.add(url);
+			}
+		}
 
-	    // If only 1 database was added, select it
-	    if (databases.size() == 1)
-		    databaseBox.setValue(databases.get(0).getAbsolutePath());
-    }
+		// If only 1 database was added, select it
+		if (databases.size() == 1)
+			databaseBox.setValue(databases.get(0).getAbsolutePath());
+	}
 
-    /*
+	/*
 	 * Creating the database is fast enough that it doesn't need to be done in a
 	 * separate thread
 	 */
-    @FXML
-    void createDatabase(ActionEvent event) {
-    	FileChooser fc = getDatabaseFileChooser();
+	@FXML
+	void createDatabase(ActionEvent event) {
+		FileChooser fc = getDatabaseFileChooser();
 
-    	File file = fc.showSaveDialog(Main.getStage());
+		File file = fc.showSaveDialog(Main.getStage());
 
-	    if (file == null)
-	    	return;
+		if (file == null)
+			return;
 
-	    file.delete();
+		file.delete();
 
-	    String url = file.getAbsolutePath();
+		String url = file.getAbsolutePath();
 
-	    try {
-		    Database.createNew(url);
-	    } catch (SQLException e) {
-		    e.printStackTrace();
-	    }
+		try {
+			Database.createNew(url);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    if (Settings.getDatabaseUrls().add(url))
-	    	databaseBox.getItems().add(url);
+		if (Settings.getDatabaseUrls().add(url))
+			databaseBox.getItems().add(url);
 
-	    Settings.getDatabaseUrls().add(url);
-	    databaseBox.setValue(url);
-    }
+		Settings.getDatabaseUrls().add(url);
+		databaseBox.setValue(url);
+	}
 
-    // TODO: 'fix' this (make text 'right')
-    private void formatDatabaseBox() {
-    	var children = databaseBox.getChildrenUnmodifiable();
-    	if (children.isEmpty())
-    		return;
+	// TODO: 'fix' this (make text 'right')
+	private void formatDatabaseBox() {
+		var children = databaseBox.getChildrenUnmodifiable();
+		if (children.isEmpty())
+			return;
 
-    	Label label = (Label) children.get(0);
-	    label.setTextAlignment(TextAlignment.RIGHT);
-	    //label.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-	    //label.setAlignment(Pos.CENTER_RIGHT);
-    }
+		Label label = (Label) children.get(0);
+		label.setTextAlignment(TextAlignment.RIGHT);
+		//label.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+		//label.setAlignment(Pos.CENTER_RIGHT);
+	}
 
-    @FXML
-    void clearDatabases(ActionEvent event) {
-    	var items = databaseBox.getItems();
-    	items.clear();
-    	items.add("Internal");
-    	databaseBox.setValue("Internal");
+	@FXML
+	void clearDatabases(ActionEvent event) {
+		var items = databaseBox.getItems();
+		items.clear();
+		items.add("Internal");
+		databaseBox.setValue("Internal");
 
-    	Settings.getDatabaseUrls().clear();
-    }
+		Settings.getDatabaseUrls().clear();
+	}
 
-    @FXML
+	@FXML
 	void resetToDefault(ActionEvent event) {
-	    Settings.reset();
+		Settings.reset();
 
-	    nameCheckBox.setSelected(false);
-	    insertionCheckBox.setSelected(false);
-	    initBoxes();
+		nameCheckBox.setSelected(false);
+		insertionCheckBox.setSelected(false);
+		initBoxes();
 
-	    opacitySlider.setValue(100);
-	    inactiveOpacitySlider.setValue(100);
+		opacitySlider.setValue(100);
+		inactiveOpacitySlider.setValue(100);
 
-    	themeBox.setValue(Theme.DEFAULT);
-    }
+		themeBox.setValue(Theme.DEFAULT);
+	}
 }

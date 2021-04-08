@@ -64,10 +64,10 @@ public class MyListInfoWindow extends InfoWindow {
 				MyList.add(anime);
 			} else if (Utils.isStrictInteger(newVal)) {
 				int newEps = Integer.parseInt(newVal);
-    			anime.setCurrEp(newEps);
-    			MyList.add(anime);
+				anime.setCurrEp(newEps);
+				MyList.add(anime);
 
-    			// re-set value in case there's a problem such as the episode being outside
+				// re-set value in case there's a problem such as the episode being outside
 				// of the anime's episode range
 				if (anime.getCurrEp() != newEps)
 					sp.setValue(Integer.toString(anime.getCurrEp()));
@@ -85,7 +85,7 @@ public class MyListInfoWindow extends InfoWindow {
 		MyList.remove(anime);
 		ToWatch.add(anime);
 		closeWindow(null);
-    }
+	}
 
 	@Override @FXML
 	void closeWindow(ActionEvent event) {

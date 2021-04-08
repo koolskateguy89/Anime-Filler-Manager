@@ -146,10 +146,10 @@ public abstract class InfoWindow extends Stage {
 	// https://stackoverflow.com/a/46395543
 	public static String wrapText(String message) {
 		StringBuilder sb = new StringBuilder(message);
-    	for (int i = 0; i < message.length(); i += 200) {
-    	    sb.insert(i, '\n');
-    	}
-    	return sb.toString();
+		for (int i = 0; i < message.length(); i += 200) {
+			sb.insert(i, '\n');
+		}
+		return sb.toString();
 	}
 
 	@FXML

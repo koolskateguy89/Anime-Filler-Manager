@@ -33,12 +33,12 @@ import afm.utils.Utils;
  * steps:
  *
  *  - search for every genre
- *    - ignore all anime whose name does not contain the name the user entered (if entered)
- *    - ignore all anime whose genres does not contain all genres the user selected
- *    - ignore all anime whose season is not one of the seasons the user selected (if any selected)
- *    - ignore all anime whose studio does not contain the studio the the user entered (if entered)
- *    - ignore all anime who don't meet the minimum episodes requirement entered by the user (if entered)
- *        (any unfinished anime will pass)
+ *	- ignore all anime whose name does not contain the name the user entered (if entered)
+ *	- ignore all anime whose genres does not contain all genres the user selected
+ *	- ignore all anime whose season is not one of the seasons the user selected (if any selected)
+ *	- ignore all anime whose studio does not contain the studio the the user entered (if entered)
+ *	- ignore all anime who don't meet the minimum episodes requirement entered by the user (if entered)
+ *		(any unfinished anime will pass)
  *
  *  - add any anime left to result list
  *  - if result contains less than 13 anime, search the next page

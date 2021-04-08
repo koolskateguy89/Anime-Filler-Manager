@@ -75,10 +75,10 @@ public class Utils {
 		if (inJar == null) {
 			String protocol = Utils.class.getResource("").getProtocol();
 			if (Objects.equals(protocol, "jar")){
-		    	// run in jar
-		    	inJar = Boolean.TRUE;
+				// run in jar
+				inJar = Boolean.TRUE;
 			}/* else if(Objects.equals(protocol, "file")) {
-		    	// run in ide
+				// run in ide
 			}*/ else {
 				inJar = Boolean.FALSE;
 			}

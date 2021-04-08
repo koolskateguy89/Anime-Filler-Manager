@@ -80,24 +80,24 @@ public class StartScreen extends Pane {
 	@FXML
 	private Text loadLbl;
 
-    // When startBtn is first pressed, load all elements first,
+	// When startBtn is first pressed, load all elements first,
 	// otherwise, move to welcome screen
-    @FXML
-    void moveToWelcomeScreen(ActionEvent event) {
-    	if (!loadTask.isRunning() && !loadTask.isDone()) {
-    		// Bind progressBar progress to the loadTask
-    		progressBar.progressProperty().bind(loadTask.progressProperty());
+	@FXML
+	void moveToWelcomeScreen(ActionEvent event) {
+		if (!loadTask.isRunning() && !loadTask.isDone()) {
+			// Bind progressBar progress to the loadTask
+			progressBar.progressProperty().bind(loadTask.progressProperty());
 
-    		// Show a new fact
-    		if (Settings.get(Settings.Key.SHOW_FACTS)) {
-    			fact = Facts.getRandomFact();
-    			factText.setText("Fact " + fact.getKey() + ": " + fact.getValue());
-    		}
+			// Show a new fact
+			if (Settings.get(Settings.Key.SHOW_FACTS)) {
+				fact = Facts.getRandomFact();
+				factText.setText("Fact " + fact.getKey() + ": " + fact.getValue());
+			}
 
-    		loadAll();
-    	} else
-    		Main.getInstance().moveToWelcomeScreen();
-    }
+			loadAll();
+		} else
+			Main.getInstance().moveToWelcomeScreen();
+	}
 
 	private void loadAll() {
 		//fade the loadLbl in and out
@@ -130,8 +130,8 @@ public class StartScreen extends Pane {
 		 *
 		 * The problem that this solved:
 		 * 	- if user closed window while loading, the thread would still be running,
-		 *    this was solved by the workaround (mentioned above) of checking the screen
-		 *    was still showing
+		 *	this was solved by the workaround (mentioned above) of checking the screen
+		 *	was still showing
 		*/
 		fadeLoadLbl.setDaemon(true);
 		fadeLoadLbl.start();
@@ -144,19 +144,19 @@ public class StartScreen extends Pane {
 
 	public class LoadTask extends Task<Void> {
 
-    	private final int max = 100;
-    	private double progress;
+		private final int max = 100;
+		private double progress;
 
-    	public LoadTask() {
-		    setOnSucceeded(event -> {
-			    //change loadLbl text to notify user
-			    loadLbl.setOpacity(1);
-			    loadLbl.setText("Done!");
-			    //enable startBtn
-			    startBtn.setVisible(true);
-			    startBtn.setDisable(false);
-		    });
-	    }
+		public LoadTask() {
+			setOnSucceeded(event -> {
+				//change loadLbl text to notify user
+				loadLbl.setOpacity(1);
+				loadLbl.setText("Done!");
+				//enable startBtn
+				startBtn.setVisible(true);
+				startBtn.setDisable(false);
+			});
+		}
 
 		protected Void call() {
 			try {
@@ -210,7 +210,7 @@ public class StartScreen extends Pane {
 		public void incrementProgress(double inc) {
 			// for some reason it freezes when using (getProgress() + inc)
 			progress += inc;
-    		updateProgress(progress, max);
+			updateProgress(progress, max);
 		}
 
 	}

@@ -28,8 +28,8 @@ public class WelcomeScreen extends VBox {
 
 	@FXML
 	void searchButtonPressed(ActionEvent event) {
-    	initMain().menu.openSearchScreenFromWelcome();
-    }
+		initMain().menu.openSearchScreenFromWelcome();
+	}
 
 	@FXML
 	void myListButtonPressed(ActionEvent event) {
