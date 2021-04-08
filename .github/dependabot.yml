@@ -9,11 +9,17 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "monthly"
+      
     # Ignore JavaFX updates
     ignore:
       - dependency-name: "org.openjfx:javafx-*"
+      
     # Add assignees
     assignees:
       - "koolskateguy89"
+    # Add reviewers
+    reviewers:
+      - "koolskateguy89"
+      
     commit-message:
       prefix: ":construction_worker:"
