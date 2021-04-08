@@ -18,7 +18,7 @@ import afm.Main;
 import afm.anime.Season;
 import afm.database.Database;
 import afm.screens.Menu;
-import afm.screens.SettingsScreen;
+import afm.screens.settings.SettingsScreen;
 import afm.screens.infowindows.InfoWindow;
 import afm.screens.version2_welcome.WelcomeScreen;
 import afm.screens.version3_search.SearchScreen;
@@ -184,14 +184,19 @@ public class StartScreen extends Pane {
 				main.menu = new Menu();
 				updateProgress(35, max);
 				main.settingsScreen = new SettingsScreen();
+				main.settingsScreen.setDisable(true);
 				updateProgress(40, max);
 				main.searchScreen = new SearchScreen();
+				main.searchScreen.setDisable(true);
 				updateProgress(45, max);
 				main.myListScreen = new MyListScreen();
+				main.myListScreen.setDisable(true);
 				updateProgress(55, max);
 				main.toWatchScreen = new ToWatchScreen();
+				main.toWatchScreen.setDisable(true);
 				updateProgress(65, max);
 				main.customScreen = new CustomScreen();
+				main.customScreen.setDisable(true);
 				updateProgress(80, max);
 
 				// load MyList & ToWatch from database into run time data structures

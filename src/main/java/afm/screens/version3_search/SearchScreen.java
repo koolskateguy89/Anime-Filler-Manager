@@ -1,13 +1,13 @@
 package afm.screens.version3_search;
 
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
@@ -22,7 +22,11 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+
+import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.textfield.TextFields;
 
 import afm.Main;
 import afm.anime.Genre;
@@ -35,20 +39,20 @@ public final class SearchScreen extends GridPane {
 
 	private static final String REMOVE = "Remove ";
 
+	// use a Pane as a placeholder for nameField to make using SceneBuilder easier
+	// (its style is white background)
 	@FXML
+	private StackPane namePane;
 	private TextField nameField;
 
 	@FXML
+	private StackPane studioPane;
 	private TextField studioField;
 
 	@FXML
-	private ComboBox<Genre> genreCombo;
+	private CheckComboBox<Genre> genreCombo;
 	@FXML
 	private Button genreHelpBtn;
-	@FXML
-	private Text genreText;
-	@FXML
-	private ContextMenu genreContextMenu;
 
 	@FXML
 	private ComboBox<String> sznCombo;
@@ -65,7 +69,6 @@ public final class SearchScreen extends GridPane {
 	@FXML
 	private Button searchBtn;
 
-	private final ObservableSet<Genre> genreSet = FXCollections.observableSet(EnumSet.noneOf(Genre.class));
 	private final ObservableSet<Season> seasonSet = FXCollections.observableSet(new TreeSet<>());
 
 
@@ -78,7 +81,30 @@ public final class SearchScreen extends GridPane {
 
 	@FXML
 	private void initialize() {
+		nameField = TextFields.createClearableTextField();
+		nameField.setPromptText("Name");
+		namePane.setStyle(null);
+		namePane.getChildren().add(nameField);
+
+		studioField = TextFields.createClearableTextField();
+		studioField.setPromptText("Studio");
+		studioPane.setStyle(null);
+		studioPane.getChildren().add(studioField);
+
+		minEpsField.textProperty().addListener(Utils.onlyAllowIntegersListener());
+
+
+		genreCombo.setTitle("Select genre(s)");
 		genreCombo.getItems().addAll(Genre.values());
+
+		// use the title as prompt text
+		genreCombo.getCheckModel().getCheckedItems().addListener((ListChangeListener<Genre>) change -> {
+			if (change.getList().isEmpty()) {
+				genreCombo.setTitle("Select genre(s)");
+			} else {
+				genreCombo.setTitle(null);
+			}
+		});
 
 		final var seasonItems = sznCombo.getItems();
 		seasonItems.add("Spring");
@@ -90,33 +116,11 @@ public final class SearchScreen extends GridPane {
 		for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
 			yearItems.add(i);
 
-
-		/* Made genreSet an ObservableSet<Genre> to be able to add a
-		 * listener to it -> was able to take out a lot of code :)
-		 */
-		final SetChangeListener<Genre> genreListener = change -> {
-			updateGenreText();
-			updateGenreContextMenu();
-		};
-		genreSet.addListener(genreListener);
-
 		final SetChangeListener<Season> sznListener = change -> {
 			updateSeasonText();
 			updateSeasonContextMenu();
-
 		};
 		seasonSet.addListener(sznListener);
-
-		minEpsField.textProperty().addListener(Utils.onlyAllowIntegersListener());
-	}
-
-	@FXML
-	void addGenre(ActionEvent event) {
-		final Genre selectedGenre = genreCombo.getValue();
-		// if a genre has been selected
-		if (selectedGenre != null) {
-			genreSet.add(selectedGenre);
-		}
 	}
 
 	@FXML
@@ -139,45 +143,6 @@ public final class SearchScreen extends GridPane {
 			return;
 
 		seasonSet.addAll(List.of(Season.getAllSeasonsFromYear(year)));
-	}
-
-	// Update genreText when genreSet has changed
-	private void updateGenreText() {
-		StringBuilder sb = new StringBuilder("Genres: ");
-
-		Iterator<Genre> it = genreSet.iterator();
-		if (it.hasNext())
-			sb.append(it.next());
-		while (it.hasNext())
-			sb.append(", ").append(it.next());
-
-		genreText.setText(sb.toString());
-	}
-
-	// Update genreContextMenu when genreSet has changed
-	private void updateGenreContextMenu() {
-		if (genreSet.isEmpty()) {
-			genreContextMenu.getItems().clear();
-			return;
-		}
-
-		/* map from Genre to its 'corresponding' MenuItem,
-		 * collect to a List,
-		 * add an ActionListener to each MenuItem - to remove the corresponding Genre,
-		 * set the contextMenu as the List
-		 */
-		var menuItems = genreSet.stream()
-								.map(genre -> new MenuItem(REMOVE+genre.toString()))
-								.collect(Collectors.toList());
-
-		menuItems.forEach(mi -> mi.setOnAction(event -> {
-									final String s = mi.getText().replace(REMOVE, "");
-									final Genre g = Genre.parseGenreFromToString(s);
-									genreSet.remove(g);
-								})
-						 );
-
-		genreContextMenu.getItems().setAll(menuItems);
 	}
 
 	private void updateSeasonText() {
@@ -224,8 +189,7 @@ public final class SearchScreen extends GridPane {
 
 	@FXML
 	void clearGenres(ActionEvent event) {
-		genreCombo.setValue(null);
-		genreSet.clear();
+		genreCombo.getCheckModel().clearChecks();
 	}
 
 	@FXML
@@ -238,17 +202,17 @@ public final class SearchScreen extends GridPane {
 	// When user pressed reset button, reset contents of all fields
 	@FXML
 	void clearFields(ActionEvent event) {
-		nameField.setText("");
+		nameField.clear();
 
-		studioField.setText("");
+		studioField.clear();
 
-		minEpsField.setText("");
+		minEpsField.clear();
 
-		genreCombo.getSelectionModel().clearSelection();
+		genreCombo.getCheckModel().clearChecks();
 		sznCombo.getSelectionModel().clearSelection();
 		yearCombo.getSelectionModel().clearSelection();
 
-		minEpsField.setText(null);
+		minEpsField.clear();
 
 		clearGenres(null);
 		clearSeasons(null);
@@ -260,7 +224,7 @@ public final class SearchScreen extends GridPane {
 	void startSearchProcess(ActionEvent event) {
 		Search search = new Search();
 
-		if (!confirmGenre(search))
+		if (!confirmGenres(search))
 			return;
 
 		if (!confirmName(search))
@@ -281,32 +245,18 @@ public final class SearchScreen extends GridPane {
 		clearFields(null);
 	}
 
-	private boolean confirmGenre(Search search) {
-		if (genreSet.isEmpty()) {
-			// if user 'selected' a Genre but didn't add it, ask if they want to add it
-			Genre potentialGenre = genreCombo.getValue();
-			if (potentialGenre != null) {
-				String content =
-						"You haven't added any Genres, " + "but you have selected {" +
-						potentialGenre.toString().replace("(", "").replace(")", "") +
-						'}' + '.' +
-						'\n' +
-						"Do you want to search for this genre?";
-				ButtonType result = Utils.showAndWaitConfAlert(content);
-				if (result != ButtonType.YES)
-					return false;
+	private boolean confirmGenres(Search search) {
+		var genres = genreCombo.getCheckModel().getCheckedItems();
 
-				genreSet.add(potentialGenre);
-			} else {
-				Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed to search!");
-				needGenre.initOwner(Main.getStage());
-				needGenre.showAndWait();
-				return false;
-			}
+		if (genres.isEmpty()) {
+			Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed to search!");
+			needGenre.initOwner(Main.getStage());
+			needGenre.showAndWait();
+			return false;
+		} else {
+			search.setGenres(genres);
+			return true;
 		}
-
-		search.setGenres(genreSet);
-		return true;
 	}
 
 	private boolean confirmName(Search search) {
@@ -323,7 +273,7 @@ public final class SearchScreen extends GridPane {
 			if (Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
 				return true;
 			} else {
-				nameField.setText(null);
+				nameField.clear();
 				return false;
 			}
 		}
@@ -347,7 +297,7 @@ public final class SearchScreen extends GridPane {
 			if (Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
 				return true;
 			} else {
-				studioField.setText(null);
+				studioField.clear();
 				return false;
 			}
 		}

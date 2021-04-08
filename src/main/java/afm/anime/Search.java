@@ -5,6 +5,7 @@ import static afm.utils.Utils.inJar;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -404,9 +405,9 @@ public class Search {
 		studio = s;
 	}
 
-	public void setGenres(Set<Genre> set) {
-		genres.clear();
-		genres.addAll(set);
+	public void setGenres(Collection<Genre> genres) {
+		this.genres.clear();
+		this.genres.addAll(genres);
 	}
 
 	public void setSeasons(Set<Season> set) {

@@ -3,15 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.StackPane?>
+<?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.SearchableComboBox?>
 
 <fx:root alignment="CENTER" prefHeight="457.0" prefWidth="588.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
@@ -33,30 +33,21 @@
   </rowConstraints>
    <children>
       <Label prefHeight="18.0" prefWidth="118.0" text="Name:" GridPane.columnIndex="1" />
-      <TextField fx:id="nameField" prefWidth="245.0" promptText="Name" GridPane.columnIndex="2" />
+      <StackPane fx:id="namePane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white;" GridPane.columnIndex="2" />
       <Label prefHeight="18.0" prefWidth="118.0" text="Genre(s):" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <ComboBox fx:id="genreCombo" prefHeight="26.0" prefWidth="218.0" promptText="Select genre(s)" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#addGenre" prefHeight="26.0" prefWidth="41.0" text="Add" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-         <contextMenu>
-            <ContextMenu fx:id="genreContextMenu" />
-         </contextMenu>
-         <tooltip>
-            <Tooltip text="Right click to remove" />
-         </tooltip>
-      </Button>
-      <Text fx:id="genreText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Genre:" wrappingWidth="281.20008850097656" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BASELINE" />
+      <CheckComboBox fx:id="genreCombo" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearGenres" prefHeight="26.0" prefWidth="72.0" styleClass="Warning" text="Clear" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="13.0" />
          </GridPane.margin>
       </Button>
-      <Label text="Seasons:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-           <ComboBox fx:id="sznCombo" prefHeight="26.0" prefWidth="127.0" promptText="Season" />
-           <ComboBox fx:id="yearCombo" prefHeight="26.0" prefWidth="127.0" promptText="Year" />
-       </HBox>
+      <Label text="Season:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <ComboBox fx:id="sznCombo" prefHeight="26.0" prefWidth="127.0" promptText="Season" />
+         <SearchableComboBox fx:id="yearCombo" maxHeight="-Infinity" prefHeight="26.0" prefWidth="127.0" promptText="Year" />
+      </HBox>
       <Label prefHeight="18.0" prefWidth="118.0" text="Studio:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <TextField fx:id="studioField" promptText="Studio" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <StackPane fx:id="studioPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
       <Label text="Episodes:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
          <TextField fx:id="totalEpField" prefHeight="26.0" prefWidth="82.0" promptText="Total eps" />

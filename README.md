@@ -104,6 +104,8 @@ _italicized = WIP/next-to-do_
 - [x] Add color themes option (use different stylesheets which the user picks from)
   - [ ] Light theme - icons are then messed up because they're white :/ but mostly done
   - [ ] Idk maybe Dracula/Monokai/etc
+- [ ] _Use ControlsFX a lot more_
+- [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**
 - [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log errors

@@ -243,15 +243,14 @@ public class Utils {
 			public void updateItem(String item, boolean empty) {
 				super.updateItem(item, empty);
 
+				setText(null);
 				if (empty) {
 					setGraphic(null);
-					setText(null);
 				} else {
 					text.wrappingWidthProperty().bind(col.widthProperty());
 					text.textProperty().bind(this.itemProperty()); /* (this refers to the cell) */
 
 					setGraphic(text);
-					setText(null);
 					setPrefHeight(Region.USE_COMPUTED_SIZE);
 				}
 			}
