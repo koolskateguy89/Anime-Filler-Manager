@@ -112,7 +112,7 @@ public class SearchingScreen extends Pane {
 					Exception ex = (Exception) newVal;
 					ex.printStackTrace();
 					Platform.exit();
-					System.exit(0);
+					System.exit(1);
 				}
 			});
 		}
