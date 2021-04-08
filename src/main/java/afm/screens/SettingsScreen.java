@@ -28,6 +28,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import afm.Main;
 import afm.database.Database;
+import afm.screens.infowindows.InfoWindow;
 import afm.screens.version1_start.StartScreen;
 import afm.user.Settings;
 import afm.user.Theme;
@@ -83,8 +84,10 @@ public class SettingsScreen extends Pane {
 		themeBox.valueProperty().bindBidirectional(Settings.themeProperty);
 
 		themeBox.valueProperty().addListener((obs, oldTheme, newTheme) -> {
-			if (newTheme != null)
+			if (newTheme != null) {
 				Main.getInstance().applyTheme(newTheme);
+				InfoWindow.applyTheme(newTheme);
+			}
 		});
 
 		Theme currentTheme = Settings.themeProperty.get();
@@ -95,9 +98,11 @@ public class SettingsScreen extends Pane {
 				StartScreen.LoadTask task = Main.getInstance().startScreen.loadTask;
 				EventHandler<WorkerStateEvent> onSucceeded = task.getOnSucceeded();
 
+				// chain the old onSucceeded with a new one
 				task.setOnSucceeded(event -> {
 					if (onSucceeded != null)
 						onSucceeded.handle(event);
+
 					Main.getInstance().applyTheme(currentTheme);
 				});
 			});
@@ -261,10 +266,15 @@ public class SettingsScreen extends Pane {
 
     @FXML
 	void resetToDefault(ActionEvent event) {
-    	nameCheckBox.setSelected(false);
-    	insertionCheckBox.setSelected(false);
-    	Settings.reset();
-    	initBoxes();
-    }
+	    Settings.reset();
 
+	    nameCheckBox.setSelected(false);
+	    insertionCheckBox.setSelected(false);
+	    initBoxes();
+
+	    opacitySlider.setValue(100);
+	    inactiveOpacitySlider.setValue(100);
+
+    	themeBox.setValue(Theme.DEFAULT);
+    }
 }

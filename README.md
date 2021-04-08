@@ -102,7 +102,7 @@ _italicized = WIP/next-to-do_
 - [x] Add option to use external database for MyList and ToWatch
   - [x] Add option to make new blank database
 - [x] Add color themes option (use different stylesheets which the user picks from)
-  - [ ] Light theme
+  - [ ] Light theme - icons are then messed up because they're white :/ but mostly done
   - [ ] Idk maybe Dracula/Monokai/etc
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**

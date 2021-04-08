@@ -163,7 +163,6 @@ public class Main extends Application {
 	}
 
 	public void moveToSearchingScreen(Search s) {
-		System.out.println("move to search");
 		searchingScreen.setSearch(s);
 		searchingScreen.startSearch();
 

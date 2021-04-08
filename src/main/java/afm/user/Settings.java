@@ -22,6 +22,10 @@ import lombok.Getter;
 
 import afm.utils.Utils;
 
+/*
+ * TODO: Map<String, String> for String settings (database, selected db etc.)
+ *  basically make getting a String setting shorter (if I add more in future it won't clutter this)
+ */
 public class Settings {
 
 	// Don't allow this class to be instantiated
