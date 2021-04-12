@@ -19,8 +19,8 @@ import lombok.Getter;
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.screens.Menu;
-import afm.screens.settings.SettingsScreen;
 import afm.screens.infowindows.InfoWindow;
+import afm.screens.settings.SettingsScreen;
 import afm.screens.version1_start.StartScreen;
 import afm.screens.version2_welcome.WelcomeScreen;
 import afm.screens.version3_search.SearchScreen;
@@ -179,6 +179,9 @@ public class Main extends Application {
 	}
 
 	public void applyTheme(Theme theme) {
+		if (theme == null)
+			return;
+
 		theme.apply(welcomeScreen);
 		theme.apply(menu);
 		theme.apply(settingsScreen);

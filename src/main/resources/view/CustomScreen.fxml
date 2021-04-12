@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
-
 <fx:root alignment="CENTER" prefHeight="457.0" prefWidth="588.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="-Infinity" prefWidth="15.0" />

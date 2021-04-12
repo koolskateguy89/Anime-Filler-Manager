@@ -3,7 +3,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
-
 <fx:root prefHeight="616.0" prefWidth="849.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<TableView fx:id="table" prefHeight="616.0" prefWidth="849.0" styleClass="Panes" stylesheets="@stylesheets/application.css" tableMenuButtonVisible="true">
