@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
+
 <fx:root id="SearchingPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="584.0" stylesheets="@stylesheets/application.css" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox id="SearchingCircleBox" fx:id="loadingBox" alignment="CENTER" disable="true" fillHeight="false" layoutX="74.0" layoutY="145.0" prefHeight="70.0" prefWidth="437.0" spacing="10.0" style="-fx-border-radius: 6;">
