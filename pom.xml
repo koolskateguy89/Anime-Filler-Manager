@@ -1,23 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>koolskateguy89</groupId>
-    <artifactId>Anime-Filler-Manager</artifactId>
-    <packaging>jar</packaging>
-    <version>0.0.1</version>
+	<groupId>koolskateguy89</groupId>
+	<artifactId>Anime-Filler-Manager</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1</version>
 
-    <name>AFM</name>
-    <url>https://github.com/koolskateguy89/Anime-Filler-Manager</url>
+	<name>AFM</name>
+	<url>https://github.com/koolskateguy89/Anime-Filler-Manager</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
-        <javafx.version>15.0.1</javafx.version>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>15</maven.compiler.source>
+		<maven.compiler.target>15</maven.compiler.target>
+		<javafx.version>15.0.1</javafx.version>
+	</properties>
 
-    <dependencies>
+	<dependencies>
 		<!-- Project Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -26,116 +26,116 @@
 			<scope>provided</scope>
 		</dependency>
 
-    	<!-- JavaFX -->
-    	<dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-base</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-media</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
+		<!-- JavaFX -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-base</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-media</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
 
-        <!-- ControlsFX -->
-        <dependency>
-        	<groupId>org.controlsfx</groupId>
-        	<artifactId>controlsfx</artifactId>
-        	<version>11.1.0</version>
-        </dependency>
+		<!-- ControlsFX -->
+		<dependency>
+			<groupId>org.controlsfx</groupId>
+			<artifactId>controlsfx</artifactId>
+			<version>11.1.0</version>
+		</dependency>
 
-        <!-- Google Guava -->
-        <dependency>
-        	<groupId>com.google.guava</groupId>
-        	<artifactId>guava</artifactId>
-        	<version>30.1.1-jre</version>
-        </dependency>
+		<!-- Google Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>30.1.1-jre</version>
+		</dependency>
 
-        <!-- jsoup -->
-        <dependency>
-        	<groupId>org.jsoup</groupId>
-        	<artifactId>jsoup</artifactId>
-        	<version>1.13.1</version>
-        </dependency>
+		<!-- jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.13.1</version>
+		</dependency>
 
-        <!-- sqlite jdbc driver -->
-        <dependency>
-        	<groupId>org.xerial</groupId>
-        	<artifactId>sqlite-jdbc</artifactId>
-        	<version>3.34.0</version>
-        </dependency>
+		<!-- sqlite jdbc driver -->
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.34.0</version>
+		</dependency>
 
-    </dependencies>
+	</dependencies>
 
-    <build>
+	<build>
 		<finalName> ${project.name} </finalName>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-            </plugin>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+			</plugin>
 
-            <plugin>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>3.0.0-M1</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 
-        	<!-- Build an executable 'shaded' JAR -->
-            <plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-shade-plugin</artifactId>
-            	<version>3.2.4</version>
-            	<executions>
-            		<execution>
-            			<phase>package</phase>
-            			<goals>
-            				<goal>shade</goal>
-            			</goals>
+			<!-- Build an executable 'shaded' JAR -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
 
-            			<configuration>
-            				<createDependencyReducedPom>false</createDependencyReducedPom>
+						<configuration>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
 
-            				<transformers>
-            					<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-            						<mainClass>afm.Launcher</mainClass>
-            					</transformer>
-            				</transformers>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>afm.Launcher</mainClass>
+								</transformer>
+							</transformers>
 
-                        <filters>
-                            <filter>
-                                <artifact>*:*</artifact>
-                                <excludes>
-                                    <exclude>META-INF/license/**</exclude>
-                                    <exclude>META-INF/*</exclude>
-                                    <exclude>META-INF/maven/**</exclude>
-                                    <exclude>LICENSE</exclude>
-                                    <exclude>NOTICE</exclude>
-                                </excludes>
-                            </filter>
-                        </filters>
+						<filters>
+							<filter>
+								<artifact>*:*</artifact>
+								<excludes>
+									<exclude>META-INF/license/**</exclude>
+									<exclude>META-INF/*</exclude>
+									<exclude>META-INF/maven/**</exclude>
+									<exclude>LICENSE</exclude>
+									<exclude>NOTICE</exclude>
+								</excludes>
+							</filter>
+						</filters>
 
-            			</configuration>
-            		</execution>
-            	</executions>
-            </plugin>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 
 </project>
