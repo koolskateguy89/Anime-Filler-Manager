@@ -18,15 +18,9 @@ public class BooleanItem extends Item {
 	@Getter
 	BooleanProperty property = new SimpleBooleanProperty();
 
-	boolean value;
-
 	public BooleanItem(Category category, String name) {
 		super(category);
 		this.name = name;
-
-		property.addListener((obs, oldVal, newVal) ->
-			value = Boolean.TRUE.equals(newVal)
-		);
 	}
 
 	public BooleanItem(Category category, String name, String description) {
@@ -36,17 +30,16 @@ public class BooleanItem extends Item {
 
 	@Override
 	public Boolean getValue() {
-		return value;
+		return property.getValue();
 	}
 
 	@Override
 	public void setValue(Object o) {
 		if (o instanceof Boolean) {
-			value = (Boolean) o;
+			property.setValue((Boolean) o);
 		} else if (o == null) {
-			value = false;
+			property.setValue(null);
 		}
-		property.setValue(value);
 	}
 
 	@Override

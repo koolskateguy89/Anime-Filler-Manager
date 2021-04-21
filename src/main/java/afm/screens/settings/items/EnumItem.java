@@ -20,18 +20,11 @@ public class EnumItem<E extends Enum<?>> extends Item {
 	@Getter
 	ObjectProperty<E> property = new SimpleObjectProperty<>();
 
-	@Getter
-	E value;
-
 	public EnumItem(Class<E> clazz, Category category, String name) {
 		super(category);
 		this.name = name;
 		this.clazz = clazz;
 		this.type = clazz;
-
-		property.addListener((obs, oldVal, newVal) ->
-			value = newVal
-		);
 	}
 
 	public EnumItem(Class<E> clazz, Category category, String name, String description) {
@@ -40,13 +33,17 @@ public class EnumItem<E extends Enum<?>> extends Item {
 	}
 
 	@Override
+	public E getValue() {
+		return property.getValue();
+	}
+
+	@Override
 	public void setValue(Object o) {
 		if (clazz.isInstance(o)) {
-			value = clazz.cast(o);
+			property.setValue(clazz.cast(o));
 		} else {
-			value = null;
+			property.setValue(null);
 		}
-		property.setValue(value);
 	}
 
 	@Override

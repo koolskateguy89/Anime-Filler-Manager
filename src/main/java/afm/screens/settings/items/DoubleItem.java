@@ -18,15 +18,9 @@ public class DoubleItem extends Item {
 	@Getter
 	DoubleProperty property = new SimpleDoubleProperty();
 
-	double value;
-
 	public DoubleItem(Category category, String name) {
 		super(category);
 		this.name = name;
-
-		property.addListener((obs, oldVal, newVal) ->
-			value = newVal.doubleValue()
-		);
 	}
 
 	public DoubleItem(Category category, String name, String description) {
@@ -36,17 +30,18 @@ public class DoubleItem extends Item {
 
 	@Override
 	public Double getValue() {
-		return value;
+		return property.getValue();
 	}
 
 	@Override
 	public void setValue(Object o) {
-		if (o instanceof Number) {
-			value = ((Number) o).doubleValue();
+		if (o instanceof Double) {
+			property.setValue((Double) o);
+		} else if (o instanceof Number) {
+			property.set(((Number) o).doubleValue());
 		} else if (o == null) {
-			value = 0;
+			property.setValue(null);
 		}
-		property.setValue(value);
 	}
 
 	@Override

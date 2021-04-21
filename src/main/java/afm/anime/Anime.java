@@ -1,7 +1,7 @@
 package afm.anime;
 
-import static afm.utils.Utils.setStyleClass;
 import static java.util.Objects.requireNonNull;
+import static afm.utils.Utils.setStyleClass;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

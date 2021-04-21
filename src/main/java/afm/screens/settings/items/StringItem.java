@@ -18,16 +18,9 @@ public class StringItem extends Item {
 	@Getter
 	StringProperty property = new SimpleStringProperty();
 
-	@Getter
-	String value;
-
 	public StringItem(Category category, String name) {
 		super(category);
 		this.name = name;
-
-		property.addListener((obs, oldVal, newVal) ->
-			value = newVal
-		);
 	}
 
 	public StringItem(Category category, String name, String description) {
@@ -36,13 +29,13 @@ public class StringItem extends Item {
 	}
 
 	@Override
+	public String getValue() {
+		return property.getValue();
+	}
+
+	@Override
 	public void setValue(Object o) {
-		if (o == null) {
-			value = null;
-		} else {
-			value = o.toString();
-		}
-		property.setValue(value);
+		property.setValue(String.valueOf(o));
 	}
 
 	@Override
