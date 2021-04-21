@@ -5,10 +5,10 @@ import static afm.utils.Utils.setStyleClass;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -139,7 +139,7 @@ public final class Anime {
 			return this;
 		}
 
-		public AnimeBuilder setGenres(Set<Genre> genres) {
+		public AnimeBuilder setGenres(Collection<Genre> genres) {
 			if (genres.isEmpty())
 				throw new IllegalArgumentException("Genres cannot be empty");
 

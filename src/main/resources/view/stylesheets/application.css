@@ -42,6 +42,7 @@
     -fx-text-fill: yellow;
 }
 
+/* Menu */
 .MenuButton {
 	-fx-background-color: -background;
 }
@@ -73,6 +74,7 @@
     -fx-background-color: derive(#77DBE5, 30%);
 }
 
+/* GenreInfoWindow */
 .text-area {
 	-fx-text-fill: #FCFCFC;
 }
@@ -99,6 +101,7 @@
     -fx-stroke: -button-color;
 }
 
+/* SearchingScreen */
 #SearchingPane {
     -fx-background-color: black;
 }
@@ -110,4 +113,9 @@
 .Circle {
     -fx-fill: -opposite-to-background-color;
     -fx-stroke: #5f306e;
+}
+
+/* SettingsScreen */
+.property-sheet .label {
+    -fx-text-fill: black;
 }

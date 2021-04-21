@@ -55,6 +55,9 @@ public abstract class InfoWindow extends Stage {
 
 	// apply new theme to all open infoWindows
 	public static void applyTheme(Theme theme) {
+		if (theme == null)
+			return;
+
 		for (Stage stage : openWindows) {
 			if (stage instanceof InfoWindow) {
 				InfoWindow iw = (InfoWindow) stage;

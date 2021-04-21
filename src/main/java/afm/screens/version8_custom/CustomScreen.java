@@ -1,14 +1,9 @@
 package afm.screens.version8_custom;
 
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
-import javafx.collections.SetChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +11,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
+import javafx.scene.layout.StackPane;
+
+import org.controlsfx.control.CheckComboBox;
+import org.controlsfx.control.SearchableComboBox;
+import org.controlsfx.control.textfield.TextFields;
 
 import afm.Main;
 import afm.anime.Anime;
@@ -30,34 +27,31 @@ import afm.anime.Season;
 import afm.database.MyList;
 import afm.database.ToWatch;
 import afm.utils.Utils;
+import impl.org.controlsfx.skin.SearchableComboBoxSkin;
 
 // A lot of things here are identical to SearchScreen
 public class CustomScreen extends GridPane {
 
 	@FXML
+	private StackPane namePane;
 	private TextField nameField;
 
 	@FXML
+	private StackPane studioPane;
 	private TextField studioField;
 
 	@FXML
-	private ComboBox<Genre> genreCombo;
-	@FXML
-	private Text genreText;
-	@FXML
-	private ContextMenu genreContextMenu;
+	private CheckComboBox<Genre> genreCombo;
 
 	@FXML
 	private ComboBox<String> sznCombo;
 	@FXML
-	private ComboBox<Integer> yearCombo;
+	private SearchableComboBox<Integer> yearCombo;
 
 	@FXML
 	private TextField totalEpField;
 	@FXML
 	private TextField currEpField;
-
-	private final ObservableSet<Genre> genreSet = FXCollections.observableSet(EnumSet.noneOf(Genre.class));
 
 	public CustomScreen() throws IOException {
 		// load FXML file into this object
@@ -69,7 +63,27 @@ public class CustomScreen extends GridPane {
 
 	@FXML
 	private void initialize() {
+		nameField = TextFields.createClearableTextField();
+		nameField.setPromptText("Name");
+		namePane.setStyle(null);
+		namePane.getChildren().add(nameField);
+
+		studioField = TextFields.createClearableTextField();
+		studioField.setPromptText("Studio");
+		studioPane.setStyle(null);
+		studioPane.getChildren().add(studioField);
+
+		genreCombo.setTitle("Select genre(s)");
 		genreCombo.getItems().addAll(Genre.values());
+
+		// use the title as prompt text
+		genreCombo.getCheckModel().getCheckedItems().addListener((ListChangeListener<Genre>) change -> {
+			if (change.getList().isEmpty()) {
+				genreCombo.setTitle("Select genre(s)");
+			} else {
+				genreCombo.setTitle(null);
+			}
+		});
 
 		final var szns = sznCombo.getItems();
 		szns.add("Spring");
@@ -81,87 +95,60 @@ public class CustomScreen extends GridPane {
 		for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
 			years.add(i);
 
-		final SetChangeListener<Genre> genreListener = change -> {
-			updateGenreText();
-			updateGenreContextMenu();
-		};
-		genreSet.addListener(genreListener);
-
 		totalEpField.textProperty().addListener(Utils.onlyAllowIntegersListener());
 		currEpField.textProperty().addListener(Utils.onlyAllowIntegersListener());
 	}
 
-	// When user pressed 'Add' button (to add a Genre to genreSet)
-	@FXML
-	void addGenre(ActionEvent event) {
-		final Genre selectedGenre = genreCombo.getValue();
-		if (selectedGenre != null) {	// if a genre has been selected
-			genreSet.add(selectedGenre);
-		}
-	}
-
-	// Update genreText when genreSet has changed
-	private void updateGenreText() {
-		StringBuilder sb = new StringBuilder("Genres: ");
-
-		Iterator<Genre> it = genreSet.iterator();
-		if (it.hasNext())
-			sb.append(it.next());
-		while (it.hasNext())
-			sb.append(", ").append(it.next());
-
-		genreText.setText(sb.toString());
-	}
-
-	// Update genreContextMenu when genreSet has changed
-	private void updateGenreContextMenu() {
-		if (genreSet.isEmpty()) {
-			genreContextMenu.getItems().clear();
+	private boolean opened = false;
+	public void open() {
+		if (opened)
 			return;
-		}
 
-		/* map from Genre to its 'corresponding' MenuItem,
-		 * collect to a List,
-		 * add an ActionListener to each MenuItem - to remove the corresponding Genre,
-		 * set the contextMenu as the List
-		 */
-		var menuItems = genreSet.stream()
-								.map(genre -> new MenuItem("Remove: "+genre.toString()))
-								.collect(Collectors.toList());
+		setYearPromptText();
 
-		menuItems.forEach(mi -> mi.setOnAction(event -> {
-									final String s = mi.getText().replace("Remove: ", "");
-									final Genre g = Genre.parseGenreFromToString(s);
-									genreSet.remove(g);
-								})
-						 );
+		opened = true;
+	}
 
-		genreContextMenu.getItems().setAll(menuItems);
+	/*
+	 * This waits (by polling) until the yearCombo has a skin (has been rendered I think) and uses the Skin to set
+	 *   the prompt text of the 'inner' ComboBox. Usually waits about 40ms.
+	 * This is needed to give the yearCombo prompt text because using SearchableComboBox.setPromptText(String)
+	 *   doesn't actually visually do anything.
+	 */
+	private void setYearPromptText() {
+		Thread t = new Thread(() -> {
+			// wait until skin isn't null
+			while (yearCombo.getSkin() == null);
+
+			SearchableComboBoxSkin<Integer> skin = (SearchableComboBoxSkin<Integer>) yearCombo.getSkin();
+
+			ComboBox comboBox = (ComboBox) skin.getChildren().get(0);
+			comboBox.setPromptText("Year");
+		});
+		t.start();
 	}
 
 	@FXML
 	void clearGenres(ActionEvent event) {
-		genreSet.clear();
+		genreCombo.getCheckModel().clearChecks();
 	}
 
 	// When user pressed reset button, reset contents of all fields
 	@FXML
 	void resetFields(ActionEvent event) {
-		nameField.setText("");
+		nameField.clear();
 
-		studioField.setText("");
+		studioField.clear();
 
-		totalEpField.setText("");
-		currEpField.setText("");
+		totalEpField.clear();
+		currEpField.clear();
 
-		genreCombo.getSelectionModel().clearSelection();
+		clearGenres(null);
 		sznCombo.getSelectionModel().clearSelection();
 		yearCombo.getSelectionModel().clearSelection();
 
-		totalEpField.setText("");
-		currEpField.setText("");
-
-		genreSet.clear();
+		totalEpField.clear();
+		currEpField.clear();
 
 		// Problem: comboBox promptText isn't showing after reset (if smthn was selected)
 	}
@@ -169,7 +156,7 @@ public class CustomScreen extends GridPane {
 	// can only add an anime if the anime has a name & genre
 	private boolean cantAdd() {
 		boolean emptyName = nameField.getText().isBlank();
-		boolean emptyGenre = genreSet.isEmpty();
+		boolean emptyGenre = genreCombo.getCheckModel().getCheckedItems().isEmpty();
 
 		if (emptyName) {
 			Alert needName = new Alert(AlertType.ERROR, "The anime needs a name!");
@@ -177,15 +164,9 @@ public class CustomScreen extends GridPane {
 			needName.showAndWait();
 		}
 		if (emptyGenre) {
-			Genre selected = genreCombo.getValue();
-
-			if (selected != null) {
-				emptyGenre = false;
-			} else {
-				Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed!");
-				needGenre.initOwner(Main.getStage());
-				needGenre.showAndWait();
-			}
+			Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed!");
+			needGenre.initOwner(Main.getStage());
+			needGenre.showAndWait();
 		}
 
 		return emptyName || emptyGenre;
@@ -197,10 +178,7 @@ public class CustomScreen extends GridPane {
 
 		builder.setCustom(true);
 
-		if (genreSet.isEmpty())
-			builder.addGenre(genreCombo.getValue());
-		else
-			builder.setGenres(genreSet);
+		builder.setGenres(genreCombo.getCheckModel().getCheckedItems());
 
 		final String studio = studioField.getText();
 		if (studio != null && !studio.isBlank())

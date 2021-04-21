@@ -1,4 +1,4 @@
-package afm.screens;
+package afm.screens.settings;
 
 import static afm.user.Settings.Key.ALWAYS_ON_TOP;
 import static afm.user.Settings.Key.NAME_ORDER;
@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.Property;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,15 +28,41 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+import org.controlsfx.control.PropertySheet;
+
 import afm.Main;
 import afm.database.Database;
 import afm.screens.infowindows.InfoWindow;
+import afm.screens.settings.items.BooleanItem;
+import afm.screens.settings.items.EnumItem;
+import afm.screens.settings.items.Item;
 import afm.screens.version1_start.StartScreen;
 import afm.user.Settings;
 import afm.user.Theme;
 import afm.utils.Utils;
 
+/*
+ * The bad things about using a PropertySheet:
+ *  - Using lots of listeners
+ *  - Having to manually create items
+ *  - GUI elements sort of seperated from the FXML
+ */
 public class SettingsScreen extends Pane {
+
+	@FXML
+	private CheckBox nameCheckBox;
+
+	@FXML
+	private CheckBox insertionCheckBox;
+
+	@FXML
+	private ChoiceBox<String> databaseBox;
+
+	@FXML
+	private Slider opacitySlider;
+	@FXML
+	private Slider inactiveOpacitySlider;
+
 
 	public SettingsScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("SettingsScreen"));
@@ -43,25 +71,90 @@ public class SettingsScreen extends Pane {
 		loader.load();
 	}
 
-	private void initBoxes() {
+	@FXML
+	private PropertySheet sheet;
+
+	// loading
+	private final Item showFacts = new BooleanItem(Category.LOADING, "*Show facts", "Show facts on loading screen");
+	private final BooleanProperty showFactsProp = showFacts.getProperty();
+	private final Item skipLoading = new BooleanItem(Category.LOADING, "*Automate loading screen");
+	private final BooleanProperty skipLoadingProp = skipLoading.getProperty();
+
+	// search
+	private final Item playSound = new BooleanItem(Category.SEARCH, "Play sound after search?");
+	private final BooleanProperty playSoundProp = playSound.getProperty();
+
+	// visual
+	private final Item theme = new EnumItem<>(Theme.class, Category.VISUAL, "Theme");
+	private final Property<Theme> themeProperty = theme.getProperty();
+	private final Item alwaysOnTop = new BooleanItem(Category.VISUAL, "Always on top");
+	private final BooleanProperty alwaysOnTopProp = alwaysOnTop.getProperty();
+
+	private void initCheckBoxes() {
 		if (Settings.get(NAME_ORDER)) {
 			nameCheckBox.setSelected(true);
 		} else {
 			insertionCheckBox.setSelected(true);
 		}
 
-		factsCheckBox.setSelected(Settings.get(SHOW_FACTS));
+		showFactsProp.set(Settings.get(SHOW_FACTS));
 
-		soundCheckBox.setSelected(Settings.get(PLAY_SOUND));
+		playSoundProp.set(Settings.get(PLAY_SOUND));
 
-		alwaysOnTopBox.setSelected(Settings.get(ALWAYS_ON_TOP));
+		alwaysOnTopProp.set(Settings.get(ALWAYS_ON_TOP));
 
-		skipLoadingBox.setSelected(Settings.get(SKIP_LOADING));
+		skipLoadingProp.set(Settings.get(SKIP_LOADING));
+	}
+
+	private void initSheet() {
+		showFactsProp.addListener((obs, oldVal, newVal) -> {
+			if (newVal != oldVal) {
+				Settings.invert(SHOW_FACTS);
+			}
+		});
+
+		skipLoadingProp.addListener((obs, oldVal, newVal) -> {
+			if (newVal != oldVal) {
+				Settings.invert(SKIP_LOADING);
+			}
+		});
+
+		playSoundProp.addListener((obs, oldVal, newVal) -> {
+			if (newVal != oldVal) {
+				Settings.invert(PLAY_SOUND);
+			}
+		});
+
+		themeProperty.bindBidirectional(Settings.themeProperty);
+		themeProperty.addListener((obs, oldTheme, newTheme) -> {
+			if (newTheme != null) {
+				Main.getInstance().applyTheme(newTheme);
+				InfoWindow.applyTheme(newTheme);
+			}
+		});
+
+		alwaysOnTopProp.addListener((obs, oldVal, newVal) -> {
+			if (newVal != oldVal) {
+				Settings.invert(ALWAYS_ON_TOP);
+				Main.getStage().setAlwaysOnTop(Settings.get(ALWAYS_ON_TOP));
+			}
+		});
+
+		var items = sheet.getItems();
+		items.add(showFacts);
+		items.add(skipLoading);
+
+		items.add(playSound);
+
+		items.add(theme);
+		items.add(alwaysOnTop);
 	}
 
 	@FXML
 	private void initialize() {
-		initBoxes();
+		initCheckBoxes();
+
+		initSheet();
 
 		databaseBox.getItems().add("Internal");
 		databaseBox.getItems().addAll(Settings.getDatabaseUrls());
@@ -70,25 +163,9 @@ public class SettingsScreen extends Pane {
 
 		databaseBox.valueProperty().bindBidirectional(Settings.selectedDatabaseProperty);
 
-		// multiply by 100 to convert from decimal to %
-		opacitySlider.setValue(Settings.opacityProperty.get() * 100);
-		inactiveOpacitySlider.setValue(Settings.inactiveOpacityProperty.get() * 100);
+		opacitySlider.valueProperty().bindBidirectional(Settings.opacityProperty);
+		inactiveOpacitySlider.valueProperty().bindBidirectional(Settings.inactiveOpacityProperty);
 
-		Platform.runLater(() -> {
-			// multiple by 0.01 to convert from % to decimal (divide by 100)
-			Settings.opacityProperty.bind(opacitySlider.valueProperty().multiply(0.01));
-			Settings.inactiveOpacityProperty.bind(inactiveOpacitySlider.valueProperty().multiply(0.01));
-		});
-
-		themeBox.getItems().addAll(Theme.values());
-		themeBox.valueProperty().bindBidirectional(Settings.themeProperty);
-
-		themeBox.valueProperty().addListener((obs, oldTheme, newTheme) -> {
-			if (newTheme != null) {
-				Main.getInstance().applyTheme(newTheme);
-				InfoWindow.applyTheme(newTheme);
-			}
-		});
 
 		Theme currentTheme = Settings.themeProperty.get();
 
@@ -110,35 +187,6 @@ public class SettingsScreen extends Pane {
 	}
 
 	@FXML
-	private CheckBox nameCheckBox;
-
-	@FXML
-	private CheckBox insertionCheckBox;
-
-	@FXML
-	private CheckBox factsCheckBox;
-
-	@FXML
-	private CheckBox soundCheckBox;
-
-	@FXML
-	private CheckBox alwaysOnTopBox;
-
-	@FXML
-	private CheckBox skipLoadingBox;
-
-	@FXML
-	private ChoiceBox<String> databaseBox;
-
-	@FXML
-	private Slider opacitySlider;
-	@FXML
-	private Slider inactiveOpacitySlider;
-
-	@FXML
-	private ChoiceBox<Theme> themeBox;
-
-	@FXML
 	void insertion(ActionEvent event) {
 		Settings.invert(NAME_ORDER);
 		nameCheckBox.setSelected(!insertionCheckBox.isSelected());
@@ -148,27 +196,6 @@ public class SettingsScreen extends Pane {
 	void name(ActionEvent event) {
 		Settings.invert(NAME_ORDER);
 		insertionCheckBox.setSelected(!nameCheckBox.isSelected());
-	}
-
-	@FXML
-	void showFacts(ActionEvent event) {
-		Settings.invert(SHOW_FACTS);
-	}
-
-	@FXML
-	void playSound(ActionEvent event) {
-		Settings.invert(PLAY_SOUND);
-	}
-
-	@FXML
-	void alwaysOnTop(ActionEvent event) {
-		Settings.invert(ALWAYS_ON_TOP);
-		Main.getStage().setAlwaysOnTop(Settings.get(ALWAYS_ON_TOP));
-	}
-
-	@FXML
-	void skipLoading(ActionEvent event) {
-		Settings.invert(SKIP_LOADING);
 	}
 
 	private static FileChooser getDatabaseFileChooser() {
@@ -270,11 +297,6 @@ public class SettingsScreen extends Pane {
 
 		nameCheckBox.setSelected(false);
 		insertionCheckBox.setSelected(false);
-		initBoxes();
-
-		opacitySlider.setValue(100);
-		inactiveOpacitySlider.setValue(100);
-
-		themeBox.setValue(Theme.DEFAULT);
+		initCheckBoxes();
 	}
 }
