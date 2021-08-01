@@ -154,7 +154,7 @@ public class Database {
 
 	// load myList & toWatch contents into runtime linkedHS's
 	public static void init(StartScreen.LoadTask task, double start, double end) {
-		if (inJar() && firstRun())
+		if (inJar() && firstRun() && Settings.getSelectedDatabase().equals("Internal"))
 			clearTables();
 		else
 			loadAll(task, start, end);

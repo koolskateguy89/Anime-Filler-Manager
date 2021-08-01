@@ -143,6 +143,7 @@ public class Settings {
 	private static void loadRest(Preferences prefs) {
 		String name = prefs.get(PrefKey.THEME.key, "DEFAULT");
 		themeProperty.set(Theme.valueOf(name));
+		// anything else to load
 	}
 
 	// OnClose

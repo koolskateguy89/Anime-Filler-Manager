@@ -242,8 +242,4 @@ public class Main extends Application {
 		}
 	}
 
-	static void launch0(String[] args) {
-		launch(args);
-	}
-
 }

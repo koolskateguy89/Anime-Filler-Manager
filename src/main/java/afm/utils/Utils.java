@@ -178,6 +178,17 @@ public class Utils {
 		return true;
 	}
 
+	// Stop user from typing any characters that aren't numeric
+	public static ChangeListener<String> onlyAllowIntegersListener() {
+		return (obs, oldVal, newVal) -> {
+			/* if (newVal == null || newVal.isEmpty())
+				((StringProperty) obs).setValue("0");
+			else */
+			if (!Strings.isNullOrEmpty(newVal) && !isStrictInteger(newVal))
+				((StringProperty) obs).setValue(oldVal);
+		};
+	}
+
 	public static void sleep(long millis) {
 		try {
 			Thread.sleep(millis);
@@ -341,17 +352,6 @@ public class Utils {
 		wrapAlertText(alert);
 
 		return alert.showAndWait().orElse(ButtonType.NO);
-	}
-
-	// Stop user from typing any characters that aren't numeric
-	public static ChangeListener<String> onlyAllowIntegersListener() {
-		return (obs, oldVal, newVal) -> {
-			/* if (newVal == null || newVal.isEmpty())
-				((StringProperty) obs).setValue("0");
-			else */
-			if (!Strings.isNullOrEmpty(newVal) && !isStrictInteger(newVal))
-				((StringProperty) obs).setValue(oldVal);
-		};
 	}
 
 	public static void copyToClipboard(String s) {
