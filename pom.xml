@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.13.1</version> <!-- 1.14.1 -->
+			<version>1.13.1</version>
 		</dependency>
 
 		<!-- sqlite jdbc driver -->
@@ -98,6 +98,7 @@
 				</configuration>
 			</plugin>
 
+			<!-- WIP -->
 			<!-- Using Proguard Maven plugin: https://stackoverflow.com/a/34706467 -->
 			<!-- Obfuscate after shading so optimize everything ? -->
 			<!-- uses proguard.conf -->
