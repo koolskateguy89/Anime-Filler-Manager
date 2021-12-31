@@ -1,7 +1,10 @@
 # Maven
 target/
+
 # User-specific
 .idea/eclipseCodeFormatter.xml
+
+src/main/resources/databases/animeDB.db
 
 
 # JetBrains.gitignore
