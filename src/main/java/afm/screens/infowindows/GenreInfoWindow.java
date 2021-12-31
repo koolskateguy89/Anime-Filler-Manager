@@ -28,22 +28,22 @@ public class GenreInfoWindow extends InfoWindow {
 
 	public static void init() {
 		EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
+		// genre definitions: https://myanimelist.net/anime/genre/info
 
 		tempMap.put(Genre.Action, """
-								  A genre in which the protagonist or \
-								  protagonists are thrust into a series of events that \
-								  typically include violence, extended fighting, physical \
-								  feats, rescues and frantic chases.
-								  """);
+								Plays out mainly through a clash of physical forces. Frequently these
+								stories have fast cuts, tough characters making quick decisions and
+								usually a beautiful girl nearby. Anything quick and most likely a thin
+								storyline.
+								""");
 
 		tempMap.put(Genre.Adventure, "Travelling and undertaking an adventure in a certain place");
 
-		// TODO
-		tempMap.put(Genre.AvantGarde, "");
+		tempMap.put(Genre.AvantGarde, "Anime that have mind-twisting plots.");
 
-		tempMap.put(Genre.AwardWinning, "Won a major award");
+		tempMap.put(Genre.AwardWinning, "Won a major award.");
 
-		tempMap.put(Genre.BoysLove, "Gay");
+		tempMap.put(Genre.BoysLove, "Gay.");
 
 		tempMap.put(Genre.Cars, "Involves cars as a main feature e.g. racing");
 
@@ -52,30 +52,38 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.Demons, "Involves demons as a main feature");
 
-		tempMap.put(Genre.Drama, "Er");
+		tempMap.put(Genre.Drama, """
+								Anime that often show life or characters through conflict and
+								emotions. In general, the different parts of the story tend to
+								form a whole that is greater than the sum of the parts. In other
+								words, the story has a message that is bigger than just the story
+								line itself.
+								""");
 
-		tempMap.put(Genre.Ecchi, "Almost cartoon porn");
+		tempMap.put(Genre.Ecchi, "Almost cartoon porn.");
 
-		// TODO
-		tempMap.put(Genre.Erotica, "");
+		tempMap.put(Genre.Erotica, "\uD83D\uDE33");
 
-		tempMap.put(Genre.Fantasy, "Based in a fanatical world");
+		tempMap.put(Genre.Fantasy, "Based in a fanatical world.");
 
-		tempMap.put(Genre.Game, "Has gaming as a core aspect");
+		tempMap.put(Genre.Game, """
+								Central theme is based on a non-violent, non-sports game, like
+								go, chess, trading card games or computer/video games.
+								""");
 
-		tempMap.put(Genre.GirlsLove, "Lesbian");
+		tempMap.put(Genre.GirlsLove, "Lesbian.");
 
-		tempMap.put(Genre.Gourmet, "Food");
+		tempMap.put(Genre.Gourmet, "Food.");
 
-		tempMap.put(Genre.Harem, "Not many guys, but many, many girls");
+		tempMap.put(Genre.Harem, "Not many guys, but many, many girls.");
 
-		tempMap.put(Genre.Hentai, "Cartoon porn");
+		tempMap.put(Genre.Hentai, "Cartoon porn.");
 
-		tempMap.put(Genre.Historical, "Based on past historical events");
+		tempMap.put(Genre.Historical, "Based on past historical events.");
 
-		tempMap.put(Genre.Horror, "Horror");
+		tempMap.put(Genre.Horror, "ooooo scarryyyy.");
 
-		tempMap.put(Genre.Josei, "Aimed towards young adult women");
+		tempMap.put(Genre.Josei, "Aimed towards young adult women.");
 
 		tempMap.put(Genre.Kids, """
 								Aimed at kids
@@ -85,53 +93,53 @@ public class GenreInfoWindow extends InfoWindow {
 								yikes
 								""");
 
-		tempMap.put(Genre.Magic, "Involves magic as a main feature");
+		tempMap.put(Genre.Magic, "Involves magic as a main feature.");
 
-		tempMap.put(Genre.MartialArts, "MARTIAL ARTS");
+		tempMap.put(Genre.MartialArts, "MARTIAL ART.");
 
-		tempMap.put(Genre.Mecha, "Involves robotic entities as a main feature");
+		tempMap.put(Genre.Mecha, "Involves robotic entities as a main feature.");
 
-		tempMap.put(Genre.Military, "Army");
+		tempMap.put(Genre.Military, "An anime series/movie that has a heavy militaristic feel behind it.");
 
 		tempMap.put(Genre.Music, "Headphones and concerts etc.");
 
 		tempMap.put(Genre.Mystery, "?");
 
-		tempMap.put(Genre.Parody, "Naruto -> Narudo" + "\n" + "Spiderman -> Spooderman");
+		tempMap.put(Genre.Parody, "Naruto -> Narudo" + "\n" + "Spiderman -> Spooderman.");
 
-		tempMap.put(Genre.Police, "Based on characters who are involved in a police force");
+		tempMap.put(Genre.Police, "Based on characters who are involved in a police force.");
 
-		tempMap.put(Genre.Psychological, "Brain");
+		tempMap.put(Genre.Psychological, "Brain.");
 
-		tempMap.put(Genre.Romance, "Love");
+		tempMap.put(Genre.Romance, "Love.");
 
-		tempMap.put(Genre.Samurai, "Sword");
+		tempMap.put(Genre.Samurai, "Sword.");
 
-		tempMap.put(Genre.School, "Based in a school setting");
+		tempMap.put(Genre.School, "Based in a school setting.");
 
 		tempMap.put(Genre.SciFi, "Science?");
 
-		tempMap.put(Genre.Seinen, "Aimed towards young adult men");
+		tempMap.put(Genre.Seinen, "Aimed towards young adult men.");
 
-		tempMap.put(Genre.Shoujo, "Aimed at a \"young female audience\"");
+		tempMap.put(Genre.Shoujo, "Aimed at a \"young female audience\".");
 
-		tempMap.put(Genre.Shounen, "Aimed at a \"young male audience\"");
+		tempMap.put(Genre.Shounen, "Aimed at a \"young male audience\".");
 
-		tempMap.put(Genre.SliceOfLife, "Aims to mimic real life through anime");
+		tempMap.put(Genre.SliceOfLife, "Aims to mimic real life through anime.");
 
-		tempMap.put(Genre.Space, "NASA");
+		tempMap.put(Genre.Space, "NASA.");
 
 		tempMap.put(Genre.Sports, "Literally sports, or rather, physical exertion...");
 
-		tempMap.put(Genre.Supernatural, "strange");
+		tempMap.put(Genre.Supernatural, "strange.");
 
-		tempMap.put(Genre.SuperPower, "Usually based in a word where having superpowers is the norm");
+		tempMap.put(Genre.SuperPower, "Usually based in a word where having superpowers is the norm.");
 
 		tempMap.put(Genre.Suspense, "...");
 
-		tempMap.put(Genre.Vampire, "Draculaaaaa");
+		tempMap.put(Genre.Vampire, "Draculaaaaa.");
 
-		tempMap.put(Genre.WorkLife, "About working");
+		tempMap.put(Genre.WorkLife, "About working.");
 
 		genreDefMap = Maps.immutableEnumMap(tempMap);
 	}
