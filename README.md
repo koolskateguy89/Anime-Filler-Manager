@@ -19,17 +19,13 @@
 
 ## Introduction
 
-<sub><sup>
-This is for my IB CS IA
-</sup></sub>
-
 Anime Filler Manager is a Java application to search for anime from
  [MyAnimeList](https://myanimelist.net/)
  and find out which episodes of that anime are **filler** (unnecessary to watch), according to the amazing community-led
  [Anime Filler List](https://www.animefillerlist.com/).
 
 <sub><sup><sub><sup>
-omg I should have called this MyFillerList
+Should have called this MyFillerList
 </sup></sub></sup></sub>
 
 ## Built With

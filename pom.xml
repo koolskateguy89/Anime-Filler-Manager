@@ -98,11 +98,11 @@
 				</configuration>
 			</plugin>
 
-			<!-- WIP -->
+			<!-- FIXME -->
 			<!-- Using Proguard Maven plugin: https://stackoverflow.com/a/34706467 -->
 			<!-- Obfuscate after shading so optimize everything ? -->
 			<!-- uses proguard.conf -->
-			<plugin>
+			<!--plugin>
 				<groupId>com.github.wvengen</groupId>
 				<artifactId>proguard-maven-plugin</artifactId>
 				<version>2.3.1</version>
@@ -128,7 +128,7 @@
 						<lib>${java.home}/jmods/java.base.jmod</lib>
 					</libs>
 
-					<!-- Only use this if after shade -->
+					<!- - Only use this if after shade -->
 					<!-- Exclude all dependencies because they should already be in the jar -->
 					<!--exclusions>
 						<exclusion>
@@ -163,7 +163,7 @@
 							<groupId>org.xerial</groupId>
 							<artifactId>sqlite-jdbc</artifactId>
 						</exclusion>
-					</exclusions-->
+					</exclusions- - >
 
 				</configuration>
 
@@ -181,7 +181,7 @@
 						<scope>runtime</scope>
 					</dependency>
 				</dependencies>
-			</plugin>
+			</plugin-->
 
 			<!-- Build an executable 'shaded' JAR -->
 			<plugin>
