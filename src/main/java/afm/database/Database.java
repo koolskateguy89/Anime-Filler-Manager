@@ -19,18 +19,18 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-import afm.Main;
-import afm.user.Settings;
-import afm.utils.Utils;
 import org.sqlite.SQLiteDataSource;
 
 import com.google.common.base.Strings;
 
+import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;
 import afm.anime.Season;
 import afm.screens.version1_start.StartScreen;
+import afm.user.Settings;
+import afm.utils.Utils;
 
 /*
  * I was initially using Serialization (EnumSet is Serializable) to store
@@ -154,7 +154,7 @@ public class Database {
 
 	// load myList & toWatch contents into runtime linkedHS's
 	public static void init(StartScreen.LoadTask task, double start, double end) {
-		if (inJar() && firstRun())
+		if (inJar() && firstRun() && Settings.getSelectedDatabase().equals("Internal"))
 			clearTables();
 		else
 			loadAll(task, start, end);

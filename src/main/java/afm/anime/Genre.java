@@ -1,14 +1,55 @@
 package afm.anime;
 
+import lombok.Getter;
+
 import afm.utils.Utils;
 
 public enum Genre {
 	// They should all be CONSTANT_CASE but I really cannot be bothered to do that manually sooooo
 	// Plus I would then have to completely refactor the findIndex(String) method sooooo
-	Action, Adventure, Cars, Comedy, Dementia, Demons, Drama, Ecchi("(18+)"), Fantasy, Game, Harem, Hentai("(18+)"), Historical,
-	Horror, Josei, Kids, Magic, MartialArts, Mecha, Military, Music, Mystery, Parody, Police, Psychological, Romance, Samurai,
-	School, SciFi, Seinen, Shoujo, ShoujoAi, Shounen, ShounenAi, SliceOfLife, Space, Sports, SuperPower, Supernatural, Thriller,
-	Vampire, Yaoi("(18+)"), Yuri("(18+)");
+	Action,
+	Adventure,
+	Cars,
+	Comedy,
+	Dementia,
+	Demons,
+	Drama,
+	Ecchi("(18+)"),
+	Fantasy,
+	Game,
+	Harem,
+	Hentai("(18+)"),
+	Historical,
+	Horror,
+	Josei,
+	Kids,
+	Magic,
+	MartialArts,
+	Mecha,
+	Military,
+	Music,
+	Mystery,
+	Parody,
+	Police,
+	Psychological,
+	Romance,
+	Samurai,
+	School,
+	SciFi,
+	Seinen,
+	Shoujo,
+	ShoujoAi,
+	Shounen,
+	ShounenAi,
+	SliceOfLife,
+	Space,
+	Sports,
+	SuperPower,
+	Supernatural,
+	Thriller,
+	Vampire,
+	Yaoi("(18+)"),
+	Yuri("(18+)");
 
 
 	String info;
@@ -17,6 +58,7 @@ public enum Genre {
 	 * a genre
 	 * (used when searching for anime)
 	 */
+	@Getter
 	final int index;
 
 	Genre() {
@@ -40,10 +82,6 @@ public enum Genre {
 			sb.append(' ').append(info);
 
 		return sb.toString();
-	}
-
-	public int getIndex() {
-		return index;
 	}
 
 	// Helper for myanimelist.net link (searching)

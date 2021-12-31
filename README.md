@@ -19,17 +19,13 @@
 
 ## Introduction
 
-<sub><sup>
-This is for my IB CS IA
-</sup></sub>
-
 Anime Filler Manager is a Java application to search for anime from
  [MyAnimeList](https://myanimelist.net/)
  and find out which episodes of that anime are **filler** (unnecessary to watch), according to the amazing community-led
  [Anime Filler List](https://www.animefillerlist.com/).
 
 <sub><sup><sub><sup>
-omg I should have called this MyFillerList
+Should have called this MyFillerList
 </sup></sub></sup></sub>
 
 ## Built With
@@ -104,6 +100,8 @@ _italicized = WIP/next-to-do_
 - [x] Add color themes option (use different stylesheets which the user picks from)
   - [ ] Light theme - icons are then messed up because they're white :/ but mostly done
   - [ ] Idk maybe Dracula/Monokai/etc
+- [x] Use ControlsFX a lot more
+- [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**
 - [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log errors

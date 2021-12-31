@@ -133,16 +133,17 @@ public class Settings {
 	}
 
 	private static void loadOpacities(Preferences prefs) {
-		double opacity = prefs.getDouble(PrefKey.OPACITY.key, 1.0);
+		double opacity = prefs.getDouble(PrefKey.OPACITY.key, 100);
 		opacityProperty.set(opacity);
 
-		double inactiveOpacity = prefs.getDouble(PrefKey.INACTIVE_OPACITY.key, 1.0);
+		double inactiveOpacity = prefs.getDouble(PrefKey.INACTIVE_OPACITY.key, 100);
 		inactiveOpacityProperty.set(inactiveOpacity);
 	}
 
 	private static void loadRest(Preferences prefs) {
 		String name = prefs.get(PrefKey.THEME.key, "DEFAULT");
 		themeProperty.set(Theme.valueOf(name));
+		// anything else to load
 	}
 
 	// OnClose
@@ -191,6 +192,11 @@ public class Settings {
 
 	public static void reset() {
 		map.putAll(defaults);
+
+		opacityProperty.set(100);
+		inactiveOpacityProperty.set(100);
+
+		themeProperty.set(Theme.DEFAULT);
 	}
 
 }

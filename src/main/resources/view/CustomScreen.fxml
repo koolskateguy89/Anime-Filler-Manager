@@ -3,72 +3,64 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.SearchableComboBox?>
 
 <fx:root alignment="CENTER" prefHeight="457.0" prefWidth="588.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="-Infinity" prefWidth="15.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.20001220703125" minWidth="10.0" prefWidth="90.00003662109376" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.39996337890625" minWidth="10.0" prefWidth="248.8" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.20001220703125" minWidth="10.0" prefWidth="139.40000000000003" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="43.60001220703123" minHeight="10.0" prefHeight="43.60001220703123" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="85.60000000000002" minHeight="10.0" prefHeight="75.19998779296873" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Label prefHeight="18.0" prefWidth="118.0" text="Name:" GridPane.columnIndex="1" />
-      <TextField fx:id="nameField" prefWidth="245.0" promptText="Name" GridPane.columnIndex="2" />
-      <Label prefHeight="18.0" prefWidth="118.0" text="Genre(s):" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <ComboBox fx:id="genreCombo" prefHeight="26.0" prefWidth="218.0" promptText="Select genre(s)" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#addGenre" prefHeight="26.0" prefWidth="41.0" text="Add" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-         <contextMenu>
-            <ContextMenu fx:id="genreContextMenu" />
-         </contextMenu>
-         <tooltip>
-            <Tooltip text="Right click to remove" />
-         </tooltip>
-      </Button>
-      <Text fx:id="genreText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Genre:" wrappingWidth="281.20008850097656" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BASELINE" />
-      <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearGenres" prefHeight="26.0" prefWidth="72.0" styleClass="Warning" text="Clear" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets left="13.0" />
-         </GridPane.margin>
-      </Button>
-      <Label text="Seasons:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-           <ComboBox fx:id="sznCombo" prefHeight="26.0" prefWidth="127.0" promptText="Season" />
-           <ComboBox fx:id="yearCombo" prefHeight="26.0" prefWidth="127.0" promptText="Year" />
-       </HBox>
-      <Label prefHeight="18.0" prefWidth="118.0" text="Studio:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <TextField fx:id="studioField" promptText="Studio" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Label text="Episodes:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-         <TextField fx:id="totalEpField" prefHeight="26.0" prefWidth="82.0" promptText="Total eps" />
-         <TextField fx:id="currEpField" prefHeight="26.0" prefWidth="82.0" promptText="Current ep" />
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="573.0" spacing="80.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-         <Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToMyList" prefHeight="46.0" prefWidth="98.0" text="Add to MyList" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-         <Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToToWatch" prefHeight="46.0" prefWidth="98.0" text="Add to ToWatch" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-         <Button alignment="CENTER" cancelButton="true" ellipsisString="" mnemonicParsing="false" onAction="#resetFields" prefHeight="46.0" prefWidth="98.0" styleClass="Warning" text="Reset" textAlignment="CENTER" textOverrun="CLIP" underline="true" />
-         <padding>
-            <Insets right="40.0" />
-         </padding>
-      </HBox>
-   </children>
+	<columnConstraints>
+	<ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="-Infinity" prefWidth="15.0" />
+	<ColumnConstraints hgrow="SOMETIMES" maxWidth="156.20001220703125" minWidth="10.0" prefWidth="90.00003662109376" />
+	<ColumnConstraints hgrow="SOMETIMES" maxWidth="304.39996337890625" minWidth="10.0" prefWidth="248.8" />
+	<ColumnConstraints hgrow="SOMETIMES" maxWidth="204.20001220703125" minWidth="10.0" prefWidth="139.40000000000003" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="43.60001220703123" minHeight="10.0" prefHeight="43.60001220703123" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="85.60000000000002" minHeight="10.0" prefHeight="75.19998779296873" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<Label prefHeight="18.0" prefWidth="118.0" text="Name:" GridPane.columnIndex="1" />
+		<StackPane fx:id="namePane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white;" GridPane.columnIndex="2" />
+		<Label prefHeight="18.0" prefWidth="118.0" text="Genre(s):" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		<CheckComboBox fx:id="genreCombo" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+		<Button alignment="CENTER" mnemonicParsing="false" onAction="#clearGenres" prefHeight="26.0" prefWidth="72.0" styleClass="Warning" text="Clear" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+			<GridPane.margin>
+				<Insets left="13.0" />
+			</GridPane.margin>
+		</Button>
+		<Label text="Season:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+		<HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+			<ComboBox fx:id="sznCombo" prefHeight="26.0" prefWidth="127.0" promptText="Season" />
+			<SearchableComboBox fx:id="yearCombo" maxHeight="-Infinity" prefHeight="26.0" prefWidth="127.0" promptText="Year" />
+		</HBox>
+		<Label prefHeight="18.0" prefWidth="118.0" text="Studio:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+		<StackPane fx:id="studioPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+		<Label text="Episodes:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+		<HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+			<TextField fx:id="totalEpField" prefHeight="26.0" prefWidth="82.0" promptText="Total eps" />
+			<TextField fx:id="currEpField" prefHeight="26.0" prefWidth="82.0" promptText="Current ep" />
+		</HBox>
+		<HBox alignment="CENTER" prefHeight="30.0" prefWidth="573.0" spacing="80.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+			<Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToMyList" prefHeight="46.0" prefWidth="98.0" text="Add to MyList" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+			<Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToToWatch" prefHeight="46.0" prefWidth="98.0" text="Add to ToWatch" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+			<Button alignment="CENTER" cancelButton="true" ellipsisString="" mnemonicParsing="false" onAction="#resetFields" prefHeight="46.0" prefWidth="98.0" styleClass="Warning" text="Reset" textAlignment="CENTER" textOverrun="CLIP" underline="true" />
+			<padding>
+				<Insets right="40.0" />
+			</padding>
+		</HBox>
+	</children>
 </fx:root>

@@ -19,8 +19,8 @@ import lombok.Getter;
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.screens.Menu;
-import afm.screens.SettingsScreen;
 import afm.screens.infowindows.InfoWindow;
+import afm.screens.settings.SettingsScreen;
 import afm.screens.version1_start.StartScreen;
 import afm.screens.version2_welcome.WelcomeScreen;
 import afm.screens.version3_search.SearchScreen;
@@ -160,6 +160,7 @@ public class Main extends Application {
 	public void openCustomScreen() {
 		// no need to reset fields when opening CustomScreen
 		setScreen(customScreen);
+		customScreen.open();
 	}
 
 	public void moveToSearchingScreen(Search s) {
@@ -178,6 +179,9 @@ public class Main extends Application {
 	}
 
 	public void applyTheme(Theme theme) {
+		if (theme == null)
+			return;
+
 		theme.apply(welcomeScreen);
 		theme.apply(menu);
 		theme.apply(settingsScreen);
@@ -200,9 +204,9 @@ public class Main extends Application {
 
 			stage.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
 				if (Boolean.TRUE.equals(isFocused)) {
-					stage.opacityProperty().bind(Settings.opacityProperty);
+					stage.opacityProperty().bind(Settings.opacityProperty.multiply(0.01));
 				} else {
-					stage.opacityProperty().bind(Settings.inactiveOpacityProperty);
+					stage.opacityProperty().bind(Settings.inactiveOpacityProperty.multiply(0.01));
 				}
 			});
 
@@ -236,10 +240,6 @@ public class Main extends Application {
 			e.printStackTrace();
 			Platform.exit();
 		}
-	}
-
-	static void launch0(String[] args) {
-		launch(args);
 	}
 
 }

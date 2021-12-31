@@ -1,5 +1,7 @@
 package afm;
 
+import javafx.application.Application;
+
 /*
  * Wrapper around Main to allow Maven-shade-plugin to build
  * (Can't use Main as it extends Application)
@@ -9,7 +11,7 @@ package afm;
 class Launcher {
 
 	public static void main(String[] args) {
-		Main.launch0(args);
+		Application.launch(Main.class, args);
 	}
 
 }

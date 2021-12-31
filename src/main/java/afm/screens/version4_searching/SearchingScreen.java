@@ -50,7 +50,7 @@ public class SearchingScreen extends Pane {
 	}
 
 	// change search
-	// (This is called on the JavaFX Application Thread)
+	// called on JavaFX Application Thread
 	public void setSearch(Search s) {
 		results.clear();
 		search = s;
@@ -71,7 +71,7 @@ public class SearchingScreen extends Pane {
 	private final Service<Void> blinking = new BlinkService();
 
 
-	// (This is called on the JavaFX Application Thread)
+	// called on JavaFX Application Thread
 	public void startSearch() {
 		resultsBtn.setDisable(true);
 		resultsBtn.setText("Not yet...");
