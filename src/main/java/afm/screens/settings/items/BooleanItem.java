@@ -16,7 +16,7 @@ public class BooleanItem extends Item {
 	private final Class<?> type = boolean.class;
 
 	@Getter
-	BooleanProperty property = new SimpleBooleanProperty();
+	final BooleanProperty property = new SimpleBooleanProperty();
 
 	public BooleanItem(Category category, String name) {
 		super(category);

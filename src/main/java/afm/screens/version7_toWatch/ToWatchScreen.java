@@ -46,8 +46,7 @@ public class ToWatchScreen extends Pane {
 		tableItems.setAll(ToWatch.values());
 	}
 
-	// 12.01 can't lie don't remember what was unchecked, need to check that out in Eclipse
-	@SuppressWarnings("unchecked") @FXML
+	@FXML
 	private void initialize() {
 		tableItems = table.getItems();
 
@@ -64,7 +63,7 @@ public class ToWatchScreen extends Pane {
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, ?> actions = Utils.getActionsCol();
+		TableColumn<Anime, Button> actions = Utils.getActionsCol();
 		table.getColumns().add(actions);
 
 		TableColumn<Anime, Button> infoCol = Utils.getInfoCol();

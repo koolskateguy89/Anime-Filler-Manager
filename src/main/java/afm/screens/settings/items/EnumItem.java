@@ -18,7 +18,7 @@ public class EnumItem<E extends Enum<?>> extends Item {
 	private final Class<E> clazz;
 
 	@Getter
-	ObjectProperty<E> property = new SimpleObjectProperty<>();
+	final ObjectProperty<E> property = new SimpleObjectProperty<>();
 
 	public EnumItem(Class<E> clazz, Category category, String name) {
 		super(category);

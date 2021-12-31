@@ -160,7 +160,6 @@ public class Main extends Application {
 	public void openCustomScreen() {
 		// no need to reset fields when opening CustomScreen
 		setScreen(customScreen);
-		customScreen.open();
 	}
 
 	public void moveToSearchingScreen(Search s) {

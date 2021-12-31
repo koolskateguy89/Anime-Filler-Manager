@@ -269,7 +269,7 @@ public class SettingsScreen extends Pane {
 		databaseBox.setValue(url);
 	}
 
-	// TODO: 'fix' this (make text 'right')
+	// TODO: 'fix' this (make text right aligned)
 	private void formatDatabaseBox() {
 		var children = databaseBox.getChildrenUnmodifiable();
 		if (children.isEmpty())

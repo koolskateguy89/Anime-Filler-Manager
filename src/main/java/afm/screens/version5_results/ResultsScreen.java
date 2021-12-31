@@ -49,7 +49,7 @@ public class ResultsScreen extends Pane {
 		tableItems.addAll(results);
 	}
 
-	@FXML @SuppressWarnings("unchecked")
+	@FXML
 	private void initialize() {
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		Utils.wrapColText(nameCol);
@@ -63,7 +63,7 @@ public class ResultsScreen extends Pane {
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, ?> actions = Utils.getActionsCol();
+		TableColumn<Anime, Button> actions = Utils.getActionsCol();
 		table.getColumns().add(actions);
 
 		TableColumn<Anime, Button> infoCol = Utils.getResultInfoCol();

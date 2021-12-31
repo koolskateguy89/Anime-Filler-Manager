@@ -46,8 +46,7 @@ public class MyListScreen extends Pane {
 		tableItems.setAll(MyList.values());
 	}
 
-	// again, don't remeber what was unchecked
-	@SuppressWarnings("unchecked") @FXML
+	@FXML
 	private void initialize() {
 		tableItems = table.getItems();
 
@@ -64,7 +63,7 @@ public class MyListScreen extends Pane {
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, ?> actions = Utils.getActionsCol();
+		TableColumn<Anime, Button> actions = Utils.getActionsCol();
 		table.getColumns().add(actions);
 
 		TableColumn<Anime, Button> infoCol = Utils.getInfoCol();

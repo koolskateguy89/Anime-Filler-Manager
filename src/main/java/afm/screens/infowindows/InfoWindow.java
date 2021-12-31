@@ -59,10 +59,8 @@ public abstract class InfoWindow extends Stage {
 			return;
 
 		for (Stage stage : openWindows) {
-			if (stage instanceof InfoWindow) {
-				InfoWindow iw = (InfoWindow) stage;
+			if (stage instanceof InfoWindow iw)
 				theme.apply(iw.pane);
-			}
 		}
 	}
 

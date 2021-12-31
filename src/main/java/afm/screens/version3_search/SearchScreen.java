@@ -35,6 +35,7 @@ import afm.anime.Season;
 import afm.screens.infowindows.GenreInfoWindow;
 import afm.utils.Utils;
 
+// TODO: don't when search screen button is pressed, show results; when pressed again, show search screen
 public final class SearchScreen extends GridPane {
 
 	private static final String REMOVE = "Remove ";
@@ -217,7 +218,7 @@ public final class SearchScreen extends GridPane {
 		clearGenres(null);
 		clearSeasons(null);
 
-		// Problem: comboBox promptText isn't showing after reset (if smthn was selected)
+		// FIXME: comboBox promptText isn't showing after reset (if smthn was selected)
 	}
 
 	@FXML

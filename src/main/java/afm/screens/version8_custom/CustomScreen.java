@@ -27,7 +27,6 @@ import afm.anime.Season;
 import afm.database.MyList;
 import afm.database.ToWatch;
 import afm.utils.Utils;
-import impl.org.controlsfx.skin.SearchableComboBoxSkin;
 
 // A lot of things here are identical to SearchScreen
 public class CustomScreen extends GridPane {
@@ -76,7 +75,7 @@ public class CustomScreen extends GridPane {
 		genreCombo.setTitle("Select genre(s)");
 		genreCombo.getItems().addAll(Genre.values());
 
-		// use the title as prompt text
+		// use the combobox title as prompt text
 		genreCombo.getCheckModel().getCheckedItems().addListener((ListChangeListener<Genre>) change -> {
 			if (change.getList().isEmpty()) {
 				genreCombo.setTitle("Select genre(s)");
@@ -85,11 +84,7 @@ public class CustomScreen extends GridPane {
 			}
 		});
 
-		final var szns = sznCombo.getItems();
-		szns.add("Spring");
-		szns.add("Summer");
-		szns.add("Fall");
-		szns.add("Winter");
+		sznCombo.getItems().addAll("Spring", "Summer", "Fall", "Winter");
 
 		final var years = yearCombo.getItems();
 		for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
@@ -97,35 +92,6 @@ public class CustomScreen extends GridPane {
 
 		totalEpField.textProperty().addListener(Utils.onlyAllowIntegersListener());
 		currEpField.textProperty().addListener(Utils.onlyAllowIntegersListener());
-	}
-
-	private boolean opened = false;
-	public void open() {
-		if (opened)
-			return;
-
-		setYearPromptText();
-
-		opened = true;
-	}
-
-	/*
-	 * This waits (by polling) until the yearCombo has a skin (has been rendered I think) and uses the Skin to set
-	 *   the prompt text of the 'inner' ComboBox. Usually waits about 40ms.
-	 * This is needed to give the yearCombo prompt text because using SearchableComboBox.setPromptText(String)
-	 *   doesn't actually visually do anything.
-	 */
-	private void setYearPromptText() {
-		Thread t = new Thread(() -> {
-			// wait until skin isn't null
-			while (yearCombo.getSkin() == null);
-
-			SearchableComboBoxSkin<Integer> skin = (SearchableComboBoxSkin<Integer>) yearCombo.getSkin();
-
-			ComboBox comboBox = (ComboBox) skin.getChildren().get(0);
-			comboBox.setPromptText("Year");
-		});
-		t.start();
 	}
 
 	@FXML
@@ -150,7 +116,7 @@ public class CustomScreen extends GridPane {
 		totalEpField.clear();
 		currEpField.clear();
 
-		// Problem: comboBox promptText isn't showing after reset (if smthn was selected)
+		// FIXME: comboBox promptText isn't showing after reset (if smthn was selected)
 	}
 
 	// can only add an anime if the anime has a name & genre
@@ -175,7 +141,6 @@ public class CustomScreen extends GridPane {
 	// Return an Anime object, built from fields in this screen
 	private Anime getAnimeFromFields() {
 		final AnimeBuilder builder = Anime.builder(nameField.getText().strip());
-
 		builder.setCustom(true);
 
 		builder.setGenres(genreCombo.getCheckModel().getCheckedItems());
@@ -192,11 +157,13 @@ public class CustomScreen extends GridPane {
 		try {
 			builder.setEpisodes(Integer.parseInt(totalEpField.getText()));
 		} catch (NumberFormatException ignored) {
+			// TODO: show error: didn't enter valid integer
 			// accept default value
 		}
 		try {
 			builder.setCurrEp(Integer.parseInt(currEpField.getText()));
 		} catch (NumberFormatException ignored) {
+			// TODO: show error: didn't enter valid integer
 			// accept default value
 		}
 

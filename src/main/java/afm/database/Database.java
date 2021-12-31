@@ -10,9 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.Map;
 
 import javafx.application.Platform;
@@ -132,25 +130,19 @@ public class Database {
 
 
 	// help performance with getting anime
-	private static final Map<String, Integer> COLUMN_MAP;
-
-	static {
-		Map<String, Integer> temp = new HashMap<>();
-
-		temp.put("name", 1);
-		temp.put("genres", 2);
-		temp.put("id", 3);
-		temp.put("studio", 4);
-		temp.put("seasonString", 5);
-		temp.put("info", 6);
-		temp.put("custom", 7);
-		temp.put("currEp", 8);
-		temp.put("totalEps", 9);
-		temp.put("imageURL", 10);
-		temp.put("fillers", 11);
-
-		COLUMN_MAP = Collections.unmodifiableMap(temp);
-	}
+	private static final Map<String, Integer> COLUMN_MAP = Map.ofEntries(
+			Map.entry("name", 1),
+			Map.entry("genres", 2),
+			Map.entry("id", 3),
+			Map.entry("studio", 4),
+			Map.entry("seasonString", 5),
+			Map.entry("info", 6),
+			Map.entry("custom", 7),
+			Map.entry("currEp", 8),
+			Map.entry("totalEps", 9),
+			Map.entry("imageURL", 10),
+			Map.entry("fillers", 11)
+	);
 
 	// load myList & toWatch contents into runtime linkedHS's
 	public static void init(StartScreen.LoadTask task, double start, double end) {

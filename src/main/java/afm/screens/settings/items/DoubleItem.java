@@ -16,7 +16,7 @@ public class DoubleItem extends Item {
 	private final Class<?> type = double.class;
 
 	@Getter
-	DoubleProperty property = new SimpleDoubleProperty();
+	final DoubleProperty property = new SimpleDoubleProperty();
 
 	public DoubleItem(Category category, String name) {
 		super(category);

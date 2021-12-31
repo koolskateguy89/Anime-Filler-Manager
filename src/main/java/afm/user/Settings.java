@@ -1,8 +1,10 @@
 package afm.user;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -40,7 +42,7 @@ public class Settings {
 		THEME,
 		;
 
-		String key;
+		final String key;
 		PrefKey() {
 			this.key = this.name();
 		}
@@ -61,17 +63,13 @@ public class Settings {
 		}
 	}
 
-	private static final String PREF_NAME;
-	static {
-		String name = Settings.class.getCanonicalName();
-		PREF_NAME = Utils.inJar() ? "jar:"+name : name;
-	}
+	private static final String PREF_NAME = (Utils.inJar() ? "jar:" : "") + Settings.class.getCanonicalName();
 
-	private static final HashMap<String, Boolean> defaults = new HashMap<>() {{
+	private static final Map<String, Boolean> defaults = Collections.unmodifiableMap(new HashMap<>() {{
 		for (Key key : Key.values()) {
 			put(key.toString(), key.getDefault());
 		}
-	}};
+	}});
 
 	// Maybe use EnumMap<Key,Boolean>
 	private static final HashMap<String, Boolean> map = new HashMap<>(defaults);
@@ -115,7 +113,7 @@ public class Settings {
 	}
 
 	/*
-	 * Most file systems don't allow '/' in file name so it should be safe to use
+	 * Most file systems don't allow '/' in file name, so it should be safe to use
 	 * '////' as the delimiter
 	 */
 	private static void loadDatabaseUrls(Preferences prefs) {
@@ -127,7 +125,7 @@ public class Settings {
 		if (Strings.isNullOrEmpty(data))
 			return;
 
-		// https://stackoverflow.com/a/6374137
+		// pattern quote: https://stackoverflow.com/a/6374137
 		String[] urls = data.split(Pattern.quote("////"));
 		databaseUrls.addAll(Arrays.asList(urls));
 	}

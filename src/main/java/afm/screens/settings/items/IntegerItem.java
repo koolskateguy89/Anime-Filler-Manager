@@ -16,7 +16,7 @@ public class IntegerItem extends Item {
 	private final Class<?> type = int.class;
 
 	@Getter
-	IntegerProperty property = new SimpleIntegerProperty();
+	final IntegerProperty property = new SimpleIntegerProperty();
 
 	public IntegerItem(Category category, String name) {
 		super(category);

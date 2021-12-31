@@ -16,7 +16,7 @@ public class StringItem extends Item {
 	private final Class<?> type = String.class;
 
 	@Getter
-	StringProperty property = new SimpleStringProperty();
+	final StringProperty property = new SimpleStringProperty();
 
 	public StringItem(Category category, String name) {
 		super(category);
