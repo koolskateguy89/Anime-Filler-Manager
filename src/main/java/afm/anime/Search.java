@@ -309,19 +309,16 @@ public class Search {
 
 			if (genreWord.equals("Sci-Fi")) {
 				genreName = "SciFi";
-			} else if (i < (genreList.length - 1)) {
+			} else if (i < genreList.length - 1) {
 				String next = genreList[i+1];
 				if (isTwoWordGenre(genreWord, next)) {
 					genreName = genreWord + next;
 					i++;
 				}
 				// Slice Of Life
-				else if (i < genreList.length - 2 && genreList[i].equals("Slice")) {
-					// shouldn't be a need to check if rest is "of life" but for safety :)
-					if (genreList[i+1].equals("of") && genreList[i+2].equals("Life")) {
-						genreName = "SliceOfLife";
-						i += 2;
-					}
+				else if (i < genreList.length - 2 && genreWord.equals("Slice")) {
+					genreName = "SliceOfLife";
+					i += 2;
 				}
 			}
 
