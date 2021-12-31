@@ -12,9 +12,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>15</maven.compiler.source>
-		<maven.compiler.target>15</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<javafx.version>15.0.1</javafx.version>
+		<main.class>afm.Launcher</main.class>
 	</properties>
 
 	<dependencies>
@@ -91,6 +92,7 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
 				<version>3.0.0-M1</version>
 				<configuration>
@@ -194,7 +196,7 @@
 
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>afm.Launcher</mainClass>
+									<mainClass>${main.class}</mainClass>
 								</transformer>
 							</transformers>
 
