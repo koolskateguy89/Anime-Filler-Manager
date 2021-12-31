@@ -10,10 +10,10 @@
 - [Built With](#built-with)
 - [How Does It Work?](#how-does-it-work)
 - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites---ish)
+    - [Dependencies](#dependencies)
     - [Installing](#installing)
     - [Building and running using Maven](#building-and-running-using-maven)
-- [Important notes](#important-things-to-know-when-running)
+- [Things to note](#some-things-to-know-when-running)
 - [TODO](#todo)
 - [License](#license)
 
@@ -21,35 +21,39 @@
 
 Anime Filler Manager is a Java application to search for anime from
  [MyAnimeList](https://myanimelist.net/)
- and find out which episodes of that anime are **filler** (unnecessary to watch), according to the amazing community-led
+ and find out which episodes of that anime are **filler** (unnecessary to watch as they do not contribute to the
+ main plot), according to the amazing community-led
  [Anime Filler List](https://www.animefillerlist.com/).
 
 <sub><sup><sub><sup>
 Should have called this MyFillerList
 </sup></sub></sup></sub>
 
+Tbh this has a lot of problems, mostly due to it being coursework and thus having to implement cOmPLeX feAtUrEs.
+
 ## Built With
 
-- [Oracle JDK 15.0.1](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html) - Programming language
-- [Maven](https://maven.apache.org/) - Project Management
-- [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/) - GUI Development
+- Java 17
+- [Maven](https://maven.apache.org/)
+- [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/)
     - [FXML](https://en.wikipedia.org/wiki/FXML)
-- [SQLite](https://www.sqlite.org/index.html) - Database Management System
+- [SQLite](https://www.sqlite.org/index.html)
 
 ## How does it work?
 
-This application mainly uses [web scraping](https://jsoup.org/) to enable you to find the anime of your dreams and to find out which episodes are not worth watching. It also employs [database management](https://github.com/xerial/sqlite-jdbc) to be able to store the anime you're currently watching/want to watch.
+This application mainly uses [web scraping](https://jsoup.org/) to enable you to find the anime of your dreams and to
+find out which episodes are not worth watching. It also employs [database management](https://github.com/xerial/sqlite-jdbc)
+to be able to store the anime you're currently watching/want to watch.
 
 ## Getting Started
 
-### Prerequisites - ish
+### Dependencies
 
-- [Java 15](https://www.oracle.com/uk/java/technologies/javase-downloads.html)
-- [JavaFX 15](https://openjfx.io/)
-- [ControlsFX 11.0.3](https://github.com/controlsfx/controlsfx)
-- [Guava 30.1-jre](https://github.com/google/guava)
-- [jsoup 1.13.1](https://jsoup.org/)
-- [SQLite JDBC Driver 3.34.0](https://github.com/xerial/sqlite-jdbc)
+- [JavaFX](https://openjfx.io/)
+- [ControlsFX](https://github.com/controlsfx/controlsfx)
+- [Guava](https://github.com/google/guava)
+- [jsoup](https://jsoup.org/)
+- [SQLite JDBC Driver](https://github.com/xerial/sqlite-jdbc)
 
 ### Installing
 
@@ -60,8 +64,6 @@ git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 
 ### Building and running using Maven
 
-Note: the only prerequisites needed for this are Java 15 & Maven.
-
 See the [res](res) folder for some bash & batch files to help build and run.
 
 <!-- <br/> -->
@@ -70,11 +72,10 @@ To build:
 1.  Run the command `mvn package` in the repository folder
 
 To run:
-
 2.  Open the target directory e.g. `cd target`
 3.  Run the command `java -jar "AFM.jar"` OR 'open' the executable JAR at `[REPO_FOLDER]/target/AFM.jar`
 
-## Important things to know when running
+## Some things to know when running
 
 1. To search for an anime, you HAVE to have selected an anime
 2. The anime database has to have the tables MyList & ToWatch, in a specific format (just use the `Create new` button
@@ -98,13 +99,14 @@ _italicized = WIP/next-to-do_
 - [x] Add option to use external database for MyList and ToWatch
   - [x] Add option to make new blank database
 - [x] Add color themes option (use different stylesheets which the user picks from)
-  - [ ] Light theme - icons are then messed up because they're white :/ but mostly done
+  - [ ] _Light theme_ - icons are then messed up because they're white :/ but mostly done
   - [ ] Idk maybe Dracula/Monokai/etc
 - [x] Use ControlsFX a lot more
 - [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
 - [ ] Add a global keybind to minimize/maximize - **no idea**
 - [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log errors
+  - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol
 - [ ] Have no window resizing
 - [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
