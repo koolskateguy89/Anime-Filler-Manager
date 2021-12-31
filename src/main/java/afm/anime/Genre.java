@@ -5,18 +5,23 @@ import lombok.Getter;
 import afm.utils.Utils;
 
 public enum Genre {
-	// They should all be CONSTANT_CASE but I really cannot be bothered to do that manually sooooo
+	// They should all be CONSTANT_CASE, but I really cannot be bothered to do that manually sooooo
 	// Plus I would then have to completely refactor the findIndex(String) method sooooo
 	Action,
 	Adventure,
+	AvantGarde,
+	AwardWinning,
+	BoysLove,
 	Cars,
 	Comedy,
-	Dementia,
 	Demons,
 	Drama,
 	Ecchi("(18+)"),
+	Erotica("(18+)"),
 	Fantasy,
 	Game,
+	GirlsLove,
+	Gourmet,
 	Harem,
 	Hentai("(18+)"),
 	Historical,
@@ -38,31 +43,26 @@ public enum Genre {
 	SciFi,
 	Seinen,
 	Shoujo,
-	ShoujoAi,
 	Shounen,
-	ShounenAi,
 	SliceOfLife,
 	Space,
 	Sports,
 	SuperPower,
 	Supernatural,
-	Thriller,
+	Suspense,
 	Vampire,
-	Yaoi("(18+)"),
-	Yuri("(18+)");
-
+	WorkLife;
 
 	String info;
 	/*
-	 * it's not index in the usual sense, it is index as in the number in the MyAnimeList link of
-	 * a genre
+	 * the number in the MyAnimeList link of a genre
 	 * (used when searching for anime)
 	 */
 	@Getter
-	final int index;
+	final int id;
 
 	Genre() {
-		index = findIndex(this.name());
+		id = findId(this.name());
 	}
 
 	Genre(String info) {
@@ -85,18 +85,23 @@ public enum Genre {
 	}
 
 	// Helper for myanimelist.net link (searching)
-	private static int findIndex(String s) {
+	private static int findId(String s) {
 		return switch (s) {
 			case "Action" -> 1;
 			case "Adventure" -> 2;
+			case "AvantGarde" -> 5;
+			case "AwardWinning" -> 46;
+			case "BoysLove" -> 28;
 			case "Cars" -> 3;
 			case "Comedy" -> 4;
-			case "Dementia" -> 5;
 			case "Demons" -> 6;
 			case "Drama" -> 8;
 			case "Ecchi" -> 9;
+			case "Erotica" -> 49;
 			case "Fantasy" -> 10;
 			case "Game" -> 11;
+			case "GirlsLove" -> 26;
+			case "Gourmet" -> 47;
 			case "Harem" -> 35;
 			case "Hentai" -> 12;
 			case "Historical" -> 13;
@@ -119,18 +124,15 @@ public enum Genre {
 			case "Sci-Fi" -> 24;
 			case "Seinen" -> 42;
 			case "Shoujo" -> 25;
-			case "ShoujoAi" -> 26;
 			case "Shounen" -> 27;
-			case "ShounenAi" -> 28;
 			case "SliceOfLife" -> 36;
 			case "Space" -> 29;
 			case "Sports" -> 30;
 			case "SuperPower" -> 31;
 			case "Supernatural" -> 37;
-			case "Thriller" -> 41;
+			case "Suspense" -> 41;
 			case "Vampire" -> 32;
-			case "Yaoi" -> 33;
-			case "Yuri" -> 34;
+			case "WorkLife" -> 48;
 			default -> throw new IllegalArgumentException("Not a genre: " + s);
 		};
 	}

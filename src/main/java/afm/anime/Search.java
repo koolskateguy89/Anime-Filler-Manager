@@ -66,7 +66,7 @@ public class Search {
 	private final HashSet<Anime> result = new HashSet<>();
 
 	private static final String MAL_URL = "https://myanimelist.net";
-	private static final String GENRE_URL = MAL_URL + "/anime/genre/"; //+genre.getIndex()
+	private static final String GENRE_URL = MAL_URL + "/anime/genre/"; //+genre.getId()
 
 
 	/* css query Strings to get respective element from myanimelist.net */
@@ -107,7 +107,7 @@ public class Search {
 		for (Genre genre : genres) {
 			final Document doc;
 			try {
-				doc = Jsoup.connect(Search.GENRE_URL + genre.getIndex() + "/?page="+page).get();
+				doc = Jsoup.connect(Search.GENRE_URL + genre.getId() + "/?page="+page).get();
 				scrapeDocument(doc);
 			} catch (UnknownHostException uhe) {
 				// no internet connection
@@ -304,30 +304,24 @@ public class Search {
 		EnumSet<Genre> genreSet = EnumSet.noneOf(Genre.class);
 
 		for (int i = 0; i < genreList.length; i++) {
-			// check for 2/3 word genres (martial arts etc)
-			if (genreList[i].equals("Arts") || genreList[i].equals("Ai") || genreList[i].equals("Power") ||
-				genreList[i].equals("of") || genreList[i].equals("Life"))
-				continue;
-
+			String genreWord = genreList[i];
 			String genreName = null;
 
-			if (genreList[i].equals("Sci-Fi")) {
+			if (genreWord.equals("Sci-Fi")) {
 				genreName = "SciFi";
 			} else if (i < (genreList.length - 1)) {
-				if (genreList[i].equals("Martial")) {
-					if (genreList[i+1].equals("Arts"))
-						genreName = "MartialArts";
-				} else if (genreList[i+1].equals("Ai")) {
-					genreName = genreList[i] + "Ai";
-				} else if (genreList[i].equals("Super")) {
-					if (genreList[i+1].equals("Power"))
-						genreName = "SuperPower";
+				String next = genreList[i+1];
+				if (isTwoWordGenre(genreWord, next)) {
+					genreName = genreWord + next;
+					i++;
 				}
 				// Slice Of Life
 				else if (i < genreList.length - 2 && genreList[i].equals("Slice")) {
 					// shouldn't be a need to check if rest is "of life" but for safety :)
-					if (genreList[i+1].equals("of") && genreList[i+2].equals("Life"))
+					if (genreList[i+1].equals("of") && genreList[i+2].equals("Life")) {
 						genreName = "SliceOfLife";
+						i += 2;
+					}
 				}
 			}
 
@@ -339,6 +333,11 @@ public class Search {
 		}
 
 		return genreSet;
+	}
+
+	private static boolean isTwoWordGenre(String genreWord, String next) {
+		return genreWord.equals("Avant") || genreWord.equals("Award") || genreWord.equals("Martial") ||
+				genreWord.equals("Super") || next.equals("Life") || next.equals("Love");
 	}
 
 

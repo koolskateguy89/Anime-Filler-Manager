@@ -26,7 +26,8 @@ public class GenreInfoWindow extends InfoWindow {
 	// maybe this should be in Genre class
 	private static ImmutableMap<Genre, String> genreDefMap;
 
-	public static void init() {EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
+	public static void init() {
+		EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
 
 		tempMap.put(Genre.Action, """
 								  A genre in which the protagonist or \
@@ -37,12 +38,17 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.Adventure, "Travelling and undertaking an adventure in a certain place");
 
+		// TODO
+		tempMap.put(Genre.AvantGarde, "");
+
+		tempMap.put(Genre.AwardWinning, "Won a major award");
+
+		tempMap.put(Genre.BoysLove, "Gay");
+
 		tempMap.put(Genre.Cars, "Involves cars as a main feature e.g. racing");
 
 		tempMap.put(Genre.Comedy, "Aims to make you laugh");
 		//tempMap.put(Genre.Comedy, "Anime: *plays*" + "\n" + "You: *laughs*");
-
-		tempMap.put(Genre.Dementia, "A main character has lost their memory");
 
 		tempMap.put(Genre.Demons, "Involves demons as a main feature");
 
@@ -50,9 +56,16 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.Ecchi, "Almost cartoon porn");
 
+		// TODO
+		tempMap.put(Genre.Erotica, "");
+
 		tempMap.put(Genre.Fantasy, "Based in a fanatical world");
 
 		tempMap.put(Genre.Game, "Has gaming as a core aspect");
+
+		tempMap.put(Genre.GirlsLove, "Lesbian");
+
+		tempMap.put(Genre.Gourmet, "Food");
 
 		tempMap.put(Genre.Harem, "Not many guys, but many, many girls");
 
@@ -101,10 +114,8 @@ public class GenreInfoWindow extends InfoWindow {
 		tempMap.put(Genre.Seinen, "Aimed towards young adult men");
 
 		tempMap.put(Genre.Shoujo, "Aimed at a \"young female audience\"");
-		tempMap.put(Genre.ShoujoAi, "Relationship between two females");
 
 		tempMap.put(Genre.Shounen, "Aimed at a \"young male audience\"");
-		tempMap.put(Genre.ShounenAi, "Relationship between two males");
 
 		tempMap.put(Genre.SliceOfLife, "Aims to mimic real life through anime");
 
@@ -116,13 +127,11 @@ public class GenreInfoWindow extends InfoWindow {
 
 		tempMap.put(Genre.SuperPower, "Usually based in a word where having superpowers is the norm");
 
-		tempMap.put(Genre.Thriller, "scary?");
+		tempMap.put(Genre.Suspense, "...");
 
 		tempMap.put(Genre.Vampire, "Draculaaaaa");
 
-		tempMap.put(Genre.Yaoi, "Gay hentai");
-
-		tempMap.put(Genre.Yuri, "Female gay hentai");
+		tempMap.put(Genre.WorkLife, "About working");
 
 		genreDefMap = Maps.immutableEnumMap(tempMap);
 	}
