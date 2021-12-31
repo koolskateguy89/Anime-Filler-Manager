@@ -57,7 +57,7 @@ public class Search {
 	private Integer minEps = null;
 
 
-	/* class variables for web scraping 'help' */
+	/* class variables to assist web scraping */
 	private int page = 1;
 	private boolean reachedLastPage = false;
 
