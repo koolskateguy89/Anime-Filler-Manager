@@ -109,7 +109,7 @@ _italicized = WIP/next-to-do_
   - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol
 - [ ] Have no window resizing
 - [ ] Add episodes column to all tablescreens - **almost-long**
-- [ ] Resize screens to all be same size (SceneBuilder) - **long*
+- [ ] Resize screens to all be same size (SceneBuilder) - **long**
 - [ ] Add hyperlink to the next watch episode
 
 ## License
