@@ -4,7 +4,8 @@ import lombok.Getter;
 
 import afm.utils.Utils;
 
-public enum Genre {
+// TODO: Demographic & Theme
+public enum Genre implements GenreType {
 	// They should all be CONSTANT_CASE, but I really cannot be bothered to do that manually sooooo
 	// Plus I would then have to completely refactor the findIndex(String) method sooooo
 	Action,
