@@ -277,13 +277,13 @@ public final class Anime {
 		ps.setString(11, fillerString);
 	}
 
-	// Only search for filler if anime has more than 60 episodes or is not finished
+	// Only search for filler if anime is not custom and has more than 48 episodes or is not finished
 	public void findFillers() {
-		if (episodes < 48 && episodes != NOT_FINISHED)
+		if ((custom) || (episodes < 48 && episodes != NOT_FINISHED))
 			return;
 
 		fillers.clear();
-		Filler.addFillersTo(this);
+		fillers.addAll(Filler.getFillers(name));
 	}
 
 	// defensively copy
@@ -300,10 +300,6 @@ public final class Anime {
 		}
 
 		return image;
-	}
-
-	public void addFiller(Filler filler) {
-		fillers.add(filler);
 	}
 
 	// taking filler into account

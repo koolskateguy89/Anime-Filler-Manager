@@ -1,6 +1,9 @@
 package afm.anime;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,11 +12,9 @@ import org.jsoup.select.Elements;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import lombok.Getter;
-
 import afm.utils.Utils;
 
-record Filler(@Getter int start, @Getter int end) implements Comparable<Filler> {
+record Filler(int start, int end) implements Comparable<Filler> {
 
 	public boolean contains(int n) {
 		return start <= n && n <= end;
@@ -64,15 +65,10 @@ record Filler(@Getter int start, @Getter int end) implements Comparable<Filler> 
 		return Filler.of(start, end);
 	}
 
-	static void addFillersTo(Anime anime) {
-		/* don't search for filler for any custom anime
-		 * (Anime already checks for this but check again in case) */
-		if (anime.isCustom())
-			return;
-
+	static List<Filler> getFillers(String name) {
 		try {
 			// replace all non-alphanumeric characters with a dash (which is what AFL does)
-			String formattedName = formatName(anime.getName());
+			String formattedName = formatName(name);
 
 			Document doc = Jsoup.connect("https://www.animefillerlist.com/shows/" + formattedName).get();
 
@@ -81,15 +77,14 @@ record Filler(@Getter int start, @Getter int end) implements Comparable<Filler> 
 
 			// the anime has no filler
 			if (episodeElements.isEmpty())
-				return;
+				return Collections.emptyList();
 
 			String[] fillerStrings = episodeElements.last().text().split(", ");
 
-			for (String f : fillerStrings) {
-				anime.addFiller(parseFiller(f));
-			}
-		} catch (IOException ignored) {
+			return Arrays.stream(fillerStrings).map(Filler::parseFiller).toList();
+		} catch (IOException io) {
 			// the page doesn't exist, most likely the MAL name is different to the AFL name
+			return Collections.emptyList();
 		}
 	}
 
