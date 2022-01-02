@@ -10,7 +10,7 @@ Might just keep demo & theme in here. Not sure whether to split them up like whe
 them separately. Actually it's probably better to keep them here because some don't have a theme/demo.
  */
 public enum Genre implements GenreType {
-	
+
 	Action(1),
 	Adventure(2),
 	AvantGarde(5),
@@ -86,24 +86,24 @@ public enum Genre implements GenreType {
 		return sb.toString();
 	}
 
-	/* special implementation of binary search that ignores case for safety */
 	public static Genre parseGenreFromToString(String toString) {
-		Genre[] values = values();
-		int pos = Utils.binarySearch(values, toString);
-
-		if (pos == -1)
-			return null;
-		else
-			return values[pos];
-	}
-
-	// ignore case for safety
-	public static Genre getGenre(String ignoreCaseName) {
-		// values() is final so this should be optimised by JIT compiler (in-lining)
-		for (Genre g : values()) {
-			if (g.name().equalsIgnoreCase(ignoreCaseName))
-				return g;
+		for (Genre genre : values()) {
+			// ignore case for safety
+			if (genre.toString().equalsIgnoreCase(toString))
+				return genre;
 		}
+
 		return null;
 	}
+
+	public static Genre getGenre(String name) {
+		for (Genre genre : values()) {
+			// ignore case for safety
+			if (genre.name().equalsIgnoreCase(name))
+				return genre;
+		}
+
+		return null;
+	}
+
 }

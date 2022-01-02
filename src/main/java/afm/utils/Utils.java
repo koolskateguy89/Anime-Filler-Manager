@@ -35,7 +35,6 @@ import com.google.common.math.DoubleMath;
 
 import afm.Main;
 import afm.anime.Anime;
-import afm.anime.Genre;
 
 public class Utils {
 
@@ -197,29 +196,6 @@ public class Utils {
 		}
 	}
 
-	// Helper to search for a Genre (given the result of its toString)
-	// from Genre.values()
-	public static int binarySearch(Genre[] arr, String key) {
-		return binarySearch(arr, key, 0, arr.length);
-	}
-
-	// Exclusive of end
-	/* a special implementation of binary search that ignores case */
-	private static int binarySearch(Genre[] arr, String key, int start, int end) {
-		if (start > end)
-			return -1;
-
-		int mid = start + (end - start) / 2;
-
-		int comp = key.compareToIgnoreCase(arr[mid].toString());
-
-		if (comp == 0)
-			return mid;
-		else if (comp < 0) { // key is less, search left
-			return binarySearch(arr, key, start, mid);
-		} else // comp > 0, key is greater, search right
-			return binarySearch(arr, key, mid + 1, end);
-	}
 
 	@SuppressWarnings("rawtypes")
 	private static <T extends Styleable> void changeStyle(T target, String style) {
