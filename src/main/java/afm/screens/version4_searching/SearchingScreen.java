@@ -28,6 +28,7 @@ import afm.user.Settings;
 import afm.utils.SoundFactory;
 import afm.utils.Utils;
 
+// TODO: make green once done
 public class SearchingScreen extends Pane {
 
 	private Search search;

@@ -16,6 +16,7 @@ import afm.database.ToWatch;
 import afm.utils.Utils;
 
 // Refreshing of MyList table is done in MyList.add(Anime)
+// TODO: hyperlink to Anime-Update of next episode to watch
 public class MyListInfoWindow extends InfoWindow {
 
 	public static void open(Anime a, Button infoBtn) {
