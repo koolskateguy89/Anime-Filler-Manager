@@ -5,69 +5,70 @@ import lombok.Getter;
 import afm.utils.Utils;
 
 // TODO: Demographic & Theme
+/*
+Might just keep demo & theme in here. Not sure whether to split them up like when showing search results show
+them separately. Actually it's probably better to keep them here because some don't have a theme/demo.
+ */
 public enum Genre implements GenreType {
-	// They should all be CONSTANT_CASE, but I really cannot be bothered to do that manually sooooo
-	// Plus I would then have to completely refactor the findIndex(String) method sooooo
-	Action,
-	Adventure,
-	AvantGarde,
-	AwardWinning,
-	BoysLove,
-	Cars,
-	Comedy,
-	Demons,
-	Drama,
-	Ecchi("(18+)"),
-	Erotica("(18+)"),
-	Fantasy,
-	Game,
-	GirlsLove,
-	Gourmet,
-	Harem,
-	Hentai("(18+)"),
-	Historical,
-	Horror,
-	Josei,
-	Kids,
-	Magic,
-	MartialArts,
-	Mecha,
-	Military,
-	Music,
-	Mystery,
-	Parody,
-	Police,
-	Psychological,
-	Romance,
-	Samurai,
-	School,
-	SciFi,
-	Seinen,
-	Shoujo,
-	Shounen,
-	SliceOfLife,
-	Space,
-	Sports,
-	SuperPower,
-	Supernatural,
-	Suspense,
-	Vampire,
-	WorkLife;
+	
+	Action(1),
+	Adventure(2),
+	AvantGarde(5),
+	AwardWinning(46),
+	BoysLove(28),
+	Cars(3),
+	Comedy(4),
+	Demons(6),
+	Drama(8),
+	Ecchi(9, "(18+)"),
+	Erotica(49, "(18+)"),
+	Fantasy(10),
+	Game(11),
+	GirlsLove(26),
+	Gourmet(47),
+	Harem(35),
+	Hentai(12, "(18+)"),
+	Historical(13),
+	Horror(14),
+	Josei(43),  // Demographics
+	Kids(15),  // Demographics
+	Magic(16),
+	MartialArts(17),
+	Mecha(18),
+	Military(38),
+	Music(19),
+	Mystery(7),
+	Parody(20),
+	Police(39),
+	Psychological(40),
+	Romance(22),
+	Samurai(21),
+	School(23),
+	SciFi(24),
+	Seinen(42),  // Demographics
+	Shoujo(25),  // Demographics
+	Shounen(27),  // Demographics
+	SliceOfLife(36),
+	Space(29),
+	Sports(30),
+	SuperPower(31),
+	Supernatural(37),
+	Suspense(41),
+	Vampire(32),
+	WorkLife(48);
 
-	String info;
-	/*
-	 * the number in the MyAnimeList link of a genre
-	 * (used when searching for anime)
-	 */
+
+	final String info;
+	// the number in the MyAnimeList link of a genre (used when searching for anime)
 	@Getter
 	final int id;
 
-	Genre() {
-		id = findId(this.name());
+	Genre(int id) {
+		this(id, null);
 	}
 
-	Genre(String info) {
-		this();
+	Genre(int id, String info) {
+		this.id = id;
 		this.info = info;
 	}
 
@@ -83,59 +84,6 @@ public enum Genre implements GenreType {
 			sb.append(' ').append(info);
 
 		return sb.toString();
-	}
-
-	// Helper for myanimelist.net link (searching)
-	private static int findId(String s) {
-		return switch (s) {
-			case "Action" -> 1;
-			case "Adventure" -> 2;
-			case "AvantGarde" -> 5;
-			case "AwardWinning" -> 46;
-			case "BoysLove" -> 28;
-			case "Cars" -> 3;
-			case "Comedy" -> 4;
-			case "Demons" -> 6;
-			case "Drama" -> 8;
-			case "Ecchi" -> 9;
-			case "Erotica" -> 49;
-			case "Fantasy" -> 10;
-			case "Game" -> 11;
-			case "GirlsLove" -> 26;
-			case "Gourmet" -> 47;
-			case "Harem" -> 35;
-			case "Hentai" -> 12;
-			case "Historical" -> 13;
-			case "Horror" -> 14;
-			case "Josei" -> 43;
-			case "Kids" -> 15;
-			case "Magic" -> 16;
-			case "MartialArts" -> 17;
-			case "Mecha" -> 18;
-			case "Military" -> 38;
-			case "Music" -> 19;
-			case "Mystery" -> 7;
-			case "Parody" -> 20;
-			case "Police" -> 39;
-			case "Psychological" -> 40;
-			case "Romance" -> 22;
-			case "Samurai" -> 21;
-			case "School" -> 23;
-			case "SciFi" -> 24;
-			case "Sci-Fi" -> 24;
-			case "Seinen" -> 42;
-			case "Shoujo" -> 25;
-			case "Shounen" -> 27;
-			case "SliceOfLife" -> 36;
-			case "Space" -> 29;
-			case "Sports" -> 30;
-			case "SuperPower" -> 31;
-			case "Supernatural" -> 37;
-			case "Suspense" -> 41;
-			case "Vampire" -> 32;
-			case "WorkLife" -> 48;
-			default -> throw new IllegalArgumentException("Not a genre: " + s);
-		};
 	}
 
 	/* special implementation of binary search that ignores case for safety */
