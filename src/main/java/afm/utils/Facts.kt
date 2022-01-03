@@ -2,7 +2,6 @@ package afm.utils
 
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.nio.charset.StandardCharsets
 
 
 // 15 facts at a time - 15 facts in a file
@@ -55,7 +54,7 @@ private fun getFileAsString(path: String): String {
             while (`in`.read(buffer).also { length = it } != -1) {
                 result.write(buffer, 0, length)
             }
-            return result.toString(StandardCharsets.UTF_8)
+            return result.toString(Charsets.UTF_8)
         }
     }
 }
