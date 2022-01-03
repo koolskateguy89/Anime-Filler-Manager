@@ -4,7 +4,6 @@ package afm.utils
 
 import afm.Main
 import afm.anime.Anime
-import com.google.common.base.Strings
 import com.google.common.math.DoubleMath
 import javafx.beans.InvalidationListener
 import javafx.beans.property.Property
@@ -98,11 +97,11 @@ fun String?.isStrictInteger(): Boolean {
 
 // Stop user from typing any characters that aren't numeric
 fun onlyAllowIntegersListener(): ChangeListener<String?> =
-    ChangeListener { obs: ObservableValue<out String?>, oldVal: String?, newVal: String? ->
+    ChangeListener { obs, oldVal, newVal ->
         /* if (newVal.isNullOrEmpty())
             (obs as StringProperty).value = "0";
         else */
-        if (!Strings.isNullOrEmpty(newVal) && !newVal.isStrictInteger())
+        if (!newVal.isNullOrEmpty() && !newVal.isStrictInteger())
             (obs as StringProperty).value = oldVal
     }
 
