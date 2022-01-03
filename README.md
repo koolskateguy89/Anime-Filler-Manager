@@ -34,6 +34,7 @@ Tbh this has a lot of problems, mostly due to it being coursework and thus havin
 ## Built With
 
 - Java 17
+- Kotlin 1.5.31
 - [Maven](https://maven.apache.org/)
 - [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/)
     - [FXML](https://en.wikipedia.org/wiki/FXML)
@@ -49,6 +50,8 @@ to be able to store the anime you're currently watching/want to watch.
 
 ### Dependencies
 
+- [Project Lombok](https://projectlombok.org/)
+- [Kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/)
 - [JavaFX](https://openjfx.io/)
 - [ControlsFX](https://github.com/controlsfx/controlsfx)
 - [Guava](https://github.com/google/guava)
