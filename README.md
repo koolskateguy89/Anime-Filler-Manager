@@ -107,8 +107,10 @@ _italicized = WIP/next-to-do_
 - [x] Use ControlsFX a lot more
 - [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
+  - [ ] Use it for filler?
+https://github.com/MALSync/MALSync/pull/689/files#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R114
 - [ ] Add a global keybind to minimize/maximize - **no idea**
-- [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log errors
+- [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log things
   - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol
 - [ ] Have no window resizing
 - [ ] Add episodes column to all tablescreens - **almost-long**

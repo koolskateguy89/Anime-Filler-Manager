@@ -76,7 +76,7 @@
 			<version>${controlsfx.version}</version>
 		</dependency>
 
-		<!-- Jikan API Java wrapper -->
+		<!-- TODO: Jikan API Java wrapper -->
 		<dependency>
 			<groupId>net.sandrohc</groupId>
 			<artifactId>reactive-jikan</artifactId>
