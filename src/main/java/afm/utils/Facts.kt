@@ -1,10 +1,6 @@
-@file:JvmName("Facts")
-
 package afm.utils
 
 import afm.Main
-import afm.utils.Utils.Companion.randomNumberClosed
-import javafx.util.Pair
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -19,33 +15,33 @@ private val factMap = HashMap<Int, String>()
 private const val DEFAULT_FACT = "A Levels are less stressful than the IB Diploma :)"
 
 /* Read text file fileX.txt into factMap
- * 	where X = random number generated between 1 and 5 (2 atm)
+ * 	where X = random number generated between 1 and 5
  *
  * - Called in StartScreen initialiser.
  */
 fun init() {
     try {
-        val fileNum = randomNumberClosed(1, 2)
+        val fileNum = (1..5).random()
 
         val path = "facts/facts$fileNum.txt"
 
         val file: String = getFileAsString(path)
-        val lines = file.split(System.lineSeparator().toRegex())
+        val lines = file.lines().subList(0, 15)
 
         for (i in lines.indices) {
             factMap[i + 1] = lines[i]
         }
-    } catch (e: Exception) {
+    } catch (e: IOException) {
         factMap[factMap.size + 1] = DEFAULT_FACT
         e.printStackTrace()
     }
 }
 
 fun getRandomFact(): Pair<Int, String> {
-    val id = randomNumberClosed(1, factMap.size)
+    val id = (1..factMap.size).random()
     val fact = factMap[id] ?: DEFAULT_FACT
 
-    return Pair(id, fact)
+    return id to fact
 }
 
 @Throws(IOException::class)

@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
 
 import afm.Main;
 import afm.anime.Season;
@@ -26,8 +25,9 @@ import afm.screens.version6_myList.MyListScreen;
 import afm.screens.version7_toWatch.ToWatchScreen;
 import afm.screens.version8_custom.CustomScreen;
 import afm.user.Settings;
-import afm.utils.Facts;
+import afm.utils.FactsKt;
 import afm.utils.Utils;
+import kotlin.Pair;
 
 public class StartScreen extends Pane {
 
@@ -45,9 +45,9 @@ public class StartScreen extends Pane {
 	void initialize() {
 		//Get a random fact and its id and display it in factText
 		if (Settings.get(Settings.Key.SHOW_FACTS)) {
-			Facts.init(); // only need to init if showing facts
-			fact = Facts.getRandomFact();
-			factText.setText("Fact " + fact.getKey() + ": " + fact.getValue());
+			FactsKt.init(); // only need to init if showing facts
+			fact = FactsKt.getRandomFact();
+			factText.setText("Fact " + fact.getFirst() + ": " + fact.getSecond());
 		} else {
 			factText.setVisible(false);
 		}
@@ -90,8 +90,8 @@ public class StartScreen extends Pane {
 
 			// Show a new fact
 			if (Settings.get(Settings.Key.SHOW_FACTS)) {
-				fact = Facts.getRandomFact();
-				factText.setText("Fact " + fact.getKey() + ": " + fact.getValue());
+				fact = FactsKt.getRandomFact();
+				factText.setText("Fact " + fact.getFirst() + ": " + fact.getSecond());
 			}
 
 			loadAll();
