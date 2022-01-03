@@ -16,7 +16,7 @@
 		<maven.compiler.release>17</maven.compiler.release>
 		<kotlin.version>1.5.31</kotlin.version>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-		<main.class>afm.Launcher</main.class>
+		<main.class>afm.LauncherKt</main.class>
 
 		<lombok.version>1.18.22</lombok.version>
 		<javafx.version>15.0.1</javafx.version>
