@@ -8,7 +8,6 @@ import static afm.user.Settings.Key.SKIP_LOADING;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -202,11 +201,11 @@ public class SettingsScreen extends Pane {
 	private static FileChooser getDatabaseFileChooser() {
 		FileChooser fc = new FileChooser();
 
-		String s = String.join(" ", Database.FILE_EXTENSIONS);
+		String s = String.join(" ", Database.getFileExtensions());
 
 		ExtensionFilter filter = new ExtensionFilter(
 				"All SQLite databases (%s)".formatted(s),
-				Database.FILE_EXTENSIONS
+				Database.getFileExtensions()
 		);
 
 		fc.setTitle("Select anime database");
@@ -257,11 +256,7 @@ public class SettingsScreen extends Pane {
 
 		String url = file.getAbsolutePath();
 
-		try {
-			Database.createNew(url);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Database.createNew(url);
 
 		if (Settings.getDatabaseUrls().add(url))
 			databaseBox.getItems().add(url);
