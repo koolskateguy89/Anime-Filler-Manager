@@ -1,6 +1,5 @@
 package afm.utils
 
-import afm.Main
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -44,9 +43,8 @@ fun getRandomFact(): Pair<Int, String> {
     return id to fact
 }
 
-@Throws(IOException::class)
 private fun getFileAsString(path: String): String {
-    Main::class.java.classLoader.getResourceAsStream(path).use { `in` ->
+    classLoader.getResourceAsStream(path).use { `in` ->
         ByteArrayOutputStream().use { result ->
             if (`in` == null)
                 return ""
