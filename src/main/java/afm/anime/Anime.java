@@ -121,12 +121,12 @@ public final class Anime {
 			return this;
 		}
 
-		public final AnimeBuilder setSeason(Season season) {
+		public AnimeBuilder setSeason(Season season) {
 			this.season = season;
 			return this;
 		}
 
-		public final AnimeBuilder setImageURL(String url) {
+		public AnimeBuilder setImageURL(String url) {
 			imageURL = url;
 			return this;
 		}

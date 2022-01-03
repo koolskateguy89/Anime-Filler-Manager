@@ -267,9 +267,9 @@ public final class SearchScreen extends GridPane {
 		if (name != null && !name.isEmpty() && name.isBlank()) {
 			String header = "Name entered is only whitespace!";
 			String content = """
-							 The anime name will not be taken into account when
-							 searching, do you still want to search?
-							 """;
+							The anime name will not be taken into account when
+							searching, do you still want to search?
+							""";
 
 			if (Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
 				return true;
@@ -291,9 +291,9 @@ public final class SearchScreen extends GridPane {
 		if (studio != null && !studio.isEmpty() && studio.isBlank()) {
 			String header = "Studio entered is only whitespace!";
 			String content = """
-							 The anime studio will not be taken into account when
-							 searching, do you still want to search?
-							 """;
+							The anime studio will not be taken into account when
+							searching, do you still want to search?
+							""";
 
 			if (Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
 				return true;
