@@ -220,7 +220,7 @@ public class Main extends Application {
 			stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
 
 			// OnClose thread will be run upon JVM trying to exit
-			Runtime.getRuntime().addShutdownHook(OnClose.getInstance());
+			Runtime.getRuntime().addShutdownHook(OnClose.INSTANCE);
 
 			// start loading is done internally in start screen (by button action)
 			startScreen = new StartScreen();

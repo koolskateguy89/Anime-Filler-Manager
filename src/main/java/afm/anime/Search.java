@@ -1,5 +1,7 @@
 package afm.anime;
 
+//import static afm.utils.Utils.inJar;
+
 import static afm.utils.Utils.inJar;
 
 import java.io.IOException;
@@ -74,6 +76,7 @@ public class Search {
 								GENRE = "div.genres-inner.js-genre-inner",
 								SRCS = "div.prodsrc",
 								INFOS = "div.synopsis.js-synopsis",
+								//INFOS = "div.synopsis.js-synopsis > span", // exclude theme(s) & demographic(s)
 								DATES = "span.remain-time",
 								IMG_URLS = "img[data-src]";
 
@@ -194,7 +197,11 @@ public class Search {
 			EnumSet<Genre> genreSet = EnumSet.noneOf(Genre.class);
 			Thread genreThread = new Thread(() -> {
 				String[] genreArray = itG.next().text().split(" ");
-				genreSet.addAll(getGenreSet(genreArray));
+				if (genreArray.length == 1 && genreArray[0].isEmpty()) {
+					// FIXME: anime with no genre but demographic/theme gets here
+					System.err.println(animeName);
+				} else
+					genreSet.addAll(getGenreSet(genreArray));
 			});
 			genreThread.setName("Genre thread");
 			genreThread.setDaemon(true);
@@ -245,6 +252,7 @@ public class Search {
 			builder.setEpisodes(episodes);
 
 
+			// TODO: check for themes & demographics
 			String synopsis = itI.next().text();
 			builder.setInfo(synopsis);
 
@@ -261,7 +269,7 @@ public class Search {
 			try {
 				String imgURL = itIMGS.next().absUrl("data-src");
 				builder.setImageURL(imgURL);
-			} catch (IllegalArgumentException | NullPointerException e) {
+			} catch (IllegalArgumentException | NullPointerException ignored) {
 				// no need to retry
 			}
 

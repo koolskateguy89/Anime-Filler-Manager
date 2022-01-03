@@ -1,5 +1,7 @@
 package afm.anime;
 
+import java.util.EnumSet;
+
 import lombok.Getter;
 
 import afm.utils.Utils;
@@ -57,7 +59,6 @@ public enum Genre implements GenreType {
 	Vampire(32),
 	WorkLife(48);
 
-
 	final String info;
 	// the number in the MyAnimeList link of a genre (used when searching for anime)
 	@Getter
@@ -85,6 +86,8 @@ public enum Genre implements GenreType {
 
 		return sb.toString();
 	}
+
+	static final EnumSet<Genre> demographics = EnumSet.of(Josei, Kids, Seinen, Shoujo, Shounen);
 
 	public static Genre parseGenreFromToString(String toString) {
 		for (Genre genre : values()) {

@@ -1,5 +1,6 @@
 package afm.anime;
 
+import static afm.utils.Utils.makeButtonProperty;
 import static afm.utils.Utils.setStyleClass;
 import static java.util.Objects.requireNonNull;
 
@@ -29,7 +30,6 @@ import afm.screens.Menu;
 import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
 import afm.screens.infowindows.ToWatchInfoWindow;
-import afm.utils.Utils;
 
 /*
  * Saving into database:
@@ -430,17 +430,17 @@ public final class Anime {
 
 	// basically return infoBtn
 	public Property<Button> infoBtnProperty() {
-		return Utils.makeButtonProperty("InfoBtnProperty", infoBtn);
+		return makeButtonProperty("InfoBtnProperty", infoBtn);
 	}
 
 	// basically return myListBtn
 	public Property<Button> myListBtnProperty() {
-		return Utils.makeButtonProperty("MyListBtnProperty", myListBtn);
+		return makeButtonProperty("MyListBtnProperty", myListBtn);
 	}
 
 	// basically return toWatchBtn
 	public Property<Button> toWatchBtnProperty() {
-		return Utils.makeButtonProperty("ToWatchBtnProperty", toWatchBtn);
+		return makeButtonProperty("ToWatchBtnProperty", toWatchBtn);
 	}
 
 
@@ -471,15 +471,15 @@ public final class Anime {
 	}
 
 	public Property<Button> myListInfoProperty() {
-		return Utils.makeButtonProperty("MyListInfoBtnProperty", myListInfoBtn);
+		return makeButtonProperty("MyListInfoBtnProperty", myListInfoBtn);
 	}
 
 	public Property<Button> myListRemoveProperty() {
-		return Utils.makeButtonProperty("MyListRemoveBtnProperty", myListRemoveBtn);
+		return makeButtonProperty("MyListRemoveBtnProperty", myListRemoveBtn);
 	}
 
 	public Property<Button> moveToToWatchProperty() {
-		return Utils.makeButtonProperty("MoveToToWatchBtnProperty", moveToToWatchBtn);
+		return makeButtonProperty("MoveToToWatchBtnProperty", moveToToWatchBtn);
 	}
 
 
@@ -510,14 +510,14 @@ public final class Anime {
 	}
 
 	public Property<Button> toWatchInfoProperty() {
-		return Utils.makeButtonProperty("ToWatchInfoBtnProperty", toWatchInfoBtn);
+		return makeButtonProperty("ToWatchInfoBtnProperty", toWatchInfoBtn);
 	}
 
 	public Property<Button> toWatchRemoveProperty() {
-		return Utils.makeButtonProperty("ToWatchRemoveBtnProperty", toWatchRemoveBtn);
+		return makeButtonProperty("ToWatchRemoveBtnProperty", toWatchRemoveBtn);
 	}
 
 	public Property<Button> moveToMyListProperty() {
-		return Utils.makeButtonProperty("MoveToMyListBtnProperty", moveToMyListBtn);
+		return makeButtonProperty("MoveToMyListBtnProperty", moveToMyListBtn);
 	}
 }

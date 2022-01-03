@@ -67,6 +67,7 @@ public class SettingsScreen extends Pane {
 	public SettingsScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("SettingsScreen"));
 		loader.setController(this);
+
 		loader.setRoot(this);
 		loader.load();
 	}

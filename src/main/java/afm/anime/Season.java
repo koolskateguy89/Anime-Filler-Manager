@@ -11,6 +11,7 @@ public final class Season implements Comparable<Season> {
 
 	public static final int START_YEAR = 1970;
 	public static final int END_YEAR = Utils.getCurrentYear();
+	//public static final int END_YEAR = Utils.getCurrentYear();
 
 	private static final int SPRING = 0, SUMMER = 1, FALL = 2, WINTER = 3;
 	// [last 2 digits of year][season(spring/...)]

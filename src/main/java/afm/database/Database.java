@@ -1,7 +1,7 @@
 package afm.database;
 
-import static afm.utils.Utils.firstRun;
 import static afm.utils.Utils.inJar;
+import static afm.utils.Utils.isFirstRun;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -146,7 +146,7 @@ public class Database {
 
 	// load myList & toWatch contents into runtime linkedHS's
 	public static void init(StartScreen.LoadTask task, double start, double end) {
-		if (inJar() && firstRun() && Settings.getSelectedDatabase().equals("Internal"))
+		if (inJar() && isFirstRun() && Settings.getSelectedDatabase().equals("Internal"))
 			clearTables();
 		else
 			loadAll(task, start, end);
