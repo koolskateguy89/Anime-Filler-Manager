@@ -9,7 +9,7 @@ import java.util.EnumSet
 Might just keep demo & theme in here. Not sure whether to split them up like when showing search results show
 them separately. Actually it's probably better to keep them here because some don't have a theme/demo.
  */
-enum class Genre(val id: Int, val info: String? = null) {
+enum class Genre(override val id: Int, private val info: String? = null) : GenreType {
 
     //<editor-fold desc="Genres">
     Action(1),
