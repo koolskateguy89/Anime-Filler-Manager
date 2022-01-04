@@ -76,7 +76,6 @@ public class Search {
 								GENRE = "div.genres-inner.js-genre-inner",
 								SRCS = "div.prodsrc",
 								INFOS = "div.synopsis.js-synopsis",
-								//INFOS = "div.synopsis.js-synopsis > span", // exclude theme(s) & demographic(s)
 								DATES = "span.remain-time",
 								IMG_URLS = "img[data-src]";
 
@@ -201,10 +200,11 @@ public class Search {
 			else
 				genreSet = getGenreSet(genreArray);
 
-			String synopsis = itI.next().text();
+			Element synopsisElement = itI.next();
+			String synopsis = synopsisElement.selectFirst("span").text();
 			builder.setInfo(synopsis);
-			// TODO: check for themes & demographics
 
+			addThemesAndDemos(genreSet, synopsisElement);
 			if (removeBecauseGenres(genreSet)) {
 				itS.next();
 				itD.next();
@@ -325,6 +325,25 @@ public class Search {
 	private static boolean isTwoWordGenre(String genreWord, String next) {
 		return genreWord.equals("Avant") || genreWord.equals("Award") || genreWord.equals("Martial") ||
 				genreWord.equals("Super") || next.equals("Life") || next.equals("Love");
+	}
+
+	/*
+	 * Examples of lines:
+	 *   Themes: Mecha, Space, Super Power
+	 *   Theme: Samurai
+	 *   Demographic: Shounen
+	 *   Demographics: Josei, Shoujo
+	 * Multiple demographics is somewhat rare
+	 */
+	private static void addThemesAndDemos(EnumSet<Genre> genreSet, Element synopsisElem) {
+		synopsisElem.select("p").forEach(elem -> elem.text().lines().forEach(line -> {
+			if (line.startsWith("Demographic") || line.startsWith("Theme")) {
+				String strings = line.substring(line.indexOf(':') + 2);
+
+				for (String s : strings.split(", "))
+					genreSet.add(Genre.valueOfFromName(s.replace(" ", "")));
+			}
+		}));
 	}
 
 
