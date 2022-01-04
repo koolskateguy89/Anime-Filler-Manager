@@ -181,18 +181,18 @@ public class Main extends Application {
 		if (theme == null)
 			return;
 
-		theme.apply(welcomeScreen);
-		theme.apply(menu);
-		theme.apply(settingsScreen);
+		theme.applyTo(welcomeScreen);
+		theme.applyTo(menu);
+		theme.applyTo(settingsScreen);
 
-		theme.apply(searchScreen);
-		theme.apply(searchingScreen);
-		theme.apply(resultsScreen);
+		theme.applyTo(searchScreen);
+		theme.applyTo(searchingScreen);
+		theme.applyTo(resultsScreen);
 
-		theme.apply(myListScreen);
-		theme.apply(toWatchScreen);
+		theme.applyTo(myListScreen);
+		theme.applyTo(toWatchScreen);
 
-		theme.apply(customScreen);
+		theme.applyTo(customScreen);
 	}
 
 	@Override

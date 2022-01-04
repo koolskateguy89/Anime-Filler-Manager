@@ -60,7 +60,7 @@ public abstract class InfoWindow extends Stage {
 
 		for (Stage stage : openWindows) {
 			if (stage instanceof InfoWindow iw)
-				theme.apply(iw.pane);
+				theme.applyTo(iw.pane);
 		}
 	}
 
@@ -100,7 +100,7 @@ public abstract class InfoWindow extends Stage {
 
 	protected void afterInitialize() {
 		// apply current theme to this
-		Settings.themeProperty.get().apply(pane);
+		Settings.themeProperty.get().applyTo(pane);
 		requestFocus();
 
 		// put this in the middle of primaryStage
