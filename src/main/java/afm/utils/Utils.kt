@@ -49,21 +49,21 @@ val isFirstRun: Boolean = run {
 
 
 // this 500ns vs regex 2000ns
-fun splitByCapitals(input: String): Array<String> {
+fun String.splitByCapitals(): Array<String> {
     val res = ArrayList<String>()
 
     var start = 0
 
-    for (i in 1 until input.length) {
-        val here = input[i]
-        if (Character.isUpperCase(here)) {
-            res.add(input.substring(start, i))
+    for (i in 1 until length) {
+        val here = this[i]
+        if (here.isUpperCase()) {
+            res.add(substring(start, i))
             start = i
         }
     }
 
     // add remaining
-    res.add(input.substring(start))
+    res.add(substring(start))
 
     res.removeIf(String?::isNullOrBlank)
 
@@ -183,24 +183,24 @@ fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : P
 
 
 // make Alert wrap text: https://stackoverflow.com/a/36938061
-fun wrapAlertText(alert: Alert) {
-    alert.dialogPane.minHeight = Region.USE_PREF_SIZE
+fun Alert.wrapAlertText() {
+    dialogPane.minHeight = Region.USE_PREF_SIZE
 }
 
-fun showAndWaitConfAlert(header: String?, content: String?): ButtonType? {
-    val alert = Alert(AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO)
-    alert.initOwner(Main.getStage())
+fun showAndWaitConfAlert(header: String?, content: String?): ButtonType {
+    return Alert(AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO).run {
+        initOwner(Main.getStage())
 
-    if (header != null)
-        alert.headerText = header
+        if (header != null)
+            headerText = header
 
-    wrapAlertText(alert)
-    return alert.showAndWait().orElse(ButtonType.NO)
+        showAndWait().orElse(ButtonType.NO)
+    }
 }
 
-fun copyToClipboard(s: String?) {
+fun String.copyToClipboard() {
     val content = ClipboardContent()
-    content.putString(s)
+    content.putString(this)
     Clipboard.getSystemClipboard().setContent(content)
 }
 

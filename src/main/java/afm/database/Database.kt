@@ -74,7 +74,7 @@ private fun mayBeValidDatabase(url: String?): Boolean {
 
             Alert(AlertType.ERROR, content).run {
                 initOwner(Main.getStage())
-                wrapAlertText(this)
+                wrapAlertText()
                 showAndWait()
             }
         }
