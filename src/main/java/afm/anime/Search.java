@@ -257,6 +257,7 @@ public class Search {
 			builder.setInfo(synopsis);
 
 
+
 			Season season = Season.parseSeasonFromMALDate(itD.next().text());
 			if (removeBecauseSeason(season)) {
 				genreThread.interrupt();
