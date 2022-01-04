@@ -66,7 +66,6 @@ internal data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
             }
         }
 
-        // TODO: ref to kotlin
         private fun formatName(name: String): String {
             // replace all non-alphanumeric characters with a dash (which is what AFL does)
             var formattedName = replaceNonAlphaNumericWithDash(name.lowercase())

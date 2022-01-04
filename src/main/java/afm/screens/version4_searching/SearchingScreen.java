@@ -28,7 +28,6 @@ import afm.user.Settings;
 import afm.utils.SoundFactory;
 import afm.utils.Utils;
 
-// TODO: make green once done
 public class SearchingScreen extends Pane {
 
 	private Search search;
@@ -68,7 +67,7 @@ public class SearchingScreen extends Pane {
 	private volatile boolean stopBlinking = false;
 
 	private final Service<Void> searching = new SearchService();
-	private final Service<Void> loading = new LoadService();
+	private final Service<Void> loading = new CircleService();
 	private final Service<Void> blinking = new BlinkService();
 
 
@@ -145,8 +144,11 @@ public class SearchingScreen extends Pane {
 
 				@Override
 				protected Void call() {
-					// Start by making all circles visible
-					circles.forEach(c -> c.setOpacity(1));
+					// Start by making all circles visible & green
+					circles.forEach(c -> {
+						c.setOpacity(1);
+						c.setStyle("-fx-fill: green");
+					});
 
 					while (!stopBlinking) {
 						circles.forEach(c -> c.setOpacity(opacity));
@@ -165,14 +167,16 @@ public class SearchingScreen extends Pane {
 						sleep(85);
 					}
 
+					circles.forEach(c -> c.setStyle(null));
+
 					return null;
 				}
 			};
 		}
 	}
 
-	private class LoadService extends Service<Void> {
-		LoadService() {
+	private class CircleService extends Service<Void> {
+		CircleService() {
 			super();
 		}
 

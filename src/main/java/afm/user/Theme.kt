@@ -13,9 +13,7 @@ enum class Theme(fileName: String) {
         stylesheet = "view/stylesheets/$fileName"
     }
 
-    override fun toString(): String {
-        return name[0] + name.substring(1).lowercase()
-    }
+    override fun toString(): String = name[0] + name.substring(1).lowercase()
 
     fun applyTo(pane: Pane) {
         pane.stylesheets[0] = stylesheet
