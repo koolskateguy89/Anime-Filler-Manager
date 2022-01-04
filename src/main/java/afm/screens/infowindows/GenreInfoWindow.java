@@ -3,7 +3,6 @@ package afm.screens.infowindows;
 import java.io.IOException;
 import java.util.EnumMap;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -201,11 +200,11 @@ public class GenreInfoWindow extends InfoWindow {
 	}
 
 	@Override @FXML
-	void closeWindow(ActionEvent event) {
+	void closeWindow() {
 		helpBtn.getStyleClass().setAll("button");
 		helpBtn.setMouseTransparent(false);
 
-		super.closeWindow(event);
+		super.closeWindow();
 
 		// allow main screen to receive input again
 		Main.getStage().removeEventFilter(ALL_EVENTS, IGNORE_EVENT);

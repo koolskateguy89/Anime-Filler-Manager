@@ -2,7 +2,6 @@ package afm.screens.version2_welcome;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
@@ -27,17 +26,17 @@ public class WelcomeScreen extends VBox {
 	}
 
 	@FXML
-	void searchButtonPressed(ActionEvent event) {
+	void searchButtonPressed() {
 		initMain().menu.openSearchScreenFromWelcome();
 	}
 
 	@FXML
-	void myListButtonPressed(ActionEvent event) {
+	void myListButtonPressed() {
 		initMain().menu.openMyListScreenFromWelcome();
 	}
 
 	@FXML
-	void toWatchButtonPressed(ActionEvent event) {
+	void toWatchButtonPressed() {
 		initMain().menu.openToWatchScreenFromWelcome();
 	}
 

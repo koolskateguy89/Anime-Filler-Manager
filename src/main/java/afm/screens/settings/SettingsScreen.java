@@ -14,7 +14,6 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -188,13 +187,13 @@ public class SettingsScreen extends Pane {
 	}
 
 	@FXML
-	void insertion(ActionEvent event) {
+	void insertion() {
 		Settings.invert(NAME_ORDER);
 		nameCheckBox.setSelected(!insertionCheckBox.isSelected());
 	}
 
 	@FXML
-	void name(ActionEvent event) {
+	void name() {
 		Settings.invert(NAME_ORDER);
 		insertionCheckBox.setSelected(!nameCheckBox.isSelected());
 	}
@@ -217,7 +216,7 @@ public class SettingsScreen extends Pane {
 	}
 
 	@FXML
-	void addDatabase(ActionEvent event) {
+	void addDatabase() {
 		FileChooser fc = getDatabaseFileChooser();
 
 		List<File> databases = fc.showOpenMultipleDialog(Main.getStage());
@@ -245,7 +244,7 @@ public class SettingsScreen extends Pane {
 	 * separate thread
 	 */
 	@FXML
-	void createDatabase(ActionEvent event) {
+	void createDatabase() {
 		FileChooser fc = getDatabaseFileChooser();
 
 		File file = fc.showSaveDialog(Main.getStage());
@@ -276,7 +275,7 @@ public class SettingsScreen extends Pane {
 	}
 
 	@FXML
-	void clearDatabases(ActionEvent event) {
+	void clearDatabases() {
 		var items = databaseBox.getItems();
 		items.clear();
 		items.add("Internal");
@@ -286,7 +285,7 @@ public class SettingsScreen extends Pane {
 	}
 
 	@FXML
-	void resetToDefault(ActionEvent event) {
+	void resetToDefault() {
 		Settings.reset();
 
 		nameCheckBox.setSelected(false);

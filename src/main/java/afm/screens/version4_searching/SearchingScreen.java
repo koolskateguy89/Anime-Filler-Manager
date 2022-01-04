@@ -12,7 +12,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -82,7 +81,7 @@ public class SearchingScreen extends Pane {
 	}
 
 	@FXML
-	void openResults(ActionEvent event) {
+	void openResults() {
 		stopBlinking = true;
 		Main.getInstance().moveToResultsScreen(results);
 	}

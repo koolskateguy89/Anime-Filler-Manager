@@ -5,7 +5,6 @@ import static afm.utils.Utils.sleep;
 import java.io.IOException;
 
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -27,6 +26,7 @@ import afm.screens.version8_custom.CustomScreen;
 import afm.user.Settings;
 import afm.utils.FactsKt;
 import afm.utils.Utils;
+
 import kotlin.Pair;
 
 public class StartScreen extends Pane {
@@ -83,7 +83,7 @@ public class StartScreen extends Pane {
 	// When startBtn is first pressed, load all elements first,
 	// otherwise, move to welcome screen
 	@FXML
-	void moveToWelcomeScreen(ActionEvent event) {
+	void moveToWelcomeScreen() {
 		if (!loadTask.isRunning() && !loadTask.isDone()) {
 			// Bind progressBar progress to the loadTask
 			progressBar.progressProperty().bind(loadTask.progressProperty());

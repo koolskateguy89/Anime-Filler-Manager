@@ -69,21 +69,21 @@ public class ResultInfoWindow extends InfoWindow {
 
 	// these also move it to MyList/ToWatch if it was in the other
 	@FXML
-	void addToMyList(ActionEvent event) {
+	void addToMyList() {
 		ToWatch.remove(anime);
 		MyList.add(anime);
 		setStyleClass(MLbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
-		closeWindow(null);
+		closeWindow();
 	}
 
 	@FXML
-	void addToToWatch(ActionEvent event) {
+	void addToToWatch() {
 		MyList.remove(anime);
 		ToWatch.add(anime);
 		setStyleClass(TWbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
-		closeWindow(null);
+		closeWindow();
 	}
 
 	private void makeBothBtnsTransparent() {
@@ -92,10 +92,10 @@ public class ResultInfoWindow extends InfoWindow {
 	}
 
 	@Override @FXML
-	void closeWindow(ActionEvent event) {
+	void closeWindow() {
 		infoBtn.getStyleClass().setAll("button");
 		infoBtn.setOnAction(eventHandler);
 
-		super.closeWindow(event);
+		super.closeWindow();
 	}
 }

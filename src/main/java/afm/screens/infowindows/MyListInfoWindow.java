@@ -82,17 +82,17 @@ public class MyListInfoWindow extends InfoWindow {
 	}
 
 	@FXML
-	void move(ActionEvent event) {
+	void move() {
 		MyList.remove(anime);
 		ToWatch.add(anime);
-		closeWindow(null);
+		closeWindow();
 	}
 
 	@Override @FXML
-	void closeWindow(ActionEvent event) {
+	void closeWindow() {
 		infoBtn.getStyleClass().setAll("button");
 		infoBtn.setOnAction(eventHandler);
 
-		super.closeWindow(event);
+		super.closeWindow();
 	}
 }

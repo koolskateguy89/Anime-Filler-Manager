@@ -5,7 +5,6 @@ import static afm.utils.Utils.setStyleClass;
 import java.io.IOException;
 import java.util.List;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -61,55 +60,55 @@ public final class Menu extends VBox {
 	}
 
 	@FXML
-	void searchButtonPressed(ActionEvent event) {
+	void searchButtonPressed() {
 		resetAllStyles();
 		setStyleClass(searchBtn, SELECTED_MENU);
 		main.openSearchScreen();
 	}
 
 	@FXML
-	void myListButtonPressed(ActionEvent event) {
+	void myListButtonPressed() {
 		resetAllStyles();
 		setStyleClass(myListBtn, SELECTED_MENU);
 		main.openMyListScreen();
 	}
 
 	@FXML
-	void toWatchButtonPressed(ActionEvent event) {
+	void toWatchButtonPressed() {
 		resetAllStyles();
 		setStyleClass(toWatchBtn, SELECTED_MENU);
 		main.openToWatchScreen();
 	}
 
 	@FXML
-	void customButtonPressed(ActionEvent event) {
+	void customButtonPressed() {
 		resetAllStyles();
 		setStyleClass(customBtn, SELECTED_MENU);
 		main.openCustomScreen();
 	}
 
 	@FXML
-	void openHomeScreen(ActionEvent event) {
+	void openHomeScreen() {
 		resetAllStyles();
 		main.moveToWelcomeScreen();
 	}
 
 	@FXML
-	void openSettingsScreen(ActionEvent event) {
+	void openSettingsScreen() {
 		resetAllStyles();
 		setStyleClass(settingsBtn, List.of("button", "Selected"));
 		main.openSettingsScreen();
 	}
 
 	public void openSearchScreenFromWelcome() {
-		searchButtonPressed(null);
+		searchButtonPressed();
 	}
 
 	public void openMyListScreenFromWelcome() {
-		myListButtonPressed(null);
+		myListButtonPressed();
 	}
 
 	public void openToWatchScreenFromWelcome() {
-		toWatchButtonPressed(null);
+		toWatchButtonPressed();
 	}
 }

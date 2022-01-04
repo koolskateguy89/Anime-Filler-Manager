@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -95,13 +94,13 @@ public class CustomScreen extends GridPane {
 	}
 
 	@FXML
-	void clearGenres(ActionEvent event) {
+	void clearGenres() {
 		genreCombo.getCheckModel().clearChecks();
 	}
 
 	// When user pressed reset button, reset contents of all fields
 	@FXML
-	void resetFields(ActionEvent event) {
+	void resetFields() {
 		nameField.clear();
 
 		studioField.clear();
@@ -109,7 +108,7 @@ public class CustomScreen extends GridPane {
 		totalEpField.clear();
 		currEpField.clear();
 
-		clearGenres(null);
+		clearGenres();
 		sznCombo.getSelectionModel().clearSelection();
 		yearCombo.getSelectionModel().clearSelection();
 
@@ -171,7 +170,7 @@ public class CustomScreen extends GridPane {
 	}
 
 	@FXML
-	void tryAddToMyList(ActionEvent event) {
+	void tryAddToMyList() {
 		if (cantAdd()) return;
 
 		// anime position is set by MyList
@@ -200,11 +199,11 @@ public class CustomScreen extends GridPane {
 		}
 
 		MyList.add(anime);
-		resetFields(null);
+		resetFields();
 	}
 
 	@FXML
-	void tryAddToToWatch(ActionEvent event) {
+	void tryAddToToWatch() {
 		if (cantAdd()) return;
 
 		// anime position is set by ToWatch
@@ -233,6 +232,6 @@ public class CustomScreen extends GridPane {
 		}
 
 		ToWatch.add(anime);
-		resetFields(null);
+		resetFields();
 	}
 }

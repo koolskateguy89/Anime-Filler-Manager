@@ -2,7 +2,6 @@ package afm.screens.infowindows;
 
 import java.util.HashSet;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -92,7 +91,7 @@ public abstract class InfoWindow extends Stage {
 		addWindow(this);
 
 		getIcons().add(new Image("icons/Info.png"));
-		setOnCloseRequest(windowEvent -> closeWindow(null));
+		setOnCloseRequest(windowEvent -> closeWindow());
 		setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
 
 		//initOwner(Main.getStage()); // this always on top of primaryStage
@@ -154,7 +153,7 @@ public abstract class InfoWindow extends Stage {
 	}
 
 	@FXML
-	void openFillers(ActionEvent event) {
+	void openFillers() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.initOwner(this);
 		Utils.wrapAlertText(alert);
@@ -193,26 +192,26 @@ public abstract class InfoWindow extends Stage {
 	}
 
 	@FXML
-	void remove(ActionEvent event) {
+	void remove() {
 		MyList.remove(anime);
 		ToWatch.remove(anime);
-		closeWindow(null);
+		closeWindow();
 	}
 
 	@FXML
-	void copyURL(ActionEvent event) {
+	void copyURL() {
 		Utils.copyToClipboard(anime.getURL());
 		NotificationFactory.showInfoNotification("Copied URL to clipboard!");
 	}
 
 	@FXML
-	void copyName(ActionEvent event) {
+	void copyName() {
 		Utils.copyToClipboard(anime.getName());
 		NotificationFactory.showInfoNotification("Copied name to clipboard!");
 	}
 
 	@FXML
-	void openBrowser(ActionEvent event) {
+	void openBrowser() {
 		String url = anime.getURL();
 		if (url == null) return;
 
@@ -227,7 +226,7 @@ public abstract class InfoWindow extends Stage {
 	}
 
 	@FXML
-	void closeWindow(ActionEvent event) {
+	void closeWindow() {
 		if (imageStage != null)
 			imageStage.close();
 
