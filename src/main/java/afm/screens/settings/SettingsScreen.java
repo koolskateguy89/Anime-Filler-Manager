@@ -21,9 +21,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -159,7 +159,8 @@ public class SettingsScreen extends Pane {
 		databaseBox.getItems().add("Internal");
 		databaseBox.getItems().addAll(Settings.getDatabaseUrls());
 
-		databaseBox.setOnAction(event -> formatDatabaseBox());
+		databaseBox.setOnMouseClicked(event -> formatDatabaseBox());
+		//databaseBox.setOnAction(event -> formatDatabaseBox());
 
 		databaseBox.valueProperty().bindBidirectional(Settings.selectedDatabaseProperty);
 
@@ -265,16 +266,13 @@ public class SettingsScreen extends Pane {
 		databaseBox.setValue(url);
 	}
 
-	// TODO: 'fix' this (make text right aligned)
 	private void formatDatabaseBox() {
 		var children = databaseBox.getChildrenUnmodifiable();
 		if (children.isEmpty())
 			return;
 
 		Label label = (Label) children.get(0);
-		label.setTextAlignment(TextAlignment.RIGHT);
-		//label.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-		//label.setAlignment(Pos.CENTER_RIGHT);
+		label.setTextOverrun(OverrunStyle.LEADING_ELLIPSIS);
 	}
 
 	@FXML
