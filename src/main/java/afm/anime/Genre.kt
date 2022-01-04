@@ -2,130 +2,82 @@ package afm.anime
 
 import afm.utils.splitByCapitals
 
-
-// TODO: rename to smthn better, it's something that can be used to search
-sealed interface GenreType {
-    val id: Int
-    val name: String  // defined by enum
-
-    companion object {
-        init {
-        }
-    }
+enum class GenreType {
+    NORMAL, DEMOGRAPHIC, THEME;
 }
 
-
-// TODO: Demographic & Theme
-/*
-Might just keep demo & theme in here. Not sure whether to split them up like when showing search results show
-them separately. Actually it's probably better to keep them here because some don't have a theme/demo.
- */
-enum class Genre(override val id: Int, private val info: String? = null) : GenreType {
-
+enum class Genre(val id: Int,
+                 val type: GenreType = GenreType.NORMAL,
+                 @get:JvmName("isExplicit") val explicit: Boolean = false) {
     //<editor-fold desc="Genres">
     Action(1),
     Adventure(2),
     AvantGarde(5),
     AwardWinning(46),
     BoysLove(28),
-    Cars(3),  // Theme
+    Cars(3, GenreType.THEME),  // Theme
     Comedy(4),
-    Demons(6),  // Theme
+    Demons(6, GenreType.THEME),  // Theme
     Drama(8),
-    Ecchi(9, "(18+)"),
-    Erotica(49, "(18+)"),
+    Ecchi(9, explicit = true),
+    Erotica(49, explicit = true),
     Fantasy(10),
-    Game(11),  // Theme
+    Game(11, GenreType.THEME),  // Theme
     GirlsLove(26),
     Gourmet(47),
-    Harem(35),  // Theme
-    Hentai(12, "(18+)"),
-    Historical(13),  // Theme
+    Harem(35, GenreType.THEME),  // Theme
+    Hentai(12, explicit = true),
+    Historical(13, GenreType.THEME),  // Theme
     Horror(14),
-    Josei(43),  // Demographics
-    Kids(15),  // Demographics
+    Josei(43, GenreType.DEMOGRAPHIC),  // Demographics
+    Kids(15, GenreType.DEMOGRAPHIC),  // Demographics
     Magic(16),
     MartialArts(17),
-    Mecha(18),  // Theme
-    Military(38),  // Theme
-    Music(19),  // Theme
+    Mecha(18, GenreType.THEME),  // Theme
+    Military(38, GenreType.THEME),  // Theme
+    Music(19, GenreType.THEME),  // Theme
     Mystery(7),
-    Parody(20),  // Theme
-    Police(39),  // Theme
-    Psychological(40),  // Theme
+    Parody(20, GenreType.THEME),  // Theme
+    Police(39, GenreType.THEME),  // Theme
+    Psychological(40, GenreType.THEME),  // Theme
     Romance(22),
-    Samurai(21),  // Theme
-    School(23),  // Theme
+    Samurai(21, GenreType.THEME),  // Theme
+    School(23, GenreType.THEME),  // Theme
     SciFi(24),
-    Seinen(42),  // Demographics
-    Shoujo(25),  // Demographics
-    Shounen(27),  // Demographics
+    Seinen(42, GenreType.DEMOGRAPHIC),  // Demographics
+    Shoujo(25, GenreType.DEMOGRAPHIC),  // Demographics
+    Shounen(27, GenreType.DEMOGRAPHIC),  // Demographics
     SliceOfLife(36),
-    Space(29),  // Theme
+    Space(29, GenreType.THEME),  // Theme
     Sports(30),
-    SuperPower(31),  // Theme
+    SuperPower(31, GenreType.THEME),  // Theme
     Supernatural(37),
     Suspense(41),
-    Vampire(32),  // Theme
-    WorkLife(48);
+    Vampire(32, GenreType.THEME),  // Theme
+    WorkLife(48),
+    ;
     //</editor-fold>
 
-    override fun toString(): String {
-        val sp = name.splitByCapitals()
-
-        return sp.joinToString("-") +
-                if (info == null) "" else " $info"
-    }
+    override fun toString(): String = name.splitByCapitals().joinToString("-") +
+            if (explicit) " (18+)" else ""
 
     companion object {
-        fun parseGenreFromToString(toString: String?): Genre? {
-            if (toString == null)
-                return null
-
-            return values().firstOrNull {
+        fun parseGenreFromToString(toString: String?): Genre? =
+            if (toString == null) null else values().firstOrNull {
                 // ignore case for safety
                 toString.equals(it.toString(), ignoreCase = true)
             }
-        }
 
         @JvmStatic
-        fun getGenre(name: String?): Genre? {
-            if (name == null)
-                return null
-
-            return values().firstOrNull {
+        fun valueOfFromName(name: String?): Genre? =
+            if (name == null) null else values().firstOrNull {
                 // ignore case for safety
                 name.equals(it.name, ignoreCase = true)
             }
+
+        @JvmStatic
+        fun valuesOfType(type: GenreType): List<Genre> = values().filter {
+            it.type == type
         }
     }
-}
-
-private enum class Theme(override val id: Int) : GenreType {
-    Cars(3),
-    Demons(6),
-    Game(11),
-    Harem(35),
-    Historical(13),
-    Mecha(18),
-    Military(38),
-    Music(19),
-    Parody(20),
-    Police(39),
-    Psychological(40),
-    Samurai(21),
-    School(23),
-    Space(29),
-    SuperPower(31),
-    Vampire(32),
-    ;
-}
-
-private enum class Demographic(override val id: Int) : GenreType {
-    Josei(43),
-    Kids(15),
-    Seinen(42),
-    Shoujo(25),
-    Shounen(27),
-    ;
 }

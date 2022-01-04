@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<fx:root alignment="CENTER" prefHeight="445.0" prefWidth="588.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" prefHeight="445.0" prefWidth="588.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="GridPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="-Infinity" prefWidth="15.0" />
 		<ColumnConstraints hgrow="SOMETIMES" maxWidth="156.20001220703125" minWidth="10.0" prefWidth="90.00003662109376" />
@@ -41,7 +41,14 @@
 		<Label prefHeight="18.0" prefWidth="118.0" text="Name:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 		<StackPane fx:id="namePane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 		<Label prefHeight="18.0" prefWidth="118.0" text="Genre(s):" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-		<CheckComboBox fx:id="genreCombo" prefHeight="26.0" prefWidth="251.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+		<CheckComboBox fx:id="genreCombo" prefHeight="26.0" prefWidth="251.0" title="Select genre(s)" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+	      <CheckComboBox fx:id="demoCombo" prefHeight="26.0" prefWidth="162.0" title="Select demographic(s)" />
+	      <CheckComboBox fx:id="themeCombo" prefHeight="26.0" prefWidth="144.0" title="Select theme(s)" />
+         <padding>
+            <Insets top="2.0" />
+         </padding>
+      </HBox>
 		<Button fx:id="genreHelpBtn" alignment="CENTER" mnemonicParsing="false" onAction="#openGenreInfoWindow" prefHeight="26.0" prefWidth="18.0" text="?" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
 			<GridPane.margin>
 				<Insets />
@@ -67,7 +74,7 @@
 				</Button>
 			</children>
 		</HBox>
-		<Button alignment="CENTER" mnemonicParsing="false" onAction="#addAllYear" prefHeight="26.0" prefWidth="61.0" text="Add all" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+		<Button alignment="CENTER" mnemonicParsing="false" onAction="#addAllFromYear" prefHeight="26.0" prefWidth="61.0" text="Add all" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5">
 			<GridPane.margin>
 				<Insets left="13.0" />
 			</GridPane.margin>

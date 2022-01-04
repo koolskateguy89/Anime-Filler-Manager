@@ -1,6 +1,7 @@
 package afm.screens.version3_search;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
@@ -10,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -30,6 +30,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import afm.Main;
 import afm.anime.Genre;
+import afm.anime.GenreType;
 import afm.anime.Search;
 import afm.anime.Season;
 import afm.screens.infowindows.GenreInfoWindow;
@@ -52,6 +53,10 @@ public final class SearchScreen extends GridPane {
 
 	@FXML
 	private CheckComboBox<Genre> genreCombo;
+	@FXML
+	private CheckComboBox<Genre> demoCombo;
+	@FXML
+	private CheckComboBox<Genre> themeCombo;
 	@FXML
 	private Button genreHelpBtn;
 
@@ -94,18 +99,12 @@ public final class SearchScreen extends GridPane {
 
 		minEpsField.textProperty().addListener(Utils.onlyAllowIntegersListener());
 
-
-		genreCombo.setTitle("Select genre(s)");
-		genreCombo.getItems().addAll(Genre.values());
-
-		// use the title as prompt text
-		genreCombo.getCheckModel().getCheckedItems().addListener((ListChangeListener<Genre>) change -> {
-			if (change.getList().isEmpty()) {
-				genreCombo.setTitle("Select genre(s)");
-			} else {
-				genreCombo.setTitle(null);
-			}
-		});
+		genreCombo.getItems().addAll(Genre.valuesOfType(GenreType.NORMAL));
+		useTitleAsPromptText(genreCombo);
+		demoCombo.getItems().addAll(Genre.valuesOfType(GenreType.DEMOGRAPHIC));
+		useTitleAsPromptText(demoCombo);
+		themeCombo.getItems().addAll(Genre.valuesOfType(GenreType.THEME));
+		useTitleAsPromptText(themeCombo);
 
 		final var seasonItems = sznCombo.getItems();
 		seasonItems.add("Spring");
@@ -125,7 +124,7 @@ public final class SearchScreen extends GridPane {
 	}
 
 	@FXML
-	void addSeason(ActionEvent event) {
+	void addSeason() {
 		final String s = sznCombo.getValue();
 		final Integer year = yearCombo.getValue();
 
@@ -137,7 +136,7 @@ public final class SearchScreen extends GridPane {
 
 	// Add all Seasons in the currently selected year
 	@FXML
-	void addAllYear(ActionEvent event) {
+	void addAllFromYear() {
 		final Integer year = yearCombo.getValue();
 
 		if (year == null)
@@ -184,45 +183,39 @@ public final class SearchScreen extends GridPane {
 	}
 
 	@FXML
-	void openGenreInfoWindow(ActionEvent event) {
+	void openGenreInfoWindow() {
 		GenreInfoWindow.open(genreHelpBtn);
 	}
 
 	@FXML
-	void clearGenres(ActionEvent event) {
+	void clearGenres() {
 		genreCombo.getCheckModel().clearChecks();
+		demoCombo.getCheckModel().clearChecks();
+		themeCombo.getCheckModel().clearChecks();
 	}
 
 	@FXML
-	void clearSeasons(ActionEvent event) {
+	void clearSeasons() {
 		sznCombo.setValue(null);
 		yearCombo.setValue(null);
 		seasonSet.clear();
 	}
 
-	// When user pressed reset button, reset contents of all fields
 	@FXML
-	void clearFields(ActionEvent event) {
+	void clearFields() {
 		nameField.clear();
-
 		studioField.clear();
 
-		minEpsField.clear();
-
-		genreCombo.getCheckModel().clearChecks();
-		sznCombo.getSelectionModel().clearSelection();
-		yearCombo.getSelectionModel().clearSelection();
+		clearGenres();
+		clearSeasons();
 
 		minEpsField.clear();
-
-		clearGenres(null);
-		clearSeasons(null);
 
 		// FIXME: comboBox promptText isn't showing after reset (if smthn was selected)
 	}
 
 	@FXML
-	void startSearchProcess(ActionEvent event) {
+	void startSearchProcess() {
 		Search search = new Search();
 
 		if (!confirmGenres(search))
@@ -243,11 +236,14 @@ public final class SearchScreen extends GridPane {
 		}
 
 		Main.getInstance().moveToSearchingScreen(search);
-		clearFields(null);
+		clearFields();
 	}
 
 	private boolean confirmGenres(Search search) {
-		var genres = genreCombo.getCheckModel().getCheckedItems();
+		List<Genre> genres = new ArrayList<Genre>();
+		genres.addAll(genreCombo.getCheckModel().getCheckedItems());
+		genres.addAll(demoCombo.getCheckModel().getCheckedItems());
+		genres.addAll(themeCombo.getCheckModel().getCheckedItems());
 
 		if (genres.isEmpty()) {
 			Alert needGenre = new Alert(AlertType.ERROR, "At least 1 genre is needed to search!");
@@ -307,5 +303,16 @@ public final class SearchScreen extends GridPane {
 			search.setStudio(studio.strip());
 
 		return true;
+	}
+
+	private static <T> void useTitleAsPromptText(CheckComboBox<T> comboBox) {
+		final String promptText = comboBox.getTitle();
+		comboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<T>) change -> {
+			if (change.getList().isEmpty()) {
+				comboBox.setTitle(promptText);
+			} else {
+				comboBox.setTitle(null);
+			}
+		});
 	}
 }
