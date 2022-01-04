@@ -15,6 +15,7 @@ import afm.Main;
 import afm.anime.Anime;
 import afm.user.Settings;
 
+// could make this Kotlin object with statics?
 public final class MyList {
 
 	// don't allow any instantiations of this to be made

@@ -1,7 +1,6 @@
 package afm.user
 
 import javafx.scene.layout.Pane
-import lombok.Getter
 
 // atm no Theme is applied to welcomeScreen
 enum class Theme(fileName: String) {
