@@ -4,7 +4,6 @@ import static afm.utils.Utils.sleep;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -32,7 +31,7 @@ public class SearchingScreen extends Pane {
 
 	private Search search;
 
-	private final List<Anime> results = Collections.synchronizedList(new ArrayList<>());
+	private final List<Anime> results = new ArrayList<>();
 
 	private ObservableList<Node> circles;
 
