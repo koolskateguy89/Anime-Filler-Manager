@@ -181,8 +181,8 @@ public class Search {
 
 			if (removeBecauseName(animeName)) {
 				itG.next();
-				itS.next();
 				itI.next();
+				itS.next();
 				itD.next();
 				itIMGS.next();
 				continue;
@@ -194,18 +194,24 @@ public class Search {
 			int id = getIdFromURl(nameElem.attr("abs:href"));
 			builder.setId(id);
 
-			EnumSet<Genre> genreSet = EnumSet.noneOf(Genre.class);
-			Thread genreThread = new Thread(() -> {
-				String[] genreArray = itG.next().text().split(" ");
-				if (genreArray.length == 1 && genreArray[0].isEmpty()) {
-					// FIXME: anime with no genre but demographic/theme gets here
-					System.err.println(animeName);
-				} else
-					genreSet.addAll(getGenreSet(genreArray));
-			});
-			genreThread.setName("Genre thread");
-			genreThread.setDaemon(true);
-			genreThread.start();
+			String[] genreArray = itG.next().text().split(" ");
+			final EnumSet<Genre> genreSet;
+			if (genreArray.length == 1 && genreArray[0].isEmpty()) // anime with no normal genre, only demographic/theme
+				genreSet = EnumSet.noneOf(Genre.class);
+			else
+				genreSet = getGenreSet(genreArray);
+
+			String synopsis = itI.next().text();
+			builder.setInfo(synopsis);
+			// TODO: check for themes & demographics
+
+			if (removeBecauseGenres(genreSet)) {
+				itS.next();
+				itD.next();
+				itIMGS.next();
+				continue;
+			}
+			builder.setGenres(genreSet);
 
 
 			String[] sources = itS.next().text().split(" ");
@@ -219,8 +225,6 @@ public class Search {
 			}
 			String animeStudio = sb.toString();
 			if (removeBecauseStudio(animeStudio)) {
-				genreThread.interrupt();
-				itI.next();
 				itD.next();
 				itIMGS.next();
 				continue;
@@ -228,7 +232,7 @@ public class Search {
 			builder.setStudio(animeStudio);
 
 			Integer episodes = null;
-			for (i = sources.length - 1; i >= 0; --i) {
+			for (i = sources.length - 1; i >= 0; i--) {
 				String eps = sources[i];
 				if (Utils.isNumeric(eps)) {
 					episodes = Integer.parseInt(eps);
@@ -240,27 +244,17 @@ public class Search {
 			}
 			// (it checks for null: if not null, don't remove)
 			if (removeBecauseMinEps(episodes)) {
-				genreThread.interrupt();
-				itI.next();
 				itD.next();
 				itIMGS.next();
 				continue;
 			}
-
 			if (episodes == null)
 				episodes = Anime.NOT_FINISHED;
 			builder.setEpisodes(episodes);
 
 
-			// TODO: check for themes & demographics
-			String synopsis = itI.next().text();
-			builder.setInfo(synopsis);
-
-
-
 			Season season = Season.parseSeasonFromMALDate(itD.next().text());
 			if (removeBecauseSeason(season)) {
-				genreThread.interrupt();
 				itIMGS.next();
 				continue;
 			}
@@ -273,19 +267,6 @@ public class Search {
 			} catch (IllegalArgumentException | NullPointerException ignored) {
 				// no need to retry
 			}
-
-			builder.setCustom(false);
-
-			try {
-				genreThread.join();
-			} catch (InterruptedException ie) {
-				Thread.currentThread().interrupt();
-			}
-
-			if (removeBecauseGenres(genreSet)) {
-				continue;
-			}
-			builder.setGenres(genreSet);
 
 			// building the anime will find its fillers
 			result.add(builder.build());
@@ -335,7 +316,7 @@ public class Search {
 			if (genreName == null)
 				genreName = genreList[i];
 
-			genreSet.add(Genre.getGenre(genreName));
+			genreSet.add(Genre.valueOfFromName(genreName));
 		}
 
 		return genreSet;
