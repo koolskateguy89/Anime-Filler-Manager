@@ -1,4 +1,5 @@
 @file:JvmName("Utils")
+@file:JvmMultifileClass
 
 package afm.utils
 
@@ -9,22 +10,16 @@ import javafx.beans.property.Property
 import javafx.beans.property.StringProperty
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
-import javafx.css.Styleable
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.Button
 import javafx.scene.control.ButtonType
-import javafx.scene.control.TableCell
 import javafx.scene.control.TableColumn
 import javafx.scene.input.Clipboard
 import javafx.scene.input.ClipboardContent
-import javafx.scene.layout.Region
-import javafx.scene.text.Text
-import javafx.util.Callback
 import java.net.URL
 import java.util.Calendar
 import java.util.prefs.Preferences
-
 
 val UtilsJavaClass: Class<*> = object {}.javaClass.enclosingClass
 val classLoader: ClassLoader = object {}.javaClass.classLoader
@@ -92,43 +87,6 @@ fun onlyAllowIntegersListener(): ChangeListener<String?> =
 fun sleep(millis: Long) = Thread.sleep(millis)
 
 
-private fun TableColumn<*, *>.changeStyle(style: String) {
-    val newStyle = if (this.style?.isNotEmpty() == true)
-        "${this.style}; $style"
-    else
-        style
-
-    this.style = newStyle
-}
-
-fun TableColumn<*, *>.topCenterColumnAlignment() = changeStyle("-fx-alignment: TOP-CENTER")
-
-private fun TableColumn<*, *>.centerColumnAlignment() = changeStyle("-fx-alignment: CENTER")
-
-fun <T> TableColumn<T, String>.wrapColText() {
-    // Need to use a custom cell factory in order to be able to make it wrap text
-    cellFactory = Callback {
-        object : TableCell<T, String?>() {
-            val graphicText = Text()
-
-            override fun updateItem(item: String?, empty: Boolean) {
-                super.updateItem(item, empty)
-                text = null
-
-                if (empty) {
-                    graphic = null
-                } else {
-                    graphicText.wrappingWidthProperty().bind(it.widthProperty())
-                    graphicText.textProperty().bind(itemProperty())
-                    prefHeight = Region.USE_COMPUTED_SIZE
-                    graphic = graphicText
-                }
-            }
-        }
-    }
-}
-
-
 fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : Property<Button> {
     override fun getName(): String {
         return name
@@ -161,11 +119,6 @@ fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : P
 }
 
 
-// make Alert wrap text: https://stackoverflow.com/a/36938061
-fun Alert.wrapAlertText() {
-    dialogPane.minHeight = Region.USE_PREF_SIZE
-}
-
 fun showAndWaitConfAlert(header: String?, content: String?): ButtonType {
     return Alert(AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO).run {
         initOwner(Main.getStage())
@@ -188,7 +141,7 @@ private fun generateColumn(name: String): TableColumn<Anime, Button> {
     return TableColumn<Anime, Button>(name).apply {
         isEditable = false
         isSortable = false
-        centerColumnAlignment()
+        style = "-fx-alignment: CENTER"
     }
 }
 
@@ -231,8 +184,4 @@ fun getRemoveCol(): TableColumn<Anime, Button> {
     return generateColumn("Remove").apply {
         prefWidth = 71.2000732421875
     }
-}
-
-fun Styleable.setStyleClass(styleClass: List<String>) {
-    this.styleClass.setAll(styleClass)
 }

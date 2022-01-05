@@ -72,7 +72,7 @@ private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
 private fun replaceNonAlphaNumericWithDash(s: String): String {
     val sb = StringBuilder()
 
-    // help with if multiple characters in a row are non-alphanumeric
+    // helper for multiple characters in a row are non-alphanumeric
     var lastWasNonAlpha = false
 
     for (ch in s) {
