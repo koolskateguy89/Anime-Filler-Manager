@@ -98,7 +98,6 @@ public class CustomScreen extends GridPane {
 		genreCombo.getCheckModel().clearChecks();
 	}
 
-	// When user pressed reset button, reset contents of all fields
 	@FXML
 	void resetFields() {
 		nameField.clear();
@@ -114,8 +113,6 @@ public class CustomScreen extends GridPane {
 
 		totalEpField.clear();
 		currEpField.clear();
-
-		// FIXME: comboBox promptText isn't showing after reset (if smthn was selected)
 	}
 
 	// can only add an anime if the anime has a name & genre
