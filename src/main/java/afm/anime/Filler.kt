@@ -1,12 +1,10 @@
 package afm.anime
 
-import afm.utils.isNumeric
 import com.google.common.collect.HashBasedTable
-import com.google.common.collect.Table
 import org.jsoup.Jsoup
 import java.io.IOException
 
-internal data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
+data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 
     operator fun contains(n: Int): Boolean = n in start..end
 
@@ -18,7 +16,7 @@ internal data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 
     companion object {
         // Start, End, Object
-        private val CACHE: Table<Int, Int, Filler> = HashBasedTable.create()
+        private val CACHE = HashBasedTable.create<Int, Int, Filler>()
 
         private fun of(start: Int, end: Int = start): Filler {
             var cached = CACHE[start, end]
@@ -58,49 +56,51 @@ internal data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
                     return emptyList()
 
                 val fillerStrings = episodeElements.last()!!.text().split(", ")
-                return fillerStrings.map(Filler::valueOf)
+                return fillerStrings.map(Companion::valueOf)
 
             } catch (io: IOException) {
                 // the page doesn't exist, likely the MAL name is different to the AFL name
                 return emptyList()
             }
         }
+    }
+}
 
-        private fun formatName(name: String): String {
-            // replace all non-alphanumeric characters with a dash (which is what AFL does)
-            var formattedName = replaceNonAlphaNumericWithDash(name.lowercase())
-            // name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
+private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
 
-            // get rid of leading/trailing dashes (due to formatting above)
-            fun String.trimDashes(): String = trim { it == '-' }
+// this took avg ~600ns vs regex ~6-7k ns
+private fun replaceNonAlphaNumericWithDash(s: String): String {
+    val sb = StringBuilder()
 
-            formattedName = formattedName.trimDashes()
-
-            // basically if name includes a year, remove it
-            if (formattedName.length > 6 && formattedName.takeLast(4).isNumeric()) {
-                formattedName = formattedName.dropLast(4)
-                formattedName = formattedName.trimDashes()
-            }
-
-            return formattedName
-        }
-
-        // this took avg ~600ns vs regex ~6-7k ns
-        private fun replaceNonAlphaNumericWithDash(s: String): String {
-            val sb = StringBuilder()
-
-            // help with if multiple characters in a row are non-alphanumeric
-            var lastWasNonAlpha = false
-            for (ch in s) {
-                if (ch.isLetterOrDigit()) {
-                    sb.append(ch)
-                    lastWasNonAlpha = false
-                } else if (!lastWasNonAlpha) {
-                    sb.append('-')
-                    lastWasNonAlpha = true
-                }
-            }
-            return sb.toString()
+    // help with if multiple characters in a row are non-alphanumeric
+    var lastWasNonAlpha = false
+    for (ch in s) {
+        if (ch.isLetterOrDigit()) {
+            sb.append(ch)
+            lastWasNonAlpha = false
+        } else if (!lastWasNonAlpha) {
+            sb.append('-')
+            lastWasNonAlpha = true
         }
     }
+    return sb.toString()
+}
+
+private fun formatName(name: String): String {
+    // replace all non-alphanumeric characters with a dash (which is what AFL does)
+    var formattedName = replaceNonAlphaNumericWithDash(name.lowercase())
+    // name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
+
+    // get rid of leading/trailing dashes (due to formatting above)
+    fun String.trimDashes(): String = trim { it == '-' }
+
+    formattedName = formattedName.trimDashes()
+
+    // basically if name includes a year, remove it
+    if (formattedName.length > 6 && formattedName.takeLast(4).isNumeric()) {
+        formattedName = formattedName.dropLast(4)
+        formattedName = formattedName.trimDashes()
+    }
+
+    return formattedName
 }
