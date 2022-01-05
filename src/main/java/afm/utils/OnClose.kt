@@ -1,5 +1,6 @@
 package afm.utils
 
+import afm.database.Database
 import afm.user.Settings
 
 object OnClose : Thread() {
@@ -12,7 +13,7 @@ object OnClose : Thread() {
     // Save Settings preferences & Save MyList & ToWatch into database
     override fun run() {
         Settings.save()
-        afm.database.saveAll()
+        Database.saveAll()
     }
 
 }
