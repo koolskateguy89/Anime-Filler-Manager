@@ -4,6 +4,19 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/774d8a80335d28beb533/maintainability)](https://codeclimate.com/github/koolskateguy89/Anime-Filler-Manager/maintainability)
 [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/koolskateguy89/Anime-Filler-Manager.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/koolskateguy89/Anime-Filler-Manager/context:java)
 
+
+## modules-split TODO
+
+### Figure out
+
+- Now `mvn package` is very slow (~15s -> ~37s)
+- Splitting functionality into diff. modules?
+  - figure out how to get that working well
+    - Maven super POM/BOM?
+    - If using `mvn install` on packages, running with IntelliJ on main package
+      may not use the most up to date 'version' of other packages 
+- Filler going to be its own actual API? i.e. project
+
 ## Table of Contents
 
 - [Introduction](#introduction)
