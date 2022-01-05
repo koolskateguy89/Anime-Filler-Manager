@@ -75,7 +75,7 @@
             </Label>
          </children>
       </VBox>
-      <PropertySheet fx:id="sheet" layoutY="65.0" prefHeight="188.0" prefWidth="393.0" />
+      <PropertySheet fx:id="sheet" layoutY="65.0" mode="CATEGORY" prefHeight="188.0" prefWidth="393.0" />
 
    </children>
 </fx:root>

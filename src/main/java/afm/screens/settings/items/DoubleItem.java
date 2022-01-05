@@ -13,7 +13,7 @@ import afm.screens.settings.Category;
 public class DoubleItem extends Item {
 
 	@Getter
-	private final Class<?> type = double.class;
+	private final Class<Double> type = double.class;
 
 	@Getter
 	final DoubleProperty property = new SimpleDoubleProperty();

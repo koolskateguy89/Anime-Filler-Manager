@@ -13,7 +13,7 @@ import afm.screens.settings.Category;
 public class StringItem extends Item {
 
 	@Getter
-	private final Class<?> type = String.class;
+	private final Class<String> type = String.class;
 
 	@Getter
 	final StringProperty property = new SimpleStringProperty();

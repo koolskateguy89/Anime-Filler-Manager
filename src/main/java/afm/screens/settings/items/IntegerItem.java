@@ -13,7 +13,7 @@ import afm.screens.settings.Category;
 public class IntegerItem extends Item {
 
 	@Getter
-	private final Class<?> type = int.class;
+	private final Class<Integer> type = int.class;
 
 	@Getter
 	final IntegerProperty property = new SimpleIntegerProperty();

@@ -13,7 +13,7 @@ import afm.screens.settings.Category;
 public class BooleanItem extends Item {
 
 	@Getter
-	private final Class<?> type = boolean.class;
+	private final Class<Boolean> type = boolean.class;
 
 	@Getter
 	final BooleanProperty property = new SimpleBooleanProperty();

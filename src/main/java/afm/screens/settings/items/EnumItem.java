@@ -13,7 +13,7 @@ import afm.screens.settings.Category;
 public class EnumItem<E extends Enum<?>> extends Item {
 
 	@Getter
-	private final Class<?> type;
+	private final Class<E> type;
 
 	private final Class<E> clazz;
 
