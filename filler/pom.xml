@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>koolskateguy89</groupId>
+	<artifactId>afm-filler</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1</version>
+
+	<name>AFM</name>
+	<url>https://github.com/koolskateguy89/Anime-Filler-Manager</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<maven.compiler.release>17</maven.compiler.release>
+		<kotlin.version>1.5.31</kotlin.version>
+		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+		<main.class>afm.LauncherKt</main.class>
+
+		<lombok.version>1.18.22</lombok.version>
+		<reactive-jikan.version>1.0.2</reactive-jikan.version>
+		<guava.version>31.0.1-jre</guava.version>
+		<jsoup.version>1.14.3</jsoup.version>
+	</properties>
+
+	<dependencies>
+		<!--<editor-fold desc="Kotlin">-->
+		<!-- Kotlin -->
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib-jdk8</artifactId>
+			<version>${kotlin.version}</version>
+		</dependency>
+		<!--</editor-fold>-->
+
+		<!-- TODO: Jikan API Java wrapper -->
+		<dependency>
+			<groupId>net.sandrohc</groupId>
+			<artifactId>reactive-jikan</artifactId>
+			<version>${reactive-jikan.version}</version>
+		</dependency>
+
+		<!-- Google Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
+		<!-- jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Using Kotlin with Maven https://kotlinlang.org/docs/maven.html -->
+			<plugin>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-maven-plugin</artifactId>
+				<version>${kotlin.version}</version>
+
+				<executions>
+					<execution>
+						<id>compile</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>test-compile</id>
+						<goals>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

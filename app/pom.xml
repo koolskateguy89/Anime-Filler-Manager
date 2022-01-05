@@ -28,6 +28,12 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>koolskateguy89</groupId>
+			<artifactId>afm-filler</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Project Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
