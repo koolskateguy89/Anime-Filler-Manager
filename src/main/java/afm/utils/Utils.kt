@@ -4,7 +4,6 @@ package afm.utils
 
 import afm.Main
 import afm.anime.Anime
-import com.google.common.math.DoubleMath
 import javafx.beans.InvalidationListener
 import javafx.beans.property.Property
 import javafx.beans.property.StringProperty
@@ -73,27 +72,11 @@ fun String.splitByCapitals(): Array<String> {
 
 fun getFxmlUrl(fname: String): URL? = classLoader.getResource("view/$fname.fxml")
 
-fun String.isNumeric(): Boolean = when (toDoubleOrNull()) {
-    null -> false
-    else -> true
-}
+fun String.isNumeric(): Boolean = toDoubleOrNull() != null
 
-fun String.isInteger(): Boolean = when (toIntOrNull()) {
-    null -> false
-    else -> DoubleMath.isMathematicalInteger(toDouble())
-}
+fun toIntOrNull(s: String): Int? = s.toIntOrNull()
 
-fun String?.isStrictInteger(): Boolean {
-    if (this.isNullOrEmpty())
-        return false
-
-    for (c in this) {
-        if (!c.isDigit())
-            return false
-    }
-
-    return true
-}
+fun String?.isStrictInteger(): Boolean = !isNullOrEmpty() && all { it.isDigit() }
 
 // Stop user from typing any characters that aren't numeric
 fun onlyAllowIntegersListener(): ChangeListener<String?> =
@@ -101,7 +84,7 @@ fun onlyAllowIntegersListener(): ChangeListener<String?> =
         /* if (newVal.isNullOrEmpty())
             (obs as StringProperty).value = "0";
         else */
-        if (!newVal.isNullOrEmpty() && !newVal.isStrictInteger())
+        if (!newVal.isStrictInteger())
             (obs as StringProperty).value = oldVal
     }
 
@@ -118,13 +101,9 @@ private fun TableColumn<*, *>.changeStyle(style: String) {
     this.style = newStyle
 }
 
-fun topCenterColumnAlignment(col: TableColumn<*, *>) {
-    col.changeStyle("-fx-alignment: TOP-CENTER")
-}
+fun TableColumn<*, *>.topCenterColumnAlignment() = changeStyle("-fx-alignment: TOP-CENTER")
 
-fun centerColumnAlignment(col: TableColumn<*, *>) {
-    col.changeStyle("-fx-alignment: CENTER")
-}
+private fun TableColumn<*, *>.centerColumnAlignment() = changeStyle("-fx-alignment: CENTER")
 
 fun <T> TableColumn<T, String>.wrapColText() {
     // Need to use a custom cell factory in order to be able to make it wrap text
@@ -206,54 +185,54 @@ fun String.copyToClipboard() {
 
 
 private fun generateColumn(name: String): TableColumn<Anime, Button> {
-    val col = TableColumn<Anime, Button>(name)
-    col.isEditable = false
-    col.isSortable = false
-    centerColumnAlignment(col)
-    return col
+    return TableColumn<Anime, Button>(name).apply {
+        isEditable = false
+        isSortable = false
+        centerColumnAlignment()
+    }
 }
 
 fun getActionsCol(): TableColumn<Anime, Button> {
-    val col = TableColumn<Anime, Button>("Actions")
-    col.isEditable = false
-    col.isSortable = false
-    return col
+    return TableColumn<Anime, Button>("Actions").apply {
+        isEditable = false
+        isSortable = false
+    }
 }
 
 /* For ResultsScreen */
 
 fun getResultInfoCol(): TableColumn<Anime, Button> {
-    val infoCol = generateColumn("See Info")
-    infoCol.prefWidth = 101.60003662109375
-    return infoCol
+    return generateColumn("See Info").apply {
+        prefWidth = 101.60003662109375
+    }
 }
 
 fun getResultCol(name: String): TableColumn<Anime, Button> {
-    val col = generateColumn(name)
-    col.prefWidth = 76.5
-    return col
+    return generateColumn(name).apply {
+        prefWidth = 76.5
+    }
 }
 
 /* For MyListScreen & ToWatchScreen */
 
 fun getInfoCol(): TableColumn<Anime, Button> {
-    val infoCol = generateColumn("See Info")
-    infoCol.prefWidth = 75.20001220703125
-    return infoCol
+    return generateColumn("See Info").apply {
+        prefWidth = 75.20001220703125
+    }
 }
 
 fun getMoveCol(move: String): TableColumn<Anime, Button> {
-    val moveCol = generateColumn("Move to $move")
-    moveCol.prefWidth = 109.5999755859375
-    return moveCol
+    return generateColumn("Move to $move").apply {
+        prefWidth = 109.5999755859375
+    }
 }
 
 fun getRemoveCol(): TableColumn<Anime, Button> {
-    val moveCol = generateColumn("Remove")
-    moveCol.prefWidth = 71.2000732421875
-    return moveCol
+    return generateColumn("Remove").apply {
+        prefWidth = 71.2000732421875
+    }
 }
 
-fun setStyleClass(node: Styleable, styleClass: List<String>) {
-    node.styleClass.setAll(styleClass)
+fun Styleable.setStyleClass(styleClass: List<String>) {
+    this.styleClass.setAll(styleClass)
 }

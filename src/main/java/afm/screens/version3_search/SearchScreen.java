@@ -231,8 +231,10 @@ public final class SearchScreen extends GridPane {
 			search.setSeasons(seasonSet);
 
 		final String minEps = minEpsField.getText();
-		if (minEps != null && !minEps.isBlank() && Utils.isInteger(minEps)) {
-			search.setMinEpisodes(Integer.parseInt(minEps));
+		if (minEps != null && !minEps.isBlank()) {
+			Integer i = Utils.toIntOrNull(minEps);
+			if (i != null)
+				search.setMinEpisodes(i);
 		}
 
 		Main.getInstance().moveToSearchingScreen(search);
