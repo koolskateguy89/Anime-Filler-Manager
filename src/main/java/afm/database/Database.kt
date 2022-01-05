@@ -67,6 +67,12 @@ object Database {
             if (inJar)
                 "jdbc:sqlite::resource:databases/animeDB.db"
             else
+                /*
+                 * Using `Database.javaClass.getResource("/databases/animeDB.db").toString()`
+                 * will give the database in target/classes/..., but if not running in jar
+                 * (i.e. through IDE or something), really we want to modify the database in
+                 * src/main/resources for persistence as target/ is likely to be deleted.
+                 */
                 "jdbc:sqlite:src/main/resources/databases/animeDB.db"
         } else {
             "jdbc:sqlite:$url"
