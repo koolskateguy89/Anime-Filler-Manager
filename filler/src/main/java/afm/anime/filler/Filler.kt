@@ -1,4 +1,4 @@
-package afm.anime
+package afm.anime.filler
 
 import com.google.common.collect.HashBasedTable
 import org.jsoup.Jsoup
@@ -74,6 +74,7 @@ private fun replaceNonAlphaNumericWithDash(s: String): String {
 
     // help with if multiple characters in a row are non-alphanumeric
     var lastWasNonAlpha = false
+
     for (ch in s) {
         if (ch.isLetterOrDigit()) {
             sb.append(ch)

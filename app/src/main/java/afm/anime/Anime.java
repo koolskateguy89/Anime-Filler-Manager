@@ -24,9 +24,9 @@ import com.google.common.collect.Sets;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import afm.anime.filler.Filler;
 import afm.database.MyList;
 import afm.database.ToWatch;
-import afm.filler.Filler;
 import afm.screens.Menu;
 import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
