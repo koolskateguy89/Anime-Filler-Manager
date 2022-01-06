@@ -17,8 +17,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import com.google.common.base.Strings;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -120,9 +118,9 @@ public class Settings {
 		String selected = prefs.get(PrefKey.SELECTED_DB.key, "Internal");
 		selectedDatabaseProperty.setValue(selected);
 
-		String data = prefs.get(PrefKey.DATABASE.key, null);
+		String data = prefs.get(PrefKey.DATABASE.key, "");
 
-		if (Strings.isNullOrEmpty(data))
+		if (data.isEmpty())
 			return;
 
 		// pattern quote: https://stackoverflow.com/a/6374137
