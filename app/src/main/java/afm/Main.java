@@ -14,8 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import lombok.Getter;
-
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.screens.Menu;
@@ -37,8 +35,11 @@ import afm.utils.Utils;
 // https://github.com/koolskateguy89/Anime-Filler-Manager
 public class Main extends Application {
 
-	@Getter
 	private static Main instance;
+
+	public static Main getInstance() {
+		return instance;
+	}
 
 	public static Stage getStage() {
 		return instance.stage;

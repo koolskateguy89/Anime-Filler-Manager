@@ -1,5 +1,7 @@
 package afm.screens.infowindows;
 
+import static afm.database.DelegatesKt.MyListKt;
+import static afm.database.DelegatesKt.ToWatchKt;
 import static afm.utils.Utils.setStyleClass;
 
 import java.io.IOException;
@@ -11,8 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 import afm.anime.Anime;
-import afm.database.MyList;
-import afm.database.ToWatch;
 import afm.screens.Menu;
 import afm.utils.Utils;
 
@@ -57,7 +57,7 @@ public class ResultInfoWindow extends InfoWindow {
 	@FXML
 	void initialize() {
 		// Don't allow the anime to be moved if already present
-		if (MyList.contains(anime) || ToWatch.contains(anime)) {
+		if (MyListKt.contains(anime) || ToWatchKt.contains(anime)) {
 			myListBtn.setVisible(false);
 			toWatchBtn.setVisible(false);
 		}
@@ -70,8 +70,8 @@ public class ResultInfoWindow extends InfoWindow {
 	// these also move it to MyList/ToWatch if it was in the other
 	@FXML
 	void addToMyList() {
-		ToWatch.remove(anime);
-		MyList.add(anime);
+		ToWatchKt.remove(anime);
+		MyListKt.add(anime);
 		setStyleClass(MLbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
 		closeWindow();
@@ -79,8 +79,8 @@ public class ResultInfoWindow extends InfoWindow {
 
 	@FXML
 	void addToToWatch() {
-		MyList.remove(anime);
-		ToWatch.add(anime);
+		MyListKt.remove(anime);
+		ToWatchKt.add(anime);
 		setStyleClass(TWbtn, Menu.SELECTED);
 		makeBothBtnsTransparent();
 		closeWindow();

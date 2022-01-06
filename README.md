@@ -11,6 +11,7 @@
 
 - Now `mvn package` is very slow (~15s -> ~37s)
   - [x] Now ~22s for `clean package`
+  - [ ] NOW ~48s for `clean package` wtf ??????
 - Splitting functionality into diff. modules?
   - figure out how to get that working well
     - [x] Maven super POM/BOM?

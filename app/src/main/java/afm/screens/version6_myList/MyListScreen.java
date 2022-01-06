@@ -1,5 +1,7 @@
 package afm.screens.version6_myList;
 
+import static afm.database.DelegatesKt.MyListKt;
+
 import java.io.IOException;
 
 import javafx.collections.ObservableList;
@@ -13,7 +15,6 @@ import javafx.scene.layout.Pane;
 
 import afm.anime.Anime;
 import afm.anime.Season;
-import afm.database.MyList;
 import afm.utils.Utils;
 
 public class MyListScreen extends Pane {
@@ -43,7 +44,7 @@ public class MyListScreen extends Pane {
 	}
 
 	public void refreshTable() {
-		tableItems.setAll(MyList.values());
+		tableItems.setAll(MyListKt.values());
 	}
 
 	@FXML

@@ -148,8 +148,8 @@ object Database {
         else
             loadAll(task, start, end)
 
-        MyList.init()
-        ToWatch.init()
+        MyListKt.init()
+        ToWatchKt.init()
     }
 
     private val ds = SQLiteDataSource().apply {
@@ -279,7 +279,7 @@ object Database {
 
         statement.executeQuery("SELECT * FROM MyList").use {
             while (it.next()) {
-                MyList.addSilent(loadAnimeFromResultSet(it))
+                MyListKt.addSilent(loadAnimeFromResultSet(it))
                 task.incrementProgress(step)
             }
         }
@@ -300,7 +300,7 @@ object Database {
 
         statement.executeQuery("SELECT * FROM ToWatch").use {
             while (it.next()) {
-                ToWatch.addSilent(loadAnimeFromResultSet(it))
+                ToWatchKt.addSilent(loadAnimeFromResultSet(it))
                 task.incrementProgress(step)
             }
         }
@@ -332,7 +332,7 @@ object Database {
      * Save all anime that were added to MyList(runtime) in animeDB database.
      */
     private fun saveMyList(con: Connection) {
-        val removed = MyList.getRemovedSQL()
+        val removed = MyListKt.getRemovedSQL()
 
         if (removed.isNotEmpty()) {
             con.createStatement().use {
@@ -342,7 +342,7 @@ object Database {
         }
 
         // add anime in batches
-        val added = MyList.getAdded()
+        val added = MyListKt.getAdded()
         if (added.isNotEmpty()) {
             con.prepareStatement(MYLIST_INSERT_QUERY).use {
                 var batchSize = 0
@@ -370,7 +370,7 @@ object Database {
      * Save all anime that were added to ToWatch(runtime) in animeDB database.
      */
     private fun saveToWatch(con: Connection) {
-        val removed = ToWatch.getRemovedSQL()
+        val removed = ToWatchKt.getRemovedSQL()
 
         if (removed.isNotEmpty()) {
             con.createStatement().use {
@@ -380,7 +380,7 @@ object Database {
         }
 
         // add anime in batches
-        val added = ToWatch.getAdded()
+        val added = ToWatchKt.getAdded()
         if (added.isNotEmpty()) {
             con.prepareStatement(TOWATCH_INSERT_QUERY).use {
                 var batchSize = 0
@@ -403,7 +403,7 @@ object Database {
         }
     }
 
-    private fun loadAnimeFromResultSet(rs: ResultSet): Anime? {
+    private fun loadAnimeFromResultSet(rs: ResultSet): Anime {
         val builder = Anime.builder()
 
         rs.run {

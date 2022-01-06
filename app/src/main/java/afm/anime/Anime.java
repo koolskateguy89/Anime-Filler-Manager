@@ -1,5 +1,7 @@
 package afm.anime;
 
+import static afm.database.DelegatesKt.MyListKt;
+import static afm.database.DelegatesKt.ToWatchKt;
 import static afm.utils.Utils.makeButtonProperty;
 import static afm.utils.Utils.setStyleClass;
 import static java.util.Objects.requireNonNull;
@@ -25,8 +27,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import afm.anime.filler.Filler;
-import afm.database.MyList;
-import afm.database.ToWatch;
 import afm.screens.Menu;
 import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
@@ -193,7 +193,7 @@ public final class Anime {
 		}
 	}
 
-	@EqualsAndHashCode.Include @Getter private final String name;
+	@EqualsAndHashCode.Include @Getter public final String name;
 	@EqualsAndHashCode.Include @Getter private final String studio;
 	@EqualsAndHashCode.Include @Getter private final Season season;
 
@@ -400,19 +400,19 @@ public final class Anime {
 		});
 
 		// anime is already in MyList
-		if (MyList.contains(this)) {
+		if (MyListKt.contains(this)) {
 			setStyleClass(myListBtn, HIGHLIGHT);
 			myListBtn.setMouseTransparent(true);
 			toWatchBtn.setMouseTransparent(true);
 		// anime is already in ToWatch
-		} else if (ToWatch.contains(this)) {
+		} else if (ToWatchKt.contains(this)) {
 			setStyleClass(toWatchBtn, HIGHLIGHT);
 			toWatchBtn.setMouseTransparent(true);
 			myListBtn.setMouseTransparent(true);
 		// anime is in neither MyList nor ToWatch
 		} else {
 			myListBtn.setOnAction(event -> {
-				MyList.add(this);
+				MyListKt.add(this);
 				setStyleClass(myListBtn, HIGHLIGHT);
 
 				myListBtn.setMouseTransparent(true);
@@ -420,7 +420,7 @@ public final class Anime {
 			});
 
 			toWatchBtn.setOnAction(event -> {
-				ToWatch.add(this);
+				ToWatchKt.add(this);
 				setStyleClass(toWatchBtn, HIGHLIGHT);
 
 				toWatchBtn.setMouseTransparent(true);
@@ -462,12 +462,12 @@ public final class Anime {
 		});
 
 		myListRemoveBtn.setOnAction(event ->
-			MyList.remove(this)
+			MyListKt.remove(this)
 		);
 
 		moveToToWatchBtn.setOnAction(event -> {
-			MyList.remove(this);
-			ToWatch.add(this);
+			MyListKt.remove(this);
+			ToWatchKt.add(this);
 		});
 	}
 
@@ -501,12 +501,12 @@ public final class Anime {
 		});
 
 		toWatchRemoveBtn.setOnAction(event ->
-			ToWatch.remove(this)
+			ToWatchKt.remove(this)
 		);
 
 		moveToMyListBtn.setOnAction(event -> {
-			ToWatch.remove(this);
-			MyList.add(this);
+			ToWatchKt.remove(this);
+			MyListKt.add(this);
 		});
 	}
 

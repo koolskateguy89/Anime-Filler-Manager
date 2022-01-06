@@ -1,5 +1,8 @@
 package afm.screens.infowindows;
 
+import static afm.database.DelegatesKt.MyListKt;
+import static afm.database.DelegatesKt.ToWatchKt;
+
 import java.util.HashSet;
 
 import javafx.fxml.FXML;
@@ -19,8 +22,6 @@ import javafx.stage.Stage;
 
 import afm.Main;
 import afm.anime.Anime;
-import afm.database.MyList;
-import afm.database.ToWatch;
 import afm.user.Settings;
 import afm.user.Theme;
 import afm.utils.Browser;
@@ -175,10 +176,10 @@ public abstract class InfoWindow extends Stage {
 		while (result == refresh) {
 			anime.findFillers();
 
-			if (MyList.contains(anime))
-				MyList.add(anime);
-			else if (ToWatch.contains(anime))
-				ToWatch.add(anime);
+			if (MyListKt.contains(anime))
+				MyListKt.add(anime);
+			else if (ToWatchKt.contains(anime))
+				ToWatchKt.add(anime);
 
 			alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
 
@@ -193,8 +194,8 @@ public abstract class InfoWindow extends Stage {
 
 	@FXML
 	void remove() {
-		MyList.remove(anime);
-		ToWatch.remove(anime);
+		MyListKt.remove(anime);
+		ToWatchKt.remove(anime);
 		closeWindow();
 	}
 

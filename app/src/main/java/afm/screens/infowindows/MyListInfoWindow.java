@@ -1,5 +1,8 @@
 package afm.screens.infowindows;
 
+import static afm.database.DelegatesKt.MyListKt;
+import static afm.database.DelegatesKt.ToWatchKt;
+
 import java.io.IOException;
 
 import javafx.beans.property.StringProperty;
@@ -11,11 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import afm.anime.Anime;
-import afm.database.MyList;
-import afm.database.ToWatch;
 import afm.utils.Utils;
 
-// Refreshing of MyList table is done in MyList.add(Anime)
+// Refreshing of MyList table is done in MyListKt.add(Anime)
 // TODO: hyperlink to Anime-Update of next episode to watch
 public class MyListInfoWindow extends InfoWindow {
 
@@ -61,11 +62,11 @@ public class MyListInfoWindow extends InfoWindow {
 
 			if (newVal.isEmpty()) {
 				anime.setCurrEp(0);
-				MyList.add(anime);
+				MyListKt.add(anime);
 			} else if (Utils.isStrictInteger(newVal)) {
 				int newEps = Integer.parseInt(newVal);
 				anime.setCurrEp(newEps);
-				MyList.add(anime);
+				MyListKt.add(anime);
 
 				// re-set value in case there's a problem such as the episode being outside
 				// of the anime's episode range
@@ -82,8 +83,8 @@ public class MyListInfoWindow extends InfoWindow {
 
 	@FXML
 	void move() {
-		MyList.remove(anime);
-		ToWatch.add(anime);
+		MyListKt.remove(anime);
+		ToWatchKt.add(anime);
 		closeWindow();
 	}
 

@@ -1,5 +1,8 @@
 package afm.screens.infowindows;
 
+import static afm.database.DelegatesKt.MyListKt;
+import static afm.database.DelegatesKt.ToWatchKt;
+
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -9,11 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 import afm.anime.Anime;
-import afm.database.MyList;
-import afm.database.ToWatch;
 import afm.utils.Utils;
 
-//Refreshing of ToWatch table is done in ToWatch.add(Anime)
+//Refreshing of ToWatch table is done in ToWatchKt.add(Anime)
 public class ToWatchInfoWindow extends InfoWindow {
 
 	public static void open(Anime a, Button infoBtn) {
@@ -51,8 +52,8 @@ public class ToWatchInfoWindow extends InfoWindow {
 
 	@FXML
 	void move() {
-		ToWatch.remove(anime);
-		MyList.add(anime);
+		ToWatchKt.remove(anime);
+		MyListKt.add(anime);
 		closeWindow();
 	}
 

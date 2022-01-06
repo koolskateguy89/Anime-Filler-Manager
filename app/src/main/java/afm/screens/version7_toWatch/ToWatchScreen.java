@@ -1,5 +1,7 @@
 package afm.screens.version7_toWatch;
 
+import static afm.database.DelegatesKt.ToWatchKt;
+
 import java.io.IOException;
 
 import javafx.collections.ObservableList;
@@ -13,7 +15,6 @@ import javafx.scene.layout.Pane;
 
 import afm.anime.Anime;
 import afm.anime.Season;
-import afm.database.ToWatch;
 import afm.utils.Utils;
 
 public class ToWatchScreen extends Pane {
@@ -43,7 +44,7 @@ public class ToWatchScreen extends Pane {
 	}
 
 	public void refreshTable() {
-		tableItems.setAll(ToWatch.values());
+		tableItems.setAll(ToWatchKt.values());
 	}
 
 	@FXML

@@ -1,5 +1,8 @@
 package afm.screens.version8_custom;
 
+import static afm.database.DelegatesKt.MyListKt;
+import static afm.database.DelegatesKt.ToWatchKt;
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -23,8 +26,6 @@ import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;
 import afm.anime.Season;
-import afm.database.MyList;
-import afm.database.ToWatch;
 import afm.utils.Utils;
 
 // A lot of things here are identical to SearchScreen
@@ -173,7 +174,7 @@ public class CustomScreen extends GridPane {
 		// anime position is set by MyList
 		Anime anime = getAnimeFromFields();
 
-		if (MyList.contains(anime)) {
+		if (MyListKt.contains(anime)) {
 			/*
 			 * open Alert to ask if they want to overwrite it
 			 * if yes: carry on
@@ -195,7 +196,7 @@ public class CustomScreen extends GridPane {
 				return;
 		}
 
-		MyList.add(anime);
+		MyListKt.add(anime);
 		resetFields();
 	}
 
@@ -206,7 +207,7 @@ public class CustomScreen extends GridPane {
 		// anime position is set by ToWatch
 		Anime anime = getAnimeFromFields();
 
-		if (ToWatch.contains(anime)) {
+		if (ToWatchKt.contains(anime)) {
 			/*
 			 * open Alert to ask if they want to overwrite it
 			 * if yes: carry on
@@ -228,7 +229,7 @@ public class CustomScreen extends GridPane {
 				return;
 		}
 
-		ToWatch.add(anime);
+		ToWatchKt.add(anime);
 		resetFields();
 	}
 }
