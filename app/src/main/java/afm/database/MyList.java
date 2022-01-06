@@ -1,103 +1,78 @@
 package afm.database;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
-import javafx.collections.SetChangeListener;
 
 import afm.Main;
 import afm.anime.Anime;
 import afm.user.Settings;
 
-// could make this Kotlin object with statics?
+// if I change this to a Kotlin object, can I actually just delegate all funcs to the
+// delegate?
+/*
+
+private interface Funcs {
+	// the functions in MyList & ToWatch
+}
+
+object MyList : Funcs by FuncDelegate(...)
+ */
 public final class MyList {
 
 	// don't allow any instantiations of this to be made
 	private MyList() { }
 
-	private static final ObservableSet<Anime> runTime;
+	// delegate all actions to this
+	private static final FuncDelegate DELEGATE;
 
-	/*
-	 * Can't lie my implementation of {name order} is absolutely genius:
-	 * -The database always stays in insertion order
-	 * -Enforce name order by using a TreeSet for runTime, database insertion order
-	 *    is still maintained as added is always a LinkedHS (insertion order)
-	 * -Enforce insertion order by using a LinkedHS
-	 */
 	static {
-		Set<Anime> backingSet = Settings.get(Settings.Key.NAME_ORDER) ? new TreeSet<>(Anime.SORT_BY_NAME)
-																	 : new LinkedHashSet<>();
-		runTime = FXCollections.observableSet(backingSet);
+		boolean nameOrder = Settings.get(Settings.Key.NAME_ORDER);
+		Runnable refreshTable = Main.getInstance().myListScreen::refreshTable;
+
+		DELEGATE = new FuncDelegate(refreshTable);
 	}
 
 	public static void init() {
-		SetChangeListener<Anime> changeListener = change -> Main.getInstance().myListScreen.refreshTable();
-		runTime.addListener(changeListener);
+		DELEGATE.init();
 	}
 
-	private static final Set<Anime> added = new LinkedHashSet<>();
-	// Only the name of the removed anime is important
-	private static final Set<String> removed = new HashSet<>();
-
-
-	/* add anime to runTime without adding to {added}.
-	 * used when loading anime from database
-	 */
 	static void addSilent(Anime anime) {
-		runTime.add(anime);
+		DELEGATE.addSilent(anime);
 	}
 
 	public static void add(Anime anime) {
-		runTime.add(anime);
-		removed.remove(anime.getName());
-		added.add(anime);
+		DELEGATE.add(anime);
 	}
 
 	public static void addAll(Collection<Anime> col) {
-		for (Anime anime : col) {
-			add(anime);
-		}
+		DELEGATE.addAll(col);
 	}
 
 	public static void remove(Anime anime) {
-		// only add to [removed] if the anime was present in [runTime]
-		if (runTime.remove(anime)) {
-			removed.add(anime.getName());
-		}
-
-		added.remove(anime);
+		DELEGATE.remove(anime);
 	}
 
 	public static boolean contains(Anime anime) {
-		return runTime.contains(anime);
+		return DELEGATE.contains(anime);
 	}
 
 	public static int size() {
-		return runTime.size();
+		return DELEGATE.size();
 	}
 
 	public static void clear() {
-		runTime.clear();
+		DELEGATE.clear();
 	}
 
 	public static Set<Anime> values() {
-		return runTime;
+		return DELEGATE.values();
 	}
 
 	static Set<Anime> getAdded() {
-		return added;
+		return DELEGATE.getAdded();
 	}
 
 	static String getRemovedSQL() {
-		return removed.stream()
-					  .map(name -> name.replace("'", "''"))	// escape quotes in SQL
-					  .map(name -> '\'' + name + '\'')
-					  .collect(Collectors.joining(","));
+		return DELEGATE.getRemovedSQL();
 	}
 }
