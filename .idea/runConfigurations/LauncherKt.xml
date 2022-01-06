@@ -2,7 +2,7 @@
   <configuration default="false" name="LauncherKt" type="JetRunConfigurationType">
     <option name="ALTERNATIVE_JRE_PATH" value="Kotlin SDK" />
     <option name="MAIN_CLASS_NAME" value="afm.LauncherKt" />
-    <module name="Anime-Filler-Manager" />
+    <module name="afm-app" />
     <shortenClasspath name="NONE" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
     <method v="2">
