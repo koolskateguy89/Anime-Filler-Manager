@@ -9,6 +9,31 @@
 
 	<name>AFM</name>
 	<url>https://github.com/koolskateguy89/Anime-Filler-Manager</url>
+	<inceptionYear>2020</inceptionYear>
+	<licenses>
+		<!-- TODO -->
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>koolskateguy89</id>
+			<email>61889617+koolskateguy89@users.noreply.github.com</email>
+			<url>https://github.com/koolskateguy89</url>
+			<timezone>London</timezone>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Birat Koirala</name>
+			<url>https://github.com/biratkk</url>
+			<timezone>London</timezone>
+		</contributor>
+	</contributors>
+
+	<modules>
+		<module>app</module>
+		<module>filler</module>
+	</modules>
 
 	<properties>
 		<revision>0.0.1</revision>
@@ -29,11 +54,6 @@
 		<guava.version>31.0.1-jre</guava.version>
 		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
 	</properties>
-
-	<modules>
-		<module>app</module>
-		<module>filler</module>
-	</modules>
 
 	<dependencyManagement>
 		<dependencies>
