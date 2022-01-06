@@ -48,7 +48,7 @@ public class ResultInfoWindow extends InfoWindow {
 		infoBtn.setOnAction(e -> this.requestFocus());
 
 		// load FXML file into this object
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("ResultInfoWindow"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("infowindows/ResultInfoWindow"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();

@@ -7,12 +7,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.stage.Stage?>
 
-<fx:root type="Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="Stage" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <scene>
         <Scene>
-         <Pane fx:id="pane" prefHeight="355.0" prefWidth="431.0" styleClass="Panes" stylesheets="@stylesheets/application.css">
+         <Pane fx:id="pane" prefHeight="355.0" prefWidth="431.0" styleClass="Panes" stylesheets="@../stylesheets/application.css">
             <children>
                <ImageView fx:id="imageView" fitHeight="112.0" fitWidth="124.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#openImage" pickOnBounds="true" preserveRatio="true" />
                <Label layoutX="144.0" layoutY="15.0" text="Info:" />
@@ -21,7 +22,11 @@
                <TextField fx:id="currEpField" layoutX="121.0" layoutY="149.0" promptText="Current episode" />
                <Label layoutX="20.0" layoutY="190.0" text="Total episodes:" />
                <TextField fx:id="totalEpField" editable="false" layoutX="121.0" layoutY="186.0" opacity="0.61" promptText="Total episodes" />
-               <Button fx:id="fillerBtn" layoutX="285.0" layoutY="165.0" mnemonicParsing="false" onAction="#openFillers" text="See fillers" />
+               <Button fx:id="openEpsBtn" layoutX="306.0" layoutY="151.0" mnemonicParsing="false" onAction="#openEpisode" style="-fx-background-color: #eed202; -fx-text-fill: black;" text="Open">
+                  <font>
+                     <Font size="10.0" />
+                  </font></Button>
+               <Button fx:id="fillerBtn" layoutX="307.0" layoutY="187.0" mnemonicParsing="false" onAction="#openFillers" text="See fillers" />
                <Button fx:id="urlBtn" layoutX="35.0" layoutY="232.0" mnemonicParsing="false" onAction="#copyURL" text="Copy URL" />
                <Button layoutX="156.0" layoutY="232.0" mnemonicParsing="false" onAction="#copyName" text="Copy name" />
                <Button fx:id="browserBtn" layoutX="289.0" layoutY="232.0" mnemonicParsing="false" onAction="#openBrowser" text="Open in browser" />

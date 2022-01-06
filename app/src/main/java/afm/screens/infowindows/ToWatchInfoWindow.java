@@ -27,6 +27,8 @@ public class ToWatchInfoWindow extends InfoWindow {
 
 	private final Button infoBtn;
 
+	// temporarily change the button event handler to set focus on this isntead
+	// of trying to open another info window
 	private final EventHandler<ActionEvent> eventHandler;
 
 	private ToWatchInfoWindow(Anime a, Button infoBtn) throws IOException {
@@ -37,7 +39,7 @@ public class ToWatchInfoWindow extends InfoWindow {
 		infoBtn.setOnAction(e -> this.requestFocus());
 
 		// load FXML file into this object
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("ToWatchInfoWindow"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("infowindows/ToWatchInfoWindow"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();

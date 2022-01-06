@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 import afm.Main;
 import afm.anime.Anime;
+import afm.anime.filler.FillerKt;
 import afm.user.Settings;
 import afm.user.Theme;
 import afm.utils.Browser;
@@ -85,6 +86,9 @@ public abstract class InfoWindow extends Stage {
 	private TextField totalEpField;
 
 	@FXML
+	protected Button openEpsBtn;
+
+	@FXML
 	protected Button fillerBtn;
 
 	protected InfoWindow(Anime anime) {
@@ -125,6 +129,7 @@ public abstract class InfoWindow extends Stage {
 
 		// If the anime does not have a URL, hide URL & browser button
 		if (anime.getURL() == null) {
+			openEpsBtn.setVisible(false);
 			urlBtn.setVisible(false);
 			browserBtn.setVisible(false);
 		}
@@ -151,6 +156,27 @@ public abstract class InfoWindow extends Stage {
 			sb.insert(i, '\n');
 		}
 		return sb.toString();
+	}
+
+	@FXML
+	void openEpisode() {
+		String name = anime.getName();
+
+		String url;
+		if (anime.getCurrEp() == 0)
+			url = "https://anime-update.com/anime/" + FillerKt.replaceNonAlphanumericWithDash(name);
+		else
+			url = "https://anime-update.com/watch-online/" + FillerKt.replaceNonAlphanumericWithDash(name) +
+					"-episode-" + anime.getCurrEp();
+
+		NotificationFactory.showInfoNotification("Opening browser...");
+
+		boolean opened = Browser.open(url);
+		if (!opened) {
+			Alert a = new Alert(AlertType.ERROR, "Browser could not be opened.");
+			a.initOwner(this);
+			a.showAndWait();
+		}
 	}
 
 	@FXML
@@ -214,7 +240,8 @@ public abstract class InfoWindow extends Stage {
 	@FXML
 	void openBrowser() {
 		String url = anime.getURL();
-		if (url == null) return;
+		if (url == null)
+			return;
 
 		NotificationFactory.showInfoNotification("Opening browser...");
 

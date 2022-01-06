@@ -17,7 +17,6 @@ import afm.anime.Anime;
 import afm.utils.Utils;
 
 // Refreshing of MyList table is done in MyListKt.add(Anime)
-// TODO: hyperlink to Anime-Update of next episode to watch
 public class MyListInfoWindow extends InfoWindow {
 
 	public static void open(Anime a, Button infoBtn) {
@@ -30,6 +29,8 @@ public class MyListInfoWindow extends InfoWindow {
 
 	private final Button infoBtn;
 
+	// temporarily change the button event handler to set focus on this isntead
+	// of trying to open another info window
 	private final EventHandler<ActionEvent> eventHandler;
 
 	@FXML
@@ -42,7 +43,7 @@ public class MyListInfoWindow extends InfoWindow {
 		eventHandler = infoBtn.getOnAction();
 		infoBtn.setOnAction(e -> this.requestFocus());
 
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("MyListInfoWindow"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("infowindows/MyListInfoWindow"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();

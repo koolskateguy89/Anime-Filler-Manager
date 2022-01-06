@@ -46,7 +46,7 @@ data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
         fun getFillers(name: String): List<Filler> {
             try {
                 // replace all non-alphanumeric characters with a dash (which is what AFL does)
-                val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${formatName(name)}").get()
+                val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${name.formatForAflUrl()}").get()
                 val fillerElem = doc.select("div.filler > span.Episodes")
 
                 return if (fillerElem.isEmpty())
@@ -65,13 +65,13 @@ data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
 
 // this took avg ~600ns vs regex ~6-7k ns
-private fun replaceNonAlphaNumericWithDash(s: String): String {
+fun String.replaceNonAlphanumericWithDash(): String {
     val sb = StringBuilder()
 
     // helper for multiple characters in a row are non-alphanumeric
     var lastWasNonAlpha = false
 
-    for (ch in s) {
+    for (ch in this) {
         if (ch.isLetterOrDigit()) {
             sb.append(ch)
             lastWasNonAlpha = false
@@ -83,9 +83,9 @@ private fun replaceNonAlphaNumericWithDash(s: String): String {
     return sb.toString()
 }
 
-private fun formatName(name: String): String {
+private fun String.formatForAflUrl(): String {
     // replace all non-alphanumeric characters with a dash (which is what AFL does)
-    var formattedName = replaceNonAlphaNumericWithDash(name.lowercase())
+    var formattedName = this.lowercase().replaceNonAlphanumericWithDash()
     // name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
 
     // get rid of leading/trailing dashes (due to formatting above)
