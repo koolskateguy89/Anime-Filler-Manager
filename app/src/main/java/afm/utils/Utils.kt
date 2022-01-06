@@ -137,11 +137,12 @@ fun String.copyToClipboard() {
 }
 
 
-private fun generateColumn(name: String): TableColumn<Anime, Button> {
+private fun generateColumn(name: String, prefWidth: Double): TableColumn<Anime, Button> {
     return TableColumn<Anime, Button>(name).apply {
         isEditable = false
         isSortable = false
         style = "-fx-alignment: CENTER"
+        this.prefWidth = prefWidth
     }
 }
 
@@ -154,34 +155,20 @@ fun getActionsCol(): TableColumn<Anime, Button> {
 
 /* For ResultsScreen */
 
-fun getResultInfoCol(): TableColumn<Anime, Button> {
-    return generateColumn("See Info").apply {
-        prefWidth = 101.60003662109375
-    }
-}
+fun getResultInfoCol(): TableColumn<Anime, Button> =
+    generateColumn("See Info", 101.60003662109375)
 
-fun getResultCol(name: String): TableColumn<Anime, Button> {
-    return generateColumn(name).apply {
-        prefWidth = 76.5
-    }
-}
+fun getResultCol(name: String): TableColumn<Anime, Button> =
+    generateColumn(name, 76.5)
+
 
 /* For MyListScreen & ToWatchScreen */
 
-fun getInfoCol(): TableColumn<Anime, Button> {
-    return generateColumn("See Info").apply {
-        prefWidth = 75.20001220703125
-    }
-}
+fun getInfoCol(): TableColumn<Anime, Button> =
+    generateColumn("See Info", 75.20001220703125)
 
-fun getMoveCol(move: String): TableColumn<Anime, Button> {
-    return generateColumn("Move to $move").apply {
-        prefWidth = 109.5999755859375
-    }
-}
+fun getMoveCol(move: String): TableColumn<Anime, Button> =
+    generateColumn("Move, to $move", 109.5999755859375)
 
-fun getRemoveCol(): TableColumn<Anime, Button> {
-    return generateColumn("Remove").apply {
-        prefWidth = 71.2000732421875
-    }
-}
+fun getRemoveCol(): TableColumn<Anime, Button> =
+    generateColumn("Remove", 71.2000732421875)
