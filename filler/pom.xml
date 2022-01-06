@@ -10,7 +10,6 @@
 
 	<artifactId>afm-filler</artifactId>
 	<packaging>jar</packaging>
-	<url>https://github.com/koolskateguy89/Anime-Filler-Manager</url>
 
 	<dependencies>
 		<!--<editor-fold desc="Kotlin">-->

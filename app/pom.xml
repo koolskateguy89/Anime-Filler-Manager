@@ -10,7 +10,6 @@
 
 	<artifactId>afm-app</artifactId>
 	<packaging>jar</packaging>
-	<url>https://github.com/koolskateguy89/Anime-Filler-Manager</url>
 
 	<dependencies>
 		<dependency>
