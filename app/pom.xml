@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>koolskateguy89</groupId>
+		<groupId>com.github.koolskateguy89</groupId>
 		<artifactId>afm-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
@@ -12,9 +12,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>koolskateguy89</groupId>
+			<groupId>com.github.koolskateguy89</groupId>
 			<artifactId>afm-filler</artifactId>
-			<version>${project.version}</version>
+			<version>${revision}</version>
 		</dependency>
 
 		<!--<editor-fold desc="Kotlin">-->
