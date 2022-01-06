@@ -41,6 +41,8 @@ import java.util.EnumSet
  * Further optimised it by using 1 PreparedStatement for adding to ML/TW - adding
  * Batches, decreasing number of network round trips to 2 (1 to format ps and 1
  * to do update
+ *
+ * Also adding anime in batches + using PreparedStatements to further increase performance.
  */
 object Database {
     // From SQLiteStudio
@@ -182,7 +184,7 @@ object Database {
 		imageURL     STRING,
 		fillers      STRING
 	);
-		  """
+    """
 
     private const val CREATE_TOWATCH = """
 	CREATE TABLE ToWatch (

@@ -280,7 +280,7 @@ public final class Anime {
 
 	// Only search for filler if anime is not custom and has more than 48 episodes or is not finished
 	public void findFillers() {
-		if ((custom) || (episodes < 48 && episodes != NOT_FINISHED))
+		if (custom || (episodes < 48 && episodes != NOT_FINISHED))
 			return;
 
 		fillers.clear();
