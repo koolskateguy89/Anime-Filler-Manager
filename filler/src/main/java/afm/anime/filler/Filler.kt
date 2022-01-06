@@ -47,16 +47,12 @@ data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
             try {
                 // replace all non-alphanumeric characters with a dash (which is what AFL does)
                 val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${formatName(name)}").get()
+                val fillerElem = doc.select("div.filler > span.Episodes")
 
-                // the filler element is always the last episode element
-                val episodeElements = doc.select("span.episodes")
-
-                // the anime has no filler
-                if (episodeElements.isEmpty())
-                    return emptyList()
-
-                val fillerStrings = episodeElements.last()!!.text().split(", ")
-                return fillerStrings.map(Companion::valueOf)
+                return if (fillerElem.isEmpty())
+                    emptyList()
+                else
+                    fillerElem.first()!!.text().split(", ").map(::valueOf)
 
             } catch (io: IOException) {
                 // the page doesn't exist, likely the MAL name is different to the AFL name
