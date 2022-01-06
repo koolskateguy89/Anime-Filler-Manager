@@ -21,12 +21,12 @@
 		<mainClass>afm.LauncherKt</mainClass>
 
 		<!-- dependency versions -->
-		<lombok.version>1.18.22</lombok.version>
 		<javafx.version>15.0.1</javafx.version>
+		<lombok.version>1.18.22</lombok.version>
 		<controlsfx.version>11.1.1</controlsfx.version>
+		<jsoup.version>1.14.3</jsoup.version>
 		<reactive-jikan.version>1.0.2</reactive-jikan.version>
 		<guava.version>31.0.1-jre</guava.version>
-		<jsoup.version>1.14.3</jsoup.version>
 		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
 	</properties>
 
@@ -37,14 +37,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Project Lombok -->
-			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>${lombok.version}</version>
-				<scope>provided</scope>
-			</dependency>
-
 			<!--<editor-fold desc="Kotlin">-->
 			<!-- Kotlin -->
 			<dependency>
@@ -78,11 +70,26 @@
 			</dependency>
 			<!--</editor-fold>-->
 
+			<!-- Project Lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
 			<!-- ControlsFX (only for Notification atm) -->
 			<dependency>
 				<groupId>org.controlsfx</groupId>
 				<artifactId>controlsfx</artifactId>
 				<version>${controlsfx.version}</version>
+			</dependency>
+
+			<!-- jsoup -->
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>${jsoup.version}</version>
 			</dependency>
 
 			<!-- TODO: Jikan API Java wrapper -->
@@ -97,13 +104,6 @@
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>${guava.version}</version>
-			</dependency>
-
-			<!-- jsoup -->
-			<dependency>
-				<groupId>org.jsoup</groupId>
-				<artifactId>jsoup</artifactId>
-				<version>${jsoup.version}</version>
 			</dependency>
 
 			<!-- sqlite jdbc driver -->

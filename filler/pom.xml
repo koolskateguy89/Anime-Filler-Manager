@@ -20,7 +20,13 @@
 		</dependency>
 		<!--</editor-fold>-->
 
-		<!-- TODO: Jikan API Java wrapper -->
+		<!-- jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+		</dependency>
+
+		<!-- TODO: Jikan API Java wrapper? -->
 		<dependency>
 			<groupId>net.sandrohc</groupId>
 			<artifactId>reactive-jikan</artifactId>
@@ -30,12 +36,6 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-		</dependency>
-
-		<!-- jsoup -->
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
 		</dependency>
 	</dependencies>
 

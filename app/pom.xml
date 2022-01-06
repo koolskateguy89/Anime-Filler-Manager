@@ -18,13 +18,6 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Project Lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 		<!--<editor-fold desc="Kotlin">-->
 		<!-- Kotlin -->
 		<dependency>
@@ -53,10 +46,23 @@
 		</dependency>
 		<!--</editor-fold>-->
 
+		<!-- Project Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- ControlsFX (only for Notification atm) -->
 		<dependency>
 			<groupId>org.controlsfx</groupId>
 			<artifactId>controlsfx</artifactId>
+		</dependency>
+
+		<!-- jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
 		</dependency>
 
 		<!-- TODO: Jikan API Java wrapper -->
@@ -69,12 +75,6 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-		</dependency>
-
-		<!-- jsoup -->
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
 		</dependency>
 
 		<!-- sqlite jdbc driver -->
