@@ -14,11 +14,13 @@
 		<revision>0.0.1</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+		<!-- for plugins -->
 		<maven.compiler.release>17</maven.compiler.release>
 		<kotlin.version>1.5.31</kotlin.version>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-		<main.class>afm.LauncherKt</main.class>
+		<mainClass>afm.LauncherKt</mainClass>
 
+		<!-- dependency versions -->
 		<lombok.version>1.18.22</lombok.version>
 		<javafx.version>15.0.1</javafx.version>
 		<controlsfx.version>11.1.1</controlsfx.version>
@@ -222,7 +224,7 @@
 							<configuration>
 								<archive>
 									<manifest>
-										<mainClass>${main.class}</mainClass>
+										<mainClass>${mainClass}</mainClass>
 									</manifest>
 								</archive>
 								<descriptorRefs>

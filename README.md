@@ -95,11 +95,10 @@ See the [res](res) folder for some bash & batch files to help build and run.
 <!-- <br/> -->
 
 To build:
-1.  Run the command `mvn package` in the repository folder
+1.  `mvn package` in the repository folder
 
 To run:
-2.  Open the target directory e.g. `cd target`
-3.  Run the command `java -jar "AFM.jar"` OR 'open' the executable JAR at `[REPO_FOLDER]/target/AFM.jar`
+2. `java -jar app/target/AFM.jar`
 
 ## Some things to know when running
 
@@ -128,13 +127,13 @@ _italicized = WIP/next-to-do_
   - [ ] _Light theme_ - icons are then messed up because they're white :/ but mostly done
   - [ ] Idk maybe Dracula/Monokai/etc
 - [x] Use ControlsFX a lot more
+- [ ] _Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log things_
+    - [ ] _Use SLF4J to allow swapping in case of more Log4j bugs lol_
 - [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
   - [ ] Use it for filler?
 https://github.com/MALSync/MALSync/pull/689/files#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R114
 - [ ] Add a global keybind to minimize/maximize - **no idea**
-- [ ] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log things
-  - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol
 - [ ] Have no window resizing
 - [ ] Add episodes column to all tablescreens - **almost-long**
 - [ ] Resize screens to all be same size (SceneBuilder) - **long**
