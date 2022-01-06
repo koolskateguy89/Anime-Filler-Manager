@@ -7,7 +7,7 @@ import afm.Main;
 import afm.anime.Anime;
 import afm.user.Settings;
 
-public final class ToWatch {
+final class ToWatch {
 
 	// don't allow any instantiations of this to be made
 	private ToWatch() { }

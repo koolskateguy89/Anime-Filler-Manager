@@ -17,7 +17,7 @@ private interface Funcs {
 
 object MyList : Funcs by FuncDelegate(...)
  */
-public final class MyList {
+final class MyList {
 
 	// don't allow any instantiations of this to be made
 	private MyList() { }
