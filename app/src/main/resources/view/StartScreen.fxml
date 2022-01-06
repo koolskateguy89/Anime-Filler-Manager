@@ -6,15 +6,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="466.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ProgressBar fx:id="progressBar" disable="true" layoutX="124.0" layoutY="93.0" prefHeight="31.0" prefWidth="217.0" progress="0.0" />
-      <Button fx:id="startBtn" layoutX="125.0" layoutY="176.0" mnemonicParsing="false" onAction="#moveToWelcomeScreen" prefHeight="42.0" prefWidth="217.0" text="Start" />
-      <Text fx:id="factText" fill="#38b747" layoutX="81.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0: IB CS IA is wayyyy too long" textAlignment="CENTER" wrappingWidth="304.2000160217285">
-         <font>
-            <Font name="Arial Nova Cond" size="14.0" />
-         </font>
-      </Text>
-      <Text fx:id="loadLbl" layoutX="208.0" layoutY="137.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Loading..." textAlignment="CENTER" />
-   </children>
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0"
+         prefWidth="466.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="Pane"
+         xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<ProgressBar fx:id="progressBar" disable="true" layoutX="124.0" layoutY="93.0" prefHeight="31.0" prefWidth="217.0"
+	             progress="0.0"/>
+	<Button fx:id="startBtn" layoutX="125.0" layoutY="176.0" mnemonicParsing="false" onAction="#moveToWelcomeScreen"
+	        prefHeight="42.0" prefWidth="217.0" text="Start"/>
+	<Text fx:id="factText" fill="#38b747" layoutX="81.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0"
+	      text="0: Kotlin is clear of Java" textAlignment="CENTER" wrappingWidth="304.2000160217285">
+		<font>
+			<Font name="Arial Nova Cond" size="14.0"/>
+		</font>
+	</Text>
+	<Text fx:id="loadLbl" layoutX="208.0" layoutY="137.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0"
+	      styleClass="Text" text="Loading..." textAlignment="CENTER"/>
 </fx:root>
