@@ -151,7 +151,7 @@ public abstract class InfoWindow extends Stage {
 	}
 
 	// https://stackoverflow.com/a/46395543
-	public static String wrapText(String message) {
+	private static String wrapText(String message) {
 		StringBuilder sb = new StringBuilder(message);
 		for (int i = 0; i < message.length(); i += 200) {
 			sb.insert(i, '\n');
@@ -203,6 +203,7 @@ public abstract class InfoWindow extends Stage {
 		while (result == refresh) {
 			anime.findFillers();
 
+			// so database will be updated
 			if (MyListKt.contains(anime))
 				MyListKt.add(anime);
 			else if (ToWatchKt.contains(anime))
