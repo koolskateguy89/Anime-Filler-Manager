@@ -5,10 +5,9 @@ import java.io.IOException
 
 
 // 15 facts at a time - 15 facts in a file
-// atm only 2 fact files
 // http://randomfactgenerator.net/
 
-private val factMap = HashMap<Int, String>()
+private val factMap = mutableMapOf<Int, String>()
 
 private const val DEFAULT_FACT = "A Levels are less stressful than the IB Diploma :)"
 
@@ -20,18 +19,33 @@ private const val DEFAULT_FACT = "A Levels are less stressful than the IB Diplom
 fun init() {
     try {
         val fileNum = (1..5).random()
-
         val path = "facts/facts$fileNum.txt"
 
-        val file: String = getFileAsString(path)
-        val lines = file.lines().subList(0, 15)
+        val str: String = getFileAsString(path)
+        val lines = str.lines().take(15)
 
-        for (i in lines.indices) {
-            factMap[i + 1] = lines[i]
+        lines.forEachIndexed { i, fact -> factMap[i + 1] = fact }
+
+    } catch (e: Exception) {
+        when (e) {
+            is NullPointerException, is IOException -> factMap[factMap.size + 1] = DEFAULT_FACT
+            else -> throw e
         }
-    } catch (e: IOException) {
-        factMap[factMap.size + 1] = DEFAULT_FACT
-        e.printStackTrace()
+    }
+}
+
+private fun getFileAsString(path: String): String {
+    classLoader.getResourceAsStream(path).use { `in` ->
+        ByteArrayOutputStream().use { result ->
+            val buffer = ByteArray(1024)
+            var length: Int
+
+            while (`in`.read(buffer).also { length = it } != -1) {
+                result.write(buffer, 0, length)
+            }
+
+            return result.toString(Charsets.UTF_8)
+        }
     }
 }
 
@@ -40,21 +54,4 @@ fun getRandomFact(): Pair<Int, String> {
     val fact = factMap[id] ?: DEFAULT_FACT
 
     return id to fact
-}
-
-private fun getFileAsString(path: String): String {
-    classLoader.getResourceAsStream(path).use { `in` ->
-        ByteArrayOutputStream().use { result ->
-            if (`in` == null)
-                return ""
-
-            val buffer = ByteArray(1024)
-            var length: Int
-
-            while (`in`.read(buffer).also { length = it } != -1) {
-                result.write(buffer, 0, length)
-            }
-            return result.toString(Charsets.UTF_8)
-        }
-    }
 }
