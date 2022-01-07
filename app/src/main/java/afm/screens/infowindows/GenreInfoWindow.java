@@ -17,8 +17,8 @@ import com.google.common.collect.Maps;
 
 import afm.Main;
 import afm.anime.Genre;
+import afm.common.Utils;
 import afm.screens.Menu;
-import afm.utils.Utils;
 
 public class GenreInfoWindow extends InfoWindow {
 

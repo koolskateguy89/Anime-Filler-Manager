@@ -1,4 +1,4 @@
-package afm.utils;
+package afm.common;
 
 import java.awt.Desktop;
 import java.io.IOException;

@@ -26,7 +26,7 @@ import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
 import afm.anime.Genre;
 import afm.anime.Season;
-import afm.utils.Utils;
+import afm.common.Utils;
 
 // A lot of things here are identical to SearchScreen
 public class CustomScreen extends GridPane {

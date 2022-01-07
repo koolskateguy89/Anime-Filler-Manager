@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 import afm.anime.Anime;
 import afm.anime.Search;
+import afm.common.OnClose;
+import afm.common.Utils;
 import afm.screens.Menu;
 import afm.screens.infowindows.InfoWindow;
 import afm.screens.settings.SettingsScreen;
@@ -29,8 +31,6 @@ import afm.screens.version7_toWatch.ToWatchScreen;
 import afm.screens.version8_custom.CustomScreen;
 import afm.user.Settings;
 import afm.user.Theme;
-import afm.utils.OnClose;
-import afm.utils.Utils;
 
 // https://github.com/koolskateguy89/Anime-Filler-Manager
 public class Main extends Application {

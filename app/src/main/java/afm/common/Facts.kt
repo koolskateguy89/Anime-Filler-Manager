@@ -1,4 +1,4 @@
-package afm.utils
+package afm.common
 
 import java.io.ByteArrayOutputStream
 import java.io.IOException

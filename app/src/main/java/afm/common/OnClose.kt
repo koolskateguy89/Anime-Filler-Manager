@@ -1,4 +1,4 @@
-package afm.utils
+package afm.common
 
 import afm.database.Database
 import afm.user.Settings

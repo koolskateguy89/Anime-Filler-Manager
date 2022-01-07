@@ -2,7 +2,7 @@ package afm.anime;
 
 import lombok.EqualsAndHashCode;
 
-import afm.utils.Utils;
+import afm.common.Utils;
 
 // shouldn't use Record as doesn't provide private constructor
 // This basically mimics an Enum

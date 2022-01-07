@@ -1,8 +1,8 @@
 package afm.screens.infowindows;
 
+import static afm.common.Utils.setStyleClass;
 import static afm.database.DelegatesKt.MyListKt;
 import static afm.database.DelegatesKt.ToWatchKt;
-import static afm.utils.Utils.setStyleClass;
 
 import java.io.IOException;
 
@@ -13,8 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 import afm.anime.Anime;
+import afm.common.Utils;
 import afm.screens.Menu;
-import afm.utils.Utils;
 
 public class ResultInfoWindow extends InfoWindow {
 

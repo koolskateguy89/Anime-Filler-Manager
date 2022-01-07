@@ -20,7 +20,7 @@ import javafx.beans.property.StringProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import afm.utils.Utils;
+import afm.common.Utils;
 
 /*
  * TODO: Map<String, String> for String settings (database, selected db etc.)

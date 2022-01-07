@@ -1,8 +1,6 @@
 package afm.anime;
 
-//import static afm.utils.Utils.inJar;
-
-import static afm.utils.Utils.inJar;
+import static afm.common.Utils.inJar;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -28,7 +26,7 @@ import org.jsoup.select.Elements;
 
 import afm.Main;
 import afm.anime.Anime.AnimeBuilder;
-import afm.utils.Utils;
+import afm.common.Utils;
 
 /*
  * Search by genre (there HAS to be a genre in order to search)

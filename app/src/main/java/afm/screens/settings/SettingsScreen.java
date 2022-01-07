@@ -29,6 +29,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import org.controlsfx.control.PropertySheet;
 
 import afm.Main;
+import afm.common.Utils;
 import afm.database.Database;
 import afm.screens.infowindows.InfoWindow;
 import afm.screens.settings.items.BooleanItem;
@@ -37,7 +38,6 @@ import afm.screens.settings.items.Item;
 import afm.screens.version1_start.StartScreen;
 import afm.user.Settings;
 import afm.user.Theme;
-import afm.utils.Utils;
 
 /*
  * The bad things about using a PropertySheet:

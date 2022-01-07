@@ -33,8 +33,8 @@ import afm.anime.Genre;
 import afm.anime.GenreType;
 import afm.anime.Search;
 import afm.anime.Season;
+import afm.common.Utils;
 import afm.screens.infowindows.GenreInfoWindow;
-import afm.utils.Utils;
 
 // TODO: don't when search screen button is pressed, show results; when pressed again, show search screen
 public final class SearchScreen extends GridPane {

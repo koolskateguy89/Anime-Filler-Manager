@@ -1,4 +1,4 @@
-package afm.utils;
+package afm.common;
 
 import static java.util.Objects.requireNonNullElse;
 

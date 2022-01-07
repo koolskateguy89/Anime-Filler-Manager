@@ -1,9 +1,9 @@
 package afm.anime;
 
+import static afm.common.Utils.makeButtonProperty;
+import static afm.common.Utils.setStyleClass;
 import static afm.database.DelegatesKt.MyListKt;
 import static afm.database.DelegatesKt.ToWatchKt;
-import static afm.utils.Utils.makeButtonProperty;
-import static afm.utils.Utils.setStyleClass;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.PreparedStatement;

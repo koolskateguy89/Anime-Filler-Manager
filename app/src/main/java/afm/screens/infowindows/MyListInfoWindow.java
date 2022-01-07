@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import afm.anime.Anime;
-import afm.utils.Utils;
+import afm.common.Utils;
 
 // Refreshing of MyList table is done in MyListKt.add(Anime)
 public class MyListInfoWindow extends InfoWindow {

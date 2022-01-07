@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 
 import afm.anime.Anime;
 import afm.anime.Season;
-import afm.utils.Utils;
+import afm.common.Utils;
 
 public class ResultsScreen extends Pane {
 

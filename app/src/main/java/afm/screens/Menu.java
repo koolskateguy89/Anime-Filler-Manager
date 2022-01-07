@@ -1,6 +1,6 @@
 package afm.screens;
 
-import static afm.utils.Utils.setStyleClass;
+import static afm.common.Utils.setStyleClass;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import afm.Main;
-import afm.utils.Utils;
+import afm.common.Utils;
 
 public final class Menu extends VBox {
 

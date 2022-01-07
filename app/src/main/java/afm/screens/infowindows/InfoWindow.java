@@ -24,11 +24,11 @@ import com.github.koolskateguy89.filler.FillerKt;
 
 import afm.Main;
 import afm.anime.Anime;
+import afm.common.Browser;
+import afm.common.NotificationFactory;
+import afm.common.Utils;
 import afm.user.Settings;
 import afm.user.Theme;
-import afm.utils.Browser;
-import afm.utils.NotificationFactory;
-import afm.utils.Utils;
 
 // not much point of it being abstract I think...
 public abstract class InfoWindow extends Stage {

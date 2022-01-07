@@ -1,7 +1,7 @@
 @file:JvmName("Utils")
 @file:JvmMultifileClass
 
-package afm.utils
+package afm.common
 
 import afm.Main
 import afm.anime.Anime
