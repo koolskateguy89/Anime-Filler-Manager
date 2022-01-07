@@ -19,14 +19,13 @@
     - [x] If using `mvn install` on packages, running with IntelliJ on main package
       may not use the most up to date 'version' of other packages
       - (Use `mvn package` in parent) Running with IntelliJ on main package
-        will use most up to date version of other packages nice
+        will use most up-to-date version of other packages nice
 - Filler going to be its own actual API? i.e. project. If so, convert it to Java???
 
 ### How it works (figured out)
 
 - [x] `mvn package` isn't slow anymore - `clean package` ~22s
-- [x] parent POM
-- [x]
+- [x] parent & aggregator POM (inherit AFM, aggregate libs e.g. filler)
 
 ## Table of Contents
 
@@ -125,17 +124,18 @@ _italicized = WIP/next-to-do_
 - [x] Add option to use external database for MyList and ToWatch
   - [x] Add option to make new blank database
 - [x] Add color themes option (use different stylesheets which the user picks from)
-  - [ ] _Light theme_ - icons are then messed up because they're white :/ but mostly done
+  - [~] _Light theme_ - icons are then messed up because they're white :/ but mostly done
   - [ ] Idk maybe Dracula/Monokai/etc
 - [x] Use ControlsFX a lot more
 - [x] Add hyperlink to the next watch episode
-- [ ] _Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log things_
-    - [ ] _Use SLF4J to allow swapping in case of more Log4j bugs lol_
+- [~] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log things
+    - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol (?) is that how it works idk
 - [ ] **Filler*** tests
-- [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
-  - [ ] Use it for filler?
-https://github.com/MALSync/MALSync/pull/689/files#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R114
+  - [ ] Just write REST API wrapper myself? not all of its features are needed, literally only searching for anime
+    - NO. Ok maybe
+  - [ ] Use it for filler? https://github.com/MALSync/MALSync/pull/689/files#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R114
+- [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
 - [ ] Add a global keybind to minimize/maximize - **no idea**
 - [ ] Have no window resizing
 - [ ] Add episodes column to all tablescreens - **almost-long**
