@@ -15,7 +15,7 @@
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 
 		<!-- dependency versions -->
-		<lombok.version>1.18.22</lombok.version>
+		<slf4j.version>2.0.0-alpha5</slf4j.version>
 		<jsoup.version>1.14.3</jsoup.version>
 		<reactive-jikan.version>1.0.2</reactive-jikan.version>
 		<guava.version>31.0.1-jre</guava.version>
@@ -30,6 +30,14 @@
 			<version>${kotlin.version}</version>
 		</dependency>
 		<!--</editor-fold>-->
+
+		<!-- TODO: Logging with slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- jsoup -->
 		<dependency>

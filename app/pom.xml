@@ -25,6 +25,12 @@
 		</dependency>
 		<!--</editor-fold>-->
 
+		<!-- TODO: Logging with slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+		</dependency>
+
 		<!--<editor-fold desc="JavaFX">-->
 		<!-- JavaFX -->
 		<dependency>
