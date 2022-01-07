@@ -193,7 +193,8 @@ public final class Anime {
 		}
 	}
 
-	@EqualsAndHashCode.Include @Getter public final String name;
+	// TODO: decide @Getter private final -> public final
+	@EqualsAndHashCode.Include @Getter private final String name;
 	@EqualsAndHashCode.Include @Getter private final String studio;
 	@EqualsAndHashCode.Include @Getter private final Season season;
 
@@ -208,7 +209,7 @@ public final class Anime {
 	private Image image;
 
 	@Getter private final int episodes;
-	private int currEp;
+	@Getter private int currEp;
 	@Getter private final Integer id; //for MAL website
 	@Getter private final boolean custom;
 
@@ -293,12 +294,8 @@ public final class Anime {
 	}
 
 	public Image getImage() {
-		if (imageURL == null)
-			return null;
-
-		if (image == null) {
+		if (imageURL != null && image == null)
 			image = new Image(imageURL);
-		}
 
 		return image;
 	}
@@ -327,10 +324,6 @@ public final class Anime {
 
 	public String getURL() {
 		return (custom || id == null) ? null : "https://myanimelist.net/anime/" + id;
-	}
-
-	public int getCurrEp() {
-		return currEp;
 	}
 
 	public void setCurrEp(int currEp) {

@@ -35,6 +35,7 @@ import afm.utils.Utils;
 // https://github.com/koolskateguy89/Anime-Filler-Manager
 public class Main extends Application {
 
+	// unresolved reference getInstance in Kotlin when using @Getter :/
 	private static Main instance;
 
 	public static Main getInstance() {
