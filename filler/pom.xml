@@ -85,6 +85,12 @@
 						</goals>
 					</execution>
 				</executions>
+
+				<configuration>
+					<args>
+						<arg>-Xexplicit-api=strict</arg> <!-- Enable explicit api mode -->
+					</args>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

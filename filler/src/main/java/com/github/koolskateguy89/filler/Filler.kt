@@ -4,9 +4,9 @@ import com.google.common.collect.HashBasedTable
 import org.jsoup.Jsoup
 import java.io.IOException
 
-data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
+public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 
-    operator fun contains(n: Int): Boolean = n in start..end
+    public operator fun contains(n: Int): Boolean = n in start..end
 
     override fun toString(): String = if (start == end) end.toString() else "$start-$end"
 
@@ -14,11 +14,12 @@ data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
     override operator fun compareTo(other: Filler): Int =
         if (start != other.start) start - other.start else end - other.end
 
-    companion object {
+    public companion object {
         // Start, End, Object
         private val CACHE = HashBasedTable.create<Int, Int, Filler>()
 
-        private fun of(start: Int, end: Int = start): Filler {
+        @JvmStatic
+        public fun valueOf(start: Int, end: Int = start): Filler {
             var cached = CACHE[start, end]
 
             if (cached == null) {
@@ -30,20 +31,20 @@ data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
         }
 
         @JvmStatic
-        fun valueOf(s: String): Filler {
+        public fun valueOf(s: String): Filler {
             val divPos = s.indexOf('-')
 
             // single episode filler
             if (divPos == -1)
-                return of(s.toInt())
+                return valueOf(s.toInt())
 
             val start = s.substring(0, divPos).toInt()
             val end = s.substring(divPos + 1).toInt()
-            return of(start, end)
+            return valueOf(start, end)
         }
 
         @JvmStatic
-        fun getFillers(name: String): List<Filler> {
+        public fun getFillers(name: String): List<Filler> {
             try {
                 // replace all non-alphanumeric characters with a dash (which is what AFL does)
                 val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${name.formatForAflUrl()}").get()
@@ -65,7 +66,7 @@ data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
 
 // this took avg ~600ns vs regex ~6-7k ns
-fun String.replaceNonAlphanumericWithDash(): String {
+public fun String.replaceNonAlphanumericWithDash(): String {
     val sb = StringBuilder()
 
     // helper for multiple characters in a row are non-alphanumeric
