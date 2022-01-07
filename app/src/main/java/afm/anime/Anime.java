@@ -193,7 +193,7 @@ public final class Anime {
 		}
 	}
 
-	// TODO: decide @Getter private final -> public final
+	// TODO: decide @Getter private final or public final
 	@EqualsAndHashCode.Include @Getter private final String name;
 	@EqualsAndHashCode.Include @Getter private final String studio;
 	@EqualsAndHashCode.Include @Getter private final Season season;
