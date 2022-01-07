@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- https://maven.apache.org/developers/conventions/code.html#pom-code-convention -->
 	<groupId>com.github.koolskateguy89</groupId>
 	<artifactId>afm-parent</artifactId>
 	<version>${revision}</version>
@@ -24,6 +25,7 @@
 	<contributors>
 		<contributor>
 			<name>Birat Koirala</name>
+			<email>koiralabirat@gmail.com</email>
 			<url>https://github.com/biratkk</url>
 			<timezone>London</timezone>
 		</contributor>
@@ -57,7 +59,7 @@
 	<dependencyManagement>
 		<dependencies>
 			<!--<editor-fold desc="Kotlin">-->
-			<!-- Kotlin -->
+			<!-- stdlib -->
 			<dependency>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -136,8 +138,6 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>${project.name}-without-dependencies</finalName>
-
 		<plugins>
 			<!-- flatten plugin to allow use of aggregation (multi-module)
 			 https://maven.apache.org/pom.html#Aggregation
@@ -194,6 +194,20 @@
 							</goals>
 						</execution>
 					</executions>
+
+					<!-- Use Lombok in mixed Java/Kotlin projects https://kotlinlang.org/docs/lombok.html#maven -->
+					<configuration>
+						<compilerPlugins>
+							<plugin>lombok</plugin>
+						</compilerPlugins>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.jetbrains.kotlin</groupId>
+							<artifactId>kotlin-maven-lombok</artifactId>
+							<version>${kotlin.version}</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 
 				<plugin>
