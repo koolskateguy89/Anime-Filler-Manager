@@ -24,6 +24,75 @@ public class GenreInfoWindow extends InfoWindow {
 
 	// maybe this should be in Genre class
 	private static ImmutableMap<Genre, String> genreDefMap;
+	/* // problem is that it won't be backed by an EnumMap :/
+	private static final ImmutableMap<Genre, String> genreDefMap =
+			ImmutableMap.<Genre, String>builderWithExpectedSize(Genre.values().length)
+					.put(Genre.Action, """
+								Plays out mainly through a clash of physical forces. Frequently these
+								stories have fast cuts, tough characters making quick decisions and
+								usually a beautiful girl nearby. Anything quick and most likely a thin
+								storyline.
+								""")
+					.put(Genre.Adventure, "Travelling and undertaking an adventure in a certain place")
+					.put(Genre.AvantGarde, "Anime that have mind-twisting plots.")
+					.put(Genre.AwardWinning, "Won a major award.")
+					.put(Genre.BoysLove, "Gay.")
+					.put(Genre.Cars, "Involves cars as a main feature e.g. racing")
+					.put(Genre.Comedy, "Aims to make you laugh")
+					//.put(Genre.Comedy, "Anime: *plays*" + "\n" + "You: *laughs*")
+					.put(Genre.Demons, "Involves demons as a main feature")
+					.put(Genre.Drama, """
+								Anime that often show life or characters through conflict and
+								emotions. In general, the different parts of the story tend to
+								form a whole that is greater than the sum of the parts. In other
+								words, the story has a message that is bigger than just the story
+								line itself.
+								""")
+					.put(Genre.Ecchi, "Almost cartoon porn.")
+					.put(Genre.Erotica, "\uD83D\uDE33")
+					.put(Genre.Fantasy, "Based in a fanatical world.")
+					.put(Genre.Game, """
+								Central theme is based on a non-violent, non-sports game, like
+								go, chess, trading card games or computer/video games.
+								""")
+					.put(Genre.GirlsLove, "Lesbian.")
+					.put(Genre.Gourmet, "Food.")
+					.put(Genre.Harem, "Not many guys, but many, many girls.")
+					.put(Genre.Hentai, "Cartoon porn.")
+					.put(Genre.Historical, "Based on past historical events.")
+					.put(Genre.Horror, "ooooo scarryyyy.")
+					.put(Genre.Josei, "Aimed towards young adult women.")
+					.put(Genre.Kids, """
+								Aimed at kids
+
+								yikes
+								""")
+					.put(Genre.Magic, "Involves magic as a main feature.")
+					.put(Genre.MartialArts, "MARTIAL ART.")
+					.put(Genre.Mecha, "Involves robotic entities as a main feature.")
+					.put(Genre.Military, "An anime series/movie that has a heavy militaristic feel behind it.")
+					.put(Genre.Music, "Headphones and concerts etc.")
+					.put(Genre.Mystery, "?")
+					.put(Genre.Parody, "Naruto -> Narudo" + "\n" + "Spiderman -> Spooderman.")
+					.put(Genre.Police, "Based on characters who are involved in a police force.")
+					.put(Genre.Psychological, "Brain.")
+					.put(Genre.Romance, "Love.")
+					.put(Genre.Samurai, "Sword.")
+					.put(Genre.School, "Based in a school setting.")
+					.put(Genre.SciFi, "Science?")
+					.put(Genre.Seinen, "Aimed towards young adult men.")
+					.put(Genre.Shoujo, "Aimed at a \"young female audience\".")
+					.put(Genre.Shounen, "Aimed at a \"young male audience\".")
+					.put(Genre.SliceOfLife, "Aims to mimic real life through anime.")
+					.put(Genre.Space, "NASA.")
+					.put(Genre.Sports, "Literally sports, or rather, physical exertion...")
+					.put(Genre.Supernatural, "strange.")
+					.put(Genre.SuperPower, "Usually based in a word where having superpowers is the norm.")
+					.put(Genre.Suspense, "...")
+					.put(Genre.Vampire, "Draculaaaaa.")
+					.put(Genre.WorkLife, "About working.")
+					.build();
+	 */
 
 	public static void init() {
 		EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
