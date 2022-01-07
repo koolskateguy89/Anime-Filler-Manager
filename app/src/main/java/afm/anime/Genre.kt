@@ -76,8 +76,6 @@ enum class Genre(val id: Int,
             }
 
         @JvmStatic
-        fun valuesOfType(type: GenreType): List<Genre> = values().filter {
-            it.type == type
-        }
+        fun valuesOfType(type: GenreType): List<Genre> = values().filter { it.type == type }
     }
 }

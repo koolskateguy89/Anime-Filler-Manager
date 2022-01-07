@@ -88,17 +88,11 @@ fun sleep(millis: Long) = Thread.sleep(millis)
 
 
 fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : Property<Button> {
-    override fun getName(): String {
-        return name
-    }
+    override fun getName(): String = name
 
-    override fun getValue(): Button {
-        return btn
-    }
+    override fun getValue(): Button = btn
 
-    override fun getBean(): Any? {
-        return null
-    }
+    override fun getBean(): Any? = null
 
     override fun addListener(listener: ChangeListener<in Button>) {}
     override fun removeListener(listener: ChangeListener<in Button>) {}
@@ -110,9 +104,7 @@ fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : P
 
     override fun bind(observable: ObservableValue<out Button?>) {}
     override fun unbind() {}
-    override fun isBound(): Boolean {
-        return false
-    }
+    override fun isBound(): Boolean = false
 
     override fun bindBidirectional(other: Property<Button?>) {}
     override fun unbindBidirectional(other: Property<Button?>) {}

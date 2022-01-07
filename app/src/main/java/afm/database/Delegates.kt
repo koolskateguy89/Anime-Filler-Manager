@@ -14,7 +14,7 @@ import java.util.TreeSet
 // TODO: rename file to something more descriptive
 
 // TODO: rename this? but what to? "MyListLike", idk?
-interface Funcs {
+sealed interface Funcs {
     fun init()
     fun addSilent(anime: Anime)
     fun add(anime: Anime)
