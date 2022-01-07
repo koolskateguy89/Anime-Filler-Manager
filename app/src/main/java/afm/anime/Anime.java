@@ -19,6 +19,7 @@ import javafx.beans.property.Property;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
+import com.github.koolskateguy89.filler.Filler;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
@@ -26,7 +27,6 @@ import com.google.common.collect.Sets;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import afm.anime.filler.Filler;
 import afm.screens.Menu;
 import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;

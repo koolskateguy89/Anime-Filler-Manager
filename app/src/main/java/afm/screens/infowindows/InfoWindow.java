@@ -20,9 +20,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import com.github.koolskateguy89.filler.FillerKt;
+
 import afm.Main;
 import afm.anime.Anime;
-import afm.anime.filler.FillerKt;
 import afm.user.Settings;
 import afm.user.Theme;
 import afm.utils.Browser;

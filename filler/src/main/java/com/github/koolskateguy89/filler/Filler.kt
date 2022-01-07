@@ -1,4 +1,4 @@
-package afm.anime.filler
+package com.github.koolskateguy89.filler
 
 import com.google.common.collect.HashBasedTable
 import org.jsoup.Jsoup
