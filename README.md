@@ -133,6 +133,7 @@ To run:
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
   - [ ] Just write REST API wrapper myself? not all of its features are needed, literally only searching for anime
     - NO. Ok maybe
+    - I think I can use Jsoup for this, using `Connection.data(String...)`
   - [ ] Use it for filler? https://github.com/MALSync/MALSync/pull/689/files#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R114
 - [ ] Enable use of `ControlsFX.TableFilter` in MyList & ToWatch
 - [ ] Add a global keybind to minimize/maximize - **no idea**
