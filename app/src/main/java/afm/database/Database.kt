@@ -248,6 +248,7 @@ object Database {
                 val halfDiff = (end - start) / 2
 
                 // still load ToWatch if there is an error loading MyList
+                // TODO: convert loadAll.try to runCatching
                 try {
                     loadMyList(it, task, start, end - halfDiff)
                 } catch (e: SQLException) {
@@ -310,6 +311,7 @@ object Database {
     fun saveAll() {
         ds.connection.use {
             it.autoCommit = false
+            // TODO: convert saveAll.try to runCatching
             try {
                 saveMyList(it)
             } catch (e: SQLException) {
@@ -447,3 +449,10 @@ object Database {
         }
     }
 }
+
+// TODO: move MyListKt and ToWatchKt to here?
+// or embed them inside Database and instead of loading the db into a data struct, query it
+// every time? (mongoDB)
+// then rename interface Funcs to Database?
+// then rename object Database to ???
+// or if embed then e.g. Database.MyList.add(...) etc.
