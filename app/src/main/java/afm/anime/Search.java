@@ -1,16 +1,21 @@
 package afm.anime;
 
 import static afm.common.Utils.inJar;
+import static java.util.Objects.requireNonNullElseGet;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.net.ssl.SSLHandshakeException;
 
@@ -18,8 +23,12 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+import kotlin.StandardKt;
+
+import org.checkerframework.checker.units.qual.A;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -64,6 +73,7 @@ public class Search {
 	/* not using LinkedHS/TreeSet as it's going to be sorted anyway */
 	/* also we don't want duplicate anime */
 	private final HashSet<Anime> result = new HashSet<>();
+	private static final AnimeBuilder builder = Anime.builder();
 
 	private static final String MAL_URL = "https://myanimelist.net";
 	private static final String GENRE_URL = MAL_URL + "/anime/genre/"; //+genre.getId()
@@ -74,8 +84,29 @@ public class Search {
 								GENRE = "div.genres-inner.js-genre-inner",
 								SRCS = "div.prodsrc",
 								INFOS = "div.synopsis.js-synopsis",
-								DATES = "span.remain-time",
-								IMG_URLS = "img[data-src]";
+								DATES = "span.remain-time", // FIXME: dates no elems
+								IMG_URLS = "img[data-src]",
+								PROPERTIES = "div.synopsis.js-synopsis > div";
+
+	// #content > div.js-categories-seasonal.js-block-list.tile.mt16 > div > div
+	// https://jsoup.org/cookbook/extracting-data/selector-syntax
+	private static final String
+			ANIME = "#content > div.js-categories-seasonal.js-block-list.tile.mt16 > div > div.seasonal-anime.js-seasonal-anime",
+			// TODO
+			NAME = "div:nth-child(1) > div.title > div.title-text > h2.h2_anime_title > a",
+			// TODO
+			IMG = "div.image > a:nth-child(1) > img",
+			// TODO
+			LINK_TTLE = "div:nth-child(1) > div.title > div > h2 > a"
+	;
+
+	private static class Selectors {
+		static class Anime {
+
+		}
+	}
+
+	private static final int TIMEOUT_MILLIS = 8000;
 
 
 	public List<Anime> search() {
@@ -107,8 +138,14 @@ public class Search {
 		for (Genre genre : genres) {
 			final Document doc;
 			try {
-				doc = Jsoup.connect(Search.GENRE_URL + genre.getId() + "/?page="+page).get();
-				scrapeDocument(doc);
+				doc = Jsoup.connect(Search.GENRE_URL + genre.getId() + "/?page="+page)
+						.userAgent(HttpConnection.DEFAULT_UA)
+						//.cookie("search_view", "list") // use the list search view to be able to get start date
+						.timeout(TIMEOUT_MILLIS)
+						.get();
+				//System.out.println(doc.outerHtml());
+				scrapeDocumentNew(doc);
+				//scrapeDocument(doc);
 			} catch (UnknownHostException uhe) {
 				// no internet connection
 				Platform.runLater(() -> {
@@ -129,7 +166,8 @@ public class Search {
 				});
 				return false;
 			} catch (IOException e) {
-				if (!inJar()) e.printStackTrace();
+				if (!inJar())
+					e.printStackTrace();
 				return false;
 			}
 		}
@@ -137,24 +175,92 @@ public class Search {
 		return true;
 	}
 
+	private void scrapeDocumentNew(final Document doc) {
+		Elements animeElems = doc.select(Search.ANIME);
+		animeElems.trimToSize();
+
+		animeElems.forEach(this::buildAnimeFromElement);
+
+		builder.clear();
+	}
+
+	private void buildAnimeFromElement(Element animeElem) {
+		builder.clear();
+
+		String name = animeElem.selectFirst(Search.NAME).text();
+
+
+
+		if (removeBecauseName(name))
+			return;
+		builder.setName(name);
+		//System.out.println(" " + name);
+
+		if (true) return;
+
+		// TODO: id
+
+
+		var genres = getGenres(animeElem);
+		if (removeBecauseGenres(genres))
+			return;
+		builder.setGenres(genres);
+	}
+
+	private static String getName(Element animeElem) {
+		//noinspection ConstantConditions
+		return animeElem.selectFirst(Search.NAME).text();
+	}
+
+	private static int getId(Element animeElem) {
+
+		return 0;
+	}
+
+	private static EnumSet<Genre> getGenres(Element animeElem) {
+		String[] ids = animeElem.attr("data-genre").split(",");
+
+		EnumSet<Genre> result = EnumSet.noneOf(Genre.class);
+		for (String id : ids)
+			result.add(Genre.valueOfFromName(id));
+		return result;
+	}
+
+	private static String getSynopsis(Element animeElem) {
+		return null;
+	}
+
+	private static String getImageUrl(Element animeElem) {
+		return null;
+	}
+
 	// Scrapes the document, adding all appropriate anime to result
 	private void scrapeDocument(Document doc) {
 		Elements linkTitles = doc.select(Search.LINK_TITLE);
+		System.out.print(linkTitles.size());
 
 		// 1 line each genre list, delimiter is space " "
 		Elements genres = doc.select(Search.GENRE);
+		System.out.print(" " + genres.size());
 
 		// studio - episodes("x eps") - source(manga/light novel/etc.)
 		Elements srcs = doc.select(Search.SRCS);
+		System.out.print(" " + srcs.size());
 
 		// 1 line of entire synopsis
 		Elements infos = doc.select(Search.INFOS);
+		System.out.print(" " + infos.size());
 
 		// need to parseSeasonFromMALDate
+		// FIXME:
 		Elements dates = doc.select(Search.DATES);
+		System.out.print(" " + dates.size());
 
 		// need to do .absUrl("data-src") to get url
 		Elements imgURLs = doc.select(Search.IMG_URLS);
+		System.out.println(" " + imgURLs.size());
+		System.out.println(srcs.text());
+		System.out.println();
 
 		Iterator<Element> itL = linkTitles.iterator(),
 						  itG = genres.iterator(),
@@ -163,9 +269,6 @@ public class Search {
 						  itD = dates.iterator(),
 						  itIMGS = imgURLs.iterator();
 
-		// Use one for memory lol
-		AnimeBuilder builder = Anime.builder();
-
 		while (itL.hasNext() && itG.hasNext() && itS.hasNext() && itI.hasNext() &&
 			   itD.hasNext() && itIMGS.hasNext()) {
 
@@ -173,6 +276,7 @@ public class Search {
 
 			Element nameElem = itL.next();
 
+			System.out.print("name");
 			// MyAnimeList spells [Naruto: Shippuden] incorrectly
 			String animeName = nameElem.text().replace("Shippuuden", "Shippuden").trim();
 
@@ -188,9 +292,11 @@ public class Search {
 			builder.setName(animeName);
 
 			// get the anime's ID
+			System.out.print(" id");
 			int id = getIdFromURl(nameElem.attr("abs:href"));
 			builder.setId(id);
 
+			System.out.print(" genre");
 			String[] genreArray = itG.next().text().split(" ");
 			final EnumSet<Genre> genreSet;
 			if (genreArray.length == 1 && genreArray[0].isEmpty()) // anime with no normal genre, only demographic/theme
@@ -198,10 +304,12 @@ public class Search {
 			else
 				genreSet = getGenreSet(genreArray);
 
+			System.out.print(" syno");
 			Element synopsisElement = itI.next();
 			String synopsis = synopsisElement.selectFirst("span").text();
 			builder.setInfo(synopsis);
 
+			System.out.print(" the & demo");
 			addThemesAndDemos(genreSet, synopsisElement);
 			if (removeBecauseGenres(genreSet)) {
 				itS.next();
@@ -211,7 +319,7 @@ public class Search {
 			}
 			builder.setGenres(genreSet);
 
-
+			System.out.print(" sources (studio)");
 			String[] sources = itS.next().text().split(" ");
 			StringBuilder sb = new StringBuilder(sources[0]);
 			int i = 1;
@@ -229,11 +337,13 @@ public class Search {
 			}
 			builder.setStudio(animeStudio);
 
+			System.out.print(" episodes (minEps)");
 			Integer episodes = null;
 			for (i = sources.length - 1; i >= 0; i--) {
 				String eps = sources[i];
-				if (Utils.isNumeric(eps)) {
-					episodes = Integer.parseInt(eps);
+				Integer e = Utils.toIntOrNull(eps);
+				if (e != null) {
+					episodes = e;
 					break;
 				} else if (eps.equals("?")) {
 					episodes = Anime.NOT_FINISHED;
@@ -251,6 +361,7 @@ public class Search {
 			builder.setEpisodes(episodes);
 
 
+			System.out.print(" season");
 			Season season = Season.parseSeasonFromMALDate(itD.next().text());
 			if (removeBecauseSeason(season)) {
 				itIMGS.next();
@@ -267,7 +378,9 @@ public class Search {
 			}
 
 			// building the anime will find its fillers
+			System.out.println(" build");
 			result.add(builder.build());
+			System.out.println();
 		}
 	}
 
@@ -349,7 +462,7 @@ public class Search {
 	 * if user entered a name, filter out all anime that don't contain that name (ignore case)
 	 */
 	private boolean removeBecauseName(String animeName) {
-		return name!= null && !animeName.toLowerCase().contains(name.toLowerCase());
+		return name != null && !animeName.toLowerCase().contains(name.toLowerCase());
 	}
 
 	/* (and)
@@ -419,7 +532,6 @@ public class Search {
 	}
 
 	public void setMinEpisodes(int n) {
-		minEps = n;
-		if (minEps > 72) minEps = 72;
+		minEps = Math.min(n, 72);
 	}
 }

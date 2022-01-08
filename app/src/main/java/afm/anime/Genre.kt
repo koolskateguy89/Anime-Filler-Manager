@@ -62,6 +62,8 @@ enum class Genre(val id: Int,
             if (explicit) " (18+)" else ""
 
     companion object {
+        private val ID_MAP = values().associateBy { it.id }
+
         fun parseGenreFromToString(toString: String?): Genre? =
             if (toString == null) null else values().firstOrNull {
                 // ignore case for safety
@@ -74,6 +76,9 @@ enum class Genre(val id: Int,
                 // ignore case for safety
                 name.equals(it.name, ignoreCase = true)
             }
+
+        @JvmStatic
+        fun valueOfFromId(id: Int): Genre? = ID_MAP[id]
 
         @JvmStatic
         fun valuesOfType(type: GenreType): List<Genre> = values().filter { it.type == type }

@@ -1,17 +1,33 @@
 package afm.anime;
 
-import lombok.EqualsAndHashCode;
-
 import afm.common.Utils;
 
 // shouldn't use Record as doesn't provide private constructor
 // This basically mimics an Enum
-@EqualsAndHashCode(cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
-public final class Season implements Comparable<Season> {
+//@EqualsAndHashCode(cacheStrategy = EqualsAndHashCode.CacheStrategy.LAZY)
+public record Season(String szn, int year) implements Comparable<Season> {
+
+	@Override
+	public String toString() {
+		if (this.equals(UNDEF))
+			return "-";
+
+		return szn + " " + year;
+	}
+
+	@Override
+	public int compareTo(Season other) {
+		return (this.year != other.year) ? this.year - other.year : this.getSeasonInt() - other.getSeasonInt();
+	}
+
+	private int getSeasonInt() {
+		return Season.getSeasonInt(szn);
+	}
+
+
 
 	public static final int START_YEAR = 1970;
 	public static final int END_YEAR = Utils.getCurrentYear();
-	//public static final int END_YEAR = Utils.getCurrentYear();
 
 	private static final int SPRING = 0, SUMMER = 1, FALL = 2, WINTER = 3;
 	// [last 2 digits of year][season(spring/...)]
@@ -151,31 +167,4 @@ public final class Season implements Comparable<Season> {
 		}
 	}
 
-
-	/* Concrete implementation members */
-
-	private final String szn;
-	private final int year;
-
-	private Season(String s, int y) {
-		szn = s;
-		year = y;
-	}
-
-	@Override
-	public String toString() {
-		if (this.equals(UNDEF))
-			return "-";
-
-		return szn + " " + year;
-	}
-
-	@Override
-	public int compareTo(Season other) {
-		return (this.year != other.year) ? this.year - other.year : this.getSeasonInt() - other.getSeasonInt();
-	}
-
-	private int getSeasonInt() {
-		return Season.getSeasonInt(szn);
-	}
 }
