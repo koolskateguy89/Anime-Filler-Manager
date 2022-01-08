@@ -90,8 +90,8 @@ public class CustomScreen extends GridPane {
 		for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
 			years.add(i);
 
-		totalEpField.textProperty().addListener(Utils.onlyAllowIntegersListener());
-		currEpField.textProperty().addListener(Utils.onlyAllowIntegersListener());
+		totalEpField.textProperty().addListener(Utils.intOnlyListener());
+		currEpField.textProperty().addListener(Utils.intOnlyListener());
 	}
 
 	@FXML

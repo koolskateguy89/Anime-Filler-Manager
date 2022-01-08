@@ -11,6 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
+import kotlin.io.ConsoleKt;
+
 import afm.anime.Anime;
 import afm.anime.Season;
 import afm.common.Utils;

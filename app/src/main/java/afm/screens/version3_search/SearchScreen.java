@@ -98,7 +98,7 @@ public final class SearchScreen extends GridPane {
 		studioPane.setStyle(null);
 		studioPane.getChildren().add(studioField);
 
-		minEpsField.textProperty().addListener(Utils.onlyAllowIntegersListener());
+		minEpsField.textProperty().addListener(Utils.intOrEmptyListener());
 
 		genreCombo.getItems().addAll(Genre.valuesOfType(GenreType.NORMAL));
 		useTitleAsPromptText(genreCombo);
@@ -243,7 +243,7 @@ public final class SearchScreen extends GridPane {
 	}
 
 	private boolean confirmGenres(Search search) {
-		List<Genre> genres = new ArrayList<Genre>();
+		List<Genre> genres = new ArrayList<>();
 		genres.addAll(genreCombo.getCheckModel().getCheckedItems());
 		genres.addAll(demoCombo.getCheckModel().getCheckedItems());
 		genres.addAll(themeCombo.getCheckModel().getCheckedItems());

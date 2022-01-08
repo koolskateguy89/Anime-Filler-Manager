@@ -44,7 +44,7 @@ val isFirstRun: Boolean = run {
 
 // this 500ns vs regex 2000ns
 fun String.splitByCapitals(): Array<String> {
-    val res = ArrayList<String>()
+    val res = mutableListOf<String>()
 
     var start = 0
 
@@ -74,13 +74,20 @@ fun toIntOrNull(s: String): Int? = s.toIntOrNull()
 fun String?.isStrictInteger(): Boolean = !isNullOrEmpty() && all { it.isDigit() }
 
 // Stop user from typing any characters that aren't numeric
-fun onlyAllowIntegersListener(): ChangeListener<String?> =
+fun intOnlyListener(): ChangeListener<String?> =
     ChangeListener { obs, oldVal, newVal ->
         /* if (newVal.isNullOrEmpty())
             (obs as StringProperty).value = "0";
         else */
         if (!newVal.isStrictInteger())
             (obs as StringProperty).value = oldVal
+    }
+fun intOrEmptyListener(): ChangeListener<String?> =
+    ChangeListener { obs, oldVal, newVal ->
+        // only change back to oldVal if newVal isn't null/empty
+        if (!newVal.isNullOrEmpty() && !newVal.isStrictInteger())
+            (obs as StringProperty).value = oldVal
+
     }
 
 

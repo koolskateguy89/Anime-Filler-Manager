@@ -2,7 +2,10 @@ package com.github.koolskateguy89.filler
 
 import com.google.common.collect.HashBasedTable
 import org.jsoup.Jsoup
+import org.jsoup.select.Elements
 import java.io.IOException
+
+// TODO: make class storing canon episodes, filler eps, canon/filler etc.
 
 public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 
@@ -48,7 +51,7 @@ public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
             try {
                 // replace all non-alphanumeric characters with a dash (which is what AFL does)
                 val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${name.formatForAflUrl()}").get()
-                val fillerElem = doc.select("div.filler > span.Episodes")
+                val fillerElem: Elements = doc.select("div.filler > span.Episodes")
 
                 return if (fillerElem.isEmpty())
                     emptyList()
@@ -66,22 +69,19 @@ public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
 
 // this took avg ~600ns vs regex ~6-7k ns
-public fun String.replaceNonAlphanumericWithDash(): String {
-    val sb = StringBuilder()
-
+public fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
     // helper for multiple characters in a row are non-alphanumeric
     var lastWasNonAlpha = false
 
-    for (ch in this) {
+    for (ch in this@replaceNonAlphanumericWithDash) {
         if (ch.isLetterOrDigit()) {
-            sb.append(ch)
+            append(ch)
             lastWasNonAlpha = false
         } else if (!lastWasNonAlpha) {
-            sb.append('-')
+            append('-')
             lastWasNonAlpha = true
         }
     }
-    return sb.toString()
 }
 
 private fun String.formatForAflUrl(): String {
