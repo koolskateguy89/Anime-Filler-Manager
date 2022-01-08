@@ -2,6 +2,7 @@ package com.github.koolskateguy89.filler
 
 import com.google.common.collect.HashBasedTable
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.io.IOException
 
@@ -51,12 +52,12 @@ public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
             try {
                 // replace all non-alphanumeric characters with a dash (which is what AFL does)
                 val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${name.formatForAflUrl()}").get()
-                val fillerElem: Elements = doc.select("div.filler > span.Episodes")
+                val fillerElem: Element? = doc.selectFirst("div.filler > span.Episodes")
 
-                return if (fillerElem.isEmpty())
+                return if (fillerElem == null)
                     emptyList()
                 else
-                    fillerElem.first()!!.text().split(", ").map(::valueOf)
+                    fillerElem.text().split(", ").map(::valueOf)
 
             } catch (io: IOException) {
                 // the page doesn't exist, likely the MAL name is different to the AFL name
