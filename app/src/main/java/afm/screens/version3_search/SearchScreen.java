@@ -108,10 +108,12 @@ public final class SearchScreen extends GridPane {
 		useTitleAsPromptText(themeCombo);
 
 		final var seasonItems = sznCombo.getItems();
-		seasonItems.add("Spring");
-		seasonItems.add("Summer");
-		seasonItems.add("Fall");
-		seasonItems.add("Winter");
+		seasonItems.addAll(
+				"Spring",
+				"Summer",
+				"Fall",
+				"Winter"
+		);
 
 		final var yearItems = yearCombo.getItems();
 		for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)

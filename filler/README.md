@@ -21,7 +21,9 @@ dependency)
 		<url>https://jitpack.io</url>
 	</repository>
 </repositories>
+```
 
+```xml
 <dependency>
    <groupId>com.github.koolskateguy89</groupId>
    <artifactId>anime-filler</artifactId>

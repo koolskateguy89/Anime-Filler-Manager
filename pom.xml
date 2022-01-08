@@ -77,8 +77,6 @@
 				<scope>test</scope>
 			</dependency>
 
-
-
 			<!--<editor-fold desc="JavaFX">-->
 			<!-- JavaFX -->
 			<dependency>

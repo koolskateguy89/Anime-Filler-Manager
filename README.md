@@ -110,9 +110,6 @@ To run:
 3. I cba
 
 ## TODO
-Key:
-
-_italicized = WIP/next-to-do_
 
 - [x] Add option to skip loading screen
 - [x] Redesign menu panel (make it a VBox with icons on buttons - make buttons 'seamless')
@@ -124,22 +121,24 @@ _italicized = WIP/next-to-do_
 - [x] Add option to use external database for MyList and ToWatch
   - [x] Add option to make new blank database
 - [x] Add color themes option (use different stylesheets which the user picks from)
-  - [~] _Light theme_ - icons are then messed up because they're white :/ but mostly done
+  - [~] Light theme - icons are then messed up because they're white :/ but mostly done
   - [ ] Idk maybe Dracula/Monokai/etc
 - [x] Use ControlsFX a lot more
 - [x] Add hyperlink to the next watch episode
 - [~] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log things
     - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol (?) is that how it works idk
-- [ ] **Filler*** tests
+- [~] Split into `core` and `app` modules, `core` will basically just be `anime` package(?) - **long-ish**
+- [ ] `Filler` tests
+- [ ] Switch to [mongoDB](https://www.mongodb.com/blog/post/getting-started-with-mongodb-and-java-part-i)?
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
   - [ ] Just write REST API wrapper myself? not all of its features are needed, literally only searching for anime
     - NO. Ok maybe
   - [ ] Use it for filler? https://github.com/MALSync/MALSync/pull/689/files#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R114
-- [ ] Enable use of ControlsFX.TableFilter in MyList & ToWatch
+- [ ] Enable use of `ControlsFX.TableFilter` in MyList & ToWatch
 - [ ] Add a global keybind to minimize/maximize - **no idea**
 - [ ] Have no window resizing
-- [ ] Add episodes column to all tablescreens - **almost-long**
-- [ ] Resize screens to all be same size (SceneBuilder) - **long**
+  - [ ] Resize screens to all be same size (SceneBuilder) - **long**
+- [ ] Add episodes column to all tablescreens? - **almost-long**
 
 ## License
 
