@@ -184,7 +184,7 @@ public abstract class InfoWindow extends Stage {
 	void openFillers() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.initOwner(this);
-		afm.common.utils.Utils.wrapAlertText(alert);
+		Utils.wrapAlertText(alert);
 
 		alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
 		alert.setTitle("Filler episodes for: " + anime.getName());

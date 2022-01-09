@@ -210,7 +210,7 @@ class Search {
         /* this should be impossible because it's already taken care of
 		   in SearchScreen */
         if (genres.isEmpty())
-            throw Error(IllegalArgumentException("No genres selected for searching"))
+            throw IllegalStateException("No genres selected for searching")
 
         val searchWorked: Boolean = searchForEachGenre()
 

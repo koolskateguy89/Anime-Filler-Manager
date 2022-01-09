@@ -54,7 +54,7 @@ public class CustomScreen extends GridPane {
 
 	public CustomScreen() throws IOException {
 		// load FXML file into this object
-		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("CustomScreen"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("CustomScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
@@ -90,7 +90,7 @@ public class CustomScreen extends GridPane {
 		for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
 			years.add(i);
 
-		totalEpField.textProperty().addListener(afm.common.utils.Utils.intOnlyListener());
+		totalEpField.textProperty().addListener(Utils.intOnlyListener());
 		currEpField.textProperty().addListener(Utils.intOnlyListener());
 	}
 
