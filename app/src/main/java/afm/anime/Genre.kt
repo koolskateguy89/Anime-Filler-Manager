@@ -78,7 +78,7 @@ enum class Genre(val id: Int,
             }
 
         @JvmStatic
-        fun valueOfFromId(id: Int): Genre? = ID_MAP[id]
+        fun valueOfFromId(id: Int): Genre = ID_MAP.getValue(id)
 
         @JvmStatic
         fun valuesOfType(type: GenreType): List<Genre> = values().filter { it.type == type }

@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -196,6 +197,8 @@ public final class Anime {
 	// TODO: decide @Getter private final or public final
 	// for some reason now Kotlin can't access this getter when running in Idea ffs
 	@EqualsAndHashCode.Include @Getter public final String name;
+	// TODO: impl studios
+	@Getter private final Set<String> studios = Set.of();
 	@EqualsAndHashCode.Include @Getter private final String studio;
 	@EqualsAndHashCode.Include @Getter private final Season season;
 	// TODO: anime startYear

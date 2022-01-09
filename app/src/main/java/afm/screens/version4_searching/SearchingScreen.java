@@ -107,8 +107,7 @@ public class SearchingScreen extends Pane {
 			// if something goes wrong: print exception & terminate
 			exceptionProperty().addListener((obs, oldVal, newVal) -> {
 				if (newVal != null) {
-					Exception ex = (Exception) newVal;
-					ex.printStackTrace();
+					newVal.printStackTrace();
 					Platform.exit();
 					System.exit(1);
 				}
