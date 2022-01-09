@@ -5,6 +5,7 @@ import static afm.database.DelegatesKt.ToWatchKt;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Set;
 
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -144,12 +145,12 @@ public class CustomScreen extends GridPane {
 
 		final String studio = studioField.getText();
 		if (studio != null && !studio.isBlank())
-			builder.setStudio(studio.strip());
+			builder.setStudios(Set.of(studio.strip()));
 
 		final String szn = sznCombo.getValue();
 		final Integer year = yearCombo.getValue();
-		if (szn != null && year != null)
-			builder.setSeason(Season.getSeason(szn, year));
+		//if (szn != null && year != null)
+			//builder.setSeason(Season.getSeason(szn, year));
 
 		try {
 			builder.setEpisodes(Integer.parseInt(totalEpField.getText()));
