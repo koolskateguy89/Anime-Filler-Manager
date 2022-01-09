@@ -13,7 +13,6 @@ import javafx.scene.layout.Region
 import javafx.scene.text.Text
 import javafx.util.Callback
 import org.controlsfx.control.CheckComboBox
-import java.util.concurrent.Callable
 
 
 fun TableColumn<*, *>.topCenterColumnAlignment() {
