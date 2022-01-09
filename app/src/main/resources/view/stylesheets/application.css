@@ -117,5 +117,14 @@
 
 /* SettingsScreen */
 .property-sheet .label {
-    -fx-text-fill: black;
+    -fx-text-fill: -opposite-to-background-color;
+}
+.property-sheet .scroll-pane {
+    -fx-background-color: background;
+}
+.property-sheet .scroll-pane .property-pane {
+    -fx-background-color: -background;
+}
+.property-sheet .scroll-pane .accordion {
+	-fx-background-color: -background;
 }
