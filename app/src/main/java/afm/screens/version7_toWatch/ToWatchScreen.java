@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 
 import afm.anime.Anime;
 import afm.anime.Season;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 
 public class ToWatchScreen extends Pane {
 
@@ -37,7 +37,7 @@ public class ToWatchScreen extends Pane {
 	private ObservableList<Anime> tableItems;
 
 	public ToWatchScreen() throws IOException {
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("ToWatchScreen"));
+		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("ToWatchScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
@@ -52,24 +52,24 @@ public class ToWatchScreen extends Pane {
 		tableItems = table.getItems();
 
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-		Utils.wrapColText(nameCol);
+		afm.common.utils.Utils.wrapColText(nameCol);
 
 		studioCol.setCellValueFactory(new PropertyValueFactory<>("studio"));
-		Utils.wrapColText(studioCol);
+		afm.common.utils.Utils.wrapColText(studioCol);
 
 		seasonCol.setCellValueFactory(new PropertyValueFactory<>("season"));
-		Utils.topCenterColumnAlignment(seasonCol);
+		afm.common.utils.Utils.topCenterColumnAlignment(seasonCol);
 
 		genreCol.setCellValueFactory(new PropertyValueFactory<>("genreString"));
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, Button> actions = Utils.getActionsCol();
+		TableColumn<Anime, Button> actions = afm.common.utils.Utils.getActionsCol();
 		table.getColumns().add(actions);
 
-		TableColumn<Anime, Button> infoCol = Utils.getInfoCol();
-		TableColumn<Anime, Button> moveToMyListCol = Utils.getMoveCol("MyList");
-		TableColumn<Anime, Button> removeCol = Utils.getRemoveCol();
+		TableColumn<Anime, Button> infoCol = afm.common.utils.Utils.getInfoCol();
+		TableColumn<Anime, Button> moveToMyListCol = afm.common.utils.Utils.getMoveCol("MyList");
+		TableColumn<Anime, Button> removeCol = afm.common.utils.Utils.getRemoveCol();
 		actions.getColumns().addAll(infoCol, moveToMyListCol, removeCol);
 
 		infoCol.setCellValueFactory(new PropertyValueFactory<>("toWatchInfo"));

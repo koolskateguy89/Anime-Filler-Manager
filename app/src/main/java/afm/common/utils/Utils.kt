@@ -1,7 +1,7 @@
 @file:JvmName("Utils")
 @file:JvmMultifileClass
 
-package afm.common
+package afm.common.utils
 
 import afm.Main
 import afm.anime.Anime
@@ -15,8 +15,6 @@ import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.Button
 import javafx.scene.control.ButtonType
 import javafx.scene.control.TableColumn
-import javafx.scene.input.Clipboard
-import javafx.scene.input.ClipboardContent
 import java.net.URL
 import java.util.Calendar
 import java.util.prefs.Preferences
@@ -42,36 +40,11 @@ val isFirstRun: Boolean = run {
 }
 
 
-// this 500ns vs regex 2000ns
-fun String.splitByCapitals(): Array<String> {
-    val res = mutableListOf<String>()
-
-    var start = 0
-
-    for (i in 1 until length) {
-        val here = this[i]
-        if (here.isUpperCase()) {
-            res.add(substring(start, i))
-            start = i
-        }
-    }
-
-    // add remaining
-    res.add(substring(start))
-
-    res.removeIf(String?::isNullOrBlank)
-
-    return res.toTypedArray()
-}
-
-
 fun getFxmlUrl(fname: String): URL? = classLoader.getResource("view/$fname.fxml")
 
-fun String.isNumeric(): Boolean = toDoubleOrNull() != null
 
 fun toIntOrNull(s: String): Int? = s.toIntOrNull()
 
-fun String?.isStrictInteger(): Boolean = !isNullOrEmpty() && all { it.isDigit() }
 
 // Stop user from typing any characters that aren't numeric
 fun intOnlyListener(): ChangeListener<String?> =
@@ -127,12 +100,6 @@ fun showAndWaitConfAlert(header: String?, content: String?): ButtonType {
 
         showAndWait().orElse(ButtonType.NO)
     }
-}
-
-fun String.copyToClipboard() {
-    val content = ClipboardContent()
-    content.putString(this)
-    Clipboard.getSystemClipboard().setContent(content)
 }
 
 

@@ -1,7 +1,7 @@
 @file:JvmName("Utils")
 @file:JvmMultifileClass
 
-package afm.common
+package afm.common.utils
 
 import javafx.css.Styleable
 import javafx.scene.control.Alert

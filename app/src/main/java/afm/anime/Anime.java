@@ -1,7 +1,7 @@
 package afm.anime;
 
-import static afm.common.Utils.makeButtonProperty;
-import static afm.common.Utils.setStyleClass;
+import static afm.common.utils.Utils.makeButtonProperty;
+import static afm.common.utils.Utils.setStyleClass;
 import static afm.database.DelegatesKt.MyListKt;
 import static afm.database.DelegatesKt.ToWatchKt;
 import static java.util.Objects.requireNonNull;

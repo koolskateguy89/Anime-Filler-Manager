@@ -29,7 +29,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import org.controlsfx.control.PropertySheet;
 
 import afm.Main;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 import afm.database.Database;
 import afm.screens.infowindows.InfoWindow;
 import afm.screens.settings.items.BooleanItem;

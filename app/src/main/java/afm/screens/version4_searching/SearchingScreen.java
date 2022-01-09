@@ -1,6 +1,6 @@
 package afm.screens.version4_searching;
 
-import static afm.common.Utils.sleep;
+import static afm.common.utils.Utils.sleep;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.common.SoundFactory;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 import afm.user.Settings;
 
 public class SearchingScreen extends Pane {

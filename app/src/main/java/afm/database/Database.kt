@@ -4,10 +4,10 @@ import afm.Main
 import afm.anime.Anime
 import afm.anime.Genre
 import afm.anime.Season
-import afm.common.NonNullMap
-import afm.common.inJar
-import afm.common.isFirstRun
-import afm.common.wrapAlertText
+import afm.common.utils.NonNullMap
+import afm.common.utils.inJar
+import afm.common.utils.isFirstRun
+import afm.common.utils.wrapAlertText
 import afm.screens.version1_start.StartScreen.LoadTask
 import afm.user.Settings
 import javafx.application.Platform

@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
 import afm.Main;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 
 // now also being used as a Home Screen
 public class WelcomeScreen extends VBox {

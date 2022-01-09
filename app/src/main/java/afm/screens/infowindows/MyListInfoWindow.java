@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import afm.anime.Anime;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 
 // Refreshing of MyList table is done in MyListKt.add(Anime)
 public class MyListInfoWindow extends InfoWindow {
@@ -43,7 +43,7 @@ public class MyListInfoWindow extends InfoWindow {
 		eventHandler = infoBtn.getOnAction();
 		infoBtn.setOnAction(e -> this.requestFocus());
 
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("infowindows/MyListInfoWindow"));
+		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("infowindows/MyListInfoWindow"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();

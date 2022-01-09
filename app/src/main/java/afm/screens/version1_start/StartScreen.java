@@ -1,6 +1,6 @@
 package afm.screens.version1_start;
 
-import static afm.common.Utils.sleep;
+import static afm.common.utils.Utils.sleep;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 import afm.Main;
 import afm.anime.Season;
 import afm.common.FactsKt;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 import afm.database.Database;
 import afm.screens.Menu;
 import afm.screens.infowindows.InfoWindow;

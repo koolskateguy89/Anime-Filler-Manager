@@ -33,7 +33,7 @@ import afm.anime.Genre;
 import afm.anime.GenreType;
 import afm.anime.Search;
 import afm.anime.Season;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 import afm.screens.infowindows.GenreInfoWindow;
 
 // TODO: when search screen button is pressed, show results (if any); when pressed again, show search screen
@@ -80,7 +80,7 @@ public final class SearchScreen extends GridPane {
 
 
 	public SearchScreen() throws IOException {
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("SearchScreen"));
+		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("SearchScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
@@ -98,7 +98,7 @@ public final class SearchScreen extends GridPane {
 		studioPane.setStyle(null);
 		studioPane.getChildren().add(studioField);
 
-		minEpsField.textProperty().addListener(Utils.intOrEmptyListener());
+		minEpsField.textProperty().addListener(afm.common.utils.Utils.intOrEmptyListener());
 
 		genreCombo.getItems().addAll(Genre.valuesOfType(GenreType.NORMAL));
 		useTitleAsPromptText(genreCombo);
@@ -233,7 +233,7 @@ public final class SearchScreen extends GridPane {
 
 		final String minEps = minEpsField.getText();
 		if (minEps != null && !minEps.isBlank()) {
-			Integer i = Utils.toIntOrNull(minEps);
+			Integer i = afm.common.utils.Utils.toIntOrNull(minEps);
 			if (i != null)
 				search.setMinEpisodes(i);
 		}
@@ -270,7 +270,7 @@ public final class SearchScreen extends GridPane {
 							searching, do you still want to search?
 							""";
 
-			if (Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
+			if (afm.common.utils.Utils.showAndWaitConfAlert(header, content) == ButtonType.YES) {
 				return true;
 			} else {
 				nameField.clear();

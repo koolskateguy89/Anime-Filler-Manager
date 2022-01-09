@@ -26,7 +26,7 @@ import afm.Main;
 import afm.anime.Anime;
 import afm.common.Browser;
 import afm.common.NotificationFactory;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 import afm.user.Settings;
 import afm.user.Theme;
 
@@ -184,7 +184,7 @@ public abstract class InfoWindow extends Stage {
 	void openFillers() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.initOwner(this);
-		Utils.wrapAlertText(alert);
+		afm.common.utils.Utils.wrapAlertText(alert);
 
 		alert.setHeaderText("Your next episode to watch is: " + anime.getNextEpisode());
 		alert.setTitle("Filler episodes for: " + anime.getName());

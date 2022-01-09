@@ -1,5 +1,6 @@
 package afm.common
 
+import afm.common.utils.classLoader
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 

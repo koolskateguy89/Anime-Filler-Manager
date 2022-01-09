@@ -11,11 +11,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
-import kotlin.io.ConsoleKt;
-
 import afm.anime.Anime;
 import afm.anime.Season;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 
 public class ResultsScreen extends Pane {
 
@@ -37,7 +35,7 @@ public class ResultsScreen extends Pane {
 	private List<Anime> tableItems;
 
 	public ResultsScreen() throws IOException {
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("ResultsScreen"));
+		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("ResultsScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
@@ -54,10 +52,10 @@ public class ResultsScreen extends Pane {
 	@FXML
 	private void initialize() {
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-		Utils.wrapColText(nameCol);
+		afm.common.utils.Utils.wrapColText(nameCol);
 
 		studioCol.setCellValueFactory(new PropertyValueFactory<>("studio"));
-		Utils.wrapColText(studioCol);
+		afm.common.utils.Utils.wrapColText(studioCol);
 
 		seasonCol.setCellValueFactory(new PropertyValueFactory<>("season"));
 
@@ -65,12 +63,12 @@ public class ResultsScreen extends Pane {
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, Button> actions = Utils.getActionsCol();
+		TableColumn<Anime, Button> actions = afm.common.utils.Utils.getActionsCol();
 		table.getColumns().add(actions);
 
-		TableColumn<Anime, Button> infoCol = Utils.getResultInfoCol();
-		TableColumn<Anime, Button> myListCol = Utils.getResultCol("MyList");
-		TableColumn<Anime, Button> toWatchCol = Utils.getResultCol("ToWatch");
+		TableColumn<Anime, Button> infoCol = afm.common.utils.Utils.getResultInfoCol();
+		TableColumn<Anime, Button> myListCol = afm.common.utils.Utils.getResultCol("MyList");
+		TableColumn<Anime, Button> toWatchCol = afm.common.utils.Utils.getResultCol("ToWatch");
 		actions.getColumns().addAll(infoCol, myListCol, toWatchCol);
 
 		// calls infoBtnProperty

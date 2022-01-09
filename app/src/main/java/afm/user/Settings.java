@@ -17,10 +17,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import afm.common.Utils;
+import afm.common.utils.Utils;
 
 /*
  * TODO: Map<String, String> for String settings (database, selected db etc.)
@@ -31,7 +30,6 @@ public class Settings {
 	// Don't allow this class to be instantiated
 	private Settings() { }
 
-	@AllArgsConstructor
 	private enum PrefKey {
 		DATABASE("DATABASE_URLS"),
 		SELECTED_DB("SELECTED_DATABASE"),
@@ -44,9 +42,11 @@ public class Settings {
 		PrefKey() {
 			this.key = this.name();
 		}
+		PrefKey(String key) {
+			this.key = key;
+		}
 	}
 
-	@AllArgsConstructor
 	public enum Key {
 		SHOW_FACTS(true),
 		NAME_ORDER(false),
@@ -56,6 +56,11 @@ public class Settings {
 		;
 
 		final boolean defaultValue;
+
+		Key(boolean def) {
+			defaultValue = def;
+		}
+
 		public boolean getDefault() {
 			return defaultValue;
 		}

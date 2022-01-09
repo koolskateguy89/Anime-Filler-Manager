@@ -1,6 +1,6 @@
 @file:JvmSynthetic
 
-package afm.common
+package afm.common.utils
 
 
 /*

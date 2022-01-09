@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.common.OnClose;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 import afm.screens.Menu;
 import afm.screens.infowindows.InfoWindow;
 import afm.screens.settings.SettingsScreen;

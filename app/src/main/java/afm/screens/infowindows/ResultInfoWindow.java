@@ -1,6 +1,6 @@
 package afm.screens.infowindows;
 
-import static afm.common.Utils.setStyleClass;
+import static afm.common.utils.Utils.setStyleClass;
 import static afm.database.DelegatesKt.MyListKt;
 import static afm.database.DelegatesKt.ToWatchKt;
 
@@ -13,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 import afm.anime.Anime;
-import afm.common.Utils;
 import afm.screens.Menu;
 
 public class ResultInfoWindow extends InfoWindow {
@@ -48,7 +47,7 @@ public class ResultInfoWindow extends InfoWindow {
 		infoBtn.setOnAction(e -> this.requestFocus());
 
 		// load FXML file into this object
-		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("infowindows/ResultInfoWindow"));
+		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("infowindows/ResultInfoWindow"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();

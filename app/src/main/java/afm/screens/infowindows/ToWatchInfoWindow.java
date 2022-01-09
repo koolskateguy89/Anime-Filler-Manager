@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 import afm.anime.Anime;
-import afm.common.Utils;
+import afm.common.utils.Utils;
 
 //Refreshing of ToWatch table is done in ToWatchKt.add(Anime)
 public class ToWatchInfoWindow extends InfoWindow {

@@ -1,6 +1,6 @@
 package afm.anime
 
-import afm.common.splitByCapitals
+import afm.common.utils.splitByCapitals
 
 enum class GenreType {
     NORMAL, DEMOGRAPHIC, THEME;

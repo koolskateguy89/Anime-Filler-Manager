@@ -1,6 +1,6 @@
 package afm.anime;
 
-import afm.common.Utils;
+import afm.common.utils.Utils;
 
 // shouldn't use Record as doesn't provide private constructor
 // This basically mimics an Enum
