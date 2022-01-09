@@ -1,5 +1,5 @@
 * { /* variables */
-    -background: #DEE4E7;
+    -background: #dee4e7;
     -opposite-to-background-color: black;
     -background-text-color: -opposite-to-background-color;
     -button-color: #282828;
@@ -15,7 +15,7 @@
 }
 
 .progress-bar {
-	-fx-accent: #F5DF4D;
+	-fx-accent: #f5df4d;
 }
 
 .label {
@@ -32,7 +32,7 @@
 
 .button {
 	-fx-background-color: -button-color;
-	-fx-text-fill: #E8E8E8;
+	-fx-text-fill: #e8e8e8;
 }
 .button:hover {
     -fx-background-color: derive(-button-color, 30%);
@@ -60,24 +60,24 @@
 }
 
 .Results {
-    -fx-background-color: #0044FF;
-    -fx-text-fill: #FAFAFA;
+    -fx-background-color: #0044ff;
+    -fx-text-fill: #fafafa;
 }
 .Results:hover {
-    -fx-background-color: derive(#0044FF, 30%);
+    -fx-background-color: derive(#0044ff, 30%);
 }
 
 .Selected {
-    -fx-background-color: #77DBE5;
-	-fx-text-fill: #300E4E;
+    -fx-background-color: #77dbe5;
+	-fx-text-fill: #300e4e;
 }
 .Selected:hover {
-    -fx-background-color: derive(#77DBE5, 30%);
+    -fx-background-color: derive(#77dbe5, 30%);
 }
 
 /* GenreInfoWindow */
 .text-area {
-	-fx-text-fill: #FCFCFC;
+	-fx-text-fill: #fcfcfc;
 }
 .text-area .content {
 	-fx-background-color: #272727;
