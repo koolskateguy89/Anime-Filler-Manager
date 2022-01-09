@@ -410,13 +410,13 @@ object Database {
 
         rs.run {
             builder.setName(getString(COLUMN_MAP["name"]))
-                .setStudio(getString(COLUMN_MAP["studio"]))
+                .setStudios(setOf(getString(COLUMN_MAP["studio"])))
                 .setInfo(getString(COLUMN_MAP["info"]))
 
             val season: Season? = Season.getSeasonFromToString(
                 getString(COLUMN_MAP["seasonString"])
             )
-            builder.setSeason(season)
+            //builder.setSeason(season)
 
             builder.setCurrEp(getInt(COLUMN_MAP["currEp"]))
                 .setEpisodes(getInt(COLUMN_MAP["totalEps"]))
