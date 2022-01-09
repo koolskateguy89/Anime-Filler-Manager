@@ -9,17 +9,6 @@
 
 ### Figure out
 
-- Now `mvn package` is very slow (~15s -> ~37s)
-  - [x] Now ~22s for `clean package`
-  - [ ] NOW ~48s for `clean package` wtf ??????
-- Splitting functionality into diff. modules?
-  - figure out how to get that working well
-    - [x] Maven super POM/BOM?
-      - parent POM
-    - [x] If using `mvn install` on packages, running with IntelliJ on main package
-      may not use the most up to date 'version' of other packages
-      - (Use `mvn package` in parent) Running with IntelliJ on main package
-        will use most up-to-date version of other packages nice
 - Filler going to be its own actual API? i.e. project. If so, convert it to Java???
 
 ### How it works (figured out)
