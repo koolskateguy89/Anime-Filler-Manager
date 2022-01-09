@@ -5,6 +5,9 @@ target/
 # User-specific
 .idea/eclipseCodeFormatter.xml
 
+# Me
+Test.kts
+
 
 
 # JetBrains.gitignore
