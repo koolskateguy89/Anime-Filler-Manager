@@ -63,11 +63,8 @@ private object NameAndId : Selector {
 private object Genres : Selector {
     override fun extractFrom(animeElem: Element): EnumSet<Genre> {
         val ids = animeElem.attr("data-genre").split(",")
-
-        val result = EnumSet.noneOf(Genre::class.java)
-        ids.map { Genre.valueOfFromId(it.toInt()) }
-            .toCollection(result)
-        return result
+        return ids.map { Genre.valueOfFromId(it.toInt()) }
+                  .toCollection(EnumSet.noneOf(Genre::class.java))
     }
 }
 
@@ -84,9 +81,10 @@ private object Synopsis : Selector {
 
     object Studios : Selector {
         private const val cssQuery = "div.properties > div:nth-child(1) > span.item > a"
+        // they should be unique anyway but yeah
         override fun extractFrom(animeElem: Element): Set<String> {
             val studioElems = synopsisElem.select(cssQuery)
-            return studioElems.map { it.text() }.toSortedSet()
+            return studioElems.map { it.text() }.toSet()
         }
     }
 
@@ -100,13 +98,9 @@ private object Synopsis : Selector {
             "div.properties > div$onlyThemeAndDemos > span.item"
 
         override fun extractFrom(animeElem: Element): EnumSet<Genre> {
-            val result = EnumSet.noneOf(Genre::class.java)
-
             val names = synopsisElem.select(cssQuery)
-            names.map { Genre.valueOfFromName(it.text().remove(" ")) }
-                 .toCollection(result)
-
-            return result
+            return names.map { Genre.valueOfFromName(it.text().remove(" ")) }
+                        .toCollection(EnumSet.noneOf(Genre::class.java))
         }
     }
 
@@ -177,7 +171,6 @@ class Search {
     var name: String? = null
     var studio: String? = null
     private val genres = EnumSet.noneOf(Genre::class.java)
-    private val seasons = mutableSetOf<Season>()
     // TODO: new search filters
     var animeType: AnimeType? = null
     var startYear: Int? = null
@@ -199,11 +192,6 @@ class Search {
     fun setGenres(genres: Collection<Genre>) {
         this.genres.clear()
         this.genres.addAll(genres)
-    }
-
-    fun setSeasons(set: Set<Season>) {
-        seasons.clear()
-        seasons.addAll(set)
     }
 
     fun search(): List<Anime> {
@@ -267,6 +255,7 @@ class Search {
     // Scrapes the document, adding all appropriate anime to result
     private fun scrapeDocument(doc: Document) =
         doc.select(ANIME_ELEMS).forEach {
+            // return@forEach == continue
             builder.reset()
 
             val (name, id) = NameAndId.extractFrom(it)
@@ -275,7 +264,7 @@ class Search {
                    .setId(id)
 
             val synopsis: String = Synopsis.extractFrom(it)
-            builder.setInfo(synopsis)
+            builder.setSynopsis(synopsis)
 
             val studios: Set<String> = Synopsis.Studios.extractFrom(it)
             if (removeBecauseStudio(studios)) return@forEach
@@ -288,11 +277,19 @@ class Search {
             builder.setGenres(genres)
 
             val (type, startYear, status, eps, epLength) = Infos.extractFrom(it)
+
+            if (removeBecauseAnimeType(type)) return@forEach
             builder.setAnimeType(type)
+
+            if (removeBecauseStartYear(startYear)) return@forEach
             builder.setStartYear(startYear)
+
+            if (removeBecauseStatus(status)) return@forEach
             builder.setStatus(status)
+
             if (removeBecauseMinEps(eps)) return@forEach
             builder.setEpisodes(eps)
+
             builder.setEpisodeLength(epLength)
 
             val imgUrl: String = ImageUrl.extractFrom(it)
@@ -315,29 +312,9 @@ class Search {
     private fun removeBecauseGenres(genreSet: EnumSet<Genre>): Boolean =
         !genreSet.containsAll(genres)
 
-    /* (or)
-	 * if user has selected seasons, filter out all anime whose season
-	 * is not one of those seasons
-	 */
-    // TODO: removeBecauseStartYear
-    // TODO: removeBecauseAnimeType
-    // TODO: removeBecauseStatus
-    // not gonna filter episode length
-    private fun removeBecauseSeason(s: Season?): Boolean {
-        // user hasn't selected any Seasons
-        if (seasons.isEmpty())
-            return false
-
-        // user selected at least 1 Season so filter all with no/UNDEF studio
-        if (s == null || s === Season.UNDEF)
-            return true
-
-        return !seasons.contains(s)
-    }
-
     /* (contains)
-	 * if user entered a Studio, filter out all anime whose studios
-	 * doesn't contain that name (ignore case)
+	 * if user entered a Studio, remove all anime whose studios
+	 * don't contain that name (ignore case)
 	 */
     private fun removeBecauseStudio(s: Set<String>): Boolean {
         // user hasn't entered a Studio
@@ -348,11 +325,22 @@ class Search {
         if (s.isEmpty())
             return true
 
-        // basically we 'want to remove' it until it has a 'valid' studio
+        // basically we 'want to remove' the anime until it has a 'valid' studio
         return !s.any { it.contains(this.studio!!, ignoreCase = true) }
     }
 
-    private fun removeBecauseMinEps(eps: Int): Boolean {
-        return if (minEpisodes == null || eps == Anime.NOT_FINISHED) false else eps < minEpisodes!!
-    }
+    private fun removeBecauseAnimeType(type: AnimeType): Boolean =
+        animeType != null && type != animeType
+
+    private fun removeBecauseStartYear(year: Int): Boolean =
+        startYear != null && year < startYear!!
+
+    private fun removeBecauseStatus(s: Status) : Boolean =
+        status != null && s != status
+
+    private fun removeBecauseMinEps(eps: Int): Boolean =
+        if (minEpisodes == null || eps == Anime.NOT_FINISHED)
+            false
+        else
+            eps < minEpisodes!!
 }

@@ -1,13 +1,9 @@
 package afm.screens.animefactories
 
 import afm.anime.Anime
-import afm.common.utils.setStyleClass
 import afm.screens.Menu
-import afm.screens.infowindows.ResultInfoWindow
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.value.ObservableValue
-import javafx.event.ActionEvent
-import javafx.event.EventHandler
 import javafx.scene.control.Button
 import javafx.scene.control.TableColumn
 import javafx.util.Callback

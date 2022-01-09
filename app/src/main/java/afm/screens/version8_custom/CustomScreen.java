@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -16,37 +15,41 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 
 import org.controlsfx.control.CheckComboBox;
-import org.controlsfx.control.SearchableComboBox;
-import org.controlsfx.control.textfield.TextFields;
+import org.controlsfx.control.textfield.CustomTextField;
 
 import afm.Main;
 import afm.anime.Anime;
 import afm.anime.Anime.AnimeBuilder;
+import afm.anime.AnimeType;
 import afm.anime.Genre;
-import afm.anime.Season;
+import afm.anime.GenreType;
+import afm.anime.Status;
 import afm.common.utils.Utils;
 
 // A lot of things here are identical to SearchScreen
 public class CustomScreen extends GridPane {
 
 	@FXML
-	private StackPane namePane;
-	private TextField nameField;
+	private CustomTextField nameField;
 
 	@FXML
-	private StackPane studioPane;
-	private TextField studioField;
+	private CustomTextField studioField;
 
 	@FXML
 	private CheckComboBox<Genre> genreCombo;
+	@FXML
+	private CheckComboBox<Genre> demoCombo;
+	@FXML
+	private CheckComboBox<Genre> themeCombo;
 
 	@FXML
-	private ComboBox<String> sznCombo;
+	private ComboBox<AnimeType> typeCombo;
 	@FXML
-	private SearchableComboBox<Integer> yearCombo;
+	private TextField startYearField;
+	@FXML
+	private ComboBox<Status> statusCombo;
 
 	@FXML
 	private TextField totalEpField;
@@ -63,55 +66,38 @@ public class CustomScreen extends GridPane {
 
 	@FXML
 	private void initialize() {
-		nameField = TextFields.createClearableTextField();
-		nameField.setPromptText("Name");
-		namePane.setStyle(null);
-		namePane.getChildren().add(nameField);
+		genreCombo.getItems().addAll(Genre.valuesOfType(GenreType.NORMAL));
+		Utils.useTitleAsPromptText(genreCombo);
+		demoCombo.getItems().addAll(Genre.valuesOfType(GenreType.DEMOGRAPHIC));
+		Utils.useTitleAsPromptText(demoCombo);
+		themeCombo.getItems().addAll(Genre.valuesOfType(GenreType.THEME));
+		Utils.useTitleAsPromptText(themeCombo);
 
-		studioField = TextFields.createClearableTextField();
-		studioField.setPromptText("Studio");
-		studioPane.setStyle(null);
-		studioPane.getChildren().add(studioField);
+		typeCombo.getItems().addAll(AnimeType.values());
+		startYearField.textProperty().addListener(Utils.intOrEmptyListener());
+		statusCombo.getItems().addAll(Status.values());
 
-		genreCombo.setTitle("Select genre(s)");
-		genreCombo.getItems().addAll(Genre.values());
-
-		// use the combobox title as prompt text
-		genreCombo.getCheckModel().getCheckedItems().addListener((ListChangeListener<Genre>) change -> {
-			if (change.getList().isEmpty()) {
-				genreCombo.setTitle("Select genre(s)");
-			} else {
-				genreCombo.setTitle(null);
-			}
-		});
-
-		sznCombo.getItems().addAll("Spring", "Summer", "Fall", "Winter");
-
-		final var years = yearCombo.getItems();
-		for (int i = Season.END_YEAR; i >= Season.START_YEAR; i--)
-			years.add(i);
-
-		totalEpField.textProperty().addListener(Utils.intOnlyListener());
+		totalEpField.textProperty().addListener(Utils.intOrEmptyListener());
 		currEpField.textProperty().addListener(Utils.intOnlyListener());
 	}
 
 	@FXML
 	void clearGenres() {
 		genreCombo.getCheckModel().clearChecks();
+		demoCombo.getCheckModel().clearChecks();
+		themeCombo.getCheckModel().clearChecks();
 	}
 
 	@FXML
 	void resetFields() {
 		nameField.clear();
-
 		studioField.clear();
 
-		totalEpField.clear();
-		currEpField.clear();
-
 		clearGenres();
-		sznCombo.getSelectionModel().clearSelection();
-		yearCombo.getSelectionModel().clearSelection();
+
+		typeCombo.getSelectionModel().clearSelection();
+		startYearField.clear();
+		statusCombo.getSelectionModel().clearSelection();
 
 		totalEpField.clear();
 		currEpField.clear();
@@ -147,17 +133,10 @@ public class CustomScreen extends GridPane {
 		if (studio != null && !studio.isBlank())
 			builder.setStudios(Set.of(studio.strip()));
 
-		final String szn = sznCombo.getValue();
-		final Integer year = yearCombo.getValue();
-		//if (szn != null && year != null)
-			//builder.setSeason(Season.getSeason(szn, year));
+		builder.setStartYear(Utils.toIntOrNull(startYearField.getText()));
 
-		try {
-			builder.setEpisodes(Integer.parseInt(totalEpField.getText()));
-		} catch (NumberFormatException ignored) {
-			// TODO: show error: didn't enter valid integer
-			// accept default value
-		}
+		builder.setEpisodes(Utils.toIntOrNull(totalEpField.getText()));
+
 		try {
 			builder.setCurrEp(Integer.parseInt(currEpField.getText()));
 		} catch (NumberFormatException ignored) {

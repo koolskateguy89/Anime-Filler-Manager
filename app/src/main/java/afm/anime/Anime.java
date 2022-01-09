@@ -100,6 +100,7 @@ public final class Anime {
 		private int currEp = 0;
 		private boolean custom = false;
 
+		// TODO: remove once db is sorted out
 		private String studio;
 		private Season season;
 
@@ -138,8 +139,8 @@ public final class Anime {
 			return this;
 		}
 
-		public AnimeBuilder setInfo(String info) {
-			this.info = info;
+		public AnimeBuilder setSynopsis(String synopsis) {
+			this.info = synopsis;
 			return this;
 		}
 
@@ -192,8 +193,8 @@ public final class Anime {
 			return this;
 		}
 
-		public AnimeBuilder setEpisodes(int episodes) {
-			this.episodes = episodes;
+		public AnimeBuilder setEpisodes(Integer episodes) {
+			this.episodes = episodes != null ? episodes : Anime.NOT_FINISHED;
 			return this;
 		}
 
@@ -221,7 +222,7 @@ public final class Anime {
 	// for some reason now Kotlin can't access this getter when running in Idea ffs
 	@EqualsAndHashCode.Include @Getter public final String name;
 	@Getter private final Integer id; //for MAL website
-	@Getter private final String info;
+	@Getter private final String synopsis;
 	@Getter private final ImmutableSet<String> studios;
 	@EqualsAndHashCode.Include private final ImmutableSet<Genre> genres;
 	@Getter private final String genreString;
@@ -229,12 +230,11 @@ public final class Anime {
 	private final String imageURL;
 	private Image image;
 
-
 	@Getter private TreeSet<Filler> fillers = new TreeSet<>();
 	@Getter private final AnimeType type;
 	@Getter private final Integer startYear;
 	@Getter private Status status;
-	@Getter private int episodes = Anime.NOT_FINISHED;
+	@Getter private int episodes;
 	@Getter private final EpisodeLength episodeLength;
 
 	@Getter private int currEp;
@@ -251,7 +251,7 @@ public final class Anime {
 	private Anime(AnimeBuilder builder) {
 		name = requireNonNull(builder.name);
 		id = builder.id;
-		info = builder.info;
+		synopsis = builder.info;
 		studios = ImmutableSet.copyOf(builder.studios);
 
 		genres = Sets.immutableEnumSet(builder.genres);
@@ -307,7 +307,7 @@ public final class Anime {
 
 		if (this.season != null)
 			ps.setString(5, this.season.toString());
-		ps.setString(6, this.info);
+		ps.setString(6, this.synopsis);
 		ps.setBoolean(7, this.custom);
 
 		ps.setInt(8, this.currEp);

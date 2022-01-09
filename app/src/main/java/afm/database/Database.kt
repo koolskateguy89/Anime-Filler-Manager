@@ -350,6 +350,7 @@ object Database {
 
         // add anime in batches
         val added = MyListKt.getAdded()
+        // FIXME: NPE here somewhere
         if (added.isNotEmpty()) {
             con.prepareStatement(MYLIST_INSERT_QUERY).use {
                 var batchSize = 0

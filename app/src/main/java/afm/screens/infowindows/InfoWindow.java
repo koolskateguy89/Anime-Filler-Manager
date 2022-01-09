@@ -145,7 +145,7 @@ public abstract class InfoWindow extends Stage {
 		if (anime.getFillers().isEmpty())
 			fillerBtn.setVisible(false);
 
-		infoTextArea.setText(anime.getInfo());
+		infoTextArea.setText(anime.getSynopsis());
 
 		imageView.setImage(anime.getImage());
 	}

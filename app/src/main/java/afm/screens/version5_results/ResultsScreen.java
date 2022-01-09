@@ -15,6 +15,7 @@ import afm.anime.Anime;
 import afm.anime.Season;
 import afm.common.utils.Utils;
 
+// TODO: change tables to show Name, Studios, [Airing], InfoBtn, addBtnx2
 public class ResultsScreen extends Pane {
 
 	@FXML
@@ -24,7 +25,7 @@ public class ResultsScreen extends Pane {
 	private TableColumn<Anime, String> nameCol;
 
 	@FXML
-	private TableColumn<Anime, String> studioCol;
+	private TableColumn<Anime, String> studiosCol;
 
 	@FXML
 	private TableColumn<Anime, Season> seasonCol;
@@ -54,10 +55,10 @@ public class ResultsScreen extends Pane {
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		Utils.wrapColText(nameCol);
 
-		studioCol.setCellValueFactory(new PropertyValueFactory<>("studio"));
-		Utils.wrapColText(studioCol);
+		studiosCol.setCellValueFactory(new PropertyValueFactory<>("studios"));
+		Utils.wrapColText(studiosCol);
 
-		seasonCol.setCellValueFactory(new PropertyValueFactory<>("season"));
+		seasonCol.setCellValueFactory(new PropertyValueFactory<>("startYear"));
 
 		genreCol.setCellValueFactory(new PropertyValueFactory<>("genreString"));
 		Utils.wrapColText(genreCol);
