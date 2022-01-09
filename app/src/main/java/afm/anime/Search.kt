@@ -1,6 +1,7 @@
 package afm.anime
 
 import afm.Main
+import afm.common.utils.currentYear
 import afm.common.utils.inJar
 import afm.common.utils.remove
 import javafx.application.Platform
@@ -21,8 +22,6 @@ private val builder = Anime.builder()
 
 private const val MAL_URL = "https://myanimelist.net"
 private const val GENRE_URL = "$MAL_URL/anime/genre" //+"/${genre.getId()}"
-
-
 private const val TIMEOUT_MILLIS = 8000
 
 // rename to smthn different? like extractor?
@@ -179,9 +178,16 @@ class Search {
     var studio: String? = null
     private val genres = EnumSet.noneOf(Genre::class.java)
     private val seasons = mutableSetOf<Season>()
+    // TODO: new search filters
+    var animeType: AnimeType? = null
+    var startYear: Int? = null
+        set(value) {
+            field = value?.let { min(it, currentYear) }
+        }
+    var status: Status? = null
     var minEpisodes: Int? = null
         set(value) {
-            field = min(value!!, 72)
+            field = value?.let { min(it, 72) }
         }
 
     /* class variables to assist with web scraping */
@@ -261,7 +267,7 @@ class Search {
     // Scrapes the document, adding all appropriate anime to result
     private fun scrapeDocument(doc: Document) =
         doc.select(ANIME_ELEMS).forEach {
-            builder.clear()
+            builder.reset()
 
             val (name, id) = NameAndId.extractFrom(it)
             if (removeBecauseName(name)) return@forEach
@@ -273,7 +279,7 @@ class Search {
 
             val studios: Set<String> = Synopsis.Studios.extractFrom(it)
             if (removeBecauseStudio(studios)) return@forEach
-            // TODO: builder.setStudios
+            builder.setStudios(studios)
 
             val genres = EnumSet.noneOf(Genre::class.java)
             genres.addAll(Genres.extractFrom(it))
@@ -282,20 +288,18 @@ class Search {
             builder.setGenres(genres)
 
             val (type, startYear, status, eps, epLength) = Infos.extractFrom(it)
-            // TODO: builder.setAnimeType
-            // TODO: builder.setStartYear
-            // TODO: builder.setStatus
-
+            builder.setAnimeType(type)
+            builder.setStartYear(startYear)
+            builder.setStatus(status)
             if (removeBecauseMinEps(eps)) return@forEach
             builder.setEpisodes(eps)
-
-            // TODO: builder.setEpisodeLength
+            builder.setEpisodeLength(epLength)
 
             val imgUrl: String = ImageUrl.extractFrom(it)
             builder.setImageURL(imgUrl)
 
             result.add(builder.build())
-            builder.clear()
+            builder.reset()
         }
 
     /* (contains)
@@ -316,6 +320,9 @@ class Search {
 	 * is not one of those seasons
 	 */
     // TODO: removeBecauseStartYear
+    // TODO: removeBecauseAnimeType
+    // TODO: removeBecauseStatus
+    // not gonna filter episode length
     private fun removeBecauseSeason(s: Season?): Boolean {
         // user hasn't selected any Seasons
         if (seasons.isEmpty())

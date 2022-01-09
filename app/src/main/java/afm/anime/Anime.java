@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -81,36 +82,50 @@ public final class Anime {
 	 */
 	public static final class AnimeBuilder {
 
-		private String imageURL;
 		private String name;
+		private Integer id; //for MAL website
+		private String info;
+		private final Set<String> studios = new HashSet<>();
+		private final EnumSet<Genre> genres = EnumSet.noneOf(Genre.class);
+		private String imageURL;
+
+		private TreeSet<Filler> fillers = new TreeSet<>();
+
+		private AnimeType type = AnimeType.UNKNOWN;
+		private Integer startYear;
+		private Status status;
+		private int episodes = Anime.NOT_FINISHED;
+		private EpisodeLength episodeLength;
+
+		private int currEp = 0;
+		private boolean custom = false;
+
 		private String studio;
 		private Season season;
-		private EnumSet<Genre> genres = EnumSet.noneOf(Genre.class);
-		private TreeSet<Filler> fillers = new TreeSet<>();
-		private String info;
-
-		private int episodes = Anime.NOT_FINISHED;
-		private int currEp = 0;
-		private Integer id; //for MAL website
-		private boolean custom = false;
 
 		/** AnimeBuilder should be instantiated using {@link Anime#builder} */
 		private AnimeBuilder(String name) {
 			this.name = requireNonNull(name);
 		}
 
-		public void clear() {
+		public void reset() {
 			name = null;
-			studio = null;
-			season = null;
+			id = null;
 			info = null;
-
+			studios.clear();
+			genres.clear();
 			imageURL = null;
 
-			genres.clear();
 			fillers.clear();
 
-			id = null;
+			type = AnimeType.UNKNOWN;
+			startYear = null;
+			status = null;
+			episodes = Anime.NOT_FINISHED;
+			episodeLength = null;
+
+			currEp = 0;
+			custom = false;
 		}
 
 		public AnimeBuilder setName(String name) {
@@ -118,26 +133,19 @@ public final class Anime {
 			return this;
 		}
 
-		public AnimeBuilder setStudio(String studio) {
-			this.studio = studio;
+		public AnimeBuilder setId(int id) {
+			this.id = id;
 			return this;
 		}
 
-		public AnimeBuilder setSeason(Season season) {
-			this.season = season;
+		public AnimeBuilder setInfo(String info) {
+			this.info = info;
 			return this;
 		}
 
-		public AnimeBuilder setImageURL(String url) {
-			imageURL = url;
-			return this;
-		}
-
-		public AnimeBuilder setGenres(EnumSet<Genre> genres) {
-			if (genres.isEmpty())
-				throw new IllegalArgumentException("Genres cannot be empty");
-
-			this.genres = genres.clone();
+		public AnimeBuilder setStudios(Collection<String> studios) {
+			this.studios.clear();
+			this.studios.addAll(studios);
 			return this;
 		}
 
@@ -155,6 +163,11 @@ public final class Anime {
 			return this;
 		}
 
+		public AnimeBuilder setImageURL(String url) {
+			imageURL = url;
+			return this;
+		}
+
 		public AnimeBuilder addFiller(Filler filler) {
 			fillers.add(filler);
 			return this;
@@ -164,8 +177,18 @@ public final class Anime {
 			return addFiller(Filler.valueOf(s));
 		}
 
-		public AnimeBuilder setInfo(String info) {
-			this.info = info;
+		public AnimeBuilder setAnimeType(AnimeType type) {
+			this.type = type;
+			return this;
+		}
+
+		public AnimeBuilder setStartYear(Integer startYear) {
+			this.startYear = startYear;
+			return this;
+		}
+
+		public AnimeBuilder setStatus(Status status) {
+			this.status = status;
 			return this;
 		}
 
@@ -174,13 +197,13 @@ public final class Anime {
 			return this;
 		}
 
-		public AnimeBuilder setCurrEp(int currEp) {
-			this.currEp = currEp;
+		public AnimeBuilder setEpisodeLength(EpisodeLength episodeLength) {
+			this.episodeLength = episodeLength;
 			return this;
 		}
 
-		public AnimeBuilder setId(int id) {
-			this.id = id;
+		public AnimeBuilder setCurrEp(int currEp) {
+			this.currEp = currEp;
 			return this;
 		}
 
@@ -197,49 +220,59 @@ public final class Anime {
 	// TODO: decide @Getter private final or public final
 	// for some reason now Kotlin can't access this getter when running in Idea ffs
 	@EqualsAndHashCode.Include @Getter public final String name;
-	// TODO: impl studios
-	@Getter private final Set<String> studios = Set.of();
-	@EqualsAndHashCode.Include @Getter private final String studio;
-	@EqualsAndHashCode.Include @Getter private final Season season;
-	// TODO: anime startYear
-	@Getter private final int startYear = 1;
-
+	@Getter private final Integer id; //for MAL website
+	@Getter private final String info;
+	@Getter private final ImmutableSet<String> studios;
 	@EqualsAndHashCode.Include private final ImmutableSet<Genre> genres;
 	@Getter private final String genreString;
-
-	@Getter private TreeSet<Filler> fillers = new TreeSet<>();
-
-	@Getter private final String info;
 
 	private final String imageURL;
 	private Image image;
 
-	@Getter private final int episodes;
+
+	@Getter private TreeSet<Filler> fillers = new TreeSet<>();
+	@Getter private final AnimeType type;
+	@Getter private final Integer startYear;
+	@Getter private Status status;
+	@Getter private int episodes = Anime.NOT_FINISHED;
+	@Getter private final EpisodeLength episodeLength;
+
 	@Getter private int currEp;
-	@Getter private final Integer id; //for MAL website
+	private final Range<Integer> episodeRange;
+
 	@Getter private final boolean custom;
 
-	private final Range<Integer> episodeRange;
+
+	// TODO: remove studio & season once database has been sorted out
+	@EqualsAndHashCode.Include @Getter private final String studio;
+	@EqualsAndHashCode.Include @Getter private final Season season;
 
 	@SuppressWarnings("unchecked")
 	private Anime(AnimeBuilder builder) {
 		name = requireNonNull(builder.name);
+		id = builder.id;
+		info = builder.info;
+		studios = ImmutableSet.copyOf(builder.studios);
 
 		genres = Sets.immutableEnumSet(builder.genres);
 		genreString = genres.stream().map(Genre::toString).collect(Collectors.joining(", "));
 
-		studio = builder.studio;
-		season = builder.season;
-		info = builder.info;
-
 		imageURL = builder.imageURL;
 
-		currEp = builder.currEp;
+		type = builder.type;
+		startYear = builder.startYear;
+		status = builder.status;
 		episodes = builder.episodes;
+		episodeLength = builder.episodeLength;
+
+		currEp = builder.currEp;
 		episodeRange = (episodes == NOT_FINISHED) ? Range.atLeast(0) : Range.closed(0, episodes);
 
 		custom = builder.custom;
-		id = builder.id;
+
+		// TODO: remove once database is sorted out
+		studio = builder.studio;
+		season = builder.season;
 
 		// It only has fillers if the anime is not custom
 		if (!custom) {

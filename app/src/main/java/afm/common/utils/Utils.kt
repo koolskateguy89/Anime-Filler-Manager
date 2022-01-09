@@ -50,7 +50,7 @@ fun toIntOrNull(s: String): Int? = s.toIntOrNull()
 fun intOnlyListener(): ChangeListener<String?> =
     ChangeListener { obs, oldVal, newVal ->
         /* if (newVal.isNullOrEmpty())
-            (obs as StringProperty).value = "0";
+            (obs as StringProperty).value = "0"
         else */
         if (!newVal.isStrictInteger())
             (obs as StringProperty).value = oldVal
