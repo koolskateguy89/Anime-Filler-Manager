@@ -247,20 +247,22 @@ object Database {
 
                 val halfDiff = (end - start) / 2
 
-                // still load ToWatch if there is an error loading MyList
-                // TODO: convert loadAll.try to runCatching
-                try {
+                var e: SQLException? = null
+
+                runCatching {
                     loadMyList(it, task, start, end - halfDiff)
-                } catch (e: SQLException) {
-                    try {
-                        loadToWatch(it, task, start + halfDiff, end)
-                    } catch (e2: SQLException) {
-                        e.nextException = e2
-                    }
-                    throw e
+                }.recover {
+                    e = it as SQLException
+                }
+                // still load ToWatch if there is an error loading MyList
+                runCatching {
+                    loadToWatch(it, task, start + halfDiff, end)
+                }.recover { th ->
+                    th as SQLException
+                    e = e?.apply { nextException = th } ?: th
                 }
 
-                loadToWatch(it, task, start + halfDiff, end)
+                e?.also { it.printStackTrace() }?.nextException?.printStackTrace()
             }
         }
     }
@@ -311,21 +313,24 @@ object Database {
     fun saveAll() {
         ds.connection.use {
             it.autoCommit = false
-            // TODO: convert saveAll.try to runCatching
-            try {
+
+            var e: SQLException? = null
+
+            runCatching {
                 saveMyList(it)
-            } catch (e: SQLException) {
-                // try to save ToWatch even if saving MyList fails
-                try {
-                    saveToWatch(it)
-                    it.commit()
-                } catch (e1: SQLException) {
-                    e.nextException = e1
-                }
-                throw e
+            }.recover {
+                e = it as SQLException
             }
-            saveToWatch(it)
+            // try to save ToWatch even if saving MyList fails
+            runCatching {
+                saveToWatch(it)
+            }.recover { th ->
+                th as SQLException
+                e = e?.apply { nextException = th } ?: th
+            }
+
             it.commit()
+            e?.also { it.printStackTrace() }?.nextException?.printStackTrace()
         }
     }
 
