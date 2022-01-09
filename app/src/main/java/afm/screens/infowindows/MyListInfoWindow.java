@@ -43,7 +43,7 @@ public class MyListInfoWindow extends InfoWindow {
 		eventHandler = infoBtn.getOnAction();
 		infoBtn.setOnAction(e -> this.requestFocus());
 
-		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("infowindows/MyListInfoWindow"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("infowindows/MyListInfoWindow"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();

@@ -239,7 +239,7 @@ public class GenreInfoWindow extends InfoWindow {
 		this.helpBtn = helpBtn;
 
 		// load FXML file into this object
-		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("infowindows/GenreInfoWindow"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("infowindows/GenreInfoWindow"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();

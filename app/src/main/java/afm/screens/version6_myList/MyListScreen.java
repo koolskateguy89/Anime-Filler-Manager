@@ -37,7 +37,7 @@ public class MyListScreen extends Pane {
 	private ObservableList<Anime> tableItems;
 
 	public MyListScreen() throws IOException {
-		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("MyListScreen"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("MyListScreen"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
@@ -52,24 +52,24 @@ public class MyListScreen extends Pane {
 		tableItems = table.getItems();
 
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-		afm.common.utils.Utils.wrapColText(nameCol);
+		Utils.wrapColText(nameCol);
 
 		studioCol.setCellValueFactory(new PropertyValueFactory<>("studio"));
-		afm.common.utils.Utils.wrapColText(studioCol);
+		Utils.wrapColText(studioCol);
 
 		seasonCol.setCellValueFactory(new PropertyValueFactory<>("season"));
-		afm.common.utils.Utils.topCenterColumnAlignment(seasonCol);
+		Utils.topCenterColumnAlignment(seasonCol);
 
 		genreCol.setCellValueFactory(new PropertyValueFactory<>("genreString"));
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, Button> actions = afm.common.utils.Utils.getActionsCol();
+		TableColumn<Anime, Button> actions = Utils.getActionsCol();
 		table.getColumns().add(actions);
 
-		TableColumn<Anime, Button> infoCol = afm.common.utils.Utils.getInfoCol();
-		TableColumn<Anime, Button> moveToToWatchCol = afm.common.utils.Utils.getMoveCol("ToWatch");
-		TableColumn<Anime, Button> removeCol = afm.common.utils.Utils.getRemoveCol();
+		TableColumn<Anime, Button> infoCol = Utils.getInfoCol();
+		TableColumn<Anime, Button> moveToToWatchCol = Utils.getMoveCol("ToWatch");
+		TableColumn<Anime, Button> removeCol = Utils.getRemoveCol();
 		actions.getColumns().addAll(infoCol, moveToToWatchCol, removeCol);
 
 		infoCol.setCellValueFactory(new PropertyValueFactory<>("myListInfo"));

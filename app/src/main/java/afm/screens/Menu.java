@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import afm.Main;
+import afm.common.utils.Utils;
 
 public final class Menu extends VBox {
 
@@ -23,7 +24,7 @@ public final class Menu extends VBox {
 	private final Main main = Main.getInstance();
 
 	public Menu() throws IOException {
-		FXMLLoader loader = new FXMLLoader(afm.common.utils.Utils.getFxmlUrl("Menu"));
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("Menu"));
 		loader.setController(this);
 		loader.setRoot(this);
 		loader.load();
