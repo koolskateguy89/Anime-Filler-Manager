@@ -62,6 +62,7 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="XML">
+      <option name="RIGHT_MARGIN" value="500" />
       <indentOptions>
         <option name="INDENT_SIZE" value="3" />
         <option name="CONTINUATION_INDENT_SIZE" value="6" />

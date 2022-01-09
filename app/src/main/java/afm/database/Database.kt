@@ -415,21 +415,23 @@ object Database {
 
         rs.run {
             builder.setName(getString(COLUMN_MAP["name"]))
-                .setStudios(setOf(getString(COLUMN_MAP["studio"])))
-                .setInfo(getString(COLUMN_MAP["info"]))
+                   .setId(getInt(COLUMN_MAP["id"]))
+                   .setSynopsis(getString(COLUMN_MAP["info"]))
+                   .setStudios(setOf(getString(COLUMN_MAP["studio"])))
+                   .setImageURL(getString(COLUMN_MAP["imageURL"]))
 
+            // TODO: AnimeType, Status
             val season: Season? = Season.getSeasonFromToString(
                 getString(COLUMN_MAP["seasonString"])
             )
             //builder.setSeason(season)
+            builder.setStartYear(season?.year)
 
             builder.setCurrEp(getInt(COLUMN_MAP["currEp"]))
-                .setEpisodes(getInt(COLUMN_MAP["totalEps"]))
+                   .setEpisodes(getInt(COLUMN_MAP["totalEps"]))
 
-            builder.setImageURL(getString(COLUMN_MAP["imageURL"]))
-
-            builder.setId(getInt(COLUMN_MAP["id"]))
-                .setCustom(getBoolean(COLUMN_MAP["custom"]))
+                   .setCustom(getBoolean(COLUMN_MAP["custom"]))
+            // TODO: episodeLength
 
             val genreString = getString(COLUMN_MAP["genres"])
             val genreSet = genreString.split(", ")

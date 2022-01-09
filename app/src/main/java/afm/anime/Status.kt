@@ -7,7 +7,7 @@ enum class Status {
     ;
 
     override fun toString(): String =
-        name[0] + name.substring(1).replace('_', ' ')
+        name[0] + name.substring(1).replace('_', ' ').lowercase()
 
     companion object {
         @JvmStatic
