@@ -118,12 +118,12 @@ To run:
     - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol (?) is that how it works idk
 - [~] Split into `core` and `app` modules, `core` will basically just be `anime` package(?) - **long-ish**
 - [ ] `Filler` tests
-- [ ] Switch to [mongoDB](https://www.mongodb.com/blog/post/getting-started-with-mongodb-and-java-part-i)?
+- [ ] Switch to a lighter embedded db (sqlite driver is 9.3MB!). Maybe h2?
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
   - [ ] Just write REST API wrapper myself? not all of its features are needed, literally only searching for anime
     - NO. Ok maybe
-    - I think I can use Jsoup for this, using `Connection.data(String...)`
-  - [ ] Use it for filler? https://github.com/MALSync/MALSync/pull/689/files#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R114
+    - I think I can use Jsoup for this, using `Connection.data(String...)` to set 
+  - [ ] Use it for filler? https://github.com/MALSync/MALSync/pull/689/commits/4c667e418a4340241f29211b66d8425885bc87e8#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R1144
 - [ ] Enable use of `ControlsFX.TableFilter` in MyList & ToWatch
 - [ ] Add a global keybind to minimize/maximize - **no idea**
 - [ ] Have no window resizing
