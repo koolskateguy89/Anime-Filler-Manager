@@ -112,8 +112,8 @@ private fun generateColumn(name: String, prefWidth: Double): TableColumn<Anime, 
     }
 }
 
-fun getActionsCol(): TableColumn<Anime, Button> {
-    return TableColumn<Anime, Button>("Actions").apply {
+fun <T> getActionsCol(): TableColumn<Anime, T> {
+    return TableColumn<Anime, T>("Actions").apply {
         isEditable = false
         isSortable = false
     }
@@ -134,7 +134,7 @@ fun getInfoCol(): TableColumn<Anime, Button> =
     generateColumn("See Info", 75.20001220703125)
 
 fun getMoveCol(move: String): TableColumn<Anime, Button> =
-    generateColumn("Move, to $move", 109.5999755859375)
+    generateColumn("Move to $move", 109.5999755859375)
 
 fun getRemoveCol(): TableColumn<Anime, Button> =
     generateColumn("Remove", 71.2000732421875)

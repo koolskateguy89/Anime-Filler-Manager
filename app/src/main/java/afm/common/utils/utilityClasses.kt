@@ -1,7 +1,6 @@
-@file:JvmSynthetic
-
 package afm.common.utils
 
+import java.util.EnumSet
 
 /*
  * map[key] will return V not V?, so you don't need to use
@@ -12,5 +11,12 @@ package afm.common.utils
 internal open class NonNullMap<K, V>(private val map: Map<K, V>) : Map<K, V> by map {
     override operator fun get(key: K): V {
         return map[key]!! // Force an NPE if the key doesn't exist
+    }
+}
+
+internal open class ImmutableEnumSet<E : Enum<E>>(values: Collection<E>) : Set<E> by EnumSet.copyOf(values) {
+    @Deprecated("Always throws UnsupportedOperationException")
+    fun add(v: E): Nothing {
+        throw UnsupportedOperationException("Immutable collection")
     }
 }

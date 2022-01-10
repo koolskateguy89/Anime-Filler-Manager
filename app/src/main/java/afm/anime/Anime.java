@@ -24,11 +24,11 @@ import javafx.scene.image.Image;
 import com.github.koolskateguy89.filler.Filler;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
-import com.google.common.collect.Sets;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import afm.common.utils.ImmutableEnumSet;
 import afm.screens.Menu;
 import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
@@ -224,7 +224,8 @@ public final class Anime {
 	@Getter private final Integer id; //for MAL website
 	@Getter private final String synopsis;
 	@Getter private final ImmutableSet<String> studios;
-	@EqualsAndHashCode.Include private final ImmutableSet<Genre> genres;
+	//@EqualsAndHashCode.Include private final ImmutableSet<Genre> genres;
+	@EqualsAndHashCode.Include private final ImmutableEnumSet<Genre> genres;
 	@Getter private final String genreString;
 
 	private final String imageURL;
@@ -254,7 +255,7 @@ public final class Anime {
 		synopsis = builder.info;
 		studios = ImmutableSet.copyOf(builder.studios);
 
-		genres = Sets.immutableEnumSet(builder.genres);
+		genres = new ImmutableEnumSet<>(builder.genres);
 		genreString = genres.stream().map(Genre::toString).collect(Collectors.joining(", "));
 
 		imageURL = builder.imageURL;
