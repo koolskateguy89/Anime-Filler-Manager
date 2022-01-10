@@ -53,7 +53,7 @@
 			<version>${reactive-jikan.version}</version>
 		</dependency>
 
-		<!-- Google Guava -->
+		<!-- Google Guava TODO: remove -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
