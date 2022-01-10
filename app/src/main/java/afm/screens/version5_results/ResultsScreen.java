@@ -64,7 +64,7 @@ public class ResultsScreen extends Pane {
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, Button> actions = Utils.getActionsCol();
+		TableColumn<Anime, ?> actions = Utils.getActionsCol();
 		table.getColumns().add(actions);
 
 		TableColumn<Anime, Button> infoCol = Utils.getResultInfoCol();

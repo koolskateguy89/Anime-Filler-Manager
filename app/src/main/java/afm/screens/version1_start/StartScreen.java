@@ -123,7 +123,7 @@ public class StartScreen extends Pane {
 
 				sleep(60);
 			}
-		});
+		}, "StartScreen fade thread");
 
 		/* Change the thread from a user thread to a daemon thread (low priority)
 		 *  so the JVM can terminate if the thread is still running.
@@ -137,7 +137,7 @@ public class StartScreen extends Pane {
 		fadeLoadLbl.start();
 
 		//Start loading screens
-		final Thread loadThread = new Thread(loadTask);
+		final Thread loadThread = new Thread(loadTask, "Startscreen init thread");
 		loadThread.setDaemon(true);
 		loadThread.start();
 	}
