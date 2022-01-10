@@ -13,14 +13,31 @@ import afm.user.Settings
 import javafx.application.Platform
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
+import org.kxtra.slf4j.getLogger
 import org.sqlite.SQLiteDataSource
 import java.nio.file.Files
 import java.nio.file.Path
 import java.sql.Connection
 import java.sql.ResultSet
-import java.sql.SQLException
 import java.sql.Statement
 import java.util.EnumSet
+
+private val COLUMN_MAP = NonNullMap(
+    mapOf(
+        "name" to 1,
+        "genres" to 2,
+        "id" to 3,
+        "studio" to 4,
+        "seasonString" to 5,
+        "info" to 6,
+        "custom" to 7,
+        "currEp" to 8,
+        "totalEps" to 9,
+        "imageURL" to 10,
+        "fillers" to 11
+    )
+)
+
 
 /*
  * I was initially using Serialization (EnumSet is Serializable) to store
@@ -45,6 +62,9 @@ import java.util.EnumSet
  * Also adding anime in batches + using PreparedStatements to further increase performance.
  */
 object Database {
+
+    private val logger = getLogger()
+
     // From SQLiteStudio
     @JvmStatic
     val fileExtensions = arrayOf(
@@ -62,9 +82,36 @@ object Database {
     )
 
     private val DB_URL: String = run {
+        fun mayBeValidDatabase(url: String?): Boolean {
+            if (url.isNullOrEmpty())
+                return false
+
+            val exists: Boolean = Files.exists(Path.of(url))
+
+            if (!exists) {
+                logger.warn("Database file does not exist. Falling back on internal")
+                Settings.selectedDatabaseProperty.value = "Internal"
+
+                Platform.runLater {
+                    val content = """
+						Database file does not exist/is not a valid file.
+						Falling back on internal database.
+						""".trimIndent()
+
+                    Alert(AlertType.ERROR, content).run {
+                        initOwner(Main.getStage())
+                        wrapAlertText()
+                        showAndWait()
+                    }
+                }
+            }
+
+            return exists
+        }
+
         val url: String? = Settings.getSelectedDatabase()
 
-        // fallback on internal database
+        // fallback on internal database if provided url is definitely not valid
         if (url == "Internal" || !mayBeValidDatabase(url)) {
             if (inJar)
                 "jdbc:sqlite::resource:databases/animeDB.db"
@@ -81,35 +128,6 @@ object Database {
         }
     }
 
-    private fun mayBeValidDatabase(url: String?): Boolean {
-        if (url.isNullOrEmpty())
-            return false
-
-        try {
-            // go to catch clause if not exists
-            require(Files.exists(Path.of(url)))
-
-            return true
-        } catch (e: Exception) {
-            Settings.selectedDatabaseProperty.value = "Internal"
-
-            Platform.runLater {
-                val content = """
-						Database file does not exist/is not a valid file.
-						Falling back on internal database.
-						""".trimIndent()
-
-                Alert(AlertType.ERROR, content).run {
-                    initOwner(Main.getStage())
-                    wrapAlertText()
-                    showAndWait()
-                }
-            }
-        }
-
-        return false
-    }
-
     private const val MYLIST_INSERT_QUERY = """
     INSERT INTO MyList(name, genres, id,
     studio, seasonString, info, custom, currEp,
@@ -123,22 +141,6 @@ object Database {
     totalEps, imageURL, fillers)
     VALUES (?,?,?,?,?,?,?,?,?,?,?)
     """
-
-    private val COLUMN_MAP = NonNullMap(
-        mapOf(
-            "name" to 1,
-            "genres" to 2,
-            "id" to 3,
-            "studio" to 4,
-            "seasonString" to 5,
-            "info" to 6,
-            "custom" to 7,
-            "currEp" to 8,
-            "totalEps" to 9,
-            "imageURL" to 10,
-            "fillers" to 11
-        )
-    )
 
     // load myList & toWatch contents into runtime linkedHS's
     @JvmStatic
@@ -247,22 +249,20 @@ object Database {
 
                 val halfDiff = (end - start) / 2
 
-                var e: SQLException? = null
-
                 runCatching {
                     loadMyList(it, task, start, end - halfDiff)
                 }.recover {
-                    e = it as SQLException
+                    logger.error("Loading MyList failed", it)
                 }
+                kotlin.runCatching {  }.
                 // still load ToWatch if there is an error loading MyList
                 runCatching {
                     loadToWatch(it, task, start + halfDiff, end)
-                }.recover { th ->
-                    th as SQLException
-                    e = e?.apply { nextException = th } ?: th
+                }.recover {
+                    logger.error("Loading ToWatch failed", it)
                 }
 
-                e?.also { it.printStackTrace() }?.nextException?.printStackTrace()
+                //e?.also { it.printStackTrace() }?.nextException?.printStackTrace()
             }
         }
     }
@@ -314,23 +314,19 @@ object Database {
         ds.connection.use {
             it.autoCommit = false
 
-            var e: SQLException? = null
-
             runCatching {
                 saveMyList(it)
             }.recover {
-                e = it as SQLException
+                logger.error("Failed saving MyList", it)
             }
             // try to save ToWatch even if saving MyList fails
             runCatching {
                 saveToWatch(it)
-            }.recover { th ->
-                th as SQLException
-                e = e?.apply { nextException = th } ?: th
+            }.recover {
+                logger.error("Failed saving ToWatch", it)
             }
 
             it.commit()
-            e?.also { it.printStackTrace() }?.nextException?.printStackTrace()
         }
     }
 
