@@ -63,12 +63,12 @@ private object NameAndId : Selector {
 private object Genres : Selector {
     override fun extractFrom(animeElem: Element): EnumSet<Genre> {
         val ids = animeElem.attr("data-genre").split(",")
+
         return ids.map { Genre.valueOfFromId(it.toInt()) }
                   .toCollection(EnumSet.noneOf(Genre::class.java))
     }
 }
 
-// TODO: collapse into 1 MultipleSelector "Properties" and return a Triple<String, List<String, EnumSet<Genre>> ?
 private object Synopsis : Selector {
     private const val cssQuery = "div.synopsis.js-synopsis"
 
@@ -149,29 +149,15 @@ private object ImageUrl : Selector {
 
 /*
  * Search by genre (there HAS to be a genre in order to search)
- *
- * steps:
- *
- *  - search for every genre
- *	- ignore all anime whose name does not contain the name the user entered (if entered)
- *	- ignore all anime whose genres does not contain all genres the user selected
- *	- ignore all anime whose season is not one of the seasons the user selected (if any selected)
- *	- ignore all anime whose studio does not contain the studio the the user entered (if entered)
- *	- ignore all anime who don't meet the minimum episodes requirement entered by the user (if entered)
- *		(any unfinished anime will pass)
- *
- *  - add any anime left to result list
  *  - if result contains less than 13 anime, search the next page
  *
- *
- *  The removeBecause[X] methods in this are in order of how they are used.
+ *  The removeBecauseX methods in this are in order of how they are used.
  */
 class Search {
     /* search filters */
     var name: String? = null
     var studio: String? = null
     private val genres = EnumSet.noneOf(Genre::class.java)
-    // TODO: new search filters
     var animeType: AnimeType? = null
     var startYear: Int? = null
         set(value) {
