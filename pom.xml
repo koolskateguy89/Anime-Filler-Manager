@@ -42,7 +42,7 @@
 
 		<!-- for plugins -->
 		<maven.compiler.release>17</maven.compiler.release>
-		<kotlin.version>1.5.31</kotlin.version>
+		<kotlin.version>1.6.0</kotlin.version>
 		<kotlin.compiler.jvmTarget>16</kotlin.compiler.jvmTarget>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 		<mainClass>afm.LauncherKt</mainClass>
