@@ -50,6 +50,11 @@ public final class Menu extends VBox {
 		setStyleClass(searchBtn, RESULTS);
 	}
 
+	public void searchScreen() {
+		resetAllStyles();
+		setStyleClass(searchBtn, SELECTED_MENU);
+	}
+
 	private void resetAllStyles() {
 		setStyleClass(searchBtn, NORMAL);
 		setStyleClass(myListBtn, NORMAL);
@@ -61,9 +66,7 @@ public final class Menu extends VBox {
 
 	@FXML
 	void searchButtonPressed() {
-		resetAllStyles();
-		setStyleClass(searchBtn, SELECTED_MENU);
-		main.openSearchScreen();
+		main.openSearchOrResultsScreen();
 	}
 
 	@FXML

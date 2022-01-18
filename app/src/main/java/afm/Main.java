@@ -1,6 +1,7 @@
 package afm;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javafx.application.Application;
@@ -145,8 +146,21 @@ public class Main extends Application {
 		}
 	}
 
-	public void openSearchScreen() {
-		setScreen(searchScreen);
+	// when search screen button is pressed:
+	// if results, show results screen -> when pressed again, show search screen
+	// else show search screen
+	public void openSearchOrResultsScreen() {
+		if (!resultsScreen.hasResults() || screenList.get(1) == resultsScreen) {
+			menu.searchScreen();
+			setScreen(searchScreen);
+			resultsScreen.setResults(Collections.emptyList());
+		} else {
+			// only want to show results screen if not on search school
+			if (screenList.get(1) != searchScreen) {
+				menu.resultsScreen();
+				setScreen(resultsScreen);
+			}
+		}
 	}
 
 	public void openMyListScreen() {

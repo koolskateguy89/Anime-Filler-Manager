@@ -40,3 +40,21 @@ fun String.splitByCapitals(): Array<String> {
 }
 
 fun String.remove(s: String, ignoreCase: Boolean = false) = replace(s, "", ignoreCase)
+
+fun String.remove(c: Char, ignoreCase: Boolean = false) = replace("$c", "", ignoreCase)
+
+// this took avg ~600ns vs regex ~6-7k ns
+fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
+    // helper for multiple characters in a row are non-alphanumeric
+    var lastWasNonAlpha = false
+
+    for (ch in this@replaceNonAlphanumericWithDash) {
+        if (ch.isLetterOrDigit()) {
+            append(ch)
+            lastWasNonAlpha = false
+        } else if (!lastWasNonAlpha) {
+            append('-')
+            lastWasNonAlpha = true
+        }
+    }
+}
