@@ -7,8 +7,6 @@ import kotlin.math.min
 
 // TODO: javadoc comments for publics
 
-internal const val AFL_URL = "https://www.animefillerlist.com/shows"
-
 // TODO: async? how?
 public object AnimeFillerList {
 
@@ -51,10 +49,29 @@ internal const val ANIME_CANON = ".anime_canon"
 
 // TODO: async? how?
 public class AnimeFiller internal constructor(url: String) {
+    /**
+     *
+     */
     public val mangaCanon: IntArray
+
+    /**
+     *
+     */
     public val mixedCanonAndFiller: IntArray
+
+    /**
+     *
+     */
     public val filler: IntArray
+
+    /**
+     *
+     */
     public val animeCanon: IntArray
+
+    /**
+     * A sorted combination of `mixedCanonAndFiller` and `filler`
+     */
     public val allFiller: IntArray
 
     init {
