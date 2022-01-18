@@ -3,4 +3,4 @@
 # Get script dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-(javaw -jar "$DIR/../../app/target/AFM.jar" &)
+java -jar "$DIR/../../app/target/AFM.jar"
