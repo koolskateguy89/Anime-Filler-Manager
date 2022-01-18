@@ -11,13 +11,12 @@
 
 		<!-- for plugins -->
 		<maven.compiler.release>17</maven.compiler.release>
-		<kotlin.version>1.6.0</kotlin.version>
+		<kotlin.version>1.6.10</kotlin.version>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 
 		<!-- dependency versions -->
 		<jsoup.version>1.14.3</jsoup.version>
 		<reactive-jikan.version>1.0.2</reactive-jikan.version>
-		<guava.version>31.0.1-jre</guava.version>
 	</properties>
 
 	<dependencies>
@@ -57,7 +56,6 @@
 
 		<plugins>
 			<!-- Using Kotlin with Maven https://kotlinlang.org/docs/maven.html -->
-			<!-- Because .kt files are under src/main/java, it is simple -->
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
@@ -81,7 +79,8 @@
 
 				<configuration>
 					<args>
-						<arg>-Xexplicit-api=strict</arg> <!-- Enable explicit api mode -->
+						<!-- Enable explicit api mode -->
+						<arg>-Xexplicit-api=strict</arg>
 					</args>
 				</configuration>
 			</plugin>
