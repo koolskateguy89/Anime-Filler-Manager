@@ -58,7 +58,7 @@ class ResultsInfoButtonFactory(val anime: Anime) : Callback<TableColumn.CellData
     override fun call(param: TableColumn.CellDataFeatures<Anime, Button>): ObservableValue<Button> {
         if (!::btn.isInitialized) {
             btn = Button(SEE_INFO)
-            // how do get access to all the button of an anime :/
+            // how do get access to all the buttons of an anime :/
             /*
             btn.setOnAction(EventHandler {
                 infoBtn.setStyleClass(Anime.HIGHLIGHT)

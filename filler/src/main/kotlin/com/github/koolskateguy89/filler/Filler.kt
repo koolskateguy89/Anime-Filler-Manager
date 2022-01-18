@@ -5,6 +5,8 @@ import org.jsoup.nodes.Document
 import java.io.IOException
 import kotlin.math.min
 
+// TODO: javadoc comments for publics
+
 internal const val AFL_URL = "https://www.animefillerlist.com/shows"
 
 // TODO: async? how?
