@@ -42,8 +42,8 @@
 
 		<!-- for plugins -->
 		<maven.compiler.release>17</maven.compiler.release>
-		<kotlin.version>1.6.0</kotlin.version>
-		<kotlin.compiler.jvmTarget>16</kotlin.compiler.jvmTarget>
+		<kotlin.version>1.6.10</kotlin.version>
+		<kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 		<mainClass>afm.LauncherKt</mainClass>
 
@@ -293,6 +293,16 @@
 							</configuration>
 						</execution>
 					</executions>
+				</plugin>
+
+				<!-- mvn exec:java -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<mainClass>${mainClass}</mainClass>
+					</configuration>
 				</plugin>
 
 			</plugins>
