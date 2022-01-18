@@ -3,6 +3,7 @@ package afm.screens.version5_results;
 import java.io.IOException;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -28,12 +29,12 @@ public class ResultsScreen extends Pane {
 	private TableColumn<Anime, String> studiosCol;
 
 	@FXML
-	private TableColumn<Anime, Season> seasonCol;
+	private TableColumn<Anime, Season> yearCol;
 
 	@FXML
 	private TableColumn<Anime, String> genreCol;
 
-	private List<Anime> tableItems;
+	private ObservableList<Anime> tableItems;
 
 	public ResultsScreen() throws IOException {
 		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("ResultsScreen"));
@@ -42,23 +43,26 @@ public class ResultsScreen extends Pane {
 		loader.load();
 	}
 
-	public final void setResults(List<Anime> results) {
-		if (tableItems == null)
-			tableItems = table.getItems();
+	public boolean hasResults() {
+		return !tableItems.isEmpty();
+	}
 
-		tableItems.clear();
-		tableItems.addAll(results);
+	public final void setResults(List<Anime> results) {
+		tableItems.setAll(results);
 	}
 
 	@FXML
 	private void initialize() {
+		tableItems = table.getItems();
+
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		Utils.wrapColText(nameCol);
 
 		studiosCol.setCellValueFactory(new PropertyValueFactory<>("studios"));
 		Utils.wrapColText(studiosCol);
 
-		seasonCol.setCellValueFactory(new PropertyValueFactory<>("startYear"));
+		yearCol.setCellValueFactory(new PropertyValueFactory<>("startYear"));
+		Utils.topCenterColumnAlignment(yearCol);
 
 		genreCol.setCellValueFactory(new PropertyValueFactory<>("genreString"));
 		Utils.wrapColText(genreCol);

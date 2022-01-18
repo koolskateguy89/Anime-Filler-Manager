@@ -26,10 +26,10 @@ public class MyListScreen extends Pane {
 	private TableColumn<Anime, String> nameCol;
 
 	@FXML
-	private TableColumn<Anime, String> studioCol;
+	private TableColumn<Anime, String> studiosCol;
 
 	@FXML
-	private TableColumn<Anime, Season> seasonCol;
+	private TableColumn<Anime, Season> yearCol;
 
 	@FXML
 	private TableColumn<Anime, String> genreCol;
@@ -54,11 +54,11 @@ public class MyListScreen extends Pane {
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		Utils.wrapColText(nameCol);
 
-		studioCol.setCellValueFactory(new PropertyValueFactory<>("studio"));
-		Utils.wrapColText(studioCol);
+		studiosCol.setCellValueFactory(new PropertyValueFactory<>("studios"));
+		Utils.wrapColText(studiosCol);
 
-		seasonCol.setCellValueFactory(new PropertyValueFactory<>("season"));
-		Utils.topCenterColumnAlignment(seasonCol);
+		yearCol.setCellValueFactory(new PropertyValueFactory<>("startYear"));
+		Utils.topCenterColumnAlignment(yearCol);
 
 		genreCol.setCellValueFactory(new PropertyValueFactory<>("genreString"));
 		Utils.wrapColText(genreCol);

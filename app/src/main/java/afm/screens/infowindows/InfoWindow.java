@@ -20,8 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import com.github.koolskateguy89.filler.FillerKt;
-
 import afm.Main;
 import afm.anime.Anime;
 import afm.common.Browser;
@@ -165,9 +163,9 @@ public abstract class InfoWindow extends Stage {
 
 		String url;
 		if (anime.getCurrEp() == 0)
-			url = "https://anime-update.com/anime/" + FillerKt.replaceNonAlphanumericWithDash(name);
+			url = "https://anime-update.com/anime/" + Utils.replaceNonAlphanumericWithDash(name);
 		else
-			url = "https://anime-update.com/watch-online/" + FillerKt.replaceNonAlphanumericWithDash(name) +
+			url = "https://anime-update.com/watch-online/" + Utils.replaceNonAlphanumericWithDash(name) +
 					"-episode-" + anime.getCurrEp();
 
 		NotificationFactory.showInfoNotification("Opening browser...");

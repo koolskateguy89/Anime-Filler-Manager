@@ -26,8 +26,6 @@ import afm.anime.Status;
 import afm.common.utils.Utils;
 import afm.screens.infowindows.GenreInfoWindow;
 
-// TODO: when search screen button is pressed, show results (if any); when pressed again, show search screen
-// i.e. search button will open results screen, which will redirect to this if there are no results
 public final class SearchScreen extends GridPane {
 
 	@FXML
