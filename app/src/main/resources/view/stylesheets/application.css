@@ -1,0 +1,130 @@
+* { /* variables */
+    -background: #484848;
+    -opposite-to-background-color: white;
+    -background-text-color: -opposite-to-background-color;
+    -button-color: #282828;
+}
+
+.Panes {
+	-fx-background-color: -background;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+	-fx-padding: 0.01;
+	-fx-background-color: black;
+}
+
+.progress-bar {
+	-fx-accent: #f5df4d;
+}
+
+.label {
+    -fx-text-fill: -background-text-color;
+}
+
+.Text {
+    -fx-fill: -background-text-color;
+}
+
+#WelcomeLine {
+    -fx-stroke: -background-text-color;
+}
+
+.button {
+	-fx-background-color: -button-color;
+	-fx-text-fill: #e8e8e8;
+}
+.button:hover {
+    -fx-background-color: derive(-button-color, 10%);
+}
+
+.Warning {
+    -fx-text-fill: yellow;
+}
+
+/* Menu */
+.MenuButton {
+	-fx-background-color: -background;
+}
+/* Selected menu buttons look like normal buttons atm */
+.SelectedMenuButton {
+    -fx-background-color: -button-color;
+}
+
+.MiscMenuButton {
+    -fx-background-color: #fcfcfc;
+}
+.MiscMenuButton:hover {
+    -fx-background-color: derive(#fcfcfc, 30%);
+}
+
+.Results {
+    -fx-background-color: #0044ff;
+    -fx-text-fill: #fafafa;
+}
+.Results:hover {
+    -fx-background-color: derive(#0044ff, 30%);
+}
+
+.Selected {
+    -fx-background-color: #77dbe5;
+	-fx-text-fill: #300e4e;
+}
+.Selected:hover {
+    -fx-background-color: derive(#77dbe5, 30%);
+}
+
+/* GenreInfoWindow */
+.text-area {
+	-fx-text-fill: #fcfcfc;
+}
+.text-area .content {
+	-fx-background-color: #272727;
+}
+
+/* https://gist.github.com/kinsleykajiva/ac452bc8280bc52be384e9af98f2ba0c */
+.table-view .column-header .label {
+    -fx-text-fill: black;
+}
+
+.choice-box .label {
+    -fx-text-fill: black;
+}
+
+/* https://stackoverflow.com/a/44062472 */
+.slider .axis {
+    -fx-tick-label-fill: -background-text-color;
+}
+/* https://stackoverflow.com/a/16343529 */
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: -button-color;
+}
+
+/* SearchingScreen */
+#SearchingPane {
+    -fx-background-color: black;
+}
+
+#SearchingCircleBox {
+    -fx-border-color: -opposite-to-background-color;
+}
+
+.Circle {
+    -fx-fill: -opposite-to-background-color;
+    -fx-stroke: #5f306e;
+}
+
+/* SettingsScreen */
+.property-sheet .label {
+    -fx-text-fill: -opposite-to-background-color;
+}
+.property-sheet .scroll-pane {
+    -fx-background-color: -background;
+}
+.property-sheet .scroll-pane .property-pane {
+    -fx-background-color: -background;
+}
+.property-sheet .scroll-pane .accordion {
+	-fx-background-color: -background;
+}

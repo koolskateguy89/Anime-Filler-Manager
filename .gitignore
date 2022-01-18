@@ -1,8 +1,12 @@
 # Maven
 target/
+.flattened-pom.xml
 
 # User-specific
 .idea/eclipseCodeFormatter.xml
+
+# Me
+Test.kts
 
 
 

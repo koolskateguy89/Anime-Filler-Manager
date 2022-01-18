@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<fx:root prefHeight="616.0" prefWidth="849.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="Pane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<TableView fx:id="table" prefHeight="616.0" prefWidth="849.0" styleClass="Panes" stylesheets="@stylesheets/application.css" tableMenuButtonVisible="true">
+		<columns>
+			<TableColumn fx:id="nameCol" editable="false" prefWidth="187.20004576444626" text="Name" />
+			<TableColumn fx:id="studiosCol" editable="false" prefWidth="115.99995422363281" text="Studios" />
+			<TableColumn fx:id="yearCol" editable="false" prefWidth="72.79998779296875" text="Start year" />
+			<TableColumn fx:id="genreCol" editable="false" prefWidth="200.79998779296875" text="Genres" />
+		</columns>
+	</TableView>
+</fx:root>

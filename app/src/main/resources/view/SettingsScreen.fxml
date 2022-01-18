@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.PropertySheet?>
+
+<fx:root prefHeight="408.0" prefWidth="588.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="Pane"
+         xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="63.0" prefWidth="321.0">
+		<Label text="*Sort MyList and ToWatch in name order or insertion order?" textAlignment="CENTER"/>
+		<HBox alignment="CENTER" prefHeight="36.0" prefWidth="171.0" spacing="30.0">
+			<Label contentDisplay="RIGHT" text="Insertion">
+				<graphic>
+					<CheckBox fx:id="insertionCheckBox" contentDisplay="TOP" mnemonicParsing="false"
+					          onAction="#insertion"/>
+				</graphic>
+			</Label>
+			<CheckBox fx:id="nameCheckBox" mnemonicParsing="false" onAction="#name" prefHeight="17.0"
+			          prefWidth="62.0" styleClass="label" text="Name"/>
+		</HBox>
+	</VBox>
+	<HBox alignment="TOP_CENTER" layoutX="22.0" layoutY="261.0" prefHeight="61.0" prefWidth="461.0" spacing="10.0">
+		<Label text="*Anime Database"/>
+		<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+		      prefHeight="50.0" prefWidth="232.0" spacing="5.0">
+			<ChoiceBox fx:id="databaseBox" prefHeight="26.0" prefWidth="262.0">
+				<opaqueInsets>
+					<Insets/>
+				</opaqueInsets>
+			</ChoiceBox>
+			<Button mnemonicParsing="false" onAction="#clearDatabases" prefHeight="26.0" prefWidth="58.0"
+			        text="Clear"/>
+		</VBox>
+		<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+		      prefHeight="56.0" prefWidth="100.0" spacing="5.0">
+			<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addDatabase" text="Add"/>
+			<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createDatabase"
+			        text="Create new"/>
+		</VBox>
+	</HBox>
+
+	<Label layoutX="107.0" layoutY="322.0" prefHeight="63.0" prefWidth="181.0" styleClass="Warning"
+	       text="*Changes will only take place upon restart" textAlignment="CENTER" wrapText="true">
+		<font>
+			<Font name="System Bold Italic" size="12.0"/>
+		</font>
+	</Label>
+	<Button layoutX="319.0" layoutY="337.0" mnemonicParsing="false" onAction="#resetToDefault" prefHeight="48.0"
+	        prefWidth="96.0" style="-fx-text-fill: red;" text="Reset">
+		<font>
+			<Font name="System Bold" size="19.0"/>
+		</font>
+	</Button>
+	<VBox layoutX="393.0" layoutY="14.0" prefHeight="123.0" prefWidth="181.0" spacing="5.0">
+		<Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" text="Opacity"
+		       textAlignment="CENTER" wrapText="true">
+			<graphic>
+				<Slider fx:id="opacitySlider" min="15.0" showTickLabels="true" showTickMarks="true" value="100.0"/>
+			</graphic>
+		</Label>
+		<Label alignment="CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308"
+		       text="Opacity while not active window" textAlignment="CENTER" wrapText="true">
+			<graphic>
+				<Slider fx:id="inactiveOpacitySlider" showTickLabels="true" showTickMarks="true" value="100.0"/>
+			</graphic>
+		</Label>
+	</VBox>
+	<PropertySheet fx:id="sheet" layoutY="65.0" mode="CATEGORY" prefHeight="188.0" prefWidth="393.0"/>
+
+</fx:root>
