@@ -3,12 +3,9 @@ package com.github.koolskateguy89.filler
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
-import java.util.Collections
 import kotlin.math.min
 
-private fun <K, V> Map<K, V>.unmodifiable(): Map<K, V> = Collections.unmodifiableMap(this)
-
-private fun <T> List<T>.unmodifiable(): List<T> = Collections.unmodifiableList(this)
+internal const val AFL_URL = "https://www.animefillerlist.com/shows"
 
 // TODO: async? how?
 public object AnimeFillerList {
@@ -31,24 +28,78 @@ public object AnimeFillerList {
     @JvmStatic
     public val allShowsWithUrls: Map<String, String> = showNamesAndUrls
 
-    public fun fillerRangesFor(name: String): AnimeFillerRange {
+    // FIXME: make public once allFillers is fixed
+    internal fun fillerRangesFor(name: String): AnimeFillerRange {
         TODO()
     }
 
     public fun fillerFor(name: String): AnimeFiller {
-        TODO()
+        return AnimeFiller("$shows/${name.formatForAflUrl()}")
     }
 
 }
 
-public class AnimeFiller private constructor(url: String) {
+internal const val MANGA_CANON = ".manga_canon"
+// jsoup doesn't properly deal with the /
+// https://github.com/jhy/jsoup/issues/838
+// internal const val MIXED = ".mixed_canon/filler"
+internal const val MIXED = ":contains(mixed)"
+internal const val FILLER = ".filler"
+internal const val ANIME_CANON = ".anime_canon"
 
+// TODO: async? how?
+public class AnimeFiller internal constructor(url: String) {
+    public val mangaCanon: IntArray
+    public val mixedCanonAndFiller: IntArray
+    public val filler: IntArray
+    public val animeCanon: IntArray
+    public val allFiller: IntArray
+
+    init {
+        val doc = Jsoup.connect(url).get()
+        val lists = doc.selectFirst("#Condensed")!!
+
+        fun fillerList(selector: String): IntArray {
+            return lists.select("div$selector > span.Episodes > a")
+                .asSequence()
+                .map { it.text() }
+                .map {
+                    val divPos = it.indexOf('-')
+                    if (divPos == -1)
+                        intArrayOf(it.toInt())
+                    else {
+                        val start = it.substring(0, divPos).toInt()
+                        val end = it.substring(divPos + 1).toInt()
+                        (start..end).toIntArray()
+                    }
+                }
+                .fold(IntArray(0)) { a, b -> a + b }
+        }
+
+        mangaCanon = fillerList(MANGA_CANON)
+        mixedCanonAndFiller = fillerList(MIXED)
+        filler = fillerList(FILLER)
+        animeCanon = fillerList(ANIME_CANON)
+        allFiller = (mixedCanonAndFiller + filler).apply { sort() }
+    }
 }
+
+private fun main() {
+    val naruto = AnimeFillerList.fillerFor("naruto")
+    //val naruto = AnimeFiller("https://www.animefillerlist.com/shows/naruto")
+    println(naruto.mangaCanon.contentToString())
+    println(naruto.mixedCanonAndFiller.contentToString())
+    println(naruto.filler.contentToString())
+    println(naruto.animeCanon.contentToString())
+    println(naruto.allFiller.contentToString())
+}
+
 
 private typealias FillerList = List<Filler>
 
 // TODO: async? how?
-public class AnimeFillerRange private constructor(name: String, url: String) {
+// FIXME: allFiller, then make public
+internal class AnimeFillerRange internal constructor(name: String, url: String) {
     public val mangaCanon: FillerList
     public val mixedCanonAndFiller: FillerList
     public val filler: FillerList
@@ -57,25 +108,24 @@ public class AnimeFillerRange private constructor(name: String, url: String) {
 
     init {
         val doc = Jsoup.connect(url).get()
-
-        printSynonyms(doc, suffix = url.substringAfterLast('/'))
-
         val lists = doc.selectFirst("#Condensed")!!
+        //printSynonyms(doc, suffix = url.substringAfterLast('/'))
 
-        fun fillerList(className: String): FillerList {
-            return lists.select("div.$className > span.Episodes > a")
-                        .map { Filler.valueOf(it.text()) }
-                        .unmodifiable()
+        fun fillerList(selector: String): FillerList {
+            return lists.select("div$selector > span.Episodes > a")
+                .map { Filler.valueOf(it.text()) }
+                .unmodifiable()
         }
 
-        mangaCanon = fillerList("manga_canon")
-        mixedCanonAndFiller = fillerList("mixed_canon.filler")
-        filler = fillerList("filler")
-        animeCanon = fillerList("anime_canon")
+        mangaCanon = fillerList(MANGA_CANON)
+        mixedCanonAndFiller = fillerList(MIXED)
+        filler = fillerList(FILLER)
+        animeCanon = fillerList(ANIME_CANON)
         allFiller = mixedCanonAndFiller + filler
     }
 }
 
+// can't just add & sort because e.g. 20-30 in mixed and 31 in filler, they dont get 'merged'
 private fun allFiller(mixed: FillerList, filler: FillerList): FillerList {
     val episodes = mutableListOf<Int>()
 
@@ -93,9 +143,9 @@ private fun allFiller(mixed: FillerList, filler: FillerList): FillerList {
     }
 
     episodes.sort()
-
     TODO("how do i impl this?")
 }
+
 
 public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 
@@ -146,47 +196,6 @@ public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
     }
 }
 
-private fun String.formatForAflUrl(): String {
-    // replace all non-alphanumeric characters with a dash (which is what AFL does)
-    var formattedName = this.lowercase().replaceNonAlphanumericWithDash()
-    // name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
-
-    // get rid of leading/trailing dashes (due to formatting above)
-    fun String.trimDashes(): String = trim { it == '-' }
-
-    formattedName = formattedName.trimDashes()
-
-    // if name includes a year, remove it
-    if (formattedName.length > 6 && formattedName.takeLast(4).isNumeric()) {
-        formattedName = formattedName.dropLast(4).trimDashes()
-    }
-
-    return formattedName
-}
-
-// this took avg ~600ns vs regex ~6-7k ns
-private fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
-    // helper for multiple characters in a row are non-alphanumeric
-    var lastWasNonAlpha = false
-
-    for (ch in this@replaceNonAlphanumericWithDash) {
-        if (ch.isLetterOrDigit()) {
-            append(ch)
-            lastWasNonAlpha = false
-        } else if (!lastWasNonAlpha) {
-            append('-')
-            lastWasNonAlpha = true
-        }
-    }
-}
-
-private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
-
-private fun main() {
-    println("Naruto: Shippuuden".formatForAflUrl())
-}
-
-
 private fun printSynonyms(doc: Document, suffix: String) {
     // title
     doc.selectFirst("#node-13724 > div.Details.clearfix > div.Right > h1")?.let {
@@ -198,10 +207,9 @@ private fun printSynonyms(doc: Document, suffix: String) {
         if (it.text().formatForAflUrl() != suffix)
             println("\"${it.text()}\" to \"$suffix\",")
     }
-    Jsoup.connect("").data()
 }
 
-// TODO: map containing synonyms -> AFL url
+// TODO: map containing [synonyms -> AFL url]
 private val synonymsMap: Map<String, String> = run {
     // if the value is not in the map, return the key formatted for AFL
     class SynonymsMap(private val map: Map<String, String>) : Map<String, String> by map {
