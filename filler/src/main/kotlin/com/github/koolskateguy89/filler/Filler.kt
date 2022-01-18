@@ -1,11 +1,207 @@
 package com.github.koolskateguy89.filler
 
-import com.google.common.collect.HashBasedTable
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
+import java.util.Collections
+import kotlin.math.min
 
-// TODO: map containing synonyms
+private fun <K, V> Map<K, V>.unmodifiable(): Map<K, V> = Collections.unmodifiableMap(this)
+
+private fun <T> List<T>.unmodifiable(): List<T> = Collections.unmodifiableList(this)
+
+// TODO: async? how?
+public object AnimeFillerList {
+
+    private const val shows = "https://www.animefillerlist.com/shows"
+    private const val showSelector = "#ShowList > div > ul > li > a"
+
+    private val showNamesAndUrls: Map<String, String> by lazy {
+        val doc = Jsoup.connect(shows)
+            .timeout(8000)
+            .get()
+
+        val shows = doc.select(showSelector)
+        return@lazy shows.associate { it.text() to it.absUrl("href") }.unmodifiable()
+    }
+
+    @JvmStatic
+    public val allShows: Set<String> = showNamesAndUrls.keys
+
+    @JvmStatic
+    public val allShowsWithUrls: Map<String, String> = showNamesAndUrls
+
+    public fun fillerRangesFor(name: String): AnimeFillerRange {
+        TODO()
+    }
+
+    public fun fillerFor(name: String): AnimeFiller {
+        TODO()
+    }
+
+}
+
+public class AnimeFiller private constructor(url: String) {
+
+}
+
+private typealias FillerList = List<Filler>
+
+// TODO: async? how?
+public class AnimeFillerRange private constructor(name: String, url: String) {
+    public val mangaCanon: FillerList
+    public val mixedCanonAndFiller: FillerList
+    public val filler: FillerList
+    public val animeCanon: FillerList
+    public val allFiller: FillerList
+
+    init {
+        val doc = Jsoup.connect(url).get()
+
+        printSynonyms(doc, suffix = url.substringAfterLast('/'))
+
+        val lists = doc.selectFirst("#Condensed")!!
+
+        fun fillerList(className: String): FillerList {
+            return lists.select("div.$className > span.Episodes > a")
+                        .map { Filler.valueOf(it.text()) }
+                        .unmodifiable()
+        }
+
+        mangaCanon = fillerList("manga_canon")
+        mixedCanonAndFiller = fillerList("mixed_canon.filler")
+        filler = fillerList("filler")
+        animeCanon = fillerList("anime_canon")
+        allFiller = mixedCanonAndFiller + filler
+    }
+}
+
+private fun allFiller(mixed: FillerList, filler: FillerList): FillerList {
+    val episodes = mutableListOf<Int>()
+
+    mixed.asSequence().map { it.toIntRange().toList() }.flatten().toCollection(episodes)
+    filler.asSequence().map { it.toIntRange().toList() }.flatten().toCollection(episodes)
+    // 2 pointer
+    var mixedI = 0
+    var fillerI = 0
+    while (mixedI < mixed.size && fillerI < filler.size) {
+        val mix = mixed[mixedI]
+        val fill = filler[fillerI]
+        val min = min(mix.start, fill.start)
+
+        TODO("not sure what to do that will work")
+    }
+
+    episodes.sort()
+
+    TODO("how do i impl this?")
+}
+
+public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
+
+    public operator fun contains(n: Int): Boolean = start <= n && n <= end
+
+    public fun toIntRange(): IntRange = start..end
+
+    public override fun toString(): String = if (start == end) end.toString() else "$start-$end"
+
+    // This smaller -> negative result
+    public override operator fun compareTo(other: Filler): Int =
+        if (start != other.start) start - other.start else end - other.end
+
+    public companion object {
+
+        @JvmStatic
+        public fun valueOf(start: Int, end: Int = start): Filler {
+            return Filler(start, end)
+        }
+
+        @JvmStatic
+        public fun valueOf(s: String): Filler {
+            val divPos = s.indexOf('-')
+
+            // single episode filler
+            if (divPos == -1)
+                return valueOf(s.toInt())
+
+            val start = s.substring(0, divPos).toInt()
+            val end = s.substring(divPos + 1).toInt()
+            return valueOf(start, end)
+        }
+
+        @JvmStatic
+        public fun getFillers(name: String): List<Filler> {
+            try {
+                // replace all non-alphanumeric characters with a dash (which is what AFL does)
+                val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${name.formatForAflUrl()}").get()
+                val fillers = doc.select("div.filler > span.Episodes > a")
+
+                return fillers.map { valueOf(it.text()) }
+
+            } catch (io: IOException) {
+                // the page doesn't exist, likely the MAL name is different to the AFL name
+                return emptyList()
+            }
+        }
+    }
+}
+
+private fun String.formatForAflUrl(): String {
+    // replace all non-alphanumeric characters with a dash (which is what AFL does)
+    var formattedName = this.lowercase().replaceNonAlphanumericWithDash()
+    // name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
+
+    // get rid of leading/trailing dashes (due to formatting above)
+    fun String.trimDashes(): String = trim { it == '-' }
+
+    formattedName = formattedName.trimDashes()
+
+    // if name includes a year, remove it
+    if (formattedName.length > 6 && formattedName.takeLast(4).isNumeric()) {
+        formattedName = formattedName.dropLast(4).trimDashes()
+    }
+
+    return formattedName
+}
+
+// this took avg ~600ns vs regex ~6-7k ns
+private fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
+    // helper for multiple characters in a row are non-alphanumeric
+    var lastWasNonAlpha = false
+
+    for (ch in this@replaceNonAlphanumericWithDash) {
+        if (ch.isLetterOrDigit()) {
+            append(ch)
+            lastWasNonAlpha = false
+        } else if (!lastWasNonAlpha) {
+            append('-')
+            lastWasNonAlpha = true
+        }
+    }
+}
+
+private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
+
+private fun main() {
+    println("Naruto: Shippuuden".formatForAflUrl())
+}
+
+
+private fun printSynonyms(doc: Document, suffix: String) {
+    // title
+    doc.selectFirst("#node-13724 > div.Details.clearfix > div.Right > h1")?.let {
+        if (it.text().formatForAflUrl() != suffix)
+            println("\"${it.text()}\" to \"$suffix\",")
+    }
+    // "alt title"
+    doc.selectFirst("#node-13724 > div.Details.clearfix > div.Right > h2:nth-child(4)")?.let {
+        if (it.text().formatForAflUrl() != suffix)
+            println("\"${it.text()}\" to \"$suffix\",")
+    }
+    Jsoup.connect("").data()
+}
+
+// TODO: map containing synonyms -> AFL url
 private val synonymsMap: Map<String, String> = run {
     // if the value is not in the map, return the key formatted for AFL
     class SynonymsMap(private val map: Map<String, String>) : Map<String, String> by map {
@@ -14,12 +210,12 @@ private val synonymsMap: Map<String, String> = run {
         }
     }
 
-    SynonymsMap(
+    return@run SynonymsMap(
         mapOf(
             "Naruto: Shippuden" to "naruto-shippuden",
             "A Certain Magical Index (Toaru Majutsu No Index)" to "certain-magical-index",
             "A Certain Magical Index Filler List" to "certain-magical-index",
-            "(Toaru Majutsu No Index)" to "certain-magical-index",
+            "Toaru Majutsu No Index" to "certain-magical-index",
             "A Certain Scientific Accelerator (Toaru Kagaku no Accelerator)" to "sh%C5%8Dnan-pure-love-gang",
             "A Certain Scientific Railgun (Toaru Kagaku No Railgun)" to "a-certain-scientific-railgun",
             "A Sister's All You Need" to "super-dragon-ball-heroes",
@@ -174,205 +370,4 @@ private val synonymsMap: Map<String, String> = run {
             "Zatch Bell! (Konjiki no Gash Bell!!)" to "zatch-bell",
         )
     )
-}
-
-private object AllAflAnime {
-
-    lateinit var map: MutableMap<String, AnimeFiller>
-
-    private const val shows = "https://www.animefillerlist.com/shows"
-    private const val selector = "#ShowList > div > ul > li > a"
-
-    @JvmStatic
-    fun init() {
-        map = mutableMapOf()
-
-        val doc = Jsoup.connect(shows)
-                       .timeout(8000)
-                       .get()
-
-        val links = doc.select(selector)
-        links.forEach {
-            val name = it.text()
-            val url = it.absUrl("href")
-
-            val suffix = url.substringAfterLast('/')
-            if (name.formatForAflUrl() != suffix)
-                println("\"$name\" to \"$suffix\",")
-
-            map[name] = AnimeFiller(name, url)
-        }
-    }
-
-    @JvmStatic
-    fun getFillers(anime: String): AnimeFiller? {
-        if (!::map.isInitialized)
-            init()
-
-        return map[anime]
-    }
-}
-
-private fun printSynonyms(doc: Document, suffix: String) {
-    // title
-    doc.selectFirst("#node-13724 > div.Details.clearfix > div.Right > h1")?.let {
-        if (it.text().formatForAflUrl() != suffix)
-            println("\"${it.text()}\" to \"$suffix\",")
-    }
-    // "alt title"
-    doc.selectFirst("#node-13724 > div.Details.clearfix > div.Right > h2:nth-child(4)")?.let {
-        if (it.text().formatForAflUrl() != suffix)
-            println("\"${it.text()}\" to \"$suffix\",")
-    }
-    Jsoup.connect("").data()
-}
-
-private typealias FillerList = List<Filler>
-
-// TODO: async
-private class AnimeFiller(val name: String, val url: String) {
-    val mangaCanon: FillerList
-    val mixed: FillerList
-    val filler: FillerList
-    val animeCanon: FillerList
-
-    init {
-        val doc = Jsoup.connect(url).get()
-
-        printSynonyms(doc, suffix = url.substringAfterLast('/'))
-
-        val list = doc.selectFirst("#Condensed")!!
-
-        fun addToCollection(className: String): FillerList {
-            return list.select("div.$className > span.Episodes > a")
-                       .map { Filler.valueOf(it.text()) }
-                       .toList()
-        }
-
-        mangaCanon = addToCollection("manga_canon")
-        mixed = addToCollection("mixed_canon.filler")
-        filler = addToCollection("filler")
-        animeCanon = addToCollection("anime_canon")
-    }
-}
-
-private fun main() {
-    val start = System.currentTimeMillis()
-    AllAflAnime.init()
-    val elapsed = System.currentTimeMillis() - start
-
-    //println("ms:  $elapsed")
-    println("s:   ${elapsed * 0.001}")
-    println("m:   ${(elapsed * 0.001) / 60}")
-
-    println()
-    AllAflAnime.map["One Piece"]!!.run {
-        println(name)
-        println(animeCanon)
-    }
-    AllAflAnime.map.forEach { (name, animeFiller) ->
-        //println(name)
-    }
-}
-
-// TODO: make class storing canon episodes, filler eps, canon/filler etc.
-public class Fillers {
-
-    public companion object {
-
-    }
-
-}
-
-public data class Filler private constructor(val start: Int, val end: Int) : Comparable<Filler> {
-
-    public operator fun contains(n: Int): Boolean = n in start..end
-
-    override fun toString(): String = if (start == end) end.toString() else "$start-$end"
-
-    // This smaller -> negative result
-    override operator fun compareTo(other: Filler): Int =
-        if (start != other.start) start - other.start else end - other.end
-
-    public companion object {
-        // Start, End, Object
-        private val CACHE = HashBasedTable.create<Int, Int, Filler>()
-
-        @JvmStatic
-        public fun valueOf(start: Int, end: Int = start): Filler {
-            var cached = CACHE[start, end]
-
-            if (cached == null) {
-                cached = Filler(start, end)
-                CACHE.put(start, end, cached)
-            }
-
-            return cached
-        }
-
-        @JvmStatic
-        public fun valueOf(s: String): Filler {
-            val divPos = s.indexOf('-')
-
-            // single episode filler
-            if (divPos == -1)
-                return valueOf(s.toInt())
-
-            val start = s.substring(0, divPos).toInt()
-            val end = s.substring(divPos + 1).toInt()
-            return valueOf(start, end)
-        }
-
-        @JvmStatic
-        public fun getFillers(name: String): List<Filler> {
-            try {
-                // replace all non-alphanumeric characters with a dash (which is what AFL does)
-                val doc = Jsoup.connect("https://www.animefillerlist.com/shows/${name.formatForAflUrl()}").get()
-                val fillers = doc.select("div.filler > span.Episodes > a")
-
-                return fillers.map { valueOf(it.text()) }
-
-            } catch (io: IOException) {
-                // the page doesn't exist, likely the MAL name is different to the AFL name
-                return emptyList()
-            }
-        }
-    }
-}
-
-private fun String.isNumeric(): Boolean = toDoubleOrNull() != null
-
-// this took avg ~600ns vs regex ~6-7k ns
-public fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
-    // helper for multiple characters in a row are non-alphanumeric
-    var lastWasNonAlpha = false
-
-    for (ch in this@replaceNonAlphanumericWithDash) {
-        if (ch.isLetterOrDigit()) {
-            append(ch)
-            lastWasNonAlpha = false
-        } else if (!lastWasNonAlpha) {
-            append('-')
-            lastWasNonAlpha = true
-        }
-    }
-}
-
-private fun String.formatForAflUrl(): String {
-    // replace all non-alphanumeric characters with a dash (which is what AFL does)
-    var formattedName = this.lowercase().replaceNonAlphanumericWithDash()
-    // name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
-
-    // get rid of leading/trailing dashes (due to formatting above)
-    fun String.trimDashes(): String = trim { it == '-' }
-
-    formattedName = formattedName.trimDashes()
-
-    // basically if name includes a year, remove it
-    if (formattedName.length > 6 && formattedName.takeLast(4).isNumeric()) {
-        formattedName = formattedName.dropLast(4)
-        formattedName = formattedName.trimDashes()
-    }
-
-    return formattedName
 }

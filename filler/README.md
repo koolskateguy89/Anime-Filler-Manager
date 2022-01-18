@@ -5,6 +5,7 @@ A Kotlin (Java?) library to search for anime filler, according to animefillerlis
 [//]: # (TODO: javadoc comments)
 [//]: # (TODO: decide whether to have as its own github project - surely right, but if not then need to update
 dependency)
+## Add to project
 
 ```xml
 <dependency>
@@ -30,3 +31,7 @@ dependency)
    <version>${latest-version}</version>
 </dependency>
 ```
+
+## Usage
+
+Import the library to your project using [Jitpack](https://jitpack.io/#rubenlagus/TelegramBots/)

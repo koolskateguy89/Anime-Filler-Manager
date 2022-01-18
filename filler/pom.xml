@@ -46,6 +46,9 @@
 	</dependencies>
 
 	<build>
+		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+		<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+
 		<plugins>
 			<!-- Using Kotlin with Maven https://kotlinlang.org/docs/maven.html -->
 			<!-- Because .kt files are under src/main/java, it is simple -->
