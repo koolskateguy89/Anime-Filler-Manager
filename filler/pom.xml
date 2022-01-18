@@ -2,8 +2,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.koolskateguy89</groupId>
-	<artifactId>anime-filler</artifactId>
-	<version>1.0.0</version>
+	<artifactId>anime-filler-list</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -15,7 +15,6 @@
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 
 		<!-- dependency versions -->
-		<slf4j.version>2.0.0-alpha5</slf4j.version>
 		<jsoup.version>1.14.3</jsoup.version>
 		<reactive-jikan.version>1.0.2</reactive-jikan.version>
 		<guava.version>31.0.1-jre</guava.version>
@@ -31,14 +30,6 @@
 		</dependency>
 		<!--</editor-fold>-->
 
-		<!-- TODO: Logging with slf4j -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -51,13 +42,6 @@
 			<groupId>net.sandrohc</groupId>
 			<artifactId>reactive-jikan</artifactId>
 			<version>${reactive-jikan.version}</version>
-		</dependency>
-
-		<!-- Google Guava TODO: remove -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
 		</dependency>
 	</dependencies>
 
