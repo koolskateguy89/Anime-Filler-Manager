@@ -432,8 +432,7 @@ object Database {
 
             val genreString = getString(COLUMN_MAP["genres"])
             val genreSet = genreString.split(", ")
-                .map(Genre::parseGenreFromToString)
-                .toCollection(EnumSet.noneOf(Genre::class.java))
+                .mapTo(EnumSet.noneOf(Genre::class.java), Genre::parseGenreFromToString)
 
             builder.setGenres(genreSet)
 

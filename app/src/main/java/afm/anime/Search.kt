@@ -64,8 +64,9 @@ private object Genres : Selector {
     override fun extractFrom(animeElem: Element): EnumSet<Genre> {
         val ids = animeElem.attr("data-genre").split(",")
 
-        return ids.map { Genre.valueOfFromId(it.toInt()) }
-                  .toCollection(EnumSet.noneOf(Genre::class.java))
+        return ids.mapTo(EnumSet.noneOf(Genre::class.java)) {
+            Genre.valueOfFromId(it.toInt())
+        }
     }
 }
 
@@ -99,8 +100,9 @@ private object Synopsis : Selector {
 
         override fun extractFrom(animeElem: Element): EnumSet<Genre> {
             val names = synopsisElem.select(cssQuery)
-            return names.map { Genre.valueOfFromName(it.text().remove(" ")) }
-                        .toCollection(EnumSet.noneOf(Genre::class.java))
+            return names.mapTo(EnumSet.noneOf(Genre::class.java)) {
+                Genre.valueOfFromName(it.text().remove(" "))
+            }
         }
     }
 

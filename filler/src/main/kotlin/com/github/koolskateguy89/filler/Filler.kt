@@ -80,7 +80,6 @@ public class AnimeFiller internal constructor(url: String) {
 
         fun fillerList(selector: String): IntArray {
             return lists.select("div$selector > span.Episodes > a")
-                .asSequence()
                 .map { it.text() }
                 .fold(mutableListOf<Int>()) { list, str ->
                     val divPos = str.indexOf('-')
@@ -149,8 +148,8 @@ internal class AnimeFillerRange internal constructor(name: String, url: String) 
 private fun allFiller(mixed: FillerList, filler: FillerList): FillerList {
     val episodes = mutableListOf<Int>()
 
-    mixed.asSequence().map { it.toIntRange().toList() }.flatten().toCollection(episodes)
-    filler.asSequence().map { it.toIntRange().toList() }.flatten().toCollection(episodes)
+    mixed.asSequence().map { it.toIntRange() }.flatten().toCollection(episodes)
+    filler.asSequence().map { it.toIntRange() }.flatten().toCollection(episodes)
     // 2 pointer
     var mixedI = 0
     var fillerI = 0
@@ -169,7 +168,7 @@ private fun allFiller(mixed: FillerList, filler: FillerList): FillerList {
 
 public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
 
-    public operator fun contains(n: Int): Boolean = start <= n && n <= end
+    public operator fun contains(n: Int): Boolean = n in start..end
 
     public fun toIntRange(): IntRange = start..end
 
