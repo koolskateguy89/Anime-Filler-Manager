@@ -82,17 +82,18 @@ public class AnimeFiller internal constructor(url: String) {
             return lists.select("div$selector > span.Episodes > a")
                 .asSequence()
                 .map { it.text() }
-                .map {
-                    val divPos = it.indexOf('-')
-                    if (divPos == -1)
-                        intArrayOf(it.toInt())
-                    else {
-                        val start = it.substring(0, divPos).toInt()
-                        val end = it.substring(divPos + 1).toInt()
-                        (start..end).toIntArray()
+                .fold(mutableListOf<Int>()) { list, str ->
+                    val divPos = str.indexOf('-')
+                    if (divPos == -1) {
+                        list.add(str.toInt())
+                    } else {
+                        val start = str.substring(0, divPos).toInt()
+                        val end = str.substring(divPos + 1).toInt()
+                        list.addAll(start..end)
                     }
+                    list
                 }
-                .fold(IntArray(0)) { a, b -> a + b }
+                .toIntArray()
         }
 
         mangaCanon = fillerList(MANGA_CANON)
