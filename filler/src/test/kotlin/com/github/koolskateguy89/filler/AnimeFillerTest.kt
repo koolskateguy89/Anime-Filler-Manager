@@ -1,14 +1,15 @@
+@file:Suppress("SpellCheckingInspection")
+
 package com.github.koolskateguy89.filler
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContentEquals
 
-internal class AnimeFillerTest {
+internal val emptyIntArray: IntArray = IntArray(0)
 
-    private val emptyIntArray: IntArray = IntArray(0)
+internal class NarutoTest {
 
     private val naruto: AnimeFiller = AnimeFiller("https://www.animefillerlist.com/shows/naruto")
-    private val beastars: AnimeFiller = AnimeFiller("https://www.animefillerlist.com/shows/beastars")
 
     @Test
     fun getMangaCanon() {
@@ -18,9 +19,6 @@ internal class AnimeFillerTest {
             125, 128, 129, 132, 133, 134, 135,
         )
         assertContentEquals(expected, naruto.mangaCanon)
-
-        val beastarsExpected = (1..24).toIntArray()
-        assertContentEquals(beastarsExpected, beastars.mangaCanon)
     }
 
     @Test
@@ -30,8 +28,6 @@ internal class AnimeFillerTest {
             112, 113, 114, 126, 127, 130, 131, 141, 142, 220
         )
         assertContentEquals(expected, naruto.mixedCanonAndFiller)
-
-        assertContentEquals(emptyIntArray, beastars.mixedCanonAndFiller)
     }
 
     @Test
@@ -43,16 +39,12 @@ internal class AnimeFillerTest {
             206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219,
         )
         assertContentEquals(expected, naruto.filler)
-
-        assertContentEquals(emptyIntArray, beastars.filler)
     }
 
     @Test
     fun getAnimeCanon() {
         val expected = intArrayOf(99)
         assertContentEquals(expected, naruto.animeCanon)
-
-        assertContentEquals(emptyIntArray, beastars.animeCanon)
     }
 
     @Test
@@ -67,8 +59,38 @@ internal class AnimeFillerTest {
         )
         assertContentEquals(expected, naruto.allFiller)
         assertContentEquals(naruto.allFiller, (naruto.mixedCanonAndFiller + naruto.filler).sortedArray())
-
-        assertContentEquals(emptyIntArray, beastars.allFiller)
-        assertContentEquals(beastars.allFiller, beastars.mixedCanonAndFiller + beastars.filler)
     }
+}
+
+internal class BeastarsTest {
+
+    private val beastars: AnimeFiller = AnimeFiller("https://www.animefillerlist.com/shows/beastars")
+
+    @Test
+    fun getMangaCanon() {
+        val expected = (1..24).toIntArray()
+        assertContentEquals(expected, beastars.mangaCanon)
+    }
+
+    @Test
+    fun getMixedCanonAndFiller() {
+        assertContentEquals(emptyIntArray, beastars.mixedCanonAndFiller)
+    }
+
+    @Test
+    fun getFiller() {
+        assertContentEquals(emptyIntArray, beastars.filler)
+    }
+
+    @Test
+    fun getAnimeCanon() {
+        assertContentEquals(emptyIntArray, beastars.animeCanon)
+    }
+
+    @Test
+    fun getAllFiller() {
+        assertContentEquals(emptyIntArray, beastars.allFiller)
+        assertContentEquals(beastars.allFiller, (beastars.mixedCanonAndFiller + beastars.filler).sortedArray())
+    }
+
 }
