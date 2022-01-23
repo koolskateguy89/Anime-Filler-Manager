@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 
 import afm.Main;
 import afm.anime.Season;
-import afm.common.FactsKt;
+import afm.common.Facts;
 import afm.common.utils.Utils;
 import afm.database.Database;
 import afm.screens.Menu;
@@ -45,8 +45,8 @@ public class StartScreen extends Pane {
 	void initialize() {
 		//Get a random fact and its id and display it in factText
 		if (Settings.get(Settings.Key.SHOW_FACTS)) {
-			FactsKt.init(); // only need to init if showing facts
-			fact = FactsKt.getRandomFact();
+			Facts.init(); // only need to init if showing facts
+			fact = Facts.getRandomFact();
 			factText.setText("Fact " + fact.getFirst() + ": " + fact.getSecond());
 		} else {
 			factText.setVisible(false);
@@ -90,7 +90,7 @@ public class StartScreen extends Pane {
 
 			// Show a new fact
 			if (Settings.get(Settings.Key.SHOW_FACTS)) {
-				fact = FactsKt.getRandomFact();
+				fact = Facts.getRandomFact();
 				factText.setText("Fact " + fact.getFirst() + ": " + fact.getSecond());
 			}
 

@@ -43,7 +43,7 @@ private object NameAndId : Selector {
      * Link will be in form:
      * https://myanimelist.net/anime/[ID]/[TITLE]
      */
-    private fun getIdFromURl(url: String): Int {
+    private fun getIdFromUrl(url: String): Int {
         val start = 30 //where ID starts
         val end = url.indexOf('/', start + 1)
         return url.substring(start, end).toIntOrNull() ?: -1
@@ -54,7 +54,7 @@ private object NameAndId : Selector {
 
         val name = nameElem.text()
         val url = nameElem.absUrl("href")
-        val id = getIdFromURl(url)
+        val id = getIdFromUrl(url)
 
         return name to id
     }
@@ -142,6 +142,7 @@ private object Infos : MultipleSelector {
 
 private object ImageUrl : Selector {
     private const val cssQuery = "div.image > a:nth-child(1) > img"
+
     override fun extractFrom(animeElem: Element): String =
         animeElem.selectFirst(cssQuery)!!.absUrl("data-src")
 }
@@ -157,7 +158,7 @@ class Search {
     /* search filters */
     var name: String? = null
     var studio: String? = null
-    private val genres = EnumSet.noneOf(Genre::class.java)
+    val genres: EnumSet<Genre> = EnumSet.noneOf(Genre::class.java)
     var animeType: AnimeType? = null
     var startYear: Int? = null
         set(value) {
@@ -183,19 +184,21 @@ class Search {
     fun search(): List<Anime> {
         /* this should be impossible because it's already taken care of
 		   in SearchScreen */
-        if (genres.isEmpty())
-            throw IllegalStateException("No genres selected for searching")
+        check(!genres.isEmpty()) { "No genres selected for searching" }
 
-        val searchWorked: Boolean = searchForEachGenre()
+        tailrec fun search0(): List<Anime> {
+            val searchWorked: Boolean = searchForEachGenre()
 
-        if (searchWorked && !reachedLastPage && result.size < 13 /*&& (name == null)*/) {
+            if (!searchWorked || reachedLastPage || result.size >= 13 /*&& (name != null)*/) {
+                // fail fast is search didn't work
+                return result.sortedWith(Anime.SORT_BY_NAME)
+            }
+
             page++
-            /* I don't want it to continue as other search() calls
-			 * will sort - which only need to happen once */
-            return search()
+            return search0()
         }
 
-        return result.sortedWith(Anime.SORT_BY_NAME)
+        return search0()
     }
 
     // (and)
@@ -203,13 +206,12 @@ class Search {
     // returns if search 'worked'
     private fun searchForEachGenre(): Boolean {
         for (genre in genres) {
-            val doc: Document
             try {
-                doc = Jsoup.connect("$GENRE_URL/${genre.id}/page=$page")
+                scrapeDocument(Jsoup.connect("$GENRE_URL/${genre.id}/page=$page")
                     //.cookie("search_view", "list") // use the list search view to be able to get start date
                     .timeout(TIMEOUT_MILLIS)
                     .get()
-                scrapeDocument(doc)
+                )
             } catch (e: Exception) {
                 when (e) {
                     // no internet connection
@@ -239,51 +241,50 @@ class Search {
     }
 
     // Scrapes the document, adding all appropriate anime to result
-    private fun scrapeDocument(doc: Document) =
-        doc.select(ANIME_ELEMS).forEach {
-            // return@forEach == continue
-            builder.reset()
+    private fun scrapeDocument(doc: Document) = doc.select(ANIME_ELEMS).forEach {
+        // note: return@forEach == continue
+        builder.reset()
 
-            val (name, id) = NameAndId.extractFrom(it)
-            if (removeBecauseName(name)) return@forEach
-            builder.setName(name)
-                   .setId(id)
+        val (name, id) = NameAndId.extractFrom(it)
+        if (removeBecauseName(name)) return@forEach
+        builder.setName(name)
+            .setId(id)
 
-            val synopsis: String = Synopsis.extractFrom(it)
-            builder.setSynopsis(synopsis)
+        val synopsis: String = Synopsis.extractFrom(it)
+        builder.setSynopsis(synopsis)
 
-            val studios: Set<String> = Synopsis.Studios.extractFrom(it)
-            if (removeBecauseStudio(studios)) return@forEach
-            builder.setStudios(studios)
+        val studios: Set<String> = Synopsis.Studios.extractFrom(it)
+        if (removeBecauseStudio(studios)) return@forEach
+        builder.setStudios(studios)
 
-            val genres = EnumSet.noneOf(Genre::class.java)
-            genres.addAll(Genres.extractFrom(it))
-            genres.addAll(Synopsis.ThemesAndDemographics.extractFrom(it))
-            if (removeBecauseGenres(genres)) return@forEach
-            builder.setGenres(genres)
+        val genres = EnumSet.noneOf(Genre::class.java)
+        genres.addAll(Genres.extractFrom(it))
+        genres.addAll(Synopsis.ThemesAndDemographics.extractFrom(it))
+        if (removeBecauseGenres(genres)) return@forEach
+        builder.setGenres(genres)
 
-            val (type, startYear, status, eps, epLength) = Infos.extractFrom(it)
+        val (type, startYear, status, eps, epLength) = Infos.extractFrom(it)
 
-            if (removeBecauseAnimeType(type)) return@forEach
-            builder.setAnimeType(type)
+        if (removeBecauseAnimeType(type)) return@forEach
+        builder.setAnimeType(type)
 
-            if (removeBecauseStartYear(startYear)) return@forEach
-            builder.setStartYear(startYear)
+        if (removeBecauseStartYear(startYear)) return@forEach
+        builder.setStartYear(startYear)
 
-            if (removeBecauseStatus(status)) return@forEach
-            builder.setStatus(status)
+        if (removeBecauseStatus(status)) return@forEach
+        builder.setStatus(status)
 
-            if (removeBecauseMinEps(eps)) return@forEach
-            builder.setEpisodes(eps)
+        if (removeBecauseMinEps(eps)) return@forEach
+        builder.setEpisodes(eps)
 
-            builder.setEpisodeLength(epLength)
+        builder.setEpisodeLength(epLength)
 
-            val imgUrl: String = ImageUrl.extractFrom(it)
-            builder.setImageURL(imgUrl)
+        val imgUrl: String = ImageUrl.extractFrom(it)
+        builder.setImageURL(imgUrl)
 
-            result.add(builder.build())
-            builder.reset()
-        }
+        result.add(builder.build())
+        builder.reset()
+    }
 
     /* (contains)
 	 * if user entered a name, filter out all anime that don't contain that name (ignore case)

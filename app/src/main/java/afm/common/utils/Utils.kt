@@ -43,6 +43,7 @@ val isFirstRun: Boolean = run {
 fun getFxmlUrl(fname: String): URL? = classLoader.getResource("view/$fname.fxml")
 
 
+// for java code
 fun toIntOrNull(s: String): Int? = s.toIntOrNull()
 
 
@@ -94,10 +95,7 @@ fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : P
 fun showAndWaitConfAlert(header: String?, content: String?): ButtonType {
     return Alert(AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO).run {
         initOwner(Main.getStage())
-
-        if (header != null)
-            headerText = header
-
+        headerText = header
         showAndWait().orElse(ButtonType.NO)
     }
 }

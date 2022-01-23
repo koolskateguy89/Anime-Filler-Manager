@@ -41,7 +41,7 @@ fun String.splitByCapitals(): Array<String> {
 
 fun String.remove(s: String, ignoreCase: Boolean = false) = replace(s, "", ignoreCase)
 
-fun String.remove(c: Char, ignoreCase: Boolean = false) = replace("$c", "", ignoreCase)
+fun String.remove(c: Char, ignoreCase: Boolean = false) = replace(c.toString(), "", ignoreCase)
 
 // this took avg ~600ns vs regex ~6-7k ns
 fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {

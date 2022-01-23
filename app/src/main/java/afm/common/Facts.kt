@@ -12,29 +12,6 @@ private val factMap = mutableMapOf<Int, String>()
 
 private const val DEFAULT_FACT = "A Levels are less stressful than the IB Diploma :)"
 
-/* Read text file fileX.txt into factMap
- * 	where X = random number generated between 1 and 5
- *
- * - Called in StartScreen initialiser.
- */
-fun init() {
-    try {
-        val fileNum = (1..5).random()
-        val path = "facts/facts$fileNum.txt"
-
-        val str: String = getFileAsString(path)
-        val lines = str.lines().take(15)
-
-        lines.forEachIndexed { i, fact -> factMap[i + 1] = fact }
-
-    } catch (e: Exception) {
-        when (e) {
-            is NullPointerException, is IOException -> factMap[factMap.size + 1] = DEFAULT_FACT
-            else -> throw e
-        }
-    }
-}
-
 private fun getFileAsString(path: String): String {
     classLoader.getResourceAsStream(path).use { `in` ->
         ByteArrayOutputStream().use { result ->
@@ -50,9 +27,36 @@ private fun getFileAsString(path: String): String {
     }
 }
 
-fun getRandomFact(): Pair<Int, String> {
-    val id = (1..factMap.size).random()
-    val fact = factMap[id] ?: DEFAULT_FACT
+object Facts {
+    /* Read text file fileX.txt into factMap
+     * 	where X = random number generated between 1 and 5
+     *
+     * - Called in StartScreen initialiser.
+     */
+    @JvmStatic
+    fun init() {
+        try {
+            val fileNum = (1..5).random()
+            val path = "facts/facts$fileNum.txt"
 
-    return id to fact
+            val str: String = getFileAsString(path)
+            val lines = str.lines().take(15)
+
+            lines.forEachIndexed { i, fact -> factMap[i + 1] = fact }
+
+        } catch (e: Exception) {
+            when (e) {
+                is NullPointerException, is IOException -> factMap[factMap.size + 1] = DEFAULT_FACT
+                else -> throw e
+            }
+        }
+    }
+
+    @JvmStatic
+    fun getRandomFact(): Pair<Int, String> {
+        val id = (1..factMap.size).random()
+        val fact = factMap[id] ?: DEFAULT_FACT
+
+        return id to fact
+    }
 }

@@ -14,7 +14,6 @@ import javafx.scene.text.Text
 import javafx.util.Callback
 import org.controlsfx.control.CheckComboBox
 
-
 fun TableColumn<*, *>.topCenterColumnAlignment() {
     style += "; -fx-alignment: TOP-CENTER"
 }
