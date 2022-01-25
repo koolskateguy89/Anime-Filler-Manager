@@ -3,6 +3,8 @@ package afm.screens.version5_results;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +49,7 @@ public class ResultsScreen extends Pane {
 		return !tableItems.isEmpty();
 	}
 
-	public final void setResults(List<Anime> results) {
+	public final void setResults(@Nonnull List<Anime> results) {
 		tableItems.setAll(results);
 	}
 

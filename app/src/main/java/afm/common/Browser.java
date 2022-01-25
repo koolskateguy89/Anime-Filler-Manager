@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.annotation.Nonnull;
+
 public class Browser {
 
 	private Browser() { }
@@ -19,7 +21,7 @@ public class Browser {
 	static final boolean isMac = !isUnix && (OS.contains("mac") || OS.contains("osx"));
 
 	// see https://stackoverflow.com/a/18509384
-	public static boolean open(String url) {
+	public static boolean open(@Nonnull String url) {
 		boolean opened;
 
 		if (isMac) {

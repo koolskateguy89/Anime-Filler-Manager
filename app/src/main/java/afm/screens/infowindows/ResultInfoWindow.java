@@ -6,6 +6,8 @@ import static afm.database.DelegatesKt.ToWatchKt;
 
 import java.io.IOException;
 
+import javax.annotation.Nonnull;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,7 +20,11 @@ import afm.screens.Menu;
 
 public class ResultInfoWindow extends InfoWindow {
 
-	public static void open(Anime a, Button infoBtn, Button myListBtn, Button toWatchBtn) {
+	public static void open(@Nonnull Anime a,
+	                        @Nonnull Button infoBtn,
+	                        @Nonnull Button myListBtn,
+	                        @Nonnull Button toWatchBtn
+	) {
 		try {
 			new ResultInfoWindow(a, infoBtn, myListBtn, toWatchBtn).show();
 		} catch (IOException e) {

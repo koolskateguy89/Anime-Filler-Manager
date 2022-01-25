@@ -10,6 +10,9 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -79,7 +82,7 @@ public class Settings {
 
 	public static final StringProperty selectedDatabaseProperty = new SimpleStringProperty();
 
-	public static String getSelectedDatabase() {
+	public static @Nonnull String getSelectedDatabase() {
 		return selectedDatabaseProperty.getValue();
 	}
 
@@ -172,20 +175,20 @@ public class Settings {
 		}
 	}
 
-	public static boolean get(Key key) {
+	public static boolean get(@Nonnull Key key) {
 		return get(key.toString());
 	}
 
-	public static boolean get(String key) {
+	public static boolean get(@Nonnull String key) {
 		Boolean value = map.get(key);
 		return value != null ? value : false;   // default to false if key doesn't exist
 	}
 
-	public static void invert(Key key) {
+	public static void invert(@Nonnull Key key) {
 		invert(key.toString());
 	}
 
-	public static void invert(String key) {
+	public static void invert(@Nonnull String key) {
 		Boolean value = map.get(key);
 		if (value != null)
 			map.put(key, !value);

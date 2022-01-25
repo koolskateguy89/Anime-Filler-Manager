@@ -5,6 +5,9 @@ import static afm.database.DelegatesKt.ToWatchKt;
 
 import java.util.HashSet;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -54,7 +57,7 @@ public abstract class InfoWindow extends Stage {
 	}
 
 	// apply new theme to all open infoWindows
-	public static void applyTheme(Theme theme) {
+	public static void applyTheme(@Nullable Theme theme) {
 		if (theme == null)
 			return;
 

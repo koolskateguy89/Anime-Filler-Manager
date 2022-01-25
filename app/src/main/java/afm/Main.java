@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -39,11 +42,11 @@ public class Main extends Application {
 	// unresolved reference getInstance in Kotlin when using @Getter :/
 	private static Main instance;
 
-	public static Main getInstance() {
+	public static @Nonnull Main getInstance() {
 		return instance;
 	}
 
-	public static Stage getStage() {
+	public static @Nonnull Stage getStage() {
 		return instance.stage;
 	}
 
@@ -91,7 +94,7 @@ public class Main extends Application {
 
 	// Set up mainScreen variable & screenList & scene root.
 	// Changed it to return Main so welcomeScreen can do method chaining
-	public Main initMainScreen() {
+	public @Nonnull Main initMainScreen() {
 		if (mainScreen == null || screenList == null)
 			try {
 				mainScreen = new SplitPane();
@@ -116,7 +119,7 @@ public class Main extends Application {
 	}
 
 	// Change 'current' screen (right of splitpane)
-	private void setScreen(Pane newPane) {
+	private void setScreen(@Nonnull Pane newPane) {
 		//InfoWindow.closeAllOpenWindows();
 
 		if (screenList.size() == 1) {
@@ -178,7 +181,7 @@ public class Main extends Application {
 		setScreen(customScreen);
 	}
 
-	public void moveToSearchingScreen(Search s) {
+	public void moveToSearchingScreen(@Nonnull Search s) {
 		searchingScreen.setSearch(s);
 		searchingScreen.startSearch();
 
@@ -186,14 +189,14 @@ public class Main extends Application {
 		stage.setWidth(searchingScreen.getPrefWidth());
 	}
 
-	public void moveToResultsScreen(List<Anime> results) {
+	public void moveToResultsScreen(@Nonnull List<Anime> results) {
 		resultsScreen.setResults(results);
 
 		menu.resultsScreen();
 		setScreen(resultsScreen);
 	}
 
-	public void applyTheme(Theme theme) {
+	public void applyTheme(@Nullable Theme theme) {
 		if (theme == null)
 			return;
 
@@ -212,49 +215,43 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(final Stage primaryStage) {
+	public void start(final Stage primaryStage) throws Exception {
 		Main.instance = this;
-		try {
-			stage = primaryStage;
+		stage = primaryStage;
 
-			stage.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
-				if (Boolean.TRUE.equals(isFocused)) {
-					stage.opacityProperty().bind(Settings.opacityProperty.multiply(0.01));
-				} else {
-					stage.opacityProperty().bind(Settings.inactiveOpacityProperty.multiply(0.01));
-				}
-			});
+		stage.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
+			if (Boolean.TRUE.equals(isFocused)) {
+				stage.opacityProperty().bind(Settings.opacityProperty.multiply(0.01));
+			} else {
+				stage.opacityProperty().bind(Settings.inactiveOpacityProperty.multiply(0.01));
+			}
+		});
 
-			stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
+		stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
 
-			stage.setTitle("Anime Filler Manager");
+		stage.setTitle("Anime Filler Manager");
 
-			stage.getIcons().add(new Image("icons/MainIcon.ico"));
+		stage.getIcons().add(new Image("icons/MainIcon.ico"));
 
-			stage.setResizable(false);
+		stage.setResizable(false);
 
-			stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
+		stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
 
-			// OnClose thread will be run upon JVM trying to exit
-			Runtime.getRuntime().addShutdownHook(OnClose.INSTANCE);
+		// OnClose thread will be run upon JVM trying to exit
+		Runtime.getRuntime().addShutdownHook(OnClose.INSTANCE);
 
-			// start loading is done internally in start screen (by button action)
-			startScreen = new StartScreen();
-			scene = new Scene(startScreen);
+		// start loading is done internally in start screen (by button action)
+		startScreen = new StartScreen();
+		scene = new Scene(startScreen);
 
-			// don't lazily load to make applying theme easier
-			searchingScreen = new SearchingScreen();
-			resultsScreen = new ResultsScreen();
+		// don't lazily load to make applying theme easier
+		searchingScreen = new SearchingScreen();
+		resultsScreen = new ResultsScreen();
 
-			stage.setScene(scene);
-			stage.centerOnScreen();
-			stage.toFront();
-			stage.show();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			Platform.exit();
-		}
+		stage.setScene(scene);
+		stage.centerOnScreen();
+		stage.toFront();
+		stage.show();
 	}
 
 }

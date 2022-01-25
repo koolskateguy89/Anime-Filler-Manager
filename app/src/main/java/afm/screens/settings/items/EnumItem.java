@@ -2,6 +2,9 @@ package afm.screens.settings.items;
 
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -20,25 +23,25 @@ public class EnumItem<E extends Enum<?>> extends Item {
 	@Getter
 	final ObjectProperty<E> property = new SimpleObjectProperty<>();
 
-	public EnumItem(Class<E> clazz, Category category, String name) {
+	public EnumItem(@Nonnull Class<E> clazz, @Nonnull Category category, @Nonnull String name) {
 		super(category);
 		this.name = name;
 		this.clazz = clazz;
 		this.type = clazz;
 	}
 
-	public EnumItem(Class<E> clazz, Category category, String name, String description) {
+	public EnumItem(@Nonnull Class<E> clazz, @Nonnull Category category, @Nonnull String name, @Nonnull String description) {
 		this(clazz, category, name);
 		this.description = description;
 	}
 
 	@Override
-	public E getValue() {
+	public @Nullable E getValue() {
 		return property.getValue();
 	}
 
 	@Override
-	public void setValue(Object o) {
+	public void setValue(@Nullable Object o) {
 		if (clazz.isInstance(o)) {
 			property.setValue(clazz.cast(o));
 		} else {
@@ -47,7 +50,7 @@ public class EnumItem<E extends Enum<?>> extends Item {
 	}
 
 	@Override
-	public Optional<ObservableValue<?>> getObservableValue() {
+	public @Nonnull Optional<ObservableValue<?>> getObservableValue() {
 		return Optional.of(property);
 	}
 	

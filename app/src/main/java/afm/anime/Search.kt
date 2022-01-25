@@ -245,47 +245,49 @@ class Search {
     // Scrapes the document, adding all appropriate anime to result
     private fun scrapeDocument(doc: Document) = doc.select(ANIME_ELEMS).forEach {
         // note: return@forEach == continue
-        builder.reset()
+        with(builder) {
+            reset()
 
-        val (name, id) = NameAndId.extractFrom(it)
-        if (removeBecauseName(name)) return@forEach
-        builder.setName(name)
-            .setId(id)
+            val (name, id) = NameAndId.extractFrom(it)
+            if (removeBecauseName(name)) return@forEach
+            setName(name)
+            setId(id)
 
-        val synopsis: String = Synopsis.extractFrom(it)
-        builder.setSynopsis(synopsis)
+            val synopsis: String = Synopsis.extractFrom(it)
+            setSynopsis(synopsis)
 
-        val studios: Set<String> = Synopsis.Studios.extractFrom(it)
-        if (removeBecauseStudio(studios)) return@forEach
-        builder.setStudios(studios)
+            val studios: Set<String> = Synopsis.Studios.extractFrom(it)
+            if (removeBecauseStudio(studios)) return@forEach
+            setStudios(studios)
 
-        val genres = EnumSet.noneOf(Genre::class.java)
-        genres.addAll(Genres.extractFrom(it))
-        genres.addAll(Synopsis.ThemesAndDemographics.extractFrom(it))
-        if (removeBecauseGenres(genres)) return@forEach
-        builder.setGenres(genres)
+            val genres = EnumSet.noneOf(Genre::class.java)
+            genres.addAll(Genres.extractFrom(it))
+            genres.addAll(Synopsis.ThemesAndDemographics.extractFrom(it))
+            if (removeBecauseGenres(genres)) return@forEach
+            setGenres(genres)
 
-        val (type, startYear, status, eps, epLength) = Infos.extractFrom(it)
+            val (type, startYear, status, eps, epLength) = Infos.extractFrom(it)
 
-        if (removeBecauseAnimeType(type)) return@forEach
-        builder.setAnimeType(type)
+            if (removeBecauseAnimeType(type)) return@forEach
+            setAnimeType(type)
 
-        if (removeBecauseStartYear(startYear)) return@forEach
-        builder.setStartYear(startYear)
+            if (removeBecauseStartYear(startYear)) return@forEach
+            setStartYear(startYear)
 
-        if (removeBecauseStatus(status)) return@forEach
-        builder.setStatus(status)
+            if (removeBecauseStatus(status)) return@forEach
+            setStatus(status)
 
-        if (removeBecauseMinEps(eps)) return@forEach
-        builder.setEpisodes(eps)
+            if (removeBecauseMinEps(eps)) return@forEach
+            setEpisodes(eps)
 
-        builder.setEpisodeLength(epLength)
+            setEpisodeLength(epLength)
 
-        val imgUrl: String = ImageUrl.extractFrom(it)
-        builder.setImageURL(imgUrl)
+            val imgUrl: String = ImageUrl.extractFrom(it)
+            setImageURL(imgUrl)
 
-        result.add(builder.build())
-        builder.reset()
+            result.add(build())
+            reset()
+        }
     }
 
     /* (contains)

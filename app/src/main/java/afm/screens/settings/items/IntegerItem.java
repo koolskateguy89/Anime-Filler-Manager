@@ -2,6 +2,9 @@ package afm.screens.settings.items;
 
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
@@ -18,23 +21,23 @@ public class IntegerItem extends Item {
 	@Getter
 	final IntegerProperty property = new SimpleIntegerProperty();
 
-	public IntegerItem(Category category, String name) {
+	public IntegerItem(@Nonnull Category category, @Nonnull String name) {
 		super(category);
 		this.name = name;
 	}
 
-	public IntegerItem(Category category, String name, String description) {
+	public IntegerItem(@Nonnull Category category, @Nonnull String name, @Nonnull String description) {
 		this(category, name);
 		this.description = description;
 	}
 
 	@Override
-	public Integer getValue() {
+	public @Nonnull Integer getValue() {
 		return property.getValue();
 	}
 
 	@Override
-	public void setValue(Object o) {
+	public void setValue(@Nullable Object o) {
 		if (o instanceof Integer) {
 			property.setValue((Integer) o);
 		} else if (o instanceof Number) {
@@ -45,7 +48,7 @@ public class IntegerItem extends Item {
 	}
 
 	@Override
-	public Optional<ObservableValue<?>> getObservableValue() {
+	public @Nonnull Optional<ObservableValue<?>> getObservableValue() {
 		return Optional.of(property);
 	}
 

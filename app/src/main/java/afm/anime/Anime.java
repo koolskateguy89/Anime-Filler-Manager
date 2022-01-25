@@ -17,6 +17,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import javafx.beans.property.Property;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -33,6 +36,8 @@ import afm.screens.Menu;
 import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
 import afm.screens.infowindows.ToWatchInfoWindow;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /*
  * Saving into database:
@@ -66,11 +71,13 @@ public final class Anime {
 		SORT_BY_NAME_DESC = SORT_BY_NAME.reversed();
 	}
 
+	@Nonnull
 	public static AnimeBuilder builder() {
 		return new AnimeBuilder("");
 	}
 
-	public static AnimeBuilder builder(String name) {
+	@Nonnull
+	public static AnimeBuilder builder(@Nonnull String name) {
 		return new AnimeBuilder(name);
 	}
 
@@ -290,13 +297,13 @@ public final class Anime {
 	}
 
 	@Override
-	public String toString() {
+	public @Nonnull String toString() {
 		return name + ( (studio == null || studio.equals("-"))? "" : ("  studio = "+studio) ) +
 					  ( (episodes == Anime.NOT_FINISHED || episodes == 0)? "" : "  episode(s) = "+episodes );
 	}
 
 	// Set up a PreparedStatement to be ready to write this anime into database
-	public void prepareStatement(PreparedStatement ps) throws SQLException {
+	public void prepareStatement(@Nonnull PreparedStatement ps) throws SQLException {
 		ps.setString(1, this.name.replace(";", ""));
 
 		//ps.setBytes(2, Utils.serialize(this.genres));
@@ -329,11 +336,11 @@ public final class Anime {
 	}
 
 	// defensively copy
-	public EnumSet<Genre> getGenres() {
+	public @Nonnull EnumSet<Genre> getGenres() {
 		return EnumSet.copyOf(genres);
 	}
 
-	public Image getImage() {
+	public @Nonnull  Image getImage() {
 		if (imageURL != null && image == null)
 			image = new Image(imageURL);
 
@@ -341,7 +348,7 @@ public final class Anime {
 	}
 
 	// taking filler into account
-	public String getNextEpisode() {
+	public @Nonnull String getNextEpisode() {
 		int nextEp = currEp + 1;
 
 		for (Filler filler : fillers) {
@@ -362,7 +369,7 @@ public final class Anime {
 		return (nextEp > episodes && episodes != Anime.NOT_FINISHED) ? "-" : Integer.toString(nextEp);
 	}
 
-	public String getURL() {
+	public @Nullable String getURL() {
 		return (custom || id == null) ? null : "https://myanimelist.net/anime/" + id;
 	}
 
@@ -463,17 +470,17 @@ public final class Anime {
 	}
 
 	// basically return infoBtn
-	public Property<Button> infoBtnProperty() {
+	public @Nonnull Property<Button> infoBtnProperty() {
 		return makeButtonProperty("InfoBtnProperty", infoBtn);
 	}
 
 	// basically return myListBtn
-	public Property<Button> myListBtnProperty() {
+	public @Nonnull Property<Button> myListBtnProperty() {
 		return makeButtonProperty("MyListBtnProperty", myListBtn);
 	}
 
 	// basically return toWatchBtn
-	public Property<Button> toWatchBtnProperty() {
+	public @Nonnull Property<Button> toWatchBtnProperty() {
 		return makeButtonProperty("ToWatchBtnProperty", toWatchBtn);
 	}
 
@@ -504,15 +511,15 @@ public final class Anime {
 		});
 	}
 
-	public Property<Button> myListInfoProperty() {
+	public @Nonnull Property<Button> myListInfoProperty() {
 		return makeButtonProperty("MyListInfoBtnProperty", myListInfoBtn);
 	}
 
-	public Property<Button> myListRemoveProperty() {
+	public @Nonnull Property<Button> myListRemoveProperty() {
 		return makeButtonProperty("MyListRemoveBtnProperty", myListRemoveBtn);
 	}
 
-	public Property<Button> moveToToWatchProperty() {
+	public @Nonnull Property<Button> moveToToWatchProperty() {
 		return makeButtonProperty("MoveToToWatchBtnProperty", moveToToWatchBtn);
 	}
 
@@ -543,15 +550,15 @@ public final class Anime {
 		});
 	}
 
-	public Property<Button> toWatchInfoProperty() {
+	public @Nonnull Property<Button> toWatchInfoProperty() {
 		return makeButtonProperty("ToWatchInfoBtnProperty", toWatchInfoBtn);
 	}
 
-	public Property<Button> toWatchRemoveProperty() {
+	public @Nonnull Property<Button> toWatchRemoveProperty() {
 		return makeButtonProperty("ToWatchRemoveBtnProperty", toWatchRemoveBtn);
 	}
 
-	public Property<Button> moveToMyListProperty() {
+	public @Nonnull Property<Button> moveToMyListProperty() {
 		return makeButtonProperty("MoveToMyListBtnProperty", moveToMyListBtn);
 	}
 }

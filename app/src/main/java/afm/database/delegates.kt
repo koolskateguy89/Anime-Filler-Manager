@@ -82,7 +82,7 @@ private class Delegate(private val refreshTable: Runnable) : Funcs {
 
     override fun clear() = runTime.clear()
 
-    override fun values(): Set<Anime> = runTime
+    override fun values(): ObservableSet<Anime> = runTime
 
     override fun getAdded(): Set<Anime> = added
 

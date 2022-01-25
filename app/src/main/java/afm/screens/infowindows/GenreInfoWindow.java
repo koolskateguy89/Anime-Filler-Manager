@@ -3,6 +3,8 @@ package afm.screens.infowindows;
 import java.io.IOException;
 import java.util.EnumMap;
 
+import javax.annotation.Nonnull;
+
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -212,7 +214,7 @@ public class GenreInfoWindow extends InfoWindow {
 		genreDefMap = Maps.immutableEnumMap(tempMap);
 	}
 
-	public static void open(Button infoBtn) {
+	public static void open(@Nonnull Button infoBtn) {
 		Utils.setStyleClass(infoBtn, Menu.SELECTED);
 
 		try {

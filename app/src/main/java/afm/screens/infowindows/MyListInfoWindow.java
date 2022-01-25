@@ -5,6 +5,8 @@ import static afm.database.DelegatesKt.ToWatchKt;
 
 import java.io.IOException;
 
+import javax.annotation.Nonnull;
+
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,7 +21,7 @@ import afm.common.utils.Utils;
 // Refreshing of MyList table is done in MyListKt.add(Anime)
 public class MyListInfoWindow extends InfoWindow {
 
-	public static void open(Anime a, Button infoBtn) {
+	public static void open(@Nonnull Anime a, @Nonnull Button infoBtn) {
 		try {
 			new MyListInfoWindow(a, infoBtn).show();
 		} catch (IOException e) {

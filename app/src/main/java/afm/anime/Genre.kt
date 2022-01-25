@@ -8,7 +8,8 @@ enum class GenreType {
 
 enum class Genre(val id: Int,
                  val type: GenreType = GenreType.NORMAL,
-                 @get:JvmName("isExplicit") val explicit: Boolean = false) {
+                 @get:JvmName("isExplicit") val explicit: Boolean = false,
+) {
     //<editor-fold desc="Genres">
     Action(1),
     Adventure(2),
@@ -64,18 +65,20 @@ enum class Genre(val id: Int,
     companion object {
         private val ID_MAP = values().associateBy { it.id }
 
-        fun parseGenreFromToString(toString: String?): Genre? =
-            if (toString == null) null else values().firstOrNull {
+        fun parseGenreFromToString(toString: String?): Genre? = toString?.let {
+            values().firstOrNull { genre ->
                 // ignore case for safety
-                toString.equals(it.toString(), ignoreCase = true)
+                toString.equals(genre.toString(), ignoreCase = true)
             }
+        }
 
         @JvmStatic
-        fun valueOfFromName(name: String?): Genre? =
-            if (name == null) null else values().firstOrNull {
+        fun valueOfFromName(name: String?): Genre? = name?.let {
+            values().firstOrNull { genre ->
                 // ignore case for safety
-                name.equals(it.name, ignoreCase = true)
+                name.equals(genre.name, ignoreCase = true)
             }
+        }
 
         @JvmStatic
         fun valueOfFromId(id: Int): Genre = ID_MAP.getValue(id)

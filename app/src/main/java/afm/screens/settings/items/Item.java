@@ -1,5 +1,7 @@
 package afm.screens.settings.items;
 
+import javax.annotation.Nonnull;
+
 import org.controlsfx.control.PropertySheet;
 
 import lombok.Getter;
@@ -15,7 +17,7 @@ public abstract class Item implements PropertySheet.Item {
 
 	protected String category;
 
-	protected Item(Category category) {
+	protected Item(@Nonnull Category category) {
 		this.category = category.toString();
 	}
 

@@ -1,5 +1,8 @@
 package afm.anime;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import afm.common.utils.Utils;
 
 // shouldn't use Record as doesn't provide private constructor
@@ -8,7 +11,7 @@ import afm.common.utils.Utils;
 public record Season(String szn, int year) implements Comparable<Season> {
 
 	@Override
-	public String toString() {
+	public @Nonnull String toString() {
 		if (this.equals(UNDEF))
 			return "-";
 
@@ -16,7 +19,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 	}
 
 	@Override
-	public int compareTo(Season other) {
+	public int compareTo(@Nonnull Season other) {
 		return (this.year != other.year) ? this.year - other.year : this.getSeasonInt() - other.getSeasonInt();
 	}
 
@@ -57,7 +60,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 	private static Season[] values;
 
 	// not used atm >:(
-	public static Season[] values() {
+	public static @Nonnull Season[] values() {
 		if (values != null)
 			return values;
 
@@ -78,7 +81,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 	}
 
 	// return the String for a season given its int
-	private static String getSeasonFromInt(int num) {
+	private static @Nonnull String getSeasonFromInt(int num) {
 		return switch (num) {
 			case SPRING -> "Spring";
 			case SUMMER -> "Summer";
@@ -88,7 +91,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 	}
 
 	// returns a Season given its toString() output as input
-	public static Season getSeasonFromToString(String str) {
+	public static @Nullable Season getSeasonFromToString(@Nullable String str) {
 		if (str == null)
 			return null;
 
@@ -101,7 +104,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 	}
 
 	// helper for sorting and parsing
-	private static int getSeasonInt(String season) {
+	private static int getSeasonInt(@Nonnull String season) {
 		return switch (season) {
 			case "Spring" -> SPRING;
 			case "Summer" -> SUMMER;
@@ -112,7 +115,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 
 	// returns a Season given the season(String e.g. Winter) and year
 	// used in search & custom screen
-	public static Season getSeason(String season, int year) {
+	public static @Nonnull Season getSeason(@Nonnull String season, int year) {
 		try {
 			return seasons[year % 100][getSeasonInt(season)];
 		} catch (IndexOutOfBoundsException e) {
@@ -120,7 +123,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 		}
 	}
 
-	public static Season getSeason(int szn, int year) {
+	public static @Nonnull Season getSeason(int szn, int year) {
 		try {
 			return seasons[year % 100][szn];
 		} catch (IndexOutOfBoundsException e) {
@@ -128,7 +131,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 		}
 	}
 
-	public static Season[] getAllSeasonsFromYear(int year) {
+	public static @Nonnull Season[] getAllSeasonsFromYear(int year) {
 		Season[] result = new Season[4];
 		int i = 0;
 		for (Season s : seasons[year % 100]) {
@@ -141,7 +144,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 	 * Helper for parsing web scraped data, see {@link #parseSeasonFromMALDate(String)
 	 * parseSeasonFromMALDate} below
 	 */
-	private static int getSznFromMonth(String month) {
+	private static int getSznFromMonth(@Nonnull String month) {
 		return switch (month) {
 			case "Dec", "Jan", "Feb" -> WINTER;
 			case "Mar", "Apr", "May" -> SPRING;
@@ -150,7 +153,7 @@ public record Season(String szn, int year) implements Comparable<Season> {
 		};
 	}
 
-	public static Season parseSeasonFromMALDate(String date) {
+	public static @Nonnull Season parseSeasonFromMALDate(@Nonnull String date) {
 		if (date.contains("?"))
 			return UNDEF;
 

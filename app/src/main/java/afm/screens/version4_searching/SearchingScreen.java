@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import javax.annotation.Nonnull;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -49,7 +51,7 @@ public class SearchingScreen extends Pane {
 
 	// change search
 	// called on JavaFX Application Thread
-	public void setSearch(Search s) {
+	public void setSearch(@Nonnull Search s) {
 		results.clear();
 		search = s;
 	}
