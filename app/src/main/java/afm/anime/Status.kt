@@ -4,6 +4,7 @@ enum class Status {
     FINISHED,
     AIRING,
     NOT_YET_AIRED,
+    UNKNOWN,
     ;
 
     override fun toString(): String =

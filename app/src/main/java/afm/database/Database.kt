@@ -74,7 +74,7 @@ private val COLUMN_MAP = NonNullMap(
  *
  * Also adding anime in batches + using PreparedStatements to further increase performance.
  */
-object MyDatabase {
+object Database {
 
     private val logger = getLogger()
 
@@ -467,13 +467,10 @@ object MyDatabase {
 
 // TODO: move MyListKt and ToWatchKt to here?
 // or embed them inside Database and instead of loading the db into a data struct
-// then rename interface Funcs to Database?
-// then rename object Database to ???
-// or if embed then e.g. Database.MyList.add(...) etc.
 
 const val DRIVER = "org.sqlite.JDBC"
 
-object ExposedDatabase {
+object DatabaseNew {
 
     private val logger = getLogger()
 
@@ -540,10 +537,8 @@ object ExposedDatabase {
         }
     }
 
-    val db: Database = run {
-        Database.connect(DB_URL, DRIVER)
-            .also { TransactionManager.defaultDatabase = it }
-    }
+    val db: Database = Database.connect(DB_URL, DRIVER)
+        .also { TransactionManager.defaultDatabase = it }
 
     @JvmStatic
     fun init(task: LoadTask, start: Double, end: Double) {
@@ -579,21 +574,33 @@ object ExposedDatabase {
         val diff: Double = end - start
         val step = diff / 2
 
-        MyListTable.selectAllAnime().forEach { MyListKt.addSilent(it) }
-        task.incrementProgress(step)
-        ToWatchTable.selectAllAnime().forEach { ToWatchKt.addSilent(it) }
-        task.incrementProgress(step)
+        transaction {
+            MyListTable.selectAllAnime().forEach { MyListKt.addSilent(it) }
+            task.incrementProgress(step)
+            ToWatchTable.selectAllAnime().forEach { ToWatchKt.addSilent(it) }
+            task.incrementProgress(step)
+        }
     }
 
     @JvmStatic
     fun saveAll() {
+        transaction {
+            val mlRemoved = MyListKt.getRemovedNames()
+            //MyListTable.deleteWhere { MyListTable.id inList mlRemoved }
+            MyListTable.deleteAnimeWithNames(mlRemoved)
 
+            val twRemoved = ToWatchKt.getRemovedNames()
+            //ToWatchTable.deleteWhere { ToWatchTable.id inList twRemoved }
+            ToWatchTable.deleteAnimeWithNames(twRemoved)
+
+            // TODO: added anime
+        }
     }
 
 }
 
 fun main() {
-    ExposedDatabase.db
+    //ExposedDatabase.db
     transaction {
         SchemaUtils.createMissingTablesAndColumns(
             MyListTable,
@@ -604,9 +611,7 @@ fun main() {
     }
 }
 
-// maybe Table(name = "mylist")
-// im not sure if this will work cos i think
-// I need to use upsert to insert stuff
+// TODO I need to use upsert to insert stuff
 
 sealed class AnimeTable(name: String) : IdTable<String>(name) {
     // id === name
@@ -642,22 +647,11 @@ object ToWatchTable : AnimeTable("towatch") {
     override val entityClass = ToWatchEntity
 }
 
-private fun AnimeTable.selectAllAnime(): Set<Anime> {
-    println("All: ${this.tableName}")
-    // entityClass.all()
-    return entityClass.all()
-        .onEach { println(it) }
-        .map { it.toAnime() }
-        .toSet()
+private fun AnimeTable.selectAllAnime(): Set<Anime> = entityClass.all()
+    //.onEach { println(it) }
+    .map { it.toAnime() }
+    .toSet()
 
-    //return setOf()
+private fun AnimeTable.deleteAnimeWithNames(names: Iterable<String>) {
+    deleteWhere { this@deleteAnimeWithNames.id inList names }
 }
-
-//private fun
-
-private fun AnimeTable.removeAnime(animeName: String) {
-    // deleteWhere(1) { name eq animeName }
-    deleteWhere(1) { id eq animeName }
-}
-
-
