@@ -36,8 +36,6 @@ import afm.screens.Menu;
 import afm.screens.infowindows.MyListInfoWindow;
 import afm.screens.infowindows.ResultInfoWindow;
 import afm.screens.infowindows.ToWatchInfoWindow;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 /*
  * Saving into database:
@@ -96,15 +94,16 @@ public final class Anime {
 		private final EnumSet<Genre> genres = EnumSet.noneOf(Genre.class);
 		private String imageURL;
 
-		private TreeSet<Filler> fillers = new TreeSet<>();
+		private final TreeSet<Filler> fillers = new TreeSet<>();
 
 		private AnimeType type = AnimeType.UNKNOWN;
-		private Integer startYear;
+		private int startYear = 0;
 		private Status status;
+
 		private int episodes = Anime.NOT_FINISHED;
+		private int currEp = 0;
 		private EpisodeLength episodeLength;
 
-		private int currEp = 0;
 		private boolean custom = false;
 
 		// TODO: remove once db is sorted out
@@ -127,7 +126,7 @@ public final class Anime {
 			fillers.clear();
 
 			type = AnimeType.UNKNOWN;
-			startYear = null;
+			startYear = 0;
 			status = null;
 			episodes = Anime.NOT_FINISHED;
 			episodeLength = null;
@@ -136,28 +135,28 @@ public final class Anime {
 			custom = false;
 		}
 
-		public AnimeBuilder setName(String name) {
+		public AnimeBuilder setName(@Nonnull String name) {
 			this.name = requireNonNull(name);
 			return this;
 		}
 
-		public AnimeBuilder setId(int id) {
+		public AnimeBuilder setId(@Nullable Integer id) {
 			this.id = id;
 			return this;
 		}
 
-		public AnimeBuilder setSynopsis(String synopsis) {
+		public AnimeBuilder setSynopsis(@Nonnull String synopsis) {
 			this.info = synopsis;
 			return this;
 		}
 
-		public AnimeBuilder setStudios(Collection<String> studios) {
+		public AnimeBuilder setStudios(@Nonnull Collection<String> studios) {
 			this.studios.clear();
 			this.studios.addAll(studios);
 			return this;
 		}
 
-		public AnimeBuilder setGenres(Collection<Genre> genres) {
+		public AnimeBuilder setGenres(@Nonnull Collection<Genre> genres) {
 			if (genres.isEmpty())
 				throw new IllegalArgumentException("Genres cannot be empty");
 
@@ -166,46 +165,51 @@ public final class Anime {
 			return this;
 		}
 
-		public AnimeBuilder addGenre(Genre genre) {
+		public AnimeBuilder addGenre(@Nonnull Genre genre) {
 			this.genres.add(genre);
 			return this;
 		}
 
-		public AnimeBuilder setImageURL(String url) {
+		public AnimeBuilder setImageURL(@Nullable String url) {
 			imageURL = url;
 			return this;
 		}
 
-		public AnimeBuilder addFiller(Filler filler) {
+		public AnimeBuilder addFiller(@Nonnull Filler filler) {
 			fillers.add(filler);
 			return this;
 		}
 
-		public AnimeBuilder addFillerAsString(String s) {
+		public AnimeBuilder addFillers(@Nonnull Collection<Filler> fillers) {
+			this.fillers.addAll(fillers);
+			return this;
+		}
+
+		public AnimeBuilder addFillerAsString(@Nonnull String s) {
 			return addFiller(Filler.valueOf(s));
 		}
 
-		public AnimeBuilder setAnimeType(AnimeType type) {
+		public AnimeBuilder setAnimeType(@Nonnull AnimeType type) {
 			this.type = type;
 			return this;
 		}
 
-		public AnimeBuilder setStartYear(Integer startYear) {
+		public AnimeBuilder setStartYear(int startYear) {
 			this.startYear = startYear;
 			return this;
 		}
 
-		public AnimeBuilder setStatus(Status status) {
+		public AnimeBuilder setStatus(@Nonnull Status status) {
 			this.status = status;
 			return this;
 		}
 
-		public AnimeBuilder setEpisodes(Integer episodes) {
+		public AnimeBuilder setEpisodes(@Nullable Integer episodes) {
 			this.episodes = episodes != null ? episodes : Anime.NOT_FINISHED;
 			return this;
 		}
 
-		public AnimeBuilder setEpisodeLength(EpisodeLength episodeLength) {
+		public AnimeBuilder setEpisodeLength(@Nonnull EpisodeLength episodeLength) {
 			this.episodeLength = episodeLength;
 			return this;
 		}
@@ -240,13 +244,13 @@ public final class Anime {
 
 	@Getter private TreeSet<Filler> fillers = new TreeSet<>();
 	@Getter private final AnimeType type;
-	@Getter private final Integer startYear;
-	@Getter private Status status;
-	@Getter private int episodes;
-	@Getter private final EpisodeLength episodeLength;
+	@Getter private final int startYear;
+	@Getter private final Status status;
 
+	@Getter private final int episodes;
 	@Getter private int currEp;
 	private final Range<Integer> episodeRange;
+	@Getter private final EpisodeLength episodeLength;
 
 	@Getter private final boolean custom;
 
@@ -270,11 +274,11 @@ public final class Anime {
 		type = builder.type;
 		startYear = builder.startYear;
 		status = builder.status;
-		episodes = builder.episodes;
-		episodeLength = builder.episodeLength;
 
+		episodes = builder.episodes;
 		currEp = builder.currEp;
 		episodeRange = (episodes == NOT_FINISHED) ? Range.atLeast(0) : Range.closed(0, episodes);
+		episodeLength = builder.episodeLength;
 
 		custom = builder.custom;
 
@@ -306,7 +310,6 @@ public final class Anime {
 	public void prepareStatement(@Nonnull PreparedStatement ps) throws SQLException {
 		ps.setString(1, this.name.replace(";", ""));
 
-		//ps.setBytes(2, Utils.serialize(this.genres));
 		ps.setString(2, this.genreString);
 
 		if (this.id != null)
@@ -340,7 +343,7 @@ public final class Anime {
 		return EnumSet.copyOf(genres);
 	}
 
-	public @Nonnull  Image getImage() {
+	public @Nullable Image getImage() {
 		if (imageURL != null && image == null)
 			image = new Image(imageURL);
 

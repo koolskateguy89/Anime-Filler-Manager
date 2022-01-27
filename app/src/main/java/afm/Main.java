@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,7 +19,6 @@ import javafx.stage.Stage;
 
 import afm.anime.Anime;
 import afm.anime.Search;
-import afm.common.OnClose;
 import afm.common.utils.Utils;
 import afm.screens.Menu;
 import afm.screens.infowindows.InfoWindow;

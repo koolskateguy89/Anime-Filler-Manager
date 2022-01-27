@@ -63,10 +63,11 @@ enum class Genre(val id: Int,
             if (explicit) " (18+)" else ""
 
     companion object {
-        private val ID_MAP = values().associateBy { it.id }
+        val values: Array<Genre> = values()
+        private val ID_MAP = values.associateBy { it.id }
 
         fun parseGenreFromToString(toString: String?): Genre? = toString?.let {
-            values().firstOrNull { genre ->
+            values.firstOrNull { genre ->
                 // ignore case for safety
                 toString.equals(genre.toString(), ignoreCase = true)
             }
@@ -74,7 +75,7 @@ enum class Genre(val id: Int,
 
         @JvmStatic
         fun valueOfFromName(name: String?): Genre? = name?.let {
-            values().firstOrNull { genre ->
+            values.firstOrNull { genre ->
                 // ignore case for safety
                 name.equals(genre.name, ignoreCase = true)
             }
@@ -84,6 +85,6 @@ enum class Genre(val id: Int,
         fun valueOfFromId(id: Int): Genre = ID_MAP.getValue(id)
 
         @JvmStatic
-        fun valuesOfType(type: GenreType): List<Genre> = values().filter { it.type == type }
+        fun valuesOfType(type: GenreType): List<Genre> = values.filter { it.type == type }
     }
 }
