@@ -2,9 +2,12 @@ package afm.database
 
 import afm.Main
 import afm.anime.Anime
+import afm.anime.AnimeType
 import afm.anime.Genre
 import afm.anime.Season
+import afm.anime.Status
 import afm.common.utils.NonNullMap
+import afm.common.utils.emptyEnumSet
 import afm.common.utils.inJar
 import afm.common.utils.isFirstRun
 import afm.common.utils.wrapAlertText
@@ -13,6 +16,17 @@ import afm.user.Settings
 import javafx.application.Platform
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
+import org.jetbrains.exposed.dao.EntityClass
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.IdTable
+import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.sql.deleteAll
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.kxtra.slf4j.getLogger
 import org.sqlite.SQLiteDataSource
 import java.nio.file.Files
@@ -20,7 +34,7 @@ import java.nio.file.Path
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
-import java.util.EnumSet
+
 
 private val COLUMN_MAP = NonNullMap(
     mapOf(
@@ -37,7 +51,6 @@ private val COLUMN_MAP = NonNullMap(
         "fillers" to 11
     )
 )
-
 
 /*
  * I was initially using Serialization (EnumSet is Serializable) to store
@@ -61,7 +74,7 @@ private val COLUMN_MAP = NonNullMap(
  *
  * Also adding anime in batches + using PreparedStatements to further increase performance.
  */
-object Database {
+object MyDatabase {
 
     private val logger = getLogger()
 
@@ -82,8 +95,8 @@ object Database {
     )
 
     private val DB_URL: String = run {
-        fun mayBeValidDatabase(url: String?): Boolean {
-            if (url.isNullOrEmpty())
+        fun mayBeValidDatabase(url: String): Boolean {
+            if (url.isEmpty())
                 return false
 
             val exists: Boolean = Files.exists(Path.of(url))
@@ -109,7 +122,7 @@ object Database {
             return exists
         }
 
-        val url: String? = Settings.getSelectedDatabase()
+        val url: String = Settings.getSelectedDatabase()
 
         // fallback on internal database if provided url is definitely not valid
         if (url == "Internal" || !mayBeValidDatabase(url)) {
@@ -126,6 +139,10 @@ object Database {
         } else {
             "jdbc:sqlite:$url"
         }
+    }
+
+    private val ds = SQLiteDataSource().apply {
+        url = DB_URL
     }
 
     private const val MYLIST_INSERT_QUERY = """
@@ -152,10 +169,6 @@ object Database {
 
         MyListKt.init()
         ToWatchKt.init()
-    }
-
-    private val ds = SQLiteDataSource().apply {
-        url = DB_URL
     }
 
     // https://stackoverflow.com/a/1604121
@@ -244,22 +257,22 @@ object Database {
 
     private fun loadAll(task: LoadTask, start: Double, end: Double) {
         ds.connection.use { con ->
-            con.createStatement().use {
-                it.queryTimeout = 30
+            con.createStatement().use { stmnt ->
+                stmnt.queryTimeout = 30
 
                 val halfDiff = (end - start) / 2
 
                 runCatching {
-                    loadMyList(it, task, start, end - halfDiff)
-                }.recover {
-                    logger.error("Loading MyList failed", it)
+                    loadMyList(stmnt, task, start, end - halfDiff)
+                }.recover { e ->
+                    logger.error("Loading MyList failed", e)
                 }
                 kotlin.runCatching {  }.
                 // still load ToWatch if there is an error loading MyList
                 runCatching {
-                    loadToWatch(it, task, start + halfDiff, end)
-                }.recover {
-                    logger.error("Loading ToWatch failed", it)
+                    loadToWatch(stmnt, task, start + halfDiff, end)
+                }.recover { e ->
+                    logger.error("Loading ToWatch failed", e)
                 }
 
                 //e?.also { it.printStackTrace() }?.nextException?.printStackTrace()
@@ -316,14 +329,14 @@ object Database {
 
             runCatching {
                 saveMyList(it)
-            }.recover {
-                logger.error("Failed saving MyList", it)
+            }.recover { e ->
+                logger.error("Failed saving MyList", e)
             }
             // try to save ToWatch even if saving MyList fails
             runCatching {
                 saveToWatch(it)
-            }.recover {
-                logger.error("Failed saving ToWatch", it)
+            }.recover { e ->
+                logger.error("Failed saving ToWatch", e)
             }
 
             it.commit()
@@ -410,7 +423,7 @@ object Database {
     private fun loadAnimeFromResultSet(rs: ResultSet): Anime {
         val builder = Anime.builder()
 
-        rs.run {
+        with(rs) {
             builder.setName(getString(COLUMN_MAP["name"]))
                    .setId(getInt(COLUMN_MAP["id"]))
                    .setSynopsis(getString(COLUMN_MAP["info"]))
@@ -418,28 +431,27 @@ object Database {
                    .setImageURL(getString(COLUMN_MAP["imageURL"]))
 
             // TODO: AnimeType, Status
-            val season: Season? = Season.getSeasonFromToString(
+            Season.getSeasonFromToString(
                 getString(COLUMN_MAP["seasonString"])
-            )
+            )?.let { season -> builder.setStartYear(season.year) }
             //builder.setSeason(season)
-            builder.setStartYear(season?.year)
 
             builder.setCurrEp(getInt(COLUMN_MAP["currEp"]))
                    .setEpisodes(getInt(COLUMN_MAP["totalEps"]))
-
-                   .setCustom(getBoolean(COLUMN_MAP["custom"]))
             // TODO: episodeLength
+                   .setCustom(getBoolean(COLUMN_MAP["custom"]))
 
-            val genreString = getString(COLUMN_MAP["genres"])
-            val genreSet = genreString.split(", ")
-                .mapTo(EnumSet.noneOf(Genre::class.java), Genre::parseGenreFromToString)
+            getString(COLUMN_MAP["genres"]).let { genreString ->
+                builder.setGenres(
+                    genreString.split(", ")
+                        .mapTo(emptyEnumSet<Genre>(), Genre::parseGenreFromToString)
+                )
+            }
 
-            builder.setGenres(genreSet)
-
-            val fillerString = rs.getString(COLUMN_MAP["fillers"])
-            if (!fillerString.isNullOrEmpty())
-                for (f in fillerString.split(", "))
-                    builder.addFillerAsString(f)
+            getString(COLUMN_MAP["fillers"])?.let { fillerString ->
+                if (fillerString.isNotEmpty())
+                    fillerString.split(", ").forEach(builder::addFillerAsString)
+            }
         }
 
         return builder.build()
@@ -454,8 +466,198 @@ object Database {
 }
 
 // TODO: move MyListKt and ToWatchKt to here?
-// or embed them inside Database and instead of loading the db into a data struct, query it
-// every time? (mongoDB)
+// or embed them inside Database and instead of loading the db into a data struct
 // then rename interface Funcs to Database?
 // then rename object Database to ???
 // or if embed then e.g. Database.MyList.add(...) etc.
+
+const val DRIVER = "org.sqlite.JDBC"
+
+object ExposedDatabase {
+
+    private val logger = getLogger()
+
+    // From SQLiteStudio
+    @JvmStatic
+    val fileExtensions = arrayOf(
+        "*.db",
+        "*.db2",
+        "*.db3",
+        "*.sdb",
+        "*.s2db",
+        "*.s3db",
+        "*.sqlite",
+        "*.sqlite2",
+        "*.sqlite3",
+        "*.sl2",
+        "*.sl3",
+    )
+
+    private val DB_URL: String = run {
+        fun mayBeValidDatabase(url: String): Boolean {
+            if (url.isEmpty())
+                return false
+
+            val exists: Boolean = Files.exists(Path.of(url))
+
+            if (!exists) {
+                logger.warn("Database file does not exist. Falling back on internal")
+                Settings.selectedDatabaseProperty.value = "Internal"
+
+                Platform.runLater {
+                    val content = """
+						Database file does not exist/is not a valid file.
+						Falling back on internal database.
+						""".trimIndent()
+
+                    Alert(AlertType.ERROR, content).run {
+                        initOwner(Main.getStage())
+                        wrapAlertText()
+                        showAndWait()
+                    }
+                }
+            }
+
+            return exists
+        }
+
+        val url: String = Settings.getSelectedDatabase()
+
+        // fallback on internal database if provided url is definitely not valid
+        if (url == "Internal" || !mayBeValidDatabase(url)) {
+            if (inJar)
+                "jdbc:sqlite::resource:databases/animeDB.db"
+            else
+            /*
+             * Using `Database.javaClass.getResource("/databases/animeDB.db").toString()`
+             * will give the database in target/classes/..., but if not running in jar
+             * (i.e. through IDE or something), really we want to modify the database in
+             * src/main/resources for persistence as target/ is likely to be deleted.
+             */
+                "jdbc:sqlite:src/main/resources/databases/animeDB.db"
+        } else {
+            "jdbc:sqlite:$url"
+        }
+    }
+
+    val db: Database = run {
+        Database.connect(DB_URL, DRIVER)
+            .also { TransactionManager.defaultDatabase = it }
+    }
+
+    @JvmStatic
+    fun init(task: LoadTask, start: Double, end: Double) {
+        if (inJar && isFirstRun && Settings.getSelectedDatabase() == "Internal")
+            transaction { clearTables() }
+        else
+            loadAll(task, start, end)
+
+        MyListKt.init()
+        ToWatchKt.init()
+    }
+
+    private fun Transaction.clearTables() {
+        MyListTable.deleteAll()
+        ToWatchTable.deleteAll()
+    }
+
+    // if table already exists: clear it, else create new table
+    // current impl. means table won't exist, but I'll keep it like this for now
+    @JvmStatic
+    fun createNew(url: String) {
+        transaction(Database.connect("jdbc:sqlite:$url", DRIVER)) {
+            SchemaUtils.createMissingTablesAndColumns(
+                MyListTable,
+                ToWatchTable,
+                withLogs = false,
+            )
+            clearTables()
+        }
+    }
+
+    private fun loadAll(task: LoadTask, start: Double, end: Double) {
+        val diff: Double = end - start
+        val step = diff / 2
+
+        MyListTable.selectAllAnime().forEach { MyListKt.addSilent(it) }
+        task.incrementProgress(step)
+        ToWatchTable.selectAllAnime().forEach { ToWatchKt.addSilent(it) }
+        task.incrementProgress(step)
+    }
+
+    @JvmStatic
+    fun saveAll() {
+
+    }
+
+}
+
+fun main() {
+    ExposedDatabase.db
+    transaction {
+        SchemaUtils.createMissingTablesAndColumns(
+            MyListTable,
+            ToWatchTable,
+            withLogs = false,
+        )
+        ToWatchTable.selectAllAnime()
+    }
+}
+
+// maybe Table(name = "mylist")
+// im not sure if this will work cos i think
+// I need to use upsert to insert stuff
+
+sealed class AnimeTable(name: String) : IdTable<String>(name) {
+    // id === name
+    final override val id: Column<EntityID<String>> = varchar("name", 30).entityId()
+    final override val primaryKey = PrimaryKey(this.id)
+
+    val malId = integer("mal_id").nullable().uniqueIndex()
+    val synopsis = text("synopsis").default("")
+    val studios = text("studios").default("[]") // delimited
+    val genres = text("genres").default("[]") // ordinals delimited
+    val imageUrl = text("imageURL").nullable()
+
+    val fillers = text("fillers").default("[]")
+
+    val type = enumeration("type", AnimeType::class).default(AnimeType.UNKNOWN)
+    val startYear = integer("start_year").default(0)
+    val status = enumeration("status", Status::class).default(Status.UNKNOWN)
+
+    val totalEps = integer("total_episodes").default(Anime.NOT_FINISHED)
+    val currEp = integer("current_episode").default(0)
+    val episodeLength = integer("episode_length").default(0)
+
+    val custom = bool("custom").default(false)
+
+    abstract val entityClass: EntityClass<String, out AnimeEntity>
+}
+
+object MyListTable : AnimeTable("mylist") {
+    override val entityClass = MyListEntity
+}
+
+object ToWatchTable : AnimeTable("towatch") {
+    override val entityClass = ToWatchEntity
+}
+
+private fun AnimeTable.selectAllAnime(): Set<Anime> {
+    println("All: ${this.tableName}")
+    // entityClass.all()
+    return entityClass.all()
+        .onEach { println(it) }
+        .map { it.toAnime() }
+        .toSet()
+
+    //return setOf()
+}
+
+//private fun
+
+private fun AnimeTable.removeAnime(animeName: String) {
+    // deleteWhere(1) { name eq animeName }
+    deleteWhere(1) { id eq animeName }
+}
+
+

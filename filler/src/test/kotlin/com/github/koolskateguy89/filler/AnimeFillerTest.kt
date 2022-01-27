@@ -5,6 +5,8 @@ package com.github.koolskateguy89.filler
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContentEquals
 
+// FIXME: mvn test finds these but doesnt run them
+
 internal val emptyIntArray: IntArray = IntArray(0)
 
 internal class NarutoTest {
