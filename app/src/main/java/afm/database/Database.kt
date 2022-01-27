@@ -74,7 +74,7 @@ private val COLUMN_MAP = NonNullMap(
  *
  * Also adding anime in batches + using PreparedStatements to further increase performance.
  */
-object Database {
+object DatabaseOld {
 
     private val logger = getLogger()
 
@@ -470,7 +470,7 @@ object Database {
 
 const val DRIVER = "org.sqlite.JDBC"
 
-object DatabaseNew {
+object Database {
 
     private val logger = getLogger()
 
