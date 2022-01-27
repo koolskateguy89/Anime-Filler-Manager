@@ -94,6 +94,21 @@
 			<artifactId>sqlite-jdbc</artifactId>
 		</dependency>
 
+		<!--<editor-fold desc="Exposed">-->
+		<dependency>
+			<groupId>org.jetbrains.exposed</groupId>
+			<artifactId>exposed-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.exposed</groupId>
+			<artifactId>exposed-dao</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.exposed</groupId>
+			<artifactId>exposed-jdbc</artifactId>
+		</dependency>
+		<!--</editor-fold>-->
+
 	</dependencies>
 
 	<build>

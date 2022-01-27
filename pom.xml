@@ -57,6 +57,7 @@
 		<reactive-jikan.version>1.0.2</reactive-jikan.version>
 		<guava.version>31.0.1-jre</guava.version>
 		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
+		<exposed.version>0.37.3</exposed.version>
 	</properties>
 
 	<repositories>
@@ -78,6 +79,7 @@
 			<!--</editor-fold>-->
 
 			<!-- TODO: Logging with slf4j -->
+			<!--<editor-fold desc="slf4j">-->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
@@ -91,6 +93,7 @@
 				<version>${kxtra.version}</version>
 				<scope>provided</scope>
 			</dependency>
+			<!--</editor-fold>-->
 
 			<!--<editor-fold desc="JavaFX">-->
 			<!-- JavaFX -->
@@ -158,6 +161,24 @@
 				<artifactId>sqlite-jdbc</artifactId>
 				<version>${sqlite-jdbc.version}</version>
 			</dependency>
+
+			<!--<editor-fold desc="Exposed">-->
+			<dependency>
+				<groupId>org.jetbrains.exposed</groupId>
+				<artifactId>exposed-core</artifactId>
+				<version>${exposed.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jetbrains.exposed</groupId>
+				<artifactId>exposed-dao</artifactId>
+				<version>${exposed.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jetbrains.exposed</groupId>
+				<artifactId>exposed-jdbc</artifactId>
+				<version>${exposed.version}</version>
+			</dependency>
+			<!--</editor-fold>-->
 
 		</dependencies>
 	</dependencyManagement>
