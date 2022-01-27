@@ -17,6 +17,7 @@ import javafx.scene.control.ButtonType
 import javafx.scene.control.TableColumn
 import java.net.URL
 import java.util.Calendar
+import java.util.EnumSet
 import java.util.prefs.Preferences
 
 val UtilsJavaClass: Class<*> = object {}.javaClass.enclosingClass
@@ -136,3 +137,7 @@ fun getMoveCol(move: String): TableColumn<Anime, Button> =
 
 fun getRemoveCol(): TableColumn<Anime, Button> =
     generateColumn("Remove", 71.2000732421875)
+
+
+inline fun <reified E : Enum<E>> emptyEnumSet(): EnumSet<E> =
+    EnumSet.noneOf(E::class.java)

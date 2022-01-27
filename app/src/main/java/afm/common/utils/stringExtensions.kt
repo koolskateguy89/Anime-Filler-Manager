@@ -58,3 +58,11 @@ fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
         }
     }
 }
+
+fun String.splitIgnoreEmpty(
+    vararg delimiters: String,
+    ignoreCase: Boolean = false,
+    limit: Int = 0,
+): List<String> =
+    split(*delimiters, ignoreCase = ignoreCase, limit = limit)
+        .filter { it.isNotEmpty() }
