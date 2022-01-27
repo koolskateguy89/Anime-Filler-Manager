@@ -1,6 +1,6 @@
 package afm.screens.version6_myList;
 
-import static afm.database.DelegatesKt.MyListKt;
+import static afm.database.AnimeListKt.MyListKt;
 
 import java.io.IOException;
 

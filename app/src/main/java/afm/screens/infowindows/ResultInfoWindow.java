@@ -1,8 +1,8 @@
 package afm.screens.infowindows;
 
 import static afm.common.utils.Utils.setStyleClass;
-import static afm.database.DelegatesKt.MyListKt;
-import static afm.database.DelegatesKt.ToWatchKt;
+import static afm.database.AnimeListKt.MyListKt;
+import static afm.database.AnimeListKt.ToWatchKt;
 
 import java.io.IOException;
 

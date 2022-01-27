@@ -1,6 +1,6 @@
 package afm.screens.version7_toWatch;
 
-import static afm.database.DelegatesKt.ToWatchKt;
+import static afm.database.AnimeListKt.ToWatchKt;
 
 import java.io.IOException;
 

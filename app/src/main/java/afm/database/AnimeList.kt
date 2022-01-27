@@ -14,7 +14,7 @@ import java.util.TreeSet
 // TODO: rename file to something more descriptive
 
 // TODO: rename this? but what to? "MyListLike", idk?
-sealed interface Funcs {
+sealed interface AnimeList {
     fun init()
     fun addSilent(anime: Anime)
     fun add(anime: Anime)
@@ -25,6 +25,7 @@ sealed interface Funcs {
     fun clear()
     fun values(): Set<Anime>
     fun getAdded(): Set<Anime>
+    fun getRemovedNames(): Set<String>
     fun getRemovedSQL(): String
 }
 
@@ -35,7 +36,7 @@ sealed interface Funcs {
  *    is still maintained as added is always a LinkedHS (insertion order)
  * -Enforce insertion order by using a LinkedHS as the backing set
  */
-private class Delegate(private val refreshTable: Runnable) : Funcs {
+private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
 
     private val runTime: ObservableSet<Anime> = FXCollections.observableSet(
         if (Settings.get(Settings.Key.NAME_ORDER))
@@ -50,7 +51,7 @@ private class Delegate(private val refreshTable: Runnable) : Funcs {
     private val removed: MutableSet<String> = HashSet()
 
     override fun init() {
-        runTime.addListener(SetChangeListener { refreshTable.run() })
+        runTime.addListener(SetChangeListener { refreshTable() })
     }
 
     /* add anime to runTime without adding to {added}.
@@ -86,6 +87,8 @@ private class Delegate(private val refreshTable: Runnable) : Funcs {
 
     override fun getAdded(): Set<Anime> = added
 
+    override fun getRemovedNames(): Set<String> = removed
+
     override fun getRemovedSQL(): String {
         return removed
             .map { "'${it.replace("'", "''")}'" } // escape quotes in SQL
@@ -95,11 +98,11 @@ private class Delegate(private val refreshTable: Runnable) : Funcs {
 
 
 @JvmField
-val MyListKt: Funcs = Delegate(
+val MyListKt: AnimeList = AnimeListImpl(
     Main.getInstance().myListScreen::refreshTable
 )
 
 @JvmField
-val ToWatchKt: Funcs = Delegate(
+val ToWatchKt: AnimeList = AnimeListImpl(
     Main.getInstance().toWatchScreen::refreshTable
 )

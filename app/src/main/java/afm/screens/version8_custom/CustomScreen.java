@@ -1,7 +1,7 @@
 package afm.screens.version8_custom;
 
-import static afm.database.DelegatesKt.MyListKt;
-import static afm.database.DelegatesKt.ToWatchKt;
+import static afm.database.AnimeListKt.MyListKt;
+import static afm.database.AnimeListKt.ToWatchKt;
 
 import java.io.IOException;
 import java.util.Optional;

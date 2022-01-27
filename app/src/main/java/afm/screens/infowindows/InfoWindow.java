@@ -1,11 +1,10 @@
 package afm.screens.infowindows;
 
-import static afm.database.DelegatesKt.MyListKt;
-import static afm.database.DelegatesKt.ToWatchKt;
+import static afm.database.AnimeListKt.MyListKt;
+import static afm.database.AnimeListKt.ToWatchKt;
 
 import java.util.HashSet;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import javafx.fxml.FXML;
