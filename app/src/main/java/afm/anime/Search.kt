@@ -2,6 +2,7 @@ package afm.anime
 
 import afm.Main
 import afm.common.utils.currentYear
+import afm.common.utils.emptyEnumSet
 import afm.common.utils.inJar
 import afm.common.utils.remove
 import javafx.application.Platform
@@ -64,7 +65,7 @@ private object Genres : Selector {
     override fun extractFrom(animeElem: Element): EnumSet<Genre> {
         val ids = animeElem.attr("data-genre").split(",")
 
-        return ids.mapTo(EnumSet.noneOf(Genre::class.java)) {
+        return ids.mapTo(emptyEnumSet<Genre>()) {
             Genre.valueOfFromId(it.toInt())
         }
     }
@@ -100,7 +101,7 @@ private object Synopsis : Selector {
 
         override fun extractFrom(animeElem: Element): EnumSet<Genre> {
             val names = synopsisElem.select(cssQuery)
-            return names.mapTo(EnumSet.noneOf(Genre::class.java)) {
+            return names.mapTo(emptyEnumSet<Genre>()) {
                 Genre.valueOfFromName(it.text().remove(" "))
             }
         }
@@ -160,7 +161,7 @@ class Search {
     /* search filters */
     var name: String? = null
     var studio: String? = null
-    val genres: EnumSet<Genre> = EnumSet.noneOf(Genre::class.java)
+    val genres: EnumSet<Genre> = emptyEnumSet()
     var animeType: AnimeType? = null
     var startYear: Int? = null
         set(value) {
@@ -260,7 +261,7 @@ class Search {
             if (removeBecauseStudio(studios)) return@forEach
             setStudios(studios)
 
-            val genres = EnumSet.noneOf(Genre::class.java)
+            val genres = emptyEnumSet<Genre>()
             genres.addAll(Genres.extractFrom(it))
             genres.addAll(Synopsis.ThemesAndDemographics.extractFrom(it))
             if (removeBecauseGenres(genres)) return@forEach
