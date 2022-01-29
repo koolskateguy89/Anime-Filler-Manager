@@ -11,8 +11,6 @@ import java.util.TreeSet
 // Delegate actions for MyList & ToWatch to not duplicate code
 // https://stackoverflow.com/a/50308477/17381629
 
-// TODO: rename file to something more descriptive
-
 // TODO: rename this? but what to? "MyListLike", idk?
 sealed interface AnimeList {
     fun init()
