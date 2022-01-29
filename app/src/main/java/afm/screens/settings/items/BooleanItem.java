@@ -11,7 +11,6 @@ import javafx.beans.value.ObservableValue;
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.val;
 
 import afm.screens.settings.Category;
 
@@ -21,7 +20,7 @@ public class BooleanItem extends Item {
 	private final Class<Boolean> type = boolean.class;
 
 	@Getter
-	final SimpleBooleanProperty property = new SimpleBooleanProperty();
+	final BooleanProperty property = new SimpleBooleanProperty();
 
 	public BooleanItem(@Nonnull Category category, @Nullable String name) {
 		super(category);

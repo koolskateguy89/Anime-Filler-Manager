@@ -14,7 +14,12 @@ internal open class NonNullMap<K, V>(private val map: Map<K, V>) : Map<K, V> by 
     }
 }
 
-open class ImmutableEnumSet<E : Enum<E>>(values: Collection<E>) : Set<E> by EnumSet.copyOf(values) {
+open class ImmutableEnumSet<E : Enum<E>> private constructor(
+    val backingSet: EnumSet<E>,
+) : Set<E> by backingSet {
+
+    constructor(values: Collection<E>) : this(EnumSet.copyOf(values))
+
     @Deprecated("Always throws UnsupportedOperationException")
     fun add(v: E): Nothing {
         throw UnsupportedOperationException("Immutable collection")

@@ -5,6 +5,7 @@ import afm.common.utils.currentYear
 import afm.common.utils.emptyEnumSet
 import afm.common.utils.inJar
 import afm.common.utils.remove
+import afm.common.utils.setAll
 import javafx.application.Platform
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
@@ -180,8 +181,7 @@ class Search {
     private val result = hashSetOf<Anime>()
 
     fun setGenres(genres: Collection<Genre>) {
-        this.genres.clear()
-        this.genres.addAll(genres)
+        this.genres.setAll(genres)
     }
 
     fun search(): List<Anime> {

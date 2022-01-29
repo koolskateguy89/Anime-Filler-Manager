@@ -21,9 +21,9 @@ import afm.common.utils.Utils;
 // Refreshing of MyList table is done in MyListKt.add(Anime)
 public class MyListInfoWindow extends InfoWindow {
 
-	public static void open(@Nonnull Anime a, @Nonnull Button infoBtn) {
+	public static void open(@Nonnull Anime anime, @Nonnull Button infoBtn) {
 		try {
-			new MyListInfoWindow(a, infoBtn).show();
+			new MyListInfoWindow(anime, infoBtn).show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

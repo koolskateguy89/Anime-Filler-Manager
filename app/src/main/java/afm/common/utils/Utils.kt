@@ -57,12 +57,11 @@ fun intOnlyListener(): ChangeListener<String?> =
         if (!newVal.isStrictInteger())
             (obs as StringProperty).value = oldVal
     }
-fun intOrEmptyListener(): ChangeListener<String?> =
+fun positiveIntOrEmptyListener(): ChangeListener<String?> =
     ChangeListener { obs, oldVal, newVal ->
         // only change back to oldVal if newVal isn't null/empty
         if (!newVal.isNullOrEmpty() && !newVal.isStrictInteger())
             (obs as StringProperty).value = oldVal
-
     }
 
 
@@ -141,3 +140,8 @@ fun getRemoveCol(): TableColumn<Anime, Button> =
 
 inline fun <reified E : Enum<E>> emptyEnumSet(): EnumSet<E> =
     EnumSet.noneOf(E::class.java)
+
+fun <E> MutableCollection<E>.setAll(elements: Collection<E>): Boolean {
+    clear()
+    return addAll(elements)
+}

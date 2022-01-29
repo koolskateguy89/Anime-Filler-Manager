@@ -19,9 +19,9 @@ import afm.common.utils.Utils;
 //Refreshing of ToWatch table is done in ToWatchKt.add(Anime)
 public class ToWatchInfoWindow extends InfoWindow {
 
-	public static void open(@Nonnull Anime a, @Nonnull Button infoBtn) {
+	public static void open(@Nonnull Anime anime, @Nonnull Button infoBtn) {
 		try {
-			new ToWatchInfoWindow(a, infoBtn).show();
+			new ToWatchInfoWindow(anime, infoBtn).show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

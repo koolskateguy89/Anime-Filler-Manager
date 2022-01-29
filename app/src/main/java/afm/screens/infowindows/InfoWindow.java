@@ -129,7 +129,7 @@ public abstract class InfoWindow extends Stage {
 			return;
 
 		// If the anime does not have a URL, hide URL & browser button
-		if (anime.getURL() == null) {
+		if (anime.getUrl() == null) {
 			openEpsBtn.setVisible(false);
 			urlBtn.setVisible(false);
 			browserBtn.setVisible(false);
@@ -229,7 +229,7 @@ public abstract class InfoWindow extends Stage {
 
 	@FXML
 	void copyURL() {
-		Utils.copyToClipboard(anime.getURL());
+		Utils.copyToClipboard(anime.getUrl());
 		NotificationFactory.showInfoNotification("Copied URL to clipboard!");
 	}
 
@@ -241,7 +241,7 @@ public abstract class InfoWindow extends Stage {
 
 	@FXML
 	void openBrowser() {
-		String url = anime.getURL();
+		String url = anime.getUrl();
 		if (url == null)
 			return;
 
