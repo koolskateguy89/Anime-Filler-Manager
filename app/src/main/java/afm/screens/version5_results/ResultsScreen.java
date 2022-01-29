@@ -15,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
 import afm.anime.Anime;
-import afm.anime.Season;
 import afm.common.utils.Utils;
 
 // TODO: change tables to show Name, Studios, [Airing], InfoBtn, addBtnx2
@@ -31,7 +30,7 @@ public class ResultsScreen extends Pane {
 	private TableColumn<Anime, String> studiosCol;
 
 	@FXML
-	private TableColumn<Anime, Season> yearCol;
+	private TableColumn<Anime, Integer> yearCol;
 
 	@FXML
 	private TableColumn<Anime, String> genreCol;

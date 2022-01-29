@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import afm.Main;
-import afm.anime.Season;
 import afm.common.Facts;
 import afm.common.utils.Utils;
 import afm.database.Database;
@@ -169,9 +168,6 @@ public class StartScreen extends Pane {
 				loadLbl.setOpacity(1);
 
 				updateProgress(5, max);
-
-				Season.init();
-				updateProgress(10, max);
 
 				InfoWindow.init();
 				updateProgress(15,  max);
