@@ -11,7 +11,6 @@ import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;

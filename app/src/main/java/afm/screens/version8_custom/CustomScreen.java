@@ -21,7 +21,7 @@ import org.controlsfx.control.textfield.CustomTextField;
 
 import afm.Main;
 import afm.anime.Anime;
-import afm.anime.Anime.AnimeBuilder;
+import afm.anime.AnimeBuilder;
 import afm.anime.AnimeType;
 import afm.anime.Genre;
 import afm.anime.GenreType;
@@ -29,6 +29,7 @@ import afm.anime.Status;
 import afm.common.utils.Utils;
 
 // A lot of things here are identical to SearchScreen
+// TODO: update to reflect updates in Anime & Database
 public class CustomScreen extends GridPane {
 
 	@FXML
@@ -36,6 +37,8 @@ public class CustomScreen extends GridPane {
 
 	@FXML
 	private CustomTextField studioField;
+
+	// TODO: synopsis field
 
 	@FXML
 	private CheckComboBox<Genre> genreCombo;
@@ -74,11 +77,16 @@ public class CustomScreen extends GridPane {
 		Utils.useTitleAsPromptText(themeCombo);
 
 		typeCombo.getItems().addAll(AnimeType.values());
-		startYearField.textProperty().addListener(Utils.intOrEmptyListener());
+		typeCombo.setValue(AnimeType.UNKNOWN);
+		startYearField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
+		startYearField.setText(Integer.toString(Utils.getCurrentYear()));
 		statusCombo.getItems().addAll(Status.values());
+		statusCombo.setValue(Status.UNKNOWN);
 
-		totalEpField.textProperty().addListener(Utils.intOrEmptyListener());
-		currEpField.textProperty().addListener(Utils.intOnlyListener());
+		totalEpField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
+		//totalEpField.setText(Integer.toString(Anime.NOT_FINISHED));
+		currEpField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
+		//currEpField.setText("1");
 	}
 
 	@FXML
@@ -119,12 +127,16 @@ public class CustomScreen extends GridPane {
 			needGenre.showAndWait();
 		}
 
+		// TODO: check startYearField valid
+		// TODO: check totalEpField valid
+		// TODO: check currEpField valid
+
 		return emptyName || emptyGenre;
 	}
 
 	// Return an Anime object, built from fields in this screen
 	private Anime getAnimeFromFields() {
-		final AnimeBuilder builder = Anime.builder(nameField.getText().strip());
+		final AnimeBuilder builder = new AnimeBuilder(nameField.getText().strip());
 		builder.setCustom(true);
 
 		builder.setGenres(genreCombo.getCheckModel().getCheckedItems());
@@ -133,12 +145,15 @@ public class CustomScreen extends GridPane {
 		if (studio != null && !studio.isBlank())
 			builder.setStudios(Set.of(studio.strip()));
 
-		builder.setStartYear(Utils.toIntOrNull(startYearField.getText()));
+		// TODO: check valid int
+		builder.setStartYear(Integer.parseInt(startYearField.getText()));
 
 		builder.setEpisodes(Utils.toIntOrNull(totalEpField.getText()));
 
+		builder.setCurrEp(Utils.toIntOrNull(currEpField.getText()));
+
 		try {
-			builder.setCurrEp(Integer.parseInt(currEpField.getText()));
+			//builder.setCurrEp(Integer.parseInt(currEpField.getText()));
 		} catch (NumberFormatException ignored) {
 			// TODO: show error: didn't enter valid integer
 			// accept default value

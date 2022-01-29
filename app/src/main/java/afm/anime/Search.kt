@@ -20,8 +20,6 @@ import java.util.EnumSet
 import javax.net.ssl.SSLHandshakeException
 import kotlin.math.min
 
-private val builder = Anime.builder()
-
 private const val MAL_URL = "https://myanimelist.net"
 private const val GENRE_URL = "$MAL_URL/anime/genre" //+"/${genre.getId()}"
 private const val TIMEOUT_MILLIS = 8000
@@ -66,7 +64,7 @@ private object Genres : Selector {
     override fun extractFrom(animeElem: Element): EnumSet<Genre> {
         val ids = animeElem.attr("data-genre").split(",")
 
-        return ids.mapTo(emptyEnumSet<Genre>()) {
+        return ids.mapTo(emptyEnumSet()) {
             Genre.valueOfFromId(it.toInt())
         }
     }
@@ -87,7 +85,8 @@ private object Synopsis : Selector {
         // they should be unique anyway but yeah
         override fun extractFrom(animeElem: Element): Set<String> {
             val studioElems = synopsisElem.select(cssQuery)
-            return studioElems.map { it.text() }.toSet()
+            val studios = studioElems.map { it.text() }.toSet()
+            return studios.ifEmpty { setOf("Unknown") }
         }
     }
 
@@ -102,7 +101,7 @@ private object Synopsis : Selector {
 
         override fun extractFrom(animeElem: Element): EnumSet<Genre> {
             val names = synopsisElem.select(cssQuery)
-            return names.mapTo(emptyEnumSet<Genre>()) {
+            return names.mapTo(emptyEnumSet()) {
                 Genre.valueOfFromName(it.text().remove(" "))
             }
         }
@@ -178,6 +177,7 @@ class Search {
     private var page = 1
     private var reachedLastPage = false
 
+    private val builder = Anime.builder()
     private val result = hashSetOf<Anime>()
 
     fun setGenres(genres: Collection<Genre>) {

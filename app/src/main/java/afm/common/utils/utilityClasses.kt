@@ -24,6 +24,10 @@ open class ImmutableEnumSet<E : Enum<E>> private constructor(
     fun add(v: E): Nothing {
         throw UnsupportedOperationException("Immutable collection")
     }
+
+    override fun equals(other: Any?): Boolean = backingSet == other
+
+    override fun hashCode(): Int = backingSet.hashCode()
 }
 
 fun <E: Enum<E>> EnumSet<E>.immutable(): ImmutableEnumSet<E> = ImmutableEnumSet(this)

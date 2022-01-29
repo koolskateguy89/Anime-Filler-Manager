@@ -74,11 +74,9 @@ enum class Genre(val id: Int,
         }
 
         @JvmStatic
-        fun valueOfFromName(name: String?): Genre? = name?.let {
-            values.firstOrNull { genre ->
-                // ignore case for safety
-                name.equals(genre.name, ignoreCase = true)
-            }
+        fun valueOfFromName(name: String): Genre = values.first { genre ->
+            // ignore case for safety
+            name.equals(genre.name, ignoreCase = true)
         }
 
         @JvmStatic

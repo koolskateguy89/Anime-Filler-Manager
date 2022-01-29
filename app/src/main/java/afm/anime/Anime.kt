@@ -21,8 +21,6 @@ import java.util.EnumSet
 import java.util.Objects
 import java.util.TreeSet
 
-/** AnimeBuilder should be instantiated using [Anime.builder]  */
-
 private val DEFAULT_EPISODE_LENGTH = EpisodeLength(0)
 
 class AnimeBuilder(var name: String) {
@@ -175,7 +173,7 @@ class Anime(builder: AnimeBuilder) {
     val name: String = builder.name
     val id: Int? = builder.id //for MAL website
     val synopsis: String = builder.info
-    val studios: Set<String> = builder.studios
+    val studios: Set<String> = builder.studios.toSet()
 
     val genres: ImmutableEnumSet<Genre> = builder.genres.immutable()
     val genreString: String = genres.joinToString(", ") { it.toString() }
