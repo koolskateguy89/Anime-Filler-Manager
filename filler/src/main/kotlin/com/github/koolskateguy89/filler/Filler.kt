@@ -33,9 +33,9 @@ public object AnimeFillerList {
         TODO()
     }
 
-    public fun fillerFor(name: String): AnimeFiller {
-        return AnimeFiller("$shows/${name.formatForAflUrl()}")
-    }
+    public fun fillerFor(name: String): AnimeFiller = fillerForUrl("$shows/${name.formatForAflUrl()}")
+
+    public fun fillerForUrl(url: String): AnimeFiller = AnimeFiller(url)
 
 }
 
@@ -166,7 +166,7 @@ private fun allFiller(mixed: FillerList, filler: FillerList): FillerList {
 }
 
 
-public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
+public data class Filler(val start: Int, val end: Int = start) : Comparable<Filler> {
 
     public operator fun contains(n: Int): Boolean = n in start..end
 
@@ -181,21 +181,16 @@ public data class Filler(val start: Int, val end: Int) : Comparable<Filler> {
     public companion object {
 
         @JvmStatic
-        public fun valueOf(start: Int, end: Int = start): Filler {
-            return Filler(start, end)
-        }
-
-        @JvmStatic
         public fun valueOf(s: String): Filler {
             val divPos = s.indexOf('-')
 
             // single episode filler
             if (divPos == -1)
-                return valueOf(s.toInt())
+                return Filler(s.toInt())
 
             val start = s.substring(0, divPos).toInt()
             val end = s.substring(divPos + 1).toInt()
-            return valueOf(start, end)
+            return Filler(start, end)
         }
 
         @JvmStatic
