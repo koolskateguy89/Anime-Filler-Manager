@@ -17,7 +17,7 @@ internal fun IntRange.toIntArray(): IntArray {
     return result
 }
 
-internal fun String.formatForAflUrl(): String {
+public fun String.formatForAflUrl(): String {
     // replace all non-alphanumeric characters with a dash (which is what AFL does)
     var formattedName = this.lowercase().replaceNonAlphanumericWithDash()
     // name.toLowerCase().replaceAll("[^a-zA-Z0-9]+", "-")
