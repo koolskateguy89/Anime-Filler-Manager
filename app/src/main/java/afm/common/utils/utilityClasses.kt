@@ -25,3 +25,11 @@ open class ImmutableEnumSet<E : Enum<E>> private constructor(
 }
 
 fun <E : Enum<E>> EnumSet<E>.immutable(): ImmutableEnumSet<E> = ImmutableEnumSet.copyOf(this)
+
+inline fun <reified E : Enum<E>> emptyEnumSet(): EnumSet<E> =
+    EnumSet.noneOf(E::class.java)
+
+fun <E> MutableCollection<E>.setAll(elements: Collection<E>): Boolean {
+    clear()
+    return addAll(elements)
+}

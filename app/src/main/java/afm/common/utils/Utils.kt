@@ -136,11 +136,3 @@ fun getMoveCol(move: String): TableColumn<Anime, Button> =
 
 fun getRemoveCol(): TableColumn<Anime, Button> =
     generateColumn("Remove", 71.2000732421875)
-
-inline fun <reified E : Enum<E>> emptyEnumSet(): EnumSet<E> =
-    EnumSet.noneOf(E::class.java)
-
-fun <E> MutableCollection<E>.setAll(elements: Collection<E>): Boolean {
-    clear()
-    return addAll(elements)
-}
