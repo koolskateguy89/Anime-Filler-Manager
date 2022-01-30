@@ -17,7 +17,6 @@ import javafx.scene.control.ButtonType
 import javafx.scene.control.TableColumn
 import java.net.URL
 import java.util.Calendar
-import java.util.EnumSet
 import java.util.prefs.Preferences
 
 val UtilsJavaClass: Class<*> = object {}.javaClass.enclosingClass
