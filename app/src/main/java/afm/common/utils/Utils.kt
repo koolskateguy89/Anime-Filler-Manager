@@ -83,12 +83,12 @@ fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : P
 
     override fun setValue(value: Button) {}
 
-    override fun bind(observable: ObservableValue<out Button?>) {}
+    override fun bind(observable: ObservableValue<out Button>) {}
     override fun unbind() {}
     override fun isBound(): Boolean = false
 
-    override fun bindBidirectional(other: Property<Button?>) {}
-    override fun unbindBidirectional(other: Property<Button?>) {}
+    override fun bindBidirectional(other: Property<Button>) {}
+    override fun unbindBidirectional(other: Property<Button>) {}
 }
 
 
@@ -136,7 +136,6 @@ fun getMoveCol(move: String): TableColumn<Anime, Button> =
 
 fun getRemoveCol(): TableColumn<Anime, Button> =
     generateColumn("Remove", 71.2000732421875)
-
 
 inline fun <reified E : Enum<E>> emptyEnumSet(): EnumSet<E> =
     EnumSet.noneOf(E::class.java)

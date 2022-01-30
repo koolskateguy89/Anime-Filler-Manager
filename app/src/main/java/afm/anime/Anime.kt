@@ -18,7 +18,6 @@ import javafx.event.EventHandler
 import javafx.scene.control.Button
 import javafx.scene.image.Image
 import java.util.EnumSet
-import java.util.Objects
 import java.util.TreeSet
 
 private val DEFAULT_EPISODE_LENGTH = EpisodeLength(0)
@@ -72,7 +71,7 @@ class AnimeBuilder(var name: String) {
     }
 
     fun setName(name: String): AnimeBuilder {
-        this.name = Objects.requireNonNull(name)
+        this.name = name
         return this
     }
 
@@ -162,9 +161,7 @@ class AnimeBuilder(var name: String) {
         return this
     }
 
-    fun build(): Anime {
-        return Anime(this)
-    }
+    fun build(): Anime = Anime(this)
 
 }
 
@@ -176,6 +173,7 @@ class Anime(builder: AnimeBuilder) {
     val studios: Set<String> = builder.studios.toSet()
 
     val genres: ImmutableEnumSet<Genre> = builder.genres.immutable()
+    @Suppress("UNUSED")
     val genreString: String = genres.joinToString(", ") { it.toString() }
 
     val imageURL: String? = builder.imageURL
@@ -214,6 +212,7 @@ class Anime(builder: AnimeBuilder) {
 
     val episodeLength: EpisodeLength = builder.episodeLength
 
+    @get:JvmName("isCustom")
     val custom: Boolean = builder.custom
 
     override fun toString(): String {
@@ -282,13 +281,8 @@ class Anime(builder: AnimeBuilder) {
         @JvmField
         var SORT_BY_NAME_DESC: Comparator<Anime> = SORT_BY_NAME.reversed()
 
-        fun builder(): AnimeBuilder {
-            return AnimeBuilder("")
-        }
-
-        fun builder(name: String): AnimeBuilder {
-            return AnimeBuilder(name)
-        }
+        @JvmStatic
+        fun builder(name: String = ""): AnimeBuilder = AnimeBuilder(name)
 
         private val HIGHLIGHT = Menu.SELECTED
         private const val SEE_INFO = "See info"
@@ -325,7 +319,7 @@ class Anime(builder: AnimeBuilder) {
 
     /* for ResultsScreen */
     private val infoBtn = Button(SEE_INFO).apply {
-        onAction = EventHandler { event: ActionEvent? ->
+        onAction = EventHandler {
             setStyleClass(HIGHLIGHT)
             ResultInfoWindow.open(this@Anime, this, myListBtn, toWatchBtn)
         }
@@ -366,16 +360,19 @@ class Anime(builder: AnimeBuilder) {
     }
 
     // basically return infoBtn
+    @Suppress("UNUSED")
     fun infoBtnProperty(): Property<Button> {
         return makeButtonProperty("InfoBtnProperty", infoBtn)
     }
 
     // basically return myListBtn
+    @Suppress("UNUSED")
     fun myListBtnProperty(): Property<Button> {
         return makeButtonProperty("MyListBtnProperty", myListBtn)
     }
 
     // basically return toWatchBtn
+    @Suppress("UNUSED")
     fun toWatchBtnProperty(): Property<Button> {
         return makeButtonProperty("ToWatchBtnProperty", toWatchBtn)
     }
@@ -401,14 +398,17 @@ class Anime(builder: AnimeBuilder) {
         }
     }
 
+    @Suppress("UNUSED")
     fun myListInfoProperty(): Property<Button> {
         return makeButtonProperty("MyListInfoBtnProperty", myListInfoBtn)
     }
 
+    @Suppress("UNUSED")
     fun myListRemoveProperty(): Property<Button> {
         return makeButtonProperty("MyListRemoveBtnProperty", myListRemoveBtn)
     }
 
+    @Suppress("UNUSED")
     fun moveToToWatchProperty(): Property<Button> {
         return makeButtonProperty("MoveToToWatchBtnProperty", moveToToWatchBtn)
     }
@@ -434,14 +434,17 @@ class Anime(builder: AnimeBuilder) {
         }
     }
 
+    @Suppress("UNUSED")
     fun toWatchInfoProperty(): Property<Button> {
         return makeButtonProperty("ToWatchInfoBtnProperty", toWatchInfoBtn)
     }
 
+    @Suppress("UNUSED")
     fun toWatchRemoveProperty(): Property<Button> {
         return makeButtonProperty("ToWatchRemoveBtnProperty", toWatchRemoveBtn)
     }
 
+    @Suppress("UNUSED")
     fun moveToMyListProperty(): Property<Button> {
         return makeButtonProperty("MoveToMyListBtnProperty", moveToMyListBtn)
     }
