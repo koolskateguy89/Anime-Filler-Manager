@@ -11,6 +11,7 @@ import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -81,8 +82,8 @@ public class Settings {
 
 	public static final StringProperty selectedDatabaseProperty = new SimpleStringProperty();
 
-	public static @Nonnull String getSelectedDatabase() {
-		return selectedDatabaseProperty.getValue();
+	public static @Nullable String getSelectedDatabase() {
+		return selectedDatabaseProperty.get();
 	}
 
 	@Getter

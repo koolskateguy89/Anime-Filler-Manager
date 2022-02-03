@@ -6,7 +6,7 @@ internal fun <K, V> Map<K, V>.unmodifiable(): Map<K, V> = Collections.unmodifiab
 
 internal fun <T> List<T>.unmodifiable(): List<T> = Collections.unmodifiableList(this)
 
-internal fun IntRange.toIntArray(): IntArray {
+public fun IntRange.toIntArray(): IntArray {
     if (last < first)
         return IntArray(0)
 
@@ -36,7 +36,7 @@ public fun String.formatForAflUrl(): String {
 }
 
 // this took avg ~600ns vs regex ~6-7k ns
-internal fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
+public fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
     // helper for multiple characters in a row are non-alphanumeric
     var lastWasNonAlpha = false
 

@@ -53,8 +53,8 @@ object Database {
     )
 
     private val DB_URL: String = run {
-        fun mayBeValidDatabase(url: String): Boolean {
-            if (url.isEmpty())
+        fun mayBeValidDatabase(url: String?): Boolean {
+            if (url.isNullOrEmpty())
                 return false
 
             val exists: Boolean = Files.exists(Path.of(url))
@@ -80,7 +80,7 @@ object Database {
             return exists
         }
 
-        val url: String = Settings.getSelectedDatabase()
+        val url: String? = Settings.getSelectedDatabase()
 
         // fallback on internal database if provided url is definitely not valid
         if (url == "Internal" || !mayBeValidDatabase(url)) {
@@ -99,6 +99,7 @@ object Database {
         }
     }
 
+    @Suppress("UNUSED")
     val db: Database = Database.connect(DB_URL, DRIVER)
         .also { TransactionManager.defaultDatabase = it }
 
@@ -114,6 +115,7 @@ object Database {
     }
 
     // has to be called in a transaction
+    @Suppress("UNUSED")
     private fun Transaction.clearTables() {
         MyListTable.deleteAll()
         ToWatchTable.deleteAll()
@@ -132,6 +134,7 @@ object Database {
     }
 
     // has to be called in a transaction
+    @Suppress("UNUSED")
     private fun Transaction.loadTable(animeList: AnimeList, table: AnimeTable) {
         table.allAnime().forEach { animeList.addSilent(it) }
     }
@@ -146,10 +149,10 @@ object Database {
 
     // has to be called in a transaction
     private fun Transaction.saveTable(animeList: AnimeList, table: AnimeTable) {
-        val removed = animeList.getRemovedNames()
+        val removed = animeList.removedNames
         table.deleteWhere { table.id inList removed }
 
-        animeList.getAdded().forEach { anime ->
+        animeList.added.forEach { anime ->
             anime.toAnimeEntity()
         }
     }
@@ -210,16 +213,16 @@ sealed class AnimeTable(name: String) : IdTable<String>(name) {
 }
 
 object MyListTable : AnimeTable("mylist") {
-    override val entityClass = MyListEntity
+    override val entityClass = MyListEntity.Companion
 }
 
 object ToWatchTable : AnimeTable("towatch") {
-    override val entityClass = ToWatchEntity
+    override val entityClass = ToWatchEntity.Companion
 }
 
 private fun AnimeTable.allAnime(): Collection<Anime> = entityClass.all().map { it.toAnime() }
 
-private fun AnimeEntity.toAnime(): Anime = with (Anime.builder(name)) {
+private fun AnimeEntity.toAnime(): Anime = Anime.build(name) {
     val entity = this@toAnime
 
     setId(entity.malId)
@@ -240,12 +243,11 @@ private fun AnimeEntity.toAnime(): Anime = with (Anime.builder(name)) {
     setEpisodeLength(entity.episodeLength)
 
     setCustom(entity.custom)
-
-    build()
 }
 
 // has to be called in a transaction
 // workaround to have ext function with 2 receivers
+@Suppress("UNUSED")
 private val Transaction.toAnimeEntity: Anime.() -> AnimeEntity
     get() = fun Anime.(): AnimeEntity {
         val ec: EntityClass<String, AnimeEntity> = if (MyListKt.contains(this))

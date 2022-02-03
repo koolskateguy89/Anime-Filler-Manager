@@ -11,20 +11,18 @@ import java.util.TreeSet
 // Delegate actions for MyList & ToWatch to not duplicate code
 // https://stackoverflow.com/a/50308477/17381629
 
-// TODO: rename this? but what to? "MyListLike", idk?
 sealed interface AnimeList {
     fun init()
+    val added: Set<Anime>
+    val removedNames: Set<String>
     fun addSilent(anime: Anime)
     fun add(anime: Anime)
     fun addAll(col: Collection<Anime>)
     fun remove(anime: Anime)
     operator fun contains(anime: Anime): Boolean
-    fun size(): Int
+    val size: Int
     fun clear()
     fun values(): Set<Anime>
-    fun getAdded(): Set<Anime>
-    fun getRemovedNames(): Set<String>
-    fun getRemovedSQL(): String
 }
 
 /*
@@ -43,10 +41,12 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
             LinkedHashSet()
     )
 
-    private val added: MutableSet<Anime> = LinkedHashSet()
+    override val added = LinkedHashSet<Anime>()
 
     // Only the name of the removed anime is important
-    private val removed: MutableSet<String> = HashSet()
+    private val removed = mutableSetOf<String>()
+
+    override val removedNames: Set<String> = removed
 
     override fun init() {
         runTime.addListener(SetChangeListener { refreshTable() })
@@ -65,7 +65,7 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
         added.add(anime)
     }
 
-    override fun addAll(col: Collection<Anime>) = col.forEach(::add)
+    override fun addAll(col: Collection<Anime>) = col.forEach { add(it) }
 
     override fun remove(anime: Anime) {
         // only add to `removed` if the anime was present in `runTime`
@@ -77,21 +77,12 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
 
     override operator fun contains(anime: Anime): Boolean = anime in runTime
 
-    override fun size(): Int = runTime.size
+    override val size: Int
+            get() = runTime.size
 
     override fun clear() = runTime.clear()
 
     override fun values(): ObservableSet<Anime> = runTime
-
-    override fun getAdded(): Set<Anime> = added
-
-    override fun getRemovedNames(): Set<String> = removed
-
-    override fun getRemovedSQL(): String {
-        return removed
-            .map { "'${it.replace("'", "''")}'" } // escape quotes in SQL
-            .joinToString(",")
-    }
 }
 
 

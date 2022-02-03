@@ -286,6 +286,10 @@ class Anime(builder: AnimeBuilder) {
 
         private val HIGHLIGHT = Menu.SELECTED
         private const val SEE_INFO = "See info"
+
+        inline fun build(name: String = "", builderAction: AnimeBuilder.() -> Unit): Anime {
+            return AnimeBuilder(name).apply(builderAction).build()
+        }
     }
 
     //<editor-fold desc="Buttons">
