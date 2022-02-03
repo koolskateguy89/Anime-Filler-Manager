@@ -15,8 +15,6 @@ fun String.copyToClipboard() {
 
 fun String?.isStrictInteger(): Boolean = !isNullOrEmpty() && all { it.isDigit() }
 
-fun String.isNumeric(): Boolean = toDoubleOrNull() != null
-
 // this 500ns vs regex 2000ns
 fun String.splitByCapitals(): Array<String> {
     val res = mutableListOf<String>()
@@ -58,6 +56,8 @@ fun String.replaceNonAlphanumericWithDash(): String = buildString(length) {
         }
     }
 }
+
+fun String.trimDashes(): String = trim { it == '-' }
 
 fun String.splitIgnoreEmpty(
     vararg delimiters: String,

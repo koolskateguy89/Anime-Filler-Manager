@@ -162,15 +162,15 @@ public abstract class InfoWindow extends Stage {
 	@FXML
 	void openEpisode() {
 		String name = anime.getName();
+		name = Utils.trimDashes(Utils.replaceNonAlphanumericWithDash(name));
 
 		String url;
 		if (anime.getCurrEp() == 0)
-			url = "https://anime-update.com/anime/" + Utils.replaceNonAlphanumericWithDash(name);
+			url = "https://anime-update.com/anime/" + name;
 		else
-			url = "https://anime-update.com/watch-online/" + Utils.replaceNonAlphanumericWithDash(name) +
-					"-episode-" + anime.getCurrEp();
+			url = "https://anime-update.com/watch-online/" + name + "-episode-" + anime.getCurrEp();
 
-		NotificationFactory.showInfoNotification("Opening browser...");
+		//NotificationFactory.showInfoNotification("Opening browser...");
 
 		boolean opened = Browser.open(url);
 		if (!opened) {
