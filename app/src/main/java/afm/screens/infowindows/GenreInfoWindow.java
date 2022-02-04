@@ -24,9 +24,9 @@ import afm.screens.Menu;
 public class GenreInfoWindow extends InfoWindow {
 
 	// maybe this should be in Genre class
-	private static Map<Genre, String> genreDefMap;
+	private static final Map<Genre, String> genreDefMap;
 
-	public static void init() {
+	static {
 		EnumMap<Genre, String> tempMap = new EnumMap<>(Genre.class);
 		// genre definitions: https://myanimelist.net/anime/genre/info
 

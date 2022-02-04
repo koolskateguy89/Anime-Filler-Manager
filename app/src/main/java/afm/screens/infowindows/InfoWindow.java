@@ -33,10 +33,6 @@ import afm.user.Theme;
 // not much point of it being abstract I think...
 public abstract class InfoWindow extends Stage {
 
-	public static void init() {
-		GenreInfoWindow.init();
-	}
-
 	private static final HashSet<Stage> openWindows = new HashSet<>();
 
 	private static void addWindow(Stage window) {

@@ -13,8 +13,6 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -35,7 +33,6 @@ import afm.screens.infowindows.InfoWindow;
 import afm.screens.settings.items.BooleanItem;
 import afm.screens.settings.items.EnumItem;
 import afm.screens.settings.items.Item;
-import afm.screens.version1_start.StartScreen;
 import afm.user.Settings;
 import afm.user.Theme;
 
@@ -172,6 +169,7 @@ public class SettingsScreen extends Pane {
 		// this applies the current theme once all screens have been loaded
 		if (currentTheme != Theme.DEFAULT) {
 			Platform.runLater(() -> {
+				/*
 				StartScreen.LoadTask task = Main.getInstance().startScreen.loadTask;
 				EventHandler<WorkerStateEvent> onSucceeded = task.getOnSucceeded();
 
@@ -182,6 +180,7 @@ public class SettingsScreen extends Pane {
 
 					Main.getInstance().applyTheme(currentTheme);
 				});
+				 */
 			});
 		}
 	}

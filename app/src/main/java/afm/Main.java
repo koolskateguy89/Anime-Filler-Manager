@@ -20,10 +20,10 @@ import javafx.stage.Stage;
 import afm.anime.Anime;
 import afm.anime.Search;
 import afm.common.utils.Utils;
+import afm.database.Database;
 import afm.screens.Menu;
 import afm.screens.infowindows.InfoWindow;
 import afm.screens.settings.SettingsScreen;
-import afm.screens.version1_start.StartScreen;
 import afm.screens.version2_welcome.WelcomeScreen;
 import afm.screens.version3_search.SearchScreen;
 import afm.screens.version4_searching.SearchingScreen;
@@ -35,7 +35,7 @@ import afm.user.Settings;
 import afm.user.Theme;
 
 // https://github.com/koolskateguy89/Anime-Filler-Manager
-public class Main extends Application {
+public final class Main extends Application {
 
 	// unresolved reference getInstance in Kotlin when using @Getter :/
 	private static Main instance;
@@ -54,11 +54,9 @@ public class Main extends Application {
 	public SplitPane mainScreen;
 	private ObservableList<Node> screenList;
 
-	public StartScreen startScreen;
 	public WelcomeScreen welcomeScreen;
 	public Menu menu;
 	public SettingsScreen settingsScreen;
-
 
 	public SearchScreen searchScreen;
 	private SearchingScreen searchingScreen;
@@ -73,15 +71,7 @@ public class Main extends Application {
 	public void moveToWelcomeScreen() {
 		InfoWindow.closeAllOpenWindows();
 
-		if (welcomeScreen == null) {
-			try {
-				welcomeScreen = new WelcomeScreen();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		normalHeight();
+		stage.setHeight(welcomeScreen.getPrefHeight());
 		stage.setWidth(welcomeScreen.getPrefWidth());
 		scene.setRoot(welcomeScreen);
 	}
@@ -91,7 +81,7 @@ public class Main extends Application {
 	}
 
 	// Set up mainScreen variable & screenList & scene root.
-	// Changed it to return Main so welcomeScreen can do method chaining
+	// Changed it to return Main so welcomeScreen can use method chaining
 	public @Nonnull Main initMainScreen() {
 		if (mainScreen == null || screenList == null)
 			try {
@@ -113,12 +103,13 @@ public class Main extends Application {
 	}
 
 	private void normalHeight() {
-		stage.setHeight(searchScreen.getPrefHeight()); // most screens have the same pref height
+		// all non-table screens have the same pref height
+		stage.setHeight(searchScreen.getPrefHeight());
 	}
 
 	// Change 'current' screen (right of splitpane)
 	private void setScreen(@Nonnull Pane newPane) {
-		//InfoWindow.closeAllOpenWindows();
+		// InfoWindow.closeAllOpenWindows();
 
 		if (screenList.size() == 1) {
 			screenList.add(newPane);
@@ -138,8 +129,9 @@ public class Main extends Application {
 		mainScreen.setDividerPosition(0, dividerPosition);
 
 		if (!stage.isFullScreen()) {
-			// only increase height if new screen is a screen with a table
-			if (newPane instanceof ResultsScreen || newPane instanceof MyListScreen || newPane instanceof ToWatchScreen) {
+			// only increase height if new screen is a table-screen
+			if (newPane instanceof ResultsScreen || newPane instanceof MyListScreen
+					|| newPane instanceof ToWatchScreen) {
 				stage.setHeight(Math.max(menu.getPrefHeight(), newPane.getPrefHeight()) + 40);
 			} else {
 				normalHeight();
@@ -213,8 +205,33 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(final Stage primaryStage) throws Exception {
+	public void init() throws Exception {
 		Main.instance = this;
+
+		// OnClose thread will be run upon JVM trying to exit
+		Runtime.getRuntime().addShutdownHook(OnClose.INSTANCE);
+
+		welcomeScreen = new WelcomeScreen();
+		menu = new Menu();
+		settingsScreen = new SettingsScreen();
+
+		searchScreen = new SearchScreen();
+		searchingScreen = new SearchingScreen();
+		resultsScreen = new ResultsScreen();
+
+		myListScreen = new MyListScreen();
+		toWatchScreen = new ToWatchScreen();
+
+		customScreen = new CustomScreen();
+
+		// load MyList & ToWatch from database into run time data structures
+		Database.loadAll();
+
+		applyTheme(Settings.themeProperty.get());
+	}
+
+	@Override
+	public void start(final Stage primaryStage) throws Exception {
 		stage = primaryStage;
 
 		stage.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
@@ -225,26 +242,15 @@ public class Main extends Application {
 			}
 		});
 
-		stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
-
 		stage.setTitle("Anime Filler Manager");
-
 		stage.getIcons().add(new Image("icons/MainIcon.ico"));
-
 		stage.setResizable(false);
 
 		stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
 
-		// OnClose thread will be run upon JVM trying to exit
-		Runtime.getRuntime().addShutdownHook(OnClose.INSTANCE);
+		stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
 
-		// start loading is done internally in start screen (by button action)
-		startScreen = new StartScreen();
-		scene = new Scene(startScreen);
-
-		// don't lazily load to make applying theme easier
-		searchingScreen = new SearchingScreen();
-		resultsScreen = new ResultsScreen();
+		scene = new Scene(welcomeScreen);
 
 		stage.setScene(scene);
 		stage.centerOnScreen();

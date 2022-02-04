@@ -7,7 +7,6 @@ import afm.anime.Status
 import afm.common.utils.inJar
 import afm.common.utils.isFirstRun
 import afm.common.utils.wrapAlertText
-import afm.screens.version1_start.StartScreen.LoadTask
 import afm.user.Settings
 import javafx.application.Platform
 import javafx.scene.control.Alert
@@ -101,14 +100,18 @@ object Database {
         .also { TransactionManager.defaultDatabase = it }
 
     @JvmStatic
-    fun init(task: LoadTask, start: Double, end: Double) {
+    fun loadAll() {
         if (inJar && isFirstRun && Settings.getSelectedDatabase() == "Internal")
             transaction { clearTables() }
         else
-            loadAll(task, start, end)
+            loadAllImpl()
+    }
 
-        MyListKt.init()
-        ToWatchKt.init()
+    private fun loadAllImpl() {
+        transaction {
+            loadTable(MyListKt, MyListTable)
+            loadTable(ToWatchKt, ToWatchTable)
+        }
     }
 
     // has to be called in a transaction
@@ -116,18 +119,6 @@ object Database {
     private fun Transaction.clearTables() {
         MyListTable.deleteAll()
         ToWatchTable.deleteAll()
-    }
-
-    private fun loadAll(task: LoadTask, start: Double, end: Double) {
-        val diff: Double = end - start
-        val step = diff / 2
-
-        transaction {
-            loadTable(MyListKt, MyListTable)
-            task.incrementProgress(step)
-            loadTable(ToWatchKt, ToWatchTable)
-            task.incrementProgress(step)
-        }
     }
 
     // has to be called in a transaction
@@ -155,7 +146,6 @@ object Database {
     }
 
     // if table already exists: clear it, else create new table
-    // current impl. means table won't exist, but I'll keep it like this for now
     @JvmStatic
     fun createNew(url: String) {
         transaction(Database.connect("jdbc:sqlite:$url", DRIVER)) {

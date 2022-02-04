@@ -15,9 +15,7 @@ import javafx.scene.text.Text;
 import afm.Main;
 import afm.common.Facts;
 import afm.common.utils.Utils;
-import afm.database.Database;
 import afm.screens.Menu;
-import afm.screens.infowindows.InfoWindow;
 import afm.screens.settings.SettingsScreen;
 import afm.screens.version2_welcome.WelcomeScreen;
 import afm.screens.version3_search.SearchScreen;
@@ -28,7 +26,7 @@ import afm.user.Settings;
 
 import kotlin.Pair;
 
-public class StartScreen extends Pane {
+class StartScreen extends Pane {
 
 	private Pair<Integer, String> fact;
 	public LoadTask loadTask;
@@ -169,7 +167,7 @@ public class StartScreen extends Pane {
 
 				updateProgress(5, max);
 
-				InfoWindow.init();
+				//InfoWindow.init();
 				updateProgress(15,  max);
 
 				// Load different Screens
@@ -197,7 +195,7 @@ public class StartScreen extends Pane {
 
 				// load MyList & ToWatch from database into run time data structures
 				progress = 80;
-				Database.init(this, 80,  max);
+				//Database.init(this, 80,  max);
 
 				// Completely fill progressBar
 				updateProgress(1.0,  1.0);

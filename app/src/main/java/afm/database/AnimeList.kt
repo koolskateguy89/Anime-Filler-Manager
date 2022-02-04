@@ -12,7 +12,6 @@ import java.util.TreeSet
 // https://stackoverflow.com/a/50308477/17381629
 
 sealed interface AnimeList {
-    fun init()
     val added: Set<Anime>
     val removedNames: Set<String>
     fun addSilent(anime: Anime)
@@ -39,7 +38,9 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
             TreeSet(Anime.SORT_BY_NAME)
         else
             LinkedHashSet()
-    )
+    ).apply {
+        addListener(SetChangeListener { refreshTable() })
+    }
 
     override val added = LinkedHashSet<Anime>()
 
@@ -47,10 +48,6 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
     private val removed = mutableSetOf<String>()
 
     override val removedNames: Set<String> = removed
-
-    override fun init() {
-        runTime.addListener(SetChangeListener { refreshTable() })
-    }
 
     /* add anime to runTime without adding to {added}.
 	 * used when loading anime from database

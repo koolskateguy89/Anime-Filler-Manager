@@ -31,8 +31,9 @@ import afm.common.utils.Utils;
 public class Settings {
 
 	// Don't allow this class to be instantiated
-	private Settings() { }
+	private Settings() {}
 
+	// just used to store constants key names
 	private enum PrefKey {
 		DATABASE("DATABASE_URLS"),
 		SELECTED_DB("SELECTED_DATABASE"),
