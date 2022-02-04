@@ -52,7 +52,7 @@
 		<mainClass>afm.LauncherKt</mainClass>
 
 		<!-- dependency versions -->
-		<slf4j.version>2.0.0-alpha5</slf4j.version>
+		<slf4j.version>2.0.0-alpha6</slf4j.version>
 		<kxtra.version>2.1.0</kxtra.version>
 		<javafx.version>15.0.1</javafx.version>
 		<lombok.version>1.18.22</lombok.version>
