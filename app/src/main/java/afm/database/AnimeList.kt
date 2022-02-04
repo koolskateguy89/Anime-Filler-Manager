@@ -3,9 +3,6 @@ package afm.database
 import afm.Main
 import afm.anime.Anime
 import afm.user.Settings
-import javafx.collections.FXCollections
-import javafx.collections.ObservableSet
-import javafx.collections.SetChangeListener
 import java.util.TreeSet
 
 // Delegate actions for MyList & ToWatch to not duplicate code
@@ -24,23 +21,33 @@ sealed interface AnimeList {
     fun values(): Set<Anime>
 }
 
-/*
- * Can't lie my implementation of {name order} is absolutely genius:
- * -The database always stays in insertion order
- * -Enforce name order by using a TreeSet for runTime, database insertion order
- *    is still maintained as added is always a LinkedHS (insertion order)
- * -Enforce insertion order by using a LinkedHS as the backing set
- */
-private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
+private class ObservableSet<T>(
+    val backingSet: MutableSet<T>,
+    var onChange: () -> Unit = {},
+) : MutableSet<T> by backingSet {
 
-    private val runTime: ObservableSet<Anime> = FXCollections.observableSet(
+    override fun add(element: T): Boolean = backingSet.add(element).also { onChange() }
+
+    override fun remove(element: T): Boolean = backingSet.remove(element).also { onChange() }
+
+}
+
+private class AnimeListImpl(refreshTable: () -> Unit) : AnimeList {
+
+    /*
+     * Can't lie my implementation of {name order} is absolutely genius:
+     * -The database always stays in insertion order
+     * -Enforce name order by using a TreeSet for runTime, database insertion order
+     *    is still maintained as added is always a LinkedHS (insertion order)
+     * -Enforce insertion order by using a LinkedHS as the backing set
+     */
+    private val runTime = ObservableSet<Anime>(
         if (Settings.get(Settings.Key.NAME_ORDER))
             TreeSet(Anime.SORT_BY_NAME)
         else
-            LinkedHashSet()
-    ).apply {
-        addListener(SetChangeListener { refreshTable() })
-    }
+            LinkedHashSet(),
+        refreshTable
+    )
 
     override val added = LinkedHashSet<Anime>()
 
@@ -74,11 +81,11 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
     override operator fun contains(anime: Anime): Boolean = anime in runTime
 
     override val size: Int
-            get() = runTime.size
+        get() = runTime.size
 
     override fun clear() = runTime.clear()
 
-    override fun values(): ObservableSet<Anime> = runTime
+    override fun values(): Set<Anime> = runTime
 }
 
 
