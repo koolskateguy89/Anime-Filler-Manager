@@ -52,10 +52,10 @@
 		<kxtra.version>2.1.0</kxtra.version>
 		<javafx.version>15.0.1</javafx.version>
 		<lombok.version>1.18.22</lombok.version>
+		<findbugs.version>3.0.2</findbugs.version>
 		<controlsfx.version>11.1.1</controlsfx.version>
 		<jsoup.version>1.14.3</jsoup.version>
 		<reactive-jikan.version>1.0.2</reactive-jikan.version>
-		<guava.version>31.0.1-jre</guava.version>
 		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
 		<exposed.version>0.37.3</exposed.version>
 	</properties>
@@ -127,6 +127,12 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>jsr305</artifactId>
+				<version>${findbugs.version}</version>
+			</dependency>
+
 			<!-- ControlsFX (only for Notification atm) -->
 			<dependency>
 				<groupId>org.controlsfx</groupId>
@@ -146,13 +152,6 @@
 				<groupId>net.sandrohc</groupId>
 				<artifactId>reactive-jikan</artifactId>
 				<version>${reactive-jikan.version}</version>
-			</dependency>
-
-			<!-- Google Guava -->
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${guava.version}</version>
 			</dependency>
 
 			<!-- sqlite jdbc driver -->
