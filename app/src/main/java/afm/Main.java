@@ -138,6 +138,7 @@ public final class Main extends Application {
 			// only want to show results screen if not on search school
 			if (screenList.get(1) != searchScreen) {
 				menu.resultsScreen();
+				resultsScreen.show();
 				setScreen(resultsScreen);
 			}
 		}

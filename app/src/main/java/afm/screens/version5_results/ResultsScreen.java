@@ -16,6 +16,8 @@ import javafx.scene.layout.Pane;
 
 import afm.anime.Anime;
 import afm.common.utils.Utils;
+import afm.screens.animefactories.ResultsAddBtns;
+import afm.screens.animefactories.ResultsInfoBtnFactory;
 
 // TODO: change tables to show Name, Studios, [Airing], InfoBtn, addBtnx2
 public class ResultsScreen extends Pane {
@@ -48,8 +50,14 @@ public class ResultsScreen extends Pane {
 		return !tableItems.isEmpty();
 	}
 
-	public final void setResults(@Nonnull List<Anime> results) {
+	public void setResults(@Nonnull List<Anime> results) {
 		tableItems.setAll(results);
+	}
+
+	public void show() {
+		// refresh the table so the buttons are updates
+		Anime[] copy = tableItems.toArray(new Anime[0]);
+		tableItems.setAll(copy);
 	}
 
 	@FXML
@@ -69,21 +77,18 @@ public class ResultsScreen extends Pane {
 		Utils.wrapColText(genreCol);
 
 
+		TableColumn<Anime, Button> infoCol = Utils.getResultInfoCol();
+		infoCol.setCellValueFactory(ResultsInfoBtnFactory.INSTANCE);
+
+		TableColumn<Anime, Button> myListCol = Utils.getResultCol("MyList");
+		myListCol.setCellValueFactory(ResultsAddBtns.myListFactory);
+
+		TableColumn<Anime, Button> toWatchCol = Utils.getResultCol("ToWatch");
+		toWatchCol.setCellValueFactory(ResultsAddBtns.toWatchFactory);
+
 		TableColumn<Anime, ?> actions = Utils.getActionsCol();
 		table.getColumns().add(actions);
-
-		TableColumn<Anime, Button> infoCol = Utils.getResultInfoCol();
-		TableColumn<Anime, Button> myListCol = Utils.getResultCol("MyList");
-		TableColumn<Anime, Button> toWatchCol = Utils.getResultCol("ToWatch");
 		actions.getColumns().addAll(infoCol, myListCol, toWatchCol);
-
-		// calls infoBtnProperty
-		infoCol.setCellValueFactory(new PropertyValueFactory<>("infoBtn"));
-
-		// calls myListBtnProperty
-		myListCol.setCellValueFactory(new PropertyValueFactory<>("myListBtn"));
-
-		// calls toWatchBtnProperty
-		toWatchCol.setCellValueFactory(new PropertyValueFactory<>("toWatchBtn"));
 	}
+
 }

@@ -1,5 +1,6 @@
 package afm.screens.version7_toWatch;
 
+import static afm.database.AnimeListKt.MyListKt;
 import static afm.database.AnimeListKt.ToWatchKt;
 
 import java.io.IOException;
@@ -15,6 +16,10 @@ import javafx.scene.layout.Pane;
 
 import afm.anime.Anime;
 import afm.common.utils.Utils;
+import afm.screens.animefactories.InfoBtnFactory;
+import afm.screens.animefactories.MoveBtnFactory;
+import afm.screens.animefactories.RemoveBtnFactory;
+import afm.screens.infowindows.ToWatchInfoWindow;
 
 public class ToWatchScreen extends Pane {
 
@@ -63,18 +68,17 @@ public class ToWatchScreen extends Pane {
 		Utils.wrapColText(genreCol);
 
 
-		TableColumn<Anime, Button> actions = Utils.getActionsCol();
-		table.getColumns().add(actions);
-
 		TableColumn<Anime, Button> infoCol = Utils.getInfoCol();
+		infoCol.setCellValueFactory(new InfoBtnFactory(ToWatchInfoWindow::open));
+
 		TableColumn<Anime, Button> moveToMyListCol = Utils.getMoveCol("MyList");
+		moveToMyListCol.setCellValueFactory(new MoveBtnFactory(ToWatchKt, MyListKt));
+
 		TableColumn<Anime, Button> removeCol = Utils.getRemoveCol();
+		removeCol.setCellValueFactory(new RemoveBtnFactory(ToWatchKt));
+
+		TableColumn<Anime, ?> actions = Utils.getActionsCol();
 		actions.getColumns().addAll(infoCol, moveToMyListCol, removeCol);
-
-		infoCol.setCellValueFactory(new PropertyValueFactory<>("toWatchInfo"));
-
-		moveToMyListCol.setCellValueFactory(new PropertyValueFactory<>("moveToMyList"));
-
-		removeCol.setCellValueFactory(new PropertyValueFactory<>("toWatchRemove"));
+		table.getColumns().add(actions);
 	}
 }

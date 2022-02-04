@@ -5,11 +5,8 @@ package afm.common.utils
 
 import afm.Main
 import afm.anime.Anime
-import javafx.beans.InvalidationListener
-import javafx.beans.property.Property
 import javafx.beans.property.StringProperty
 import javafx.beans.value.ChangeListener
-import javafx.beans.value.ObservableValue
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.Button
@@ -65,30 +62,6 @@ fun positiveIntOrEmptyListener(): ChangeListener<String?> =
 
 
 fun sleep(millis: Long) = Thread.sleep(millis)
-
-
-fun makeButtonProperty(name: String, btn: Button): Property<Button> = object : Property<Button> {
-    override fun getName(): String = name
-
-    override fun getValue(): Button = btn
-
-    override fun getBean(): Any? = null
-
-    override fun addListener(listener: ChangeListener<in Button>) {}
-    override fun removeListener(listener: ChangeListener<in Button>) {}
-
-    override fun addListener(listener: InvalidationListener) {}
-    override fun removeListener(listener: InvalidationListener) {}
-
-    override fun setValue(value: Button) {}
-
-    override fun bind(observable: ObservableValue<out Button>) {}
-    override fun unbind() {}
-    override fun isBound(): Boolean = false
-
-    override fun bindBidirectional(other: Property<Button>) {}
-    override fun unbindBidirectional(other: Property<Button>) {}
-}
 
 
 fun showAndWaitConfAlert(header: String?, content: String?): ButtonType {

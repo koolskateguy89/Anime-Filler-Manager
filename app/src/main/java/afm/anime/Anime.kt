@@ -2,20 +2,8 @@ package afm.anime
 
 import afm.common.utils.ImmutableEnumSet
 import afm.common.utils.immutable
-import afm.common.utils.makeButtonProperty
 import afm.common.utils.setAll
-import afm.common.utils.setStyleClass
-import afm.database.MyListKt
-import afm.database.ToWatchKt
-import afm.screens.Menu
-import afm.screens.infowindows.MyListInfoWindow
-import afm.screens.infowindows.ResultInfoWindow
-import afm.screens.infowindows.ToWatchInfoWindow
 import com.github.koolskateguy89.filler.Filler
-import javafx.beans.property.Property
-import javafx.event.ActionEvent
-import javafx.event.EventHandler
-import javafx.scene.control.Button
 import javafx.scene.image.Image
 import java.util.EnumSet
 import java.util.TreeSet
@@ -91,7 +79,7 @@ class AnimeBuilder(var name: String) {
     }
 
     fun setGenres(genres: Collection<Genre>): AnimeBuilder {
-        require(!genres.isEmpty()) { "Genres cannot be empty" }
+        //require(!genres.isEmpty()) { "Genres cannot be empty" }
         this.genres.setAll(genres)
         return this
     }
@@ -172,7 +160,9 @@ class Anime(builder: AnimeBuilder) {
     val synopsis: String = builder.info
     val studios: Set<String> = builder.studios.toSet()
 
-    val genres: ImmutableEnumSet<Genre> = builder.genres.immutable()
+    val genres: ImmutableEnumSet<Genre> = builder.genres.immutable().also {
+
+    }
     @Suppress("UNUSED")
     val genreString: String = genres.joinToString(", ") { it.toString() }
 
@@ -283,180 +273,10 @@ class Anime(builder: AnimeBuilder) {
         @JvmStatic
         fun builder(name: String = ""): AnimeBuilder = AnimeBuilder(name)
 
-        private val HIGHLIGHT = Menu.SELECTED
-        private const val SEE_INFO = "See info"
-
         inline fun build(name: String = "", builderAction: AnimeBuilder.() -> Unit): Anime {
             return AnimeBuilder(name).apply(builderAction).build()
         }
     }
-
-    //<editor-fold desc="Buttons">
-
-    /* Everything following this is to help ResultsScreen with anime
-	 * returned from search results:
-	 *
-	 * - if an anime is already in ML, both button disable & highlight
-	 *   ML btn;
-	 * - if an anime is already in TW, both button disable & highlight
-	 *   TW btn;
-	 * - else, set up both buttons to do on action:
-	 *      * add anime to respective location (ML/TW)
-	 *      * disable both buttons
-	 *
-	 * - infoBtn - highlight & become mouse transparent (see below),
-	 *             InfoWindow will make it mouse non-transparent and unhighlight it
-	 *
-	 *
-	 *  Neither buttons actually become disabled, just made "mouse transparent"
-	 *  which means mouse events called on them are ignored
-	 *
-	 *  mouseTransparent property is:
-	 *  "If true, this node (together with all its children) is completely
-	 *   transparent to mouse events. When choosing target for mouse event,
-	 *   nodes with mouseTransparent set to true and their subtrees won'
-	 *   be taken into account."
-	 *
-	 *
-	 *  Also helps MyListScreen and ToWatchScreen to have appropriately functioning buttons
-	 */
-
-    /* for ResultsScreen */
-    private val myListBtn = Button("Add")
-    private val toWatchBtn = Button("Add")
-
-    init {
-        when (this) {
-            in MyListKt -> { // anime is already in MyList
-                myListBtn.setStyleClass(HIGHLIGHT)
-                myListBtn.isMouseTransparent = true
-                toWatchBtn.isMouseTransparent = true
-            }
-            in ToWatchKt -> { // anime is already in ToWatch
-                toWatchBtn.setStyleClass(HIGHLIGHT)
-                toWatchBtn.isMouseTransparent = true
-                myListBtn.isMouseTransparent = true
-            }
-            else -> { // anime is in neither MyList nor ToWatch
-                myListBtn.onAction = EventHandler {
-                    MyListKt.add(this)
-                    myListBtn.setStyleClass(HIGHLIGHT)
-
-                    myListBtn.isMouseTransparent = true
-                    toWatchBtn.isMouseTransparent = true
-                }
-
-                toWatchBtn.onAction = EventHandler {
-                    ToWatchKt.add(this)
-                    toWatchBtn.setStyleClass(HIGHLIGHT)
-
-                    toWatchBtn.isMouseTransparent = true
-                    myListBtn.isMouseTransparent = true
-                }
-            }
-        }
-    }
-
-    @Suppress("UNUSED")
-    @get:JvmName("infoBtnProperty")
-    val infoBtnProperty: Property<Button> by lazy {
-        val infoBtn = Button(SEE_INFO).apply {
-            onAction = EventHandler {
-                setStyleClass(HIGHLIGHT)
-                ResultInfoWindow.open(this@Anime, this, myListBtn, toWatchBtn)
-            }
-        }
-        makeButtonProperty("InfoBtnProperty", infoBtn)
-    }
-
-    @Suppress("UNUSED")
-    @get:JvmName("myListBtnProperty")
-    val myListBtnProperty: Property<Button> by lazy {
-        makeButtonProperty("MyListBtnProperty", myListBtn)
-    }
-
-    @Suppress("UNUSED")
-    @get:JvmName("toWatchBtnProperty")
-    val toWatchBtnProperty: Property<Button> by lazy {
-        makeButtonProperty("ToWatchBtnProperty", toWatchBtn)
-    }
-
-
-    /* for MyListScreen */
-
-    @Suppress("UNUSED")
-    @get:JvmName("myListInfoProperty")
-    val myListInfoProperty: Property<Button> by lazy {
-        val myListInfoBtn = Button(SEE_INFO).apply {
-            onAction = EventHandler {
-                setStyleClass(HIGHLIGHT)
-                MyListInfoWindow.open(this@Anime, this)
-            }
-        }
-        makeButtonProperty("MyListInfoBtnProperty", myListInfoBtn)
-    }
-
-    @Suppress("UNUSED")
-    @get:JvmName("myListRemoveProperty")
-    val myListRemoveProperty: Property<Button> by lazy {
-        val myListRemoveBtn = Button("Remove").apply {
-            onAction = EventHandler {
-                MyListKt.remove(this@Anime)
-            }
-        }
-        makeButtonProperty("MyListRemoveBtnProperty", myListRemoveBtn)
-    }
-
-    @Suppress("UNUSED")
-    @get:JvmName("moveToToWatchProperty")
-    val moveToToWatchProperty: Property<Button> by lazy {
-        val moveToToWatchBtn = Button("Move").apply {
-            onAction = EventHandler {
-                MyListKt.remove(this@Anime)
-                ToWatchKt.add(this@Anime)
-            }
-        }
-        makeButtonProperty("MoveToToWatchBtnProperty", moveToToWatchBtn)
-    }
-
-
-    /* for ToWatchScreen */
-
-    @Suppress("UNUSED")
-    @get:JvmName("toWatchInfoProperty")
-    val toWatchInfoProperty: Property<Button> by lazy {
-        val toWatchInfoBtn = Button(SEE_INFO).apply {
-            onAction = EventHandler { event: ActionEvent? ->
-                setStyleClass(HIGHLIGHT)
-                ToWatchInfoWindow.open(this@Anime, this)
-            }
-        }
-        makeButtonProperty("ToWatchInfoBtnProperty", toWatchInfoBtn)
-    }
-
-    @Suppress("UNUSED")
-    @get:JvmName("toWatchRemoveProperty")
-    val toWatchRemoveProperty: Property<Button> by lazy {
-        val toWatchRemoveBtn = Button("Remove").apply {
-            onAction = EventHandler {
-                ToWatchKt.remove(this@Anime)
-            }
-        }
-        makeButtonProperty("ToWatchRemoveBtnProperty", toWatchRemoveBtn)
-    }
-
-    @Suppress("UNUSED")
-    @get:JvmName("moveToMyListProperty")
-    val moveToMyListProperty: Property<Button> by lazy {
-        val moveToMyListBtn = Button("Move").apply {
-            onAction = EventHandler {
-                ToWatchKt.remove(this@Anime)
-                MyListKt.add(this@Anime)
-            }
-        }
-        makeButtonProperty("MoveToMyListBtnProperty", moveToMyListBtn)
-    }
-    //</editor-fold>
 
 }
 

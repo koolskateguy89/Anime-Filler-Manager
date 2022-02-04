@@ -46,8 +46,14 @@ fun Alert.wrapAlertText() {
     dialogPane.minHeight = Region.USE_PREF_SIZE
 }
 
+
 fun Styleable.setStyleClass(styleClass: List<String>) {
     this.styleClass.setAll(styleClass)
+}
+
+fun Styleable.setStyleClass(vararg styleClass: String) {
+    this.styleClass.clear()
+    this.styleClass.addAll(styleClass)
 }
 
 fun CheckComboBox<*>.useTitleAsPromptText() {
