@@ -14,7 +14,7 @@ open class ImmutableEnumSet<E : Enum<E>> protected constructor(val backingSet: E
     override fun hashCode(): Int = backingSet.hashCode()
 
     override fun toString(): String = backingSet.toString()
-    
+
     companion object {
         @JvmStatic
         fun <E : Enum<E>> viewOf(values: EnumSet<E>): ImmutableEnumSet<E> = ImmutableEnumSet(values)

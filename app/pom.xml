@@ -64,6 +64,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- JSR305 annotations -->
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
