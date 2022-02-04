@@ -13,12 +13,14 @@ open class ImmutableEnumSet<E : Enum<E>> protected constructor(val backingSet: E
 
     override fun hashCode(): Int = backingSet.hashCode()
 
+    override fun toString(): String = backingSet.toString()
+    
     companion object {
         @JvmStatic
         fun <E : Enum<E>> viewOf(values: EnumSet<E>): ImmutableEnumSet<E> = ImmutableEnumSet(values)
 
         @JvmStatic
-        fun <E : Enum<E>> copyOf(values: EnumSet<E>): ImmutableEnumSet<E> = ImmutableEnumSet(values)
+        fun <E : Enum<E>> copyOf(values: EnumSet<E>): ImmutableEnumSet<E> = ImmutableEnumSet(EnumSet.copyOf(values))
 
         inline fun <reified E : Enum<E>> copyOf(values: Iterable<E>): ImmutableEnumSet<E> {
             // use alternative constructor in case provided set is empty
@@ -31,7 +33,7 @@ open class ImmutableEnumSet<E : Enum<E>> protected constructor(val backingSet: E
     }
 }
 
-inline fun <reified E : Enum<E>> EnumSet<E>.immutable() = ImmutableEnumSet.copyOf(this)
+fun <E : Enum<E>> EnumSet<E>.immutable() = ImmutableEnumSet.copyOf(this)
 
 inline fun <reified E : Enum<E>> emptyEnumSet(): EnumSet<E> = EnumSet.noneOf(E::class.java)
 
