@@ -13,7 +13,7 @@
 - [Getting Started](#getting-started)
     - [Dependencies](#dependencies)
     - [Installing](#installing)
-    - [Running using Maven](#running-using-maven)
+    - [Running using Maven](#running-with-maven)
     - [Building into an executable JAR](#building-into-an-executable-jar)
 - [Things to note](#some-things-to-know-when-running)
 - [License](#license)
@@ -78,7 +78,7 @@ git clone https://github.com/koolskateguy89/Anime-Filler-Manager
 Run this command on the project root:
 
 ```
-mvn clean compile && cd app && mvn exec:java
+mvn clean package && java -jar app/target/AFM.jar
 ```
 
 (`mvn -pl app exec:java` breaks the program for some reason)
@@ -142,6 +142,6 @@ Distributed under the MIT License. See [LICENSE].txt for more information.
   - [ ] Use it for filler? https://github.com/MALSync/MALSync/pull/689/commits/4c667e418a4340241f29211b66d8425885bc87e8#diff-7f379e3d9a0edcfa6f3d11771fbf08a97c786103ca087f384bc9acec82f1c0a0R1144
 - [ ] Enable use of `ControlsFX.TableFilter` in MyList & ToWatch
 - [ ] Add a global keybind to minimize/maximize - **no idea**
-- [ ] Have no window resizing
-  - [ ] Resize screens to all be same size (SceneBuilder) - **long**
+- [~] Have no window resizing
+  - [~] Resize screens to all be same size (SceneBuilder) - **long**
 - [ ] Add episodes column to all tablescreens? - **almost-long**
