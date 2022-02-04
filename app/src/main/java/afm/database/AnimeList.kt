@@ -46,7 +46,6 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
 
     // Only the name of the removed anime is important
     private val removed = mutableSetOf<String>()
-
     override val removedNames: Set<String> = removed
 
     /* add anime to runTime without adding to {added}.
@@ -84,11 +83,11 @@ private class AnimeListImpl(private val refreshTable: () -> Unit) : AnimeList {
 
 
 @JvmField
-val MyListKt: AnimeList = AnimeListImpl(
-    Main.getInstance().myListScreen::refreshTable
-)
+val MyListKt: AnimeList = AnimeListImpl {
+    Main.getInstance().myListScreen.refreshTable()
+}
 
 @JvmField
-val ToWatchKt: AnimeList = AnimeListImpl(
-    Main.getInstance().toWatchScreen::refreshTable
-)
+val ToWatchKt: AnimeList = AnimeListImpl {
+    Main.getInstance().toWatchScreen.refreshTable()
+}
