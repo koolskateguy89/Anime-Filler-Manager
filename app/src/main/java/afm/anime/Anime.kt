@@ -292,6 +292,7 @@ class Anime(builder: AnimeBuilder) {
     }
 
     //<editor-fold desc="Buttons">
+
     /* Everything following this is to help ResultsScreen with anime
 	 * returned from search results:
 	 *
@@ -321,12 +322,6 @@ class Anime(builder: AnimeBuilder) {
 	 */
 
     /* for ResultsScreen */
-    private val infoBtn = Button(SEE_INFO).apply {
-        onAction = EventHandler {
-            setStyleClass(HIGHLIGHT)
-            ResultInfoWindow.open(this@Anime, this, myListBtn, toWatchBtn)
-        }
-    }
     private val myListBtn = Button("Add")
     private val toWatchBtn = Button("Add")
 
@@ -362,95 +357,112 @@ class Anime(builder: AnimeBuilder) {
         }
     }
 
-    // basically return infoBtn
     @Suppress("UNUSED")
-    fun infoBtnProperty(): Property<Button> {
-        return makeButtonProperty("InfoBtnProperty", infoBtn)
+    @get:JvmName("infoBtnProperty")
+    val infoBtnProperty: Property<Button> by lazy {
+        val infoBtn = Button(SEE_INFO).apply {
+            onAction = EventHandler {
+                setStyleClass(HIGHLIGHT)
+                ResultInfoWindow.open(this@Anime, this, myListBtn, toWatchBtn)
+            }
+        }
+        makeButtonProperty("InfoBtnProperty", infoBtn)
     }
 
-    // basically return myListBtn
     @Suppress("UNUSED")
-    fun myListBtnProperty(): Property<Button> {
-        return makeButtonProperty("MyListBtnProperty", myListBtn)
+    @get:JvmName("myListBtnProperty")
+    val myListBtnProperty: Property<Button> by lazy {
+        makeButtonProperty("MyListBtnProperty", myListBtn)
     }
 
-    // basically return toWatchBtn
     @Suppress("UNUSED")
-    fun toWatchBtnProperty(): Property<Button> {
-        return makeButtonProperty("ToWatchBtnProperty", toWatchBtn)
+    @get:JvmName("toWatchBtnProperty")
+    val toWatchBtnProperty: Property<Button> by lazy {
+        makeButtonProperty("ToWatchBtnProperty", toWatchBtn)
     }
 
 
     /* for MyListScreen */
 
-    private val myListInfoBtn = Button(SEE_INFO).apply {
-        onAction = EventHandler {
-            setStyleClass(HIGHLIGHT)
-            MyListInfoWindow.open(this@Anime, this)
+    @Suppress("UNUSED")
+    @get:JvmName("myListInfoProperty")
+    val myListInfoProperty: Property<Button> by lazy {
+        val myListInfoBtn = Button(SEE_INFO).apply {
+            onAction = EventHandler {
+                setStyleClass(HIGHLIGHT)
+                MyListInfoWindow.open(this@Anime, this)
+            }
         }
-    }
-    private val myListRemoveBtn = Button("Remove").apply {
-        onAction = EventHandler {
-            MyListKt.remove(this@Anime)
-        }
-    }
-    private val moveToToWatchBtn = Button("Move").apply {
-        onAction = EventHandler {
-            MyListKt.remove(this@Anime)
-            ToWatchKt.add(this@Anime)
-        }
+        makeButtonProperty("MyListInfoBtnProperty", myListInfoBtn)
     }
 
     @Suppress("UNUSED")
-    fun myListInfoProperty(): Property<Button> {
-        return makeButtonProperty("MyListInfoBtnProperty", myListInfoBtn)
+    @get:JvmName("myListRemoveProperty")
+    val myListRemoveProperty: Property<Button> by lazy {
+        val myListRemoveBtn = Button("Remove").apply {
+            onAction = EventHandler {
+                MyListKt.remove(this@Anime)
+            }
+        }
+        makeButtonProperty("MyListRemoveBtnProperty", myListRemoveBtn)
     }
 
     @Suppress("UNUSED")
-    fun myListRemoveProperty(): Property<Button> {
-        return makeButtonProperty("MyListRemoveBtnProperty", myListRemoveBtn)
-    }
-
-    @Suppress("UNUSED")
-    fun moveToToWatchProperty(): Property<Button> {
-        return makeButtonProperty("MoveToToWatchBtnProperty", moveToToWatchBtn)
+    @get:JvmName("moveToToWatchProperty")
+    val moveToToWatchProperty: Property<Button> by lazy {
+        val moveToToWatchBtn = Button("Move").apply {
+            onAction = EventHandler {
+                MyListKt.remove(this@Anime)
+                ToWatchKt.add(this@Anime)
+            }
+        }
+        makeButtonProperty("MoveToToWatchBtnProperty", moveToToWatchBtn)
     }
 
 
     /* for ToWatchScreen */
 
-    private val toWatchInfoBtn = Button(SEE_INFO).apply {
-        onAction = EventHandler { event: ActionEvent? ->
-            setStyleClass(HIGHLIGHT)
-            ToWatchInfoWindow.open(this@Anime, this)
+    @Suppress("UNUSED")
+    @get:JvmName("toWatchInfoProperty")
+    val toWatchInfoProperty: Property<Button> by lazy {
+        val toWatchInfoBtn = Button(SEE_INFO).apply {
+            onAction = EventHandler { event: ActionEvent? ->
+                setStyleClass(HIGHLIGHT)
+                ToWatchInfoWindow.open(this@Anime, this)
+            }
         }
-    }
-    private val toWatchRemoveBtn = Button("Remove").apply {
-        onAction = EventHandler {
-            ToWatchKt.remove(this@Anime)
-        }
-    }
-    private val moveToMyListBtn = Button("Move").apply {
-        onAction = EventHandler {
-            ToWatchKt.remove(this@Anime)
-            MyListKt.add(this@Anime)
-        }
+        makeButtonProperty("ToWatchInfoBtnProperty", toWatchInfoBtn)
     }
 
     @Suppress("UNUSED")
-    fun toWatchInfoProperty(): Property<Button> {
-        return makeButtonProperty("ToWatchInfoBtnProperty", toWatchInfoBtn)
+    @get:JvmName("toWatchRemoveProperty")
+    val toWatchRemoveProperty: Property<Button> by lazy {
+        val toWatchRemoveBtn = Button("Remove").apply {
+            onAction = EventHandler {
+                ToWatchKt.remove(this@Anime)
+            }
+        }
+        makeButtonProperty("ToWatchRemoveBtnProperty", toWatchRemoveBtn)
     }
 
     @Suppress("UNUSED")
-    fun toWatchRemoveProperty(): Property<Button> {
-        return makeButtonProperty("ToWatchRemoveBtnProperty", toWatchRemoveBtn)
-    }
-
-    @Suppress("UNUSED")
-    fun moveToMyListProperty(): Property<Button> {
-        return makeButtonProperty("MoveToMyListBtnProperty", moveToMyListBtn)
+    @get:JvmName("moveToMyListProperty")
+    val moveToMyListProperty: Property<Button> by lazy {
+        val moveToMyListBtn = Button("Move").apply {
+            onAction = EventHandler {
+                ToWatchKt.remove(this@Anime)
+                MyListKt.add(this@Anime)
+            }
+        }
+        makeButtonProperty("MoveToMyListBtnProperty", moveToMyListBtn)
     }
     //</editor-fold>
 
 }
+
+// I think MAL always shows episode length in mins
+@JvmInline
+value class EpisodeLength(val mins: Int) {
+    override fun toString(): String = mins.toString()
+}
+
