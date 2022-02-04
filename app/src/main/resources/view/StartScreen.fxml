@@ -20,5 +20,5 @@
 		</font>
 	</Text>
 	<Text fx:id="loadLbl" layoutX="208.0" layoutY="137.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0"
-	      styleClass="Text" text="Loading..." textAlignment="CENTER"/>
+	      styleClass="normal-text" text="Loading..." textAlignment="CENTER"/>
 </fx:root>

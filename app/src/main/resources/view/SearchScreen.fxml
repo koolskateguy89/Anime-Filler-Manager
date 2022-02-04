@@ -42,7 +42,7 @@
 			<Insets />
 		</GridPane.margin>
 	</Button>
-	<Button alignment="CENTER" mnemonicParsing="false" onAction="#clearGenres" prefHeight="26.0" prefWidth="72.0" styleClass="Warning" text="Clear" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+	<Button alignment="CENTER" mnemonicParsing="false" onAction="#clearGenres" prefHeight="26.0" prefWidth="72.0" styleClass="warning" text="Clear" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
 		<GridPane.margin>
 			<Insets left="13.0" />
 		</GridPane.margin>
@@ -74,8 +74,8 @@
 	<Label prefHeight="18.0" prefWidth="118.0" text="Studio:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
    <TextFields fx:factory="createClearableTextField" fx:id="studioField" promptText="Studio" GridPane.columnIndex="2" GridPane.rowIndex="6" />
 	<Label text="Minimum episodes:" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="TOP" />
-	<Label styleClass="Warning" text="(max 72)" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+	<Label styleClass="warning" text="(max 72)" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
 	<TextField fx:id="minEpsField" maxWidth="130.0" prefHeight="26.0" prefWidth="185.0" promptText="Minimum episodes" GridPane.columnIndex="2" GridPane.rowIndex="7" GridPane.valignment="TOP" />
 	<Button fx:id="searchBtn" alignment="CENTER" mnemonicParsing="false" onAction="#startSearchProcess" prefHeight="42.0" prefWidth="74.0" text="Search" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="9" />
-	<Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#resetFields" prefHeight="50.0" prefWidth="97.0" styleClass="Warning" text="Reset" textAlignment="CENTER" underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+	<Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#resetFields" prefHeight="50.0" prefWidth="97.0" styleClass="warning" text="Reset" textAlignment="CENTER" underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
 </fx:root>

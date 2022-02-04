@@ -22,11 +22,11 @@
     -fx-text-fill: -background-text-color;
 }
 
-.Text {
+.normal-text {
     -fx-fill: -background-text-color;
 }
 
-#WelcomeLine {
+#welcome-line {
     -fx-stroke: -background-text-color;
 }
 
@@ -38,39 +38,39 @@
     -fx-background-color: derive(-button-color, 10%);
 }
 
-.Warning {
+.warning {
     -fx-text-fill: yellow;
 }
 
 /* Menu */
-.MenuButton {
+.menu-button {
 	-fx-background-color: -background;
 }
-/* Selected menu buttons look like normal buttons atm */
-.SelectedMenuButton {
+/* selected menu buttons look like normal buttons atm */
+.selected-menu-button {
     -fx-background-color: -button-color;
 }
 
-.MiscMenuButton {
+.misc-menu-button {
     -fx-background-color: #fcfcfc;
 }
-.MiscMenuButton:hover {
+.misc-menu-button:hover {
     -fx-background-color: derive(#fcfcfc, 30%);
 }
 
-.Results {
+.results {
     -fx-background-color: #0044ff;
     -fx-text-fill: #fafafa;
 }
-.Results:hover {
+.results:hover {
     -fx-background-color: derive(#0044ff, 30%);
 }
 
-.Selected {
+.selected {
     -fx-background-color: #77dbe5;
 	-fx-text-fill: #300e4e;
 }
-.Selected:hover {
+.selected:hover {
     -fx-background-color: derive(#77dbe5, 30%);
 }
 
@@ -102,15 +102,15 @@
 }
 
 /* SearchingScreen */
-#SearchingPane {
+#searching-pane {
     -fx-background-color: black;
 }
 
-#SearchingCircleBox {
+#searching-circle-box {
     -fx-border-color: -opposite-to-background-color;
 }
 
-.Circle {
+.circle {
     -fx-fill: -opposite-to-background-color;
     -fx-stroke: #5f306e;
 }

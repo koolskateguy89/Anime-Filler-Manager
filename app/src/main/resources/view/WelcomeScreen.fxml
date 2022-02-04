@@ -7,24 +7,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-         prefHeight="394.0" prefWidth="466.0" spacing="25.0" styleClass="Panes"
-         stylesheets="@stylesheets/application.css" type="VBox" xmlns="http://javafx.com/javafx/11.0.1"
-         xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="720.0" spacing="25.0" styleClass="Panes" stylesheets="@stylesheets/application.css" type="VBox" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<padding>
-		<Insets bottom="30.0" top="25.0"/>
+		<Insets bottom="30.0" />
 	</padding>
-	<Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Welcome to AnimeFillerManager"
-	      VBox.vgrow="ALWAYS">
+	<Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Welcome to AnimeFillerManager" VBox.vgrow="ALWAYS">
 		<font>
-			<Font size="14.0"/>
+			<Font name="System Bold" size="14.0" />
 		</font>
 	</Text>
-	<Line id="WelcomeLine" endX="299.0" startX="-100.0"/>
-	<Button defaultButton="true" mnemonicParsing="false" onAction="#searchButtonPressed" prefHeight="42.0"
-	        prefWidth="241.0" text="Search" VBox.vgrow="ALWAYS"/>
-	<Button mnemonicParsing="false" onAction="#myListButtonPressed" prefHeight="42.0" prefWidth="241.0" text="MyList"
-	        VBox.vgrow="ALWAYS"/>
-	<Button mnemonicParsing="false" onAction="#toWatchButtonPressed" prefHeight="42.0" prefWidth="241.0"
-	        text="ToWatch" VBox.vgrow="ALWAYS"/>
+	<Line id="welcome-line" endX="519.2929077148438" endY="0.4273521602153778" startX="-100.0" />
+	<Button defaultButton="true" mnemonicParsing="false" onAction="#searchButtonPressed" prefHeight="50.0" prefWidth="259.0" text="Search" VBox.vgrow="ALWAYS" />
+	<Button mnemonicParsing="false" onAction="#myListButtonPressed" prefHeight="50.0" prefWidth="259.0" text="MyList" VBox.vgrow="ALWAYS" />
+	<Button mnemonicParsing="false" onAction="#toWatchButtonPressed" prefHeight="50.0" prefWidth="259.0" text="ToWatch" VBox.vgrow="ALWAYS" />
+   <Text fx:id="factText" fill="#38b747" strokeType="OUTSIDE" strokeWidth="0.0" text="Fact 0: Kotlin is clear of Java" textAlignment="CENTER" wrappingWidth="304.2000160217285">
+      <font>
+         <Font name="Arial Nova Cond" size="14.0" />
+      </font>
+   </Text>
 </fx:root>

@@ -11,7 +11,7 @@
          stylesheets="@stylesheets/application.css" type="VBox" xmlns="http://javafx.com/javafx/11.0.1"
          xmlns:fx="http://javafx.com/fxml/1">
 	<Button fx:id="searchBtn" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-	        onAction="#searchButtonPressed" prefHeight="63.0" styleClass="MenuButton" text="Search">
+	        onAction="#searchButtonPressed" prefHeight="63.0" styleClass="menu-button" text="Search">
 		<graphic>
 			<ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
 				<Image url="@../icons/Search.png"/>
@@ -19,7 +19,7 @@
 		</graphic>
 	</Button>
 	<Button fx:id="myListBtn" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-	        onAction="#myListButtonPressed" prefHeight="63.0" styleClass="MenuButton" text="MyList">
+	        onAction="#myListButtonPressed" prefHeight="63.0" styleClass="menu-button" text="MyList">
 		<graphic>
 			<ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
 				<Image url="@../icons/MyList.png"/>
@@ -27,7 +27,7 @@
 		</graphic>
 	</Button>
 	<Button fx:id="toWatchBtn" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-	        onAction="#toWatchButtonPressed" prefHeight="63.0" styleClass="MenuButton" text="ToWatch">
+	        onAction="#toWatchButtonPressed" prefHeight="63.0" styleClass="menu-button" text="ToWatch">
 		<graphic>
 			<ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
 				<Image url="@../icons/ToWatch.png"/>
@@ -35,7 +35,7 @@
 		</graphic>
 	</Button>
 	<Button fx:id="customBtn" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-	        onAction="#customButtonPressed" prefHeight="63.0" styleClass="MenuButton" text="Custom">
+	        onAction="#customButtonPressed" prefHeight="63.0" styleClass="menu-button" text="Custom">
 		<graphic>
 			<ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
 				<Image url="@../icons/Custom.png"/>
@@ -48,7 +48,7 @@
 		</VBox.margin>
 		<Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
 		        mnemonicParsing="false" onAction="#openHomeScreen" prefHeight="32.0" prefWidth="40.0"
-		        styleClass="MiscMenuButton">
+		        styleClass="misc-menu-button">
 			<graphic>
 				<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 					<Image url="@../icons/Home.png"/>
@@ -57,7 +57,7 @@
 		</Button>
 		<Button fx:id="settingsBtn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
 		        minWidth="-Infinity" mnemonicParsing="false" onAction="#openSettingsScreen" prefHeight="32.0"
-		        prefWidth="40.0" styleClass="MiscMenuButton">
+		        prefWidth="40.0" styleClass="misc-menu-button">
 			<graphic>
 				<ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
 					<Image url="@../icons/Settings.gif"/>

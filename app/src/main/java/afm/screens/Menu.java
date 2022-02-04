@@ -15,11 +15,12 @@ import afm.common.utils.Utils;
 
 public final class Menu extends VBox {
 
-	public static final List<String> SELECTED = List.of("button", "Selected"),
-									   NORMAL = List.of("button", "MenuButton"),
-									  RESULTS = List.of("button", "Results");
+	public static final List<String> SELECTED = List.of("button", "selected"),
+									   NORMAL = List.of("button", "menu-button"),
+									  RESULTS = List.of("button", "results");
 
-	private static final List<String> SELECTED_MENU = List.of("button", "SelectedMenuButton");
+	private static final List<String> SELECTED_MENU = List.of("button", "selected-menu-button");
+	private static final List<String> MISC = List.of("button", "misc-menu-button");
 
 	private final Main main = Main.getInstance();
 
@@ -61,7 +62,7 @@ public final class Menu extends VBox {
 		setStyleClass(toWatchBtn, NORMAL);
 		setStyleClass(customBtn, NORMAL);
 
-		settingsBtn.getStyleClass().setAll("button", "MiscMenuButton");
+		settingsBtn.getStyleClass().setAll(MISC);
 	}
 
 	@FXML
@@ -99,7 +100,7 @@ public final class Menu extends VBox {
 	@FXML
 	void openSettingsScreen() {
 		resetAllStyles();
-		setStyleClass(settingsBtn, List.of("button", "Selected"));
+		setStyleClass(settingsBtn, SELECTED);
 		main.openSettingsScreen();
 	}
 
