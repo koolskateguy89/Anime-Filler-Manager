@@ -4,7 +4,6 @@ import afm.common.utils.ImmutableEnumSet
 import afm.common.utils.immutable
 import afm.common.utils.setAll
 import com.github.koolskateguy89.filler.Filler
-import javafx.scene.image.Image
 import java.util.EnumSet
 import java.util.TreeSet
 
@@ -160,14 +159,11 @@ class Anime(builder: AnimeBuilder) {
     val synopsis: String = builder.info
     val studios: Set<String> = builder.studios.toSet()
 
-    val genres: ImmutableEnumSet<Genre> = builder.genres.immutable().also {
-
-    }
+    val genres: ImmutableEnumSet<Genre> = builder.genres.immutable()
     @Suppress("UNUSED")
     val genreString: String = genres.joinToString(", ") { it.toString() }
 
     val imageURL: String? = builder.imageURL
-    val image: Image? by lazy { imageURL?.let { Image(it) } }
 
     val fillers = TreeSet<Filler>().apply {
         if (!builder.custom) {

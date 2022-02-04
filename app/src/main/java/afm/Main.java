@@ -1,5 +1,8 @@
 package afm;
 
+import static afm.database.AnimeListKt.MyListKt;
+import static afm.database.AnimeListKt.ToWatchKt;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -219,13 +222,17 @@ public final class Main extends Application {
 		customScreen = new CustomScreen();
 
 		// load MyList & ToWatch from database into run time data structures
+		Database.setUrl(Settings.selectedDatabaseProperty.getValueSafe());
 		Database.loadAll();
+
+		MyListKt.setOnChange(myListScreen::refreshTable);
+		ToWatchKt.setOnChange(toWatchScreen::refreshTable);
 
 		applyTheme(Settings.themeProperty.get());
 	}
 
 	@Override
-	public void start(final Stage primaryStage) throws Exception {
+	public void start(final Stage primaryStage) {
 		stage = primaryStage;
 
 		stage.setTitle("Anime Filler Manager");

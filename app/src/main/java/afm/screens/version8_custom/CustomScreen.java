@@ -26,6 +26,7 @@ import afm.anime.AnimeType;
 import afm.anime.Genre;
 import afm.anime.GenreType;
 import afm.anime.Status;
+import afm.common.utils.CoreUtils;
 import afm.common.utils.Utils;
 
 // A lot of things here are identical to SearchScreen
@@ -79,7 +80,7 @@ public class CustomScreen extends GridPane {
 		typeCombo.getItems().addAll(AnimeType.values());
 		typeCombo.setValue(AnimeType.UNKNOWN);
 		startYearField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
-		startYearField.setText(Integer.toString(Utils.getCurrentYear()));
+		startYearField.setText(Integer.toString(CoreUtils.getCurrentYear()));
 		statusCombo.getItems().addAll(Status.values());
 		statusCombo.setValue(Status.UNKNOWN);
 

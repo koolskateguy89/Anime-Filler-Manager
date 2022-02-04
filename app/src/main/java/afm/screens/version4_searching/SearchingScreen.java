@@ -3,12 +3,14 @@ package afm.screens.version4_searching;
 import static afm.common.utils.Utils.sleep;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.Nonnull;
+import javax.net.ssl.SSLHandshakeException;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -17,6 +19,8 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -121,7 +125,23 @@ public class SearchingScreen extends Pane {
 			return new Task<>() {
 				@Override
 				protected Void call() {
-					results.addAll(search.search());
+					var searchResults = search.search(e -> {
+						if (e instanceof UnknownHostException) {
+							Platform.runLater(() -> {
+								Alert a = new Alert(AlertType.ERROR, "No internet connection");
+								a.initOwner(Main.getStage());
+								a.showAndWait();
+							});
+						}
+						if (e instanceof SSLHandshakeException) {
+							Platform.runLater(() -> {
+								Alert a = new Alert(AlertType.ERROR, "Could not connect to MyAnimeList");
+								a.initOwner(Main.getStage());
+								a.showAndWait();
+							});
+						}
+					});
+					results.addAll(searchResults);
 					return null;
 				}
 			};

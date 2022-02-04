@@ -1,16 +1,9 @@
 package afm.database
 
-import afm.Main
 import afm.anime.Anime
 import afm.anime.AnimeType
 import afm.anime.Status
 import afm.common.utils.inJar
-import afm.common.utils.isFirstRun
-import afm.common.utils.wrapAlertText
-import afm.user.Settings
-import javafx.application.Platform
-import javafx.scene.control.Alert
-import javafx.scene.control.Alert.AlertType
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
@@ -20,14 +13,14 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.kxtra.slf4j.getLogger
-import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.exists
 
 object Database {
 
+    @Suppress("UNUSED")
     private val logger = getLogger()
 
     // From SQLiteStudio
@@ -46,69 +39,44 @@ object Database {
         "*.sl3",
     )
 
-    private fun mayBeValidDatabase(url: String?): Boolean {
-        if (url.isNullOrEmpty())
-            return false
+    private val internalUrl = "jdbc:sqlite:${if (inJar) ":resource:" else "core/src/main/resources/"}databases/animeDB.db"
 
-        val exists: Boolean = Files.exists(Path.of(url))
+    @JvmStatic
+    var url: String = internalUrl
+        set(newUrl) {
+            if (newUrl == field)
+                return
 
-        if (!exists) {
-            logger.warn("Database file does not exist. Falling back on internal")
-            Settings.selectedDatabaseProperty.value = "Internal"
-
-            Platform.runLater {
-                val content = """
-						Database file does not exist/is not a valid file.
-						Falling back on internal database.
-						""".trimIndent()
-
-                Alert(AlertType.ERROR, content).run {
-                    initOwner(Main.getStage())
-                    wrapAlertText()
-                    showAndWait()
+            if (newUrl == "Internal") {
+                if (field != internalUrl) {
+                    db = Database.connect(internalUrl, DRIVER)
+                    field = internalUrl
                 }
+            } else if (newUrl.isValidPath()) {
+                if (!Path.of(newUrl).exists())
+                    createNew(newUrl)
+
+                db = Database.connect("jdbc:sqlite:$newUrl", DRIVER)
+                field = newUrl
             }
+
         }
-
-        return exists
-    }
-
-    private val DB_URL: String = run {
-        val url: String? = Settings.getSelectedDatabase()
-
-        // fallback on internal database if provided url is definitely not valid
-        if (url == "Internal" || !mayBeValidDatabase(url)) {
-            if (inJar)
-                "jdbc:sqlite::resource:databases/animeDB.db"
-            else
-                /*
-                 * Using `Database.javaClass.getResource("/databases/animeDB.db").toString()`
-                 * will give the database in target/classes/..., but if not running in jar
-                 * (i.e. through IDE or something), really we want to modify the database in
-                 * src/main/resources for persistence as target/ is likely to be deleted.
-                 */
-                "jdbc:sqlite:src/main/resources/databases/animeDB.db"
-        } else {
-            "jdbc:sqlite:$url"
-        }
-    }
 
     private const val DRIVER = "org.sqlite.JDBC"
 
-    @Suppress("UNUSED")
-    val db = Database.connect(DB_URL, DRIVER)
-        .also { TransactionManager.defaultDatabase = it }
+    var db: Database = Database.connect(url, DRIVER)
+        private set
 
     @JvmStatic
     fun loadAll() {
-        if (inJar && isFirstRun && Settings.getSelectedDatabase() == "Internal")
-            transaction { clearTables() }
-        else
-            loadAllImpl()
+        // if (inJar && isFirstRun && url == internalUrl)
+        //     transaction(db) { clearTables() }
+        // else
+        loadAllImpl()
     }
 
     private fun loadAllImpl() {
-        transaction {
+        transaction(db) {
             loadTable(MyListKt, MyListTable)
             loadTable(ToWatchKt, ToWatchTable)
         }
@@ -129,7 +97,7 @@ object Database {
 
     @JvmStatic
     fun saveAll() {
-        transaction {
+        transaction(db) {
             saveTable(MyListKt, MyListTable)
             saveTable(ToWatchKt, ToWatchTable)
         }
@@ -147,8 +115,8 @@ object Database {
 
     // if table already exists: clear it, else create new table
     @JvmStatic
-    fun createNew(url: String) {
-        transaction(Database.connect("jdbc:sqlite:$url", DRIVER)) {
+    fun createNew(url: String): Database = Database.connect("jdbc:sqlite:$url", DRIVER).also {
+        transaction(it) {
             SchemaUtils.createMissingTablesAndColumns(
                 MyListTable,
                 ToWatchTable,
@@ -159,19 +127,33 @@ object Database {
     }
 }
 
-fun main() {
-    //ExposedDatabase.db
-    transaction {
-        SchemaUtils.createMissingTablesAndColumns(
-            MyListTable,
-            ToWatchTable,
-            withLogs = false,
-        )
-        ToWatchTable.allAnime()
-    }
+private fun String.isValidPath(): Boolean = try {
+    Path.of(this)
+    true
+} catch (_: Exception) {
+    false
 }
 
-// TODO I need to use upsert to insert stuff
+fun main() {
+//    afm.database.Database.url = "./test.db"
+//    transaction(afm.database.Database.db) {
+//        Anime.build("ok mate") {
+//            setId(1)
+//            setGenres(EnumSet.allOf(Genre::class.java))
+//        }.toAnimeEntity()
+//    }
+    //ExposedDatabase.db
+//    transaction(afm.database.Database.db) {
+//        SchemaUtils.createMissingTablesAndColumns(
+//            MyListTable,
+//            ToWatchTable,
+//            withLogs = false,
+//        )
+//        ToWatchTable.allAnime()
+//    }
+}
+
+// TODO: need to use upsert to insert stuff because will fail unique constraint
 
 sealed class AnimeTable(name: String) : IdTable<String>(name) {
     // id === name

@@ -1,10 +1,11 @@
 package afm.screens.settings;
 
+import static afm.database.AnimeListKt.MyListKt;
+import static afm.database.AnimeListKt.ToWatchKt;
 import static afm.user.Settings.Key.ALWAYS_ON_TOP;
 import static afm.user.Settings.Key.NAME_ORDER;
 import static afm.user.Settings.Key.PLAY_SOUND;
 import static afm.user.Settings.Key.SHOW_FACTS;
-import static afm.user.Settings.Key.SKIP_LOADING;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,10 +72,8 @@ public class SettingsScreen extends Pane {
 	private PropertySheet sheet;
 
 	// loading
-	private final Item showFacts = new BooleanItem(Category.LOADING, "*Show facts", "Show facts on loading screen");
+	private final Item showFacts = new BooleanItem(Category.LOADING, "Show facts", "Show facts on welcome screen");
 	private final BooleanProperty showFactsProp = showFacts.getProperty();
-	private final Item skipLoading = new BooleanItem(Category.LOADING, "*Automate loading screen");
-	private final BooleanProperty skipLoadingProp = skipLoading.getProperty();
 
 	// search
 	private final Item playSound = new BooleanItem(Category.SEARCH, "Play sound after search?");
@@ -98,20 +97,12 @@ public class SettingsScreen extends Pane {
 		playSoundProp.set(Settings.get(PLAY_SOUND));
 
 		alwaysOnTopProp.set(Settings.get(ALWAYS_ON_TOP));
-
-		skipLoadingProp.set(Settings.get(SKIP_LOADING));
 	}
 
 	private void initSheet() {
 		showFactsProp.addListener((obs, oldVal, newVal) -> {
 			if (newVal != oldVal) {
 				Settings.invert(SHOW_FACTS);
-			}
-		});
-
-		skipLoadingProp.addListener((obs, oldVal, newVal) -> {
-			if (newVal != oldVal) {
-				Settings.invert(SKIP_LOADING);
 			}
 		});
 
@@ -138,7 +129,6 @@ public class SettingsScreen extends Pane {
 
 		var items = sheet.getItems();
 		items.add(showFacts);
-		items.add(skipLoading);
 
 		items.add(playSound);
 
@@ -189,12 +179,19 @@ public class SettingsScreen extends Pane {
 	void insertion() {
 		Settings.invert(NAME_ORDER);
 		nameCheckBox.setSelected(!insertionCheckBox.isSelected());
+		nameOrder(nameCheckBox.isSelected());
 	}
 
 	@FXML
 	void name() {
 		Settings.invert(NAME_ORDER);
 		insertionCheckBox.setSelected(!nameCheckBox.isSelected());
+		nameOrder(nameCheckBox.isSelected());
+	}
+
+	private static void nameOrder(boolean nameOrder) {
+		MyListKt.setNameOrder(nameOrder);
+		ToWatchKt.setNameOrder(nameOrder);
 	}
 
 	private static FileChooser getDatabaseFileChooser() {

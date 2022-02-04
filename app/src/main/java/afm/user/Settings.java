@@ -22,7 +22,7 @@ import javafx.beans.property.StringProperty;
 
 import lombok.Getter;
 
-import afm.common.utils.Utils;
+import afm.common.utils.CoreUtils;
 
 /*
  * TODO: Map<String, String> for String settings (database, selected db etc.)
@@ -56,7 +56,6 @@ public class Settings {
 		NAME_ORDER(false),
 		PLAY_SOUND(false),
 		ALWAYS_ON_TOP(false),
-		SKIP_LOADING(false),
 		;
 
 		final boolean defaultValue;
@@ -70,7 +69,7 @@ public class Settings {
 		}
 	}
 
-	private static final String PREF_NAME = (Utils.inJar() ? "jar:" : "") + Settings.class.getCanonicalName();
+	private static final String PREF_NAME = (CoreUtils.inJar() ? "jar:" : "") + Settings.class.getCanonicalName();
 
 	private static final Map<String, Boolean> defaults = Collections.unmodifiableMap(new HashMap<>() {{
 		for (Key key : Key.values()) {

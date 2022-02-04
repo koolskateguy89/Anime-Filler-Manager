@@ -131,7 +131,7 @@ Distributed under the MIT License. See [LICENSE].txt for more information.
 - [x] Use ControlsFX a lot more
 - [x] Add hyperlink to the next watch episode
 - [~] Use a logger (slf4j simple)
-- [~] Split into `core` and `app` modules, `core` will basically just be `anime` package(?) - **long-ish**
+- [x] Split into `core` and `app` modules, `core` will basically just be `anime` & `database` packages
 - [~] `Filler` tests
 - [ ] Switch to a lighter embedded db? (sqlite driver is 9.3MB!). Maybe h2?
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**

@@ -143,7 +143,8 @@ public abstract class InfoWindow extends Stage {
 
 		infoTextArea.setText(anime.getSynopsis());
 
-		imageView.setImage(anime.getImage());
+		if (anime.getImageURL() != null)
+			imageView.setImage(new Image(anime.getImageURL()));
 	}
 
 	// https://stackoverflow.com/a/46395543

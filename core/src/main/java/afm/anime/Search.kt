@@ -1,23 +1,16 @@
 package afm.anime
 
-import afm.Main
 import afm.common.utils.currentYear
 import afm.common.utils.emptyEnumSet
-import afm.common.utils.inJar
 import afm.common.utils.remove
 import afm.common.utils.setAll
-import javafx.application.Platform
-import javafx.scene.control.Alert
-import javafx.scene.control.Alert.AlertType
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-import java.io.IOException
-import java.net.UnknownHostException
 import java.util.EnumSet
-import javax.net.ssl.SSLHandshakeException
+import java.util.function.Consumer
 import kotlin.math.min
 
 private const val MAL_URL = "https://myanimelist.net"
@@ -184,13 +177,13 @@ class Search {
         this.genres.setAll(genres)
     }
 
-    fun search(): List<Anime> {
+    fun search(onException: Consumer<Exception> = Consumer {}): List<Anime> {
         /* this should be impossible because it's already taken care of
 		   in SearchScreen */
         check(!genres.isEmpty()) { "No genres selected for searching" }
 
         tailrec fun search0(): List<Anime> {
-            val searchWorked: Boolean = searchForEachGenre()
+            val searchWorked: Boolean = searchForEachGenre(onException)
 
             if (!searchWorked || reachedLastPage || result.size >= 13 /*&& (name != null)*/) {
                 // fail fast is search didn't work
@@ -207,7 +200,7 @@ class Search {
     // (and)
     // searches for each and every genre the user selected
     // returns if search 'worked'
-    private fun searchForEachGenre(): Boolean {
+    private fun searchForEachGenre(onException: Consumer<Exception>): Boolean {
         for (genre in genres) {
             try {
                 scrapeDocument(Jsoup.connect("$GENRE_URL/${genre.id}/page=$page")
@@ -216,26 +209,9 @@ class Search {
                     .get()
                 )
             } catch (e: Exception) {
-                when (e) {
-                    // no internet connection
-                    is UnknownHostException -> Platform.runLater {
-                        Alert(AlertType.ERROR, "No internet connection").run {
-                            initOwner(Main.getStage())
-                            showAndWait()
-                        }
-                    }
-                    // gone past last page
-                    is HttpStatusException -> reachedLastPage = true
-                    // likely caused by MAL being blocked or something
-                    is SSLHandshakeException -> Platform.runLater {
-                        Alert(AlertType.ERROR, "Could not connect to MyAnimeList").run {
-                            initOwner(Main.getStage())
-                            showAndWait()
-                        }
-                    }
-                    is IOException -> if (!inJar) e.printStackTrace()
-                    else -> throw e
-                }
+                if (e is HttpStatusException)
+                    reachedLastPage = true
+                onException.accept(e)
                 return false
             }
         }

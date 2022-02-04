@@ -32,8 +32,9 @@
 	</contributors>
 
 	<modules>
-		<module>app</module>
 		<module>filler</module>
+		<module>core</module>
+		<module>app</module>
 	</modules>
 
 	<properties>

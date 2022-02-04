@@ -4,7 +4,7 @@ import afm.anime.EpisodeLength
 import afm.anime.Genre
 import afm.common.utils.emptyEnumSet
 import afm.common.utils.splitIgnoreEmpty
-import afm.database.MyListEntity.Companion.transform
+import afm.database.MyListEntity.Companion.transform // (doesn't matter that it's MyListEntity)
 import com.github.koolskateguy89.filler.Filler
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
