@@ -130,11 +130,10 @@ Distributed under the MIT License. See [LICENSE].txt for more information.
   - [ ] Idk maybe Dracula/Monokai/etc
 - [x] Use ControlsFX a lot more
 - [x] Add hyperlink to the next watch episode
-- [~] Use [Apache log4j](https://logging.apache.org/log4j/2.x/) to log things
-    - [ ] Use SLF4J to allow swapping in case of more Log4j bugs lol (?) is that how it works idk
+- [~] Use a logger (slf4j simple)
 - [~] Split into `core` and `app` modules, `core` will basically just be `anime` package(?) - **long-ish**
-- [ ] `Filler` tests
-- [ ] Switch to a lighter embedded db (sqlite driver is 9.3MB!). Maybe h2?
+- [~] `Filler` tests
+- [ ] Switch to a lighter embedded db? (sqlite driver is 9.3MB!). Maybe h2?
 - [ ] Switch to use Jikan API if this is actually gonna be used because web-scraping is so long, plus the minimum 13 results thing is a bit 🥴 - **quite long**
   - [ ] Just write REST API wrapper myself? not all of its features are needed, literally only searching for anime
     - NO. Ok maybe. Can use
