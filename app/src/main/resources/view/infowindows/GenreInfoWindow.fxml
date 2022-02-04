@@ -20,8 +20,8 @@
 					<Label layoutX="14.0" layoutY="69.0" text="Explanation:"/>
 					<Label layoutX="181.0" layoutY="69.0" text="https://myanimelist.net/anime/genre/info"/>
 					<TextArea fx:id="textArea" editable="false" layoutX="9.0" layoutY="86.0" prefHeight="153.0"
-					          prefWidth="392.0" promptText="Select a genre" styleClass="Text-area"
-					          stylesheets="@stylesheets/application.css" wrapText="true">
+					          prefWidth="392.0" promptText="Select a genre" styleClass="text-area"
+					          wrapText="true">
 						<font>
 							<Font name="Dubai Medium" size="12.0"/>
 						</font>
