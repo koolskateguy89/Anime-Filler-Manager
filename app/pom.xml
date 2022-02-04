@@ -12,9 +12,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.github.koolskateguy89</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>afm-core</artifactId>
-			<version>${revision}</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!--<editor-fold desc="Kotlin">-->
@@ -30,11 +30,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.kxtra</groupId>
 			<artifactId>kxtra-slf4j</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency-->
 		<!--</editor-fold>-->
 
 		<!--<editor-fold desc="JavaFX">-->

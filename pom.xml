@@ -11,7 +11,10 @@
 	<url>https://github.com/koolskateguy89/Anime-Filler-Manager</url>
 	<inceptionYear>2020</inceptionYear>
 	<licenses>
-		<!-- TODO -->
+		<license>
+			<name>MIT License</name>
+			<distribution>manual</distribution>
+		</license>
 	</licenses>
 
 	<developers>

@@ -12,7 +12,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.github.koolskateguy89</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>anime-filler-list</artifactId>
 			<version>[0.0.1,)</version> <!-- latest version -->
 		</dependency>
