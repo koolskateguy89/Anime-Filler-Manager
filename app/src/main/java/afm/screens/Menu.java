@@ -94,7 +94,7 @@ public final class Menu extends VBox {
 	@FXML
 	void openHomeScreen() {
 		resetAllStyles();
-		main.moveToWelcomeScreen();
+		main.showWelcomeScreen();
 	}
 
 	@FXML

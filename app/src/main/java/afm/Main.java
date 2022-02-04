@@ -1,6 +1,5 @@
 package afm;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,12 +67,13 @@ public final class Main extends Application {
 	public CustomScreen customScreen;
 
 	// welcomeScreen == home screen
-	public void moveToWelcomeScreen() {
+	public void showWelcomeScreen() {
 		InfoWindow.closeAllOpenWindows();
 
+		welcomeScreen.show();
+		scene.setRoot(welcomeScreen);
 		stage.setHeight(welcomeScreen.getPrefHeight());
 		stage.setWidth(welcomeScreen.getPrefWidth());
-		scene.setRoot(welcomeScreen);
 	}
 
 	public void openSettingsScreen() {
@@ -82,29 +82,16 @@ public final class Main extends Application {
 
 	// Set up mainScreen variable & screenList & scene root.
 	// Changed it to return Main so welcomeScreen can use method chaining
-	public @Nonnull Main initMainScreen() {
-		if (mainScreen == null || screenList == null)
-			try {
-				mainScreen = new SplitPane();
-				FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("MainScreen"));
-				loader.setRoot(mainScreen);
-				loader.load();
-
-				screenList = mainScreen.getItems();
-				screenList.add(menu);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
+	public @Nonnull Main setupMainScreen() {
+		if (screenList.isEmpty())
+			screenList.add(menu);
 		scene.setRoot(mainScreen);
-		stage.setResizable(true);
-
 		return this;
 	}
 
 	private void normalHeight() {
 		// all non-table screens have the same pref height
-		stage.setHeight(searchScreen.getPrefHeight());
+		stage.setHeight(mainScreen.getPrefHeight());
 	}
 
 	// Change 'current' screen (right of splitpane)
@@ -211,6 +198,12 @@ public final class Main extends Application {
 		// OnClose thread will be run upon JVM trying to exit
 		Runtime.getRuntime().addShutdownHook(OnClose.INSTANCE);
 
+		mainScreen = new SplitPane();
+		FXMLLoader loader = new FXMLLoader(Utils.getFxmlUrl("MainScreen"));
+		loader.setRoot(mainScreen);
+		loader.load();
+		screenList = mainScreen.getItems();
+
 		welcomeScreen = new WelcomeScreen();
 		menu = new Menu();
 		settingsScreen = new SettingsScreen();
@@ -234,6 +227,13 @@ public final class Main extends Application {
 	public void start(final Stage primaryStage) throws Exception {
 		stage = primaryStage;
 
+		stage.setTitle("Anime Filler Manager");
+		stage.getIcons().add(new Image("icons/MainIcon.ico"));
+
+		stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
+
+		stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
+
 		stage.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
 			if (Boolean.TRUE.equals(isFocused)) {
 				stage.opacityProperty().bind(Settings.opacityProperty.multiply(0.01));
@@ -242,17 +242,12 @@ public final class Main extends Application {
 			}
 		});
 
-		stage.setTitle("Anime Filler Manager");
-		stage.getIcons().add(new Image("icons/MainIcon.ico"));
-		stage.setResizable(false);
-
-		stage.setOnCloseRequest(e -> InfoWindow.closeAllOpenWindows());
-
-		stage.setAlwaysOnTop(Settings.get(Settings.Key.ALWAYS_ON_TOP));
-
 		scene = new Scene(welcomeScreen);
-
 		stage.setScene(scene);
+		// for some reason stage.sizeToScene() doesn't work properly
+		stage.setHeight(welcomeScreen.getPrefHeight());
+		stage.setWidth(welcomeScreen.getPrefWidth());
+
 		stage.centerOnScreen();
 		stage.toFront();
 		stage.show();

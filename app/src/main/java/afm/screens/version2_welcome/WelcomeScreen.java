@@ -31,7 +31,6 @@ public class WelcomeScreen extends VBox {
 	private void initialize() {
 		//Get a random fact and its id and display it in factText
 		if (Settings.get(Settings.Key.SHOW_FACTS)) {
-			Facts.init(); // only need to init if showing facts
 			Pair<Integer, String> fact = Facts.getRandomFact();
 			factText.setText("Fact " + fact.getFirst() + ": " + fact.getSecond());
 		} else {
@@ -39,25 +38,34 @@ public class WelcomeScreen extends VBox {
 		}
 	}
 
-	// Initialise main screen & return main to be able to change screens easily
-	// Quite clever imo
-	private Main initMain() {
-		return Main.getInstance().initMainScreen();
+	public void show() {
+		// show a (probably) different fact whenever this in shown
+		if (Settings.get(Settings.Key.SHOW_FACTS)) {
+			Pair<Integer, String> newFact = Facts.getRandomFact();
+			factText.setText("Fact " + newFact.getFirst() + ": " + newFact.getSecond());
+			factText.setVisible(true);
+		} else {
+			factText.setVisible(false);
+		}
+	}
+
+	private Main setupMain() {
+		return Main.getInstance().setupMainScreen();
 	}
 
 	@FXML
 	void searchButtonPressed() {
-		initMain().menu.openSearchScreenFromWelcome();
+		setupMain().menu.openSearchScreenFromWelcome();
 	}
 
 	@FXML
 	void myListButtonPressed() {
-		initMain().menu.openMyListScreenFromWelcome();
+		setupMain().menu.openMyListScreenFromWelcome();
 	}
 
 	@FXML
 	void toWatchButtonPressed() {
-		initMain().menu.openToWatchScreenFromWelcome();
+		setupMain().menu.openToWatchScreenFromWelcome();
 	}
 
 }
