@@ -215,10 +215,29 @@ class Anime(builder: AnimeBuilder) {
     @get:JvmName("isCustom")
     val custom: Boolean = builder.custom
 
-    override fun toString(): String {
-        return name + (if (studios.isEmpty()) "" else " studios = $studios") +
-                if (episodes == NOT_FINISHED || episodes == 0) "" else " episode(s) = $episodes"
-    }
+    // takes filler into account
+    val nextEpisode: String
+        get() {
+            var nextEp = currEp + 1
+
+            for (filler in fillers) {
+                if (nextEp in filler) {
+                    // 'skip' to the end of the filler range
+                    // this is fine as consecutive filler SHOULD be in the same range
+                    nextEp = filler.end + 1
+                    break
+                }
+                if (currEp < filler.start) {
+                    // if this clause is triggered, we have gone past our episode,
+                    // this should happen if the next episode is not filler
+                    break
+                }
+            }
+
+            return if (nextEp > episodes && episodes != NOT_FINISHED) "-" else nextEp.toString()
+        }
+
+    val url: String? = if (custom || id == null) null else "https://myanimelist.net/anime/$id"
 
     // Only search for filler if anime is not custom and has more than 48 episodes or is not finished
     fun findFillers() {
@@ -228,29 +247,9 @@ class Anime(builder: AnimeBuilder) {
         fillers.setAll(Filler.getFillers(name))
     }
 
-    // takes filler into account
-    fun getNextEpisode(): String {
-        var nextEp = currEp + 1
-
-        for (filler in fillers) {
-            if (nextEp in filler) {
-                // 'skip' to the end of the filler range
-                // this is fine as consecutive filler SHOULD be in the same range
-                nextEp = filler.end + 1
-                break
-            }
-            if (currEp < filler.start) {
-                // if this clause is triggered, we have gone past our episode,
-                // this should happen if the next episode is not filler
-                break
-            }
-        }
-
-        return if (nextEp > episodes && episodes != NOT_FINISHED) "-" else nextEp.toString()
-    }
-
-    fun getUrl(): String? {
-        return if (custom || id == null) null else "https://myanimelist.net/anime/$id"
+    override fun toString(): String {
+        return name + (if (studios.isEmpty()) "" else " studios = $studios") +
+                if (episodes == NOT_FINISHED || episodes == 0) "" else " episode(s) = $episodes"
     }
 
     override fun equals(other: Any?): Boolean {

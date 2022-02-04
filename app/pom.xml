@@ -87,12 +87,6 @@
 			<artifactId>reactive-jikan</artifactId>
 		</dependency>
 
-		<!-- sqlite jdbc driver -->
-		<dependency>
-			<groupId>org.xerial</groupId>
-			<artifactId>sqlite-jdbc</artifactId>
-		</dependency>
-
 		<!--<editor-fold desc="Exposed">-->
 		<dependency>
 			<groupId>org.jetbrains.exposed</groupId>
@@ -107,6 +101,12 @@
 			<artifactId>exposed-jdbc</artifactId>
 		</dependency>
 		<!--</editor-fold>-->
+
+		<!-- sqlite jdbc driver -->
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+		</dependency>
 
 	</dependencies>
 

@@ -27,11 +27,6 @@ import org.kxtra.slf4j.getLogger
 import java.nio.file.Files
 import java.nio.file.Path
 
-// TODO: move MyListKt and ToWatchKt to here?
-// or embed them inside Database and instead of loading the db into a data struct
-
-private const val DRIVER = "org.sqlite.JDBC"
-
 object Database {
 
     private val logger = getLogger()
@@ -52,34 +47,34 @@ object Database {
         "*.sl3",
     )
 
-    private val DB_URL: String = run {
-        fun mayBeValidDatabase(url: String?): Boolean {
-            if (url.isNullOrEmpty())
-                return false
+    private fun mayBeValidDatabase(url: String?): Boolean {
+        if (url.isNullOrEmpty())
+            return false
 
-            val exists: Boolean = Files.exists(Path.of(url))
+        val exists: Boolean = Files.exists(Path.of(url))
 
-            if (!exists) {
-                logger.warn("Database file does not exist. Falling back on internal")
-                Settings.selectedDatabaseProperty.value = "Internal"
+        if (!exists) {
+            logger.warn("Database file does not exist. Falling back on internal")
+            Settings.selectedDatabaseProperty.value = "Internal"
 
-                Platform.runLater {
-                    val content = """
+            Platform.runLater {
+                val content = """
 						Database file does not exist/is not a valid file.
 						Falling back on internal database.
 						""".trimIndent()
 
-                    Alert(AlertType.ERROR, content).run {
-                        initOwner(Main.getStage())
-                        wrapAlertText()
-                        showAndWait()
-                    }
+                Alert(AlertType.ERROR, content).run {
+                    initOwner(Main.getStage())
+                    wrapAlertText()
+                    showAndWait()
                 }
             }
-
-            return exists
         }
 
+        return exists
+    }
+
+    private val DB_URL: String = run {
         val url: String? = Settings.getSelectedDatabase()
 
         // fallback on internal database if provided url is definitely not valid
@@ -87,20 +82,22 @@ object Database {
             if (inJar)
                 "jdbc:sqlite::resource:databases/animeDB.db"
             else
-            /*
-             * Using `Database.javaClass.getResource("/databases/animeDB.db").toString()`
-             * will give the database in target/classes/..., but if not running in jar
-             * (i.e. through IDE or something), really we want to modify the database in
-             * src/main/resources for persistence as target/ is likely to be deleted.
-             */
+                /*
+                 * Using `Database.javaClass.getResource("/databases/animeDB.db").toString()`
+                 * will give the database in target/classes/..., but if not running in jar
+                 * (i.e. through IDE or something), really we want to modify the database in
+                 * src/main/resources for persistence as target/ is likely to be deleted.
+                 */
                 "jdbc:sqlite:src/main/resources/databases/animeDB.db"
         } else {
             "jdbc:sqlite:$url"
         }
     }
 
+    private const val DRIVER = "org.sqlite.JDBC"
+
     @Suppress("UNUSED")
-    val db: Database = Database.connect(DB_URL, DRIVER)
+    val db = Database.connect(DB_URL, DRIVER)
         .also { TransactionManager.defaultDatabase = it }
 
     @JvmStatic
@@ -249,7 +246,7 @@ private fun AnimeEntity.toAnime(): Anime = Anime.build(name) {
 // workaround to have ext function with 2 receivers
 @Suppress("UNUSED")
 private val Transaction.toAnimeEntity: Anime.() -> AnimeEntity
-    get() = fun Anime.(): AnimeEntity {
+    get() = {
         val ec: EntityClass<String, AnimeEntity> = if (MyListKt.contains(this))
             MyListEntity.Companion
         else
@@ -258,7 +255,7 @@ private val Transaction.toAnimeEntity: Anime.() -> AnimeEntity
         val anime = this
 
         // also stores it in db
-        return ec.new(anime.name) {
+        ec.new(anime.name) {
             malId = anime.id
             synopsis = anime.synopsis
             studios = anime.studios

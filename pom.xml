@@ -56,8 +56,8 @@
 		<controlsfx.version>11.1.1</controlsfx.version>
 		<jsoup.version>1.14.3</jsoup.version>
 		<reactive-jikan.version>1.0.2</reactive-jikan.version>
-		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
 		<exposed.version>0.37.3</exposed.version>
+		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
 	</properties>
 
 	<repositories>
@@ -127,6 +127,7 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<!-- JSR305 annotations -->
 			<dependency>
 				<groupId>com.google.code.findbugs</groupId>
 				<artifactId>jsr305</artifactId>
@@ -154,13 +155,6 @@
 				<version>${reactive-jikan.version}</version>
 			</dependency>
 
-			<!-- sqlite jdbc driver -->
-			<dependency>
-				<groupId>org.xerial</groupId>
-				<artifactId>sqlite-jdbc</artifactId>
-				<version>${sqlite-jdbc.version}</version>
-			</dependency>
-
 			<!--<editor-fold desc="Exposed">-->
 			<dependency>
 				<groupId>org.jetbrains.exposed</groupId>
@@ -178,6 +172,13 @@
 				<version>${exposed.version}</version>
 			</dependency>
 			<!--</editor-fold>-->
+
+			<!-- sqlite jdbc driver -->
+			<dependency>
+				<groupId>org.xerial</groupId>
+				<artifactId>sqlite-jdbc</artifactId>
+				<version>${sqlite-jdbc.version}</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
