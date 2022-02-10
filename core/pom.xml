@@ -44,10 +44,10 @@
 		</dependency>
 
 		<!-- TODO: Jikan API Java wrapper -->
-		<dependency>
+		<!--dependency>
 			<groupId>net.sandrohc</groupId>
 			<artifactId>reactive-jikan</artifactId>
-		</dependency>
+		</dependency-->
 
 		<!--<editor-fold desc="Exposed">-->
 		<dependency>
