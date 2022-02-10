@@ -4,6 +4,7 @@ target/
 
 # User-specific
 .idea/eclipseCodeFormatter.xml
+.idea/dataSources*.xml
 
 # Me
 Test.kts
