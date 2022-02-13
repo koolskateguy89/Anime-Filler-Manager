@@ -3,10 +3,9 @@ package afm
 import afm.database.Database
 import afm.user.Settings
 
-object OnClose : Thread() {
+internal object OnClose : Thread("On close thread") {
 
     init {
-        name = "On close thread"
         isDaemon = true
     }
 

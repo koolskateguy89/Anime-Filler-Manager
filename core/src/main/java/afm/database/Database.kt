@@ -53,10 +53,10 @@ object Database {
                     field = internalUrl
                 }
             } else if (newUrl.isValidPath()) {
-                if (!Path.of(newUrl).exists())
+                db = if (!Path.of(newUrl).exists())
                     createNew(newUrl)
-
-                db = Database.connect("jdbc:sqlite:$newUrl", DRIVER)
+                else
+                    Database.connect("jdbc:sqlite:$newUrl", DRIVER)
                 field = newUrl
             }
 
