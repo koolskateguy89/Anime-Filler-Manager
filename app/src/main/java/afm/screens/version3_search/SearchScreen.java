@@ -72,9 +72,11 @@ public final class SearchScreen extends GridPane {
 		Utils.useTitleAsPromptText(themeCombo);
 
 		typeCombo.getItems().addAll(AnimeType.values());
-		startYearField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
+		startYearField.setTextFormatter(Utils.positiveIntOrEmptyFormatter());
+		startYearField.setText("");
 		statusCombo.getItems().addAll(Status.values());
-		minEpsField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
+		minEpsField.setTextFormatter(Utils.positiveIntOrEmptyFormatter());
+		minEpsField.setText("");
 	}
 
 	@FXML

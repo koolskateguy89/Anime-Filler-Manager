@@ -79,14 +79,15 @@ public class CustomScreen extends GridPane {
 
 		typeCombo.getItems().addAll(AnimeType.values());
 		typeCombo.setValue(AnimeType.UNKNOWN);
-		startYearField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
-		startYearField.setText(Integer.toString(CoreUtils.getCurrentYear()));
+		startYearField.setTextFormatter(Utils.positiveIntOrEmptyFormatter(CoreUtils.getCurrentYear()));
 		statusCombo.getItems().addAll(Status.values());
 		statusCombo.setValue(Status.UNKNOWN);
 
-		totalEpField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
+		totalEpField.setTextFormatter(Utils.positiveIntOrEmptyFormatter());
+		totalEpField.setText("");
 		//totalEpField.setText(Integer.toString(Anime.NOT_FINISHED));
-		currEpField.textProperty().addListener(Utils.positiveIntOrEmptyListener());
+		currEpField.setTextFormatter(Utils.positiveIntOrEmptyFormatter());
+		currEpField.setText("");
 		//currEpField.setText("1");
 	}
 

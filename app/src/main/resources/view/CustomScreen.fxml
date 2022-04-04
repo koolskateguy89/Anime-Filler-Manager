@@ -32,7 +32,7 @@
 		<RowConstraints maxHeight="85.60000000000002" minHeight="10.0" prefHeight="23.999975585937477" vgrow="SOMETIMES" />
 	</rowConstraints>
 	<Label prefHeight="18.0" prefWidth="118.0" text="Name:" GridPane.columnIndex="1" />
-	<TextFields fx:id="nameField" promptText="Name" GridPane.columnIndex="2" fx:factory="createClearableTextField" />
+	<TextFields fx:factory="createClearableTextField" fx:id="nameField" promptText="Name" GridPane.columnIndex="2" />
 	<Label prefHeight="18.0" prefWidth="118.0" text="Genre(s):" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 	<CheckComboBox fx:id="genreCombo" prefHeight="26.0" prefWidth="248.0" title="Select genre(s)" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 	<Button alignment="CENTER" mnemonicParsing="false" onAction="#clearGenres" prefHeight="26.0" prefWidth="72.0" styleClass="warning" text="Clear" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
@@ -71,10 +71,10 @@
 		<TextField fx:id="totalEpField" prefHeight="26.0" prefWidth="82.0" promptText="Total eps" />
 		<TextField fx:id="currEpField" prefHeight="26.0" prefWidth="82.0" promptText="Current ep" />
 	</HBox>
-	<HBox alignment="CENTER" prefHeight="30.0" prefWidth="573.0" spacing="80.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-		<Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToMyList" prefHeight="46.0" prefWidth="98.0" text="Add to MyList" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-		<Button alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#tryAddToToWatch" prefHeight="46.0" prefWidth="98.0" text="Add to ToWatch" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-		<Button alignment="CENTER" cancelButton="true" ellipsisString="" mnemonicParsing="false" onAction="#resetFields" prefHeight="46.0" prefWidth="98.0" styleClass="warning" text="Reset" textAlignment="CENTER" textOverrun="CLIP" underline="true" />
+	<HBox alignment="CENTER" prefHeight="30.0" prefWidth="573.0" spacing="60.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+		<Button mnemonicParsing="false" onAction="#tryAddToMyList" prefHeight="46.0" prefWidth="105.0" text="Add to MyList" textAlignment="CENTER" wrapText="true" />
+		<Button mnemonicParsing="false" onAction="#tryAddToToWatch" prefHeight="46.0" prefWidth="105.0" text="Add to ToWatch" textAlignment="CENTER" wrapText="true" />
+		<Button cancelButton="true" mnemonicParsing="false" onAction="#resetFields" prefHeight="46.0" prefWidth="105.0" styleClass="warning" text="Reset" underline="true" />
 		<padding>
 			<Insets right="40.0" />
 		</padding>

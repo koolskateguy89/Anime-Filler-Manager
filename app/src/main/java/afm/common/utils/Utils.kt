@@ -5,14 +5,15 @@ package afm.common.utils
 
 import afm.Main
 import afm.anime.Anime
-import javafx.beans.property.StringProperty
-import javafx.beans.value.ChangeListener
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.Button
 import javafx.scene.control.ButtonType
 import javafx.scene.control.TableColumn
+import javafx.scene.control.TextFormatter
+import javafx.util.converter.IntegerStringConverter
 import java.net.URL
+import java.util.regex.Pattern
 
 fun getFxmlUrl(fname: String): URL? = classLoader.getResource("view/$fname.fxml")
 
@@ -22,20 +23,19 @@ fun toIntOrNull(s: String): Int? = s.toIntOrNull()
 
 
 // Stop user from typing any characters that aren't numeric
-fun intOnlyListener(): ChangeListener<String?> =
-    ChangeListener { obs, oldVal, newVal ->
-        /* if (newVal.isNullOrEmpty())
-            (obs as StringProperty).value = "0"
-        else */
-        if (!newVal.isStrictInteger())
-            (obs as StringProperty).value = oldVal
+val NATURAL_NUMBER_REGEX: Pattern = Pattern.compile("([1-9][0-9]*)?")
+
+private fun intTextFormatterForPattern(pattern: Pattern, defaultValue: Int): TextFormatter<Int> =
+    TextFormatter(IntegerStringConverter(), defaultValue) { change: TextFormatter.Change ->
+        val newText = change.controlNewText
+        if (pattern.matcher(newText).matches())
+            change
+        else
+            null
     }
-fun positiveIntOrEmptyListener(): ChangeListener<String?> =
-    ChangeListener { obs, oldVal, newVal ->
-        // only change back to oldVal if newVal isn't null/empty
-        if (!newVal.isNullOrEmpty() && !newVal.isStrictInteger())
-            (obs as StringProperty).value = oldVal
-    }
+
+@JvmOverloads
+fun positiveIntOrEmptyFormatter(defaultValue: Int = 0): TextFormatter<Int> = intTextFormatterForPattern(NATURAL_NUMBER_REGEX, defaultValue)
 
 
 fun sleep(millis: Long) = Thread.sleep(millis)
