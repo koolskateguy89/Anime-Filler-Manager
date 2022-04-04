@@ -22,7 +22,7 @@
 
 ## Introduction
 
-Anime Filler Manager is a Java application to search for anime from
+Anime Filler Manager is a JVM application to search for anime from
  [MyAnimeList](https://myanimelist.net/)
  and find out which episodes of that anime are **filler** (unnecessary to watch as they do not contribute to the
  main plot), according to the amazing community-led
