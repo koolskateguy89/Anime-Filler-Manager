@@ -60,7 +60,7 @@
 		<controlsfx.version>11.1.1</controlsfx.version>
 		<jsoup.version>1.14.3</jsoup.version>
 		<reactive-jikan.version>2.1.0</reactive-jikan.version>
-		<exposed.version>0.37.3</exposed.version>
+		<exposed.version>0.38.2</exposed.version>
 		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
 	</properties>
 
