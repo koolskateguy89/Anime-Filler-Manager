@@ -281,4 +281,3 @@ class Anime(builder: AnimeBuilder) {
 value class EpisodeLength(val mins: Int) {
     override fun toString(): String = mins.toString()
 }
-

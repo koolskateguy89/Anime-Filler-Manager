@@ -133,12 +133,14 @@ public class SearchingScreen extends Pane {
 								a.showAndWait();
 							});
 						}
-						if (e instanceof SSLHandshakeException) {
+						else if (e instanceof SSLHandshakeException) {
 							Platform.runLater(() -> {
 								Alert a = new Alert(AlertType.ERROR, "Could not connect to MyAnimeList");
 								a.initOwner(Main.getStage());
 								a.showAndWait();
 							});
+						} else {
+							e.printStackTrace();
 						}
 					});
 					results.addAll(searchResults);
