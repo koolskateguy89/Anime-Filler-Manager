@@ -24,7 +24,6 @@ import javafx.stage.Stage;
 
 import afm.Main;
 import afm.anime.Anime;
-import afm.common.Browser;
 import afm.common.NotificationFactory;
 import afm.common.utils.Utils;
 import afm.user.Settings;
@@ -169,12 +168,7 @@ public abstract class InfoWindow extends Stage {
 
 		//NotificationFactory.showInfoNotification("Opening browser...");
 
-		boolean opened = Browser.open(url);
-		if (!opened) {
-			Alert a = new Alert(AlertType.ERROR, "Browser could not be opened.");
-			a.initOwner(this);
-			a.showAndWait();
-		}
+		Main.getInstance().getHostServices().showDocument(url);
 	}
 
 	@FXML
@@ -242,14 +236,7 @@ public abstract class InfoWindow extends Stage {
 		if (url == null)
 			return;
 
-		NotificationFactory.showInfoNotification("Opening browser...");
-
-		boolean opened = Browser.open(url);
-		if (!opened) {
-			Alert a = new Alert(AlertType.ERROR, "Browser could not be opened.");
-			a.initOwner(this);
-			a.showAndWait();
-		}
+		Main.getInstance().getHostServices().showDocument(url);
 	}
 
 	@FXML

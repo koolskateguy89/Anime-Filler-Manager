@@ -15,37 +15,37 @@
 		<Scene>
 			<Pane fx:id="pane" prefHeight="355.0" prefWidth="431.0" styleClass="Panes"
 			      stylesheets="@../stylesheets/application.css">
-				<children>
-					<ImageView fx:id="imageView" fitHeight="112.0" fitWidth="124.0" layoutX="14.0" layoutY="14.0"
-					           onMouseClicked="#openImage" pickOnBounds="true" preserveRatio="true"/>
-					<Label layoutX="144.0" layoutY="15.0" text="Info:"/>
-					<TextArea fx:id="infoTextArea" editable="false" layoutX="195.0" layoutY="14.0" opacity="0.44"
-					          prefHeight="121.0" prefWidth="222.0" wrapText="true"/>
-					<Label layoutX="20.0" layoutY="153.0" text="Current episode:"/>
-					<TextField fx:id="currEpField" layoutX="121.0" layoutY="149.0" promptText="Current episode"/>
-					<Label layoutX="20.0" layoutY="190.0" text="Total episodes:"/>
-					<TextField fx:id="totalEpField" editable="false" layoutX="121.0" layoutY="186.0" opacity="0.61"
-					           promptText="Total episodes"/>
-					<Button fx:id="openEpsBtn" layoutX="306.0" layoutY="151.0" mnemonicParsing="false"
-					        onAction="#openEpisode" style="-fx-background-color: #eed202; -fx-text-fill: black;" text="Open">
-						<font>
-							<Font size="10.0"/>
-						</font>
-					</Button>
-					<Button fx:id="fillerBtn" layoutX="307.0" layoutY="187.0" mnemonicParsing="false" onAction="#openFillers"
-					        text="See fillers"/>
-					<Button fx:id="urlBtn" layoutX="35.0" layoutY="232.0" mnemonicParsing="false" onAction="#copyURL"
-					        text="Copy URL"/>
-					<Button layoutX="156.0" layoutY="232.0" mnemonicParsing="false" onAction="#copyName" text="Copy name"/>
-					<Button fx:id="browserBtn" layoutX="289.0" layoutY="232.0" mnemonicParsing="false"
-					        onAction="#openBrowser" text="Open in browser"/>
-					<Button layoutX="14.0" layoutY="281.0" mnemonicParsing="false" onAction="#remove" prefHeight="53.0"
-					        prefWidth="91.0" text="Remove from MyList" textAlignment="CENTER" wrapText="true"/>
-					<Button layoutX="156.0" layoutY="281.0" mnemonicParsing="false" onAction="#move" prefHeight="53.0"
-					        prefWidth="96.0" text="Move to ToWatch" textAlignment="CENTER" wrapText="true"/>
-					<Button layoutX="293.0" layoutY="281.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="53.0"
-					        prefWidth="95.0" text="Close" textAlignment="CENTER" wrapText="true"/>
-				</children>
+				<ImageView fx:id="imageView" fitHeight="112.0" fitWidth="124.0" layoutX="14.0" layoutY="14.0"
+				           onMouseClicked="#openImage" pickOnBounds="true" preserveRatio="true"/>
+				<Label layoutX="144.0" layoutY="15.0" text="Info:"/>
+				<TextArea fx:id="infoTextArea" editable="false" layoutX="195.0" layoutY="14.0" opacity="0.44"
+				          prefHeight="121.0" prefWidth="222.0" wrapText="true"/>
+				<Label layoutX="20.0" layoutY="153.0" text="Current episode:"/>
+				<TextField fx:id="currEpField" layoutX="121.0" layoutY="149.0" promptText="Current episode"/>
+				<Label layoutX="20.0" layoutY="190.0" text="Total episodes:"/>
+				<TextField fx:id="totalEpField" editable="false" layoutX="121.0" layoutY="186.0" opacity="0.61"
+				           promptText="Total episodes"/>
+				<!--
+				<Button fx:id="openEpsBtn" layoutX="306.0" layoutY="151.0" mnemonicParsing="false"
+				        onAction="#openEpisode" style="-fx-background-color: #eed202; -fx-text-fill: black;" text="Open">
+					<font>
+						<Font size="10.0"/>
+					</font>
+				</Button>
+				-->
+				<Button fx:id="fillerBtn" layoutX="307.0" layoutY="187.0" mnemonicParsing="false" onAction="#openFillers"
+				        text="See fillers"/>
+				<Button fx:id="urlBtn" layoutX="35.0" layoutY="232.0" mnemonicParsing="false" onAction="#copyURL"
+				        text="Copy URL"/>
+				<Button layoutX="156.0" layoutY="232.0" mnemonicParsing="false" onAction="#copyName" text="Copy name"/>
+				<Button fx:id="browserBtn" layoutX="289.0" layoutY="232.0" mnemonicParsing="false"
+				        onAction="#openBrowser" text="Open in browser"/>
+				<Button layoutX="14.0" layoutY="281.0" mnemonicParsing="false" onAction="#remove" prefHeight="53.0"
+				        prefWidth="91.0" text="Remove from MyList" textAlignment="CENTER" wrapText="true"/>
+				<Button layoutX="156.0" layoutY="281.0" mnemonicParsing="false" onAction="#move" prefHeight="53.0"
+				        prefWidth="96.0" text="Move to ToWatch" textAlignment="CENTER" wrapText="true"/>
+				<Button layoutX="293.0" layoutY="281.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="53.0"
+				        prefWidth="95.0" text="Close" textAlignment="CENTER" wrapText="true"/>
 			</Pane>
 		</Scene>
 	</scene>
