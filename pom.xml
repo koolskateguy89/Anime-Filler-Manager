@@ -46,7 +46,7 @@
 
 		<!-- for plugins -->
 		<maven.compiler.release>17</maven.compiler.release>
-		<kotlin.version>1.6.21</kotlin.version>
+		<kotlin.version>1.7.0</kotlin.version>
 		<kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 		<mainClass>afm.LauncherKt</mainClass>
@@ -58,7 +58,7 @@
 		<lombok.version>1.18.24</lombok.version>
 		<findbugs.version>3.0.2</findbugs.version>
 		<controlsfx.version>11.1.1</controlsfx.version>
-		<jsoup.version>1.14.3</jsoup.version>
+		<jsoup.version>1.15.1</jsoup.version>
 		<reactive-jikan.version>2.1.0</reactive-jikan.version>
 		<exposed.version>0.38.2</exposed.version>
 		<sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>

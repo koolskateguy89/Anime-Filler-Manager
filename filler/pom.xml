@@ -11,11 +11,11 @@
 
 		<!-- for plugins -->
 		<maven.compiler.release>17</maven.compiler.release>
-		<kotlin.version>1.6.21</kotlin.version>
+		<kotlin.version>1.7.0</kotlin.version>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 
 		<!-- dependency versions -->
-		<jsoup.version>1.14.3</jsoup.version>
+		<jsoup.version>1.15.1</jsoup.version>
 		<reactive-jikan.version>2.1.0</reactive-jikan.version>
 	</properties>
 
