@@ -37,8 +37,8 @@ Tbh this has a lot of problems, mostly due to it being coursework and thus havin
 
 ## Built With
 
-- Java 17
-- Kotlin 1.5.31
+- Java
+- Kotlin
 - [Maven](https://maven.apache.org/)
 - [Gluon SceneBuilder](https://gluonhq.com/products/scene-builder/)
     - [FXML](https://en.wikipedia.org/wiki/FXML)
@@ -57,14 +57,14 @@ to locally store the anime you're currently watching/want to watch.
 ### Dependencies
 
 - [Kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/)
+- [slf4j-simple](https://github.com/qos-ch/slf4j)
+- [kxtra-slf4j](https://github.com/kxtra/kxtra-slf4j) (compile-time only)
 - [JavaFX](https://openjfx.io/)
 - [Project Lombok](https://projectlombok.org/)
 - [ControlsFX](https://github.com/controlsfx/controlsfx)
 - [jsoup](https://jsoup.org/)
-- [Guava](https://github.com/google/guava)
 - [SQLite JDBC Driver](https://github.com/xerial/sqlite-jdbc)
-- [slf4j-simple](https://github.com/qos-ch/slf4j)
-- [kxtra-slf4j](https://github.com/kxtra/kxtra-slf4j) (compile-time only)
+- [Exposed](https://github.com/JetBrains/Exposed)
 
 ### Installing
 
@@ -101,11 +101,11 @@ java -jar app/target/AFM.jar
 
 ## Some things to know when running
 
-1. To search for an anime, you HAVE to have selected an anime
+1. To search for an anime, you HAVE to select a genre
 2. The anime database has to have the tables MyList & ToWatch, in a specific format (just use the `Create new` button
-   on the Settings screen, it's easier)
-   - There is a [blank database](res/blank.db) with these in the [res](res) folder
-   - Tbh if you're actually gonna use this program, I **strongly recommend** using an external database so you can update without losing your data
+   on the Settings screen)
+   - There is a [blank database](res/blank.db) in this format in the [res](res) folder
+   - Tbh if you're actually going to use this program, I **strongly recommend** using an external database, so you can update without losing your data
 3. ...
 
 
