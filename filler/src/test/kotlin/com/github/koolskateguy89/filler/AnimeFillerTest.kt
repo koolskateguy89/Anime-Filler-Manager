@@ -4,12 +4,12 @@ package com.github.koolskateguy89.filler
 
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertContentEquals
-
-// FIXME: mvn test finds these but doesnt run them
 
 internal val emptyIntArray: IntArray = IntArray(0)
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class NarutoTest {
 
     private lateinit var naruto: AnimeFiller
@@ -72,6 +72,7 @@ internal class NarutoTest {
     }
 }
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class BeastarsTest {
 
     private lateinit var beastars: AnimeFiller
