@@ -15,7 +15,7 @@ private const val STUDIO_DELIMITER = "::"
 private const val GENRE_DELIMITER = ","
 private const val FILLER_DELIMITER = ","
 
-sealed class AnimeEntity private constructor(id: EntityID<String>, table: AnimeTable) : Entity<String>(id) {
+sealed class AnimeEntity(id: EntityID<String>, table: AnimeTable) : Entity<String>(id) {
     var name = id.value
     var malId by table.malId
     var synopsis by table.synopsis
