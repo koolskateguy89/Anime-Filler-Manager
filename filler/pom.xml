@@ -15,7 +15,7 @@
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 
 		<!-- dependency versions -->
-		<jsoup.version>1.15.1</jsoup.version>
+		<jsoup.version>1.15.3</jsoup.version>
 		<reactive-jikan.version>2.1.0</reactive-jikan.version>
 	</properties>
 
