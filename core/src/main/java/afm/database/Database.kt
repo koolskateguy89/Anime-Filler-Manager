@@ -155,6 +155,12 @@ fun main() {
 
 // TODO: need to use upsert to insert stuff because will fail unique constraint
 
+/*
+Not in 1NF:
+studios, (many-many)
+genres, (many-many)
+fillers (many-many but 'not much point')
+ */
 sealed class AnimeTable(name: String) : IdTable<String>(name) {
     // id === name
     final override val id: Column<EntityID<String>> = varchar("name", 30).entityId()
