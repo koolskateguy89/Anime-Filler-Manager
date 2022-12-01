@@ -16,7 +16,7 @@
 
 		<!-- dependency versions -->
 		<jsoup.version>1.15.3</jsoup.version>
-		<reactive-jikan.version>2.1.0</reactive-jikan.version>
+		<reactive-jikan.version>2.2.0</reactive-jikan.version>
 	</properties>
 
 	<dependencies>
