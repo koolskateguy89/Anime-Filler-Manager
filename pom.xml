@@ -57,7 +57,7 @@
 		<javafx.version>15.0.1</javafx.version>
 		<lombok.version>1.18.24</lombok.version>
 		<findbugs.version>3.0.2</findbugs.version>
-		<controlsfx.version>11.1.1</controlsfx.version>
+		<controlsfx.version>11.1.2</controlsfx.version>
 		<jsoup.version>1.15.3</jsoup.version>
 		<reactive-jikan.version>2.2.0</reactive-jikan.version>
 		<exposed.version>0.38.2</exposed.version>
