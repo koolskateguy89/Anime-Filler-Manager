@@ -4,7 +4,7 @@ import afm.anime.Anime
 import java.util.TreeSet
 
 // Delegate actions for MyList & ToWatch to not duplicate code
-// https://stackoverflow.com/a/50308477/17381629
+// https://stackoverflow.com/a/50308477
 
 sealed interface AnimeList {
     var onChange: Runnable
