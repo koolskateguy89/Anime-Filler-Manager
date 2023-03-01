@@ -55,7 +55,7 @@
 		<slf4j.version>2.0.3</slf4j.version>
 		<kxtra.version>2.1.0</kxtra.version>
 		<javafx.version>15.0.1</javafx.version>
-		<lombok.version>1.18.24</lombok.version>
+		<lombok.version>1.18.26</lombok.version>
 		<findbugs.version>3.0.2</findbugs.version>
 		<controlsfx.version>11.1.2</controlsfx.version>
 		<jsoup.version>1.15.3</jsoup.version>
