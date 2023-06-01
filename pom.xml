@@ -61,7 +61,7 @@
 		<jsoup.version>1.15.3</jsoup.version>
 		<reactive-jikan.version>2.2.0</reactive-jikan.version>
 		<exposed.version>0.41.1</exposed.version>
-		<sqlite-jdbc.version>3.40.0.0</sqlite-jdbc.version>
+		<sqlite-jdbc.version>3.42.0.0</sqlite-jdbc.version>
 	</properties>
 
 	<repositories>
